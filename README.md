@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# V2 Badminton Next
 
-## Getting Started
+Parallel Next.js rebuild for the V2 Badminton website.
 
-First, run the development server:
+This repo is the safe migration sandbox for the future Vercel version of the site. The current production HTML site stays separate and live while this app is rebuilt, tested, and compared route-by-route before any domain cutover.
+
+## Goals
+
+- Keep the current production URLs and SEO intent.
+- Preserve the strongest conversion flow:
+  - schedule card click
+  - prefill location + time + message
+  - scroll to form
+  - focus the first empty field
+- Preserve GA4 / GTM / Meta tracking semantics.
+- Add a stronger lead backend with server-side fallback.
+- Reach parity first, improve later.
+
+## Current primary routes
+
+- `/`
+- `/hoc-cau-long-cho-nguoi-moi/`
+- `/lop-cau-long-binh-thanh/`
+- `/lop-cau-long-thu-duc/`
+
+## Planned money pages
+
+- `/hoc-cau-long-1-kem-1/`
+- `/lop-cau-long-cuoi-tuan/`
+- `/lop-cau-long-buoi-toi/`
+- `/gia-hoc-cau-long-tphcm/`
+- `/team-building-cau-long/`
+
+## Non-negotiable acceptance criteria
+
+- Preserve schedule-to-form prefill behavior.
+- Preserve `cta_click`, `contact_click`, `map_click`, `form_start`, `generate_lead`, and `form_error`.
+- Add server-side fallback for lead submission.
+- Handle Zalo differently on mobile vs desktop.
+- Keep sitemap, robots, metadata, canonicals, and schema parity.
+- Add deep links from homepage location cards to local landing pages.
+
+## Local development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Verification before cutover
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npm run build
+```
 
-## Learn More
+Then test:
 
-To learn more about Next.js, take a look at the following resources:
+- route parity
+- form submit
+- schedule prefill
+- analytics events
+- JSON-LD
+- mobile UX
+- performance budget
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Reference docs
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `MASTERPLAN.md`
+- `NEXTJS_MIGRATION_PLAN.md`
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+These two files are the source-of-truth docs for roadmap, migration safety, conversion parity, and the longer-term SEO / lead strategy.
