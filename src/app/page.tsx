@@ -1,138 +1,127 @@
+import { JsonLd } from "@/components/ui/JsonLd";
 import Link from "next/link";
-import { moneyPages, routeCards } from "@/lib/site";
+import { getFaqsForPage } from "@/lib/faqs";
+import { courtLocations } from "@/lib/locations";
+import { pricingTiers, sitePriceRange } from "@/lib/pricing";
+import { buildMetadata, routeCards } from "@/lib/routes";
+import { scheduleItems } from "@/lib/schedule";
+import {
+  buildCourseSchemas,
+  buildFaqPageSchema,
+  buildHomepageLocalBusinessSchema,
+  buildOrganizationSchema,
+  buildWebsiteSchema,
+} from "@/lib/schema";
+import { moneyPages } from "@/lib/site";
+
+export const metadata = buildMetadata("/");
 
 export default function Home() {
+  const homepageFaqCount = getFaqsForPage("homepage").length;
+  const courseSchemas = buildCourseSchemas();
+
   return (
-    <main
-      style={{
-        maxWidth: "1120px",
-        margin: "0 auto",
-        padding: "64px 24px 96px",
-        display: "grid",
-        gap: "40px",
-      }}
-    >
-      <section
-        style={{
-          display: "grid",
-          gap: "18px",
-          padding: "32px",
-          background: "rgba(30,30,30,0.72)",
-          border: "1px solid rgba(200,245,66,0.12)",
-        }}
-      >
-        <p
-          style={{
-            color: "var(--v2-lime)",
-            letterSpacing: "0.15em",
-            textTransform: "uppercase",
-            fontSize: "0.8rem",
-            fontWeight: 700,
-          }}
-        >
-          Migration Sandbox
-        </p>
-        <h1
-          style={{
-            fontSize: "clamp(2.2rem, 6vw, 4.4rem)",
-            lineHeight: 1.05,
-            color: "var(--v2-white)",
-          }}
-        >
+    <div className="page-shell">
+      <JsonLd id="organization-schema" data={buildOrganizationSchema()} />
+      <JsonLd id="website-schema" data={buildWebsiteSchema()} />
+      <JsonLd id="homepage-business-schema" data={buildHomepageLocalBusinessSchema()} />
+      <JsonLd id="homepage-faq-schema" data={buildFaqPageSchema("homepage")} />
+      <JsonLd id="homepage-course-schema" data={courseSchemas} />
+
+      <section className="page-shell__section">
+        <p className="page-shell__eyebrow">Sprint 1 Workspace</p>
+        <h1 className="page-shell__title">
           V2 Badminton
           <br />
-          Next.js Baseline
+          Next.js Foundation
         </h1>
-        <p style={{ color: "var(--v2-muted)", maxWidth: "780px", lineHeight: 1.7 }}>
-          Đây là repo/app mới để rebuild website V2 Badminton bằng Next.js App Router
-          trên Vercel. Bản này chưa thay thế production hiện tại; mục tiêu của giai đoạn
-          đầu là giữ parity cho SEO, tracking, và conversion flow trước khi cutover.
+        <p className="page-shell__text">
+          Repo này là bản rebuild song song để thay thế website HTML hiện tại khi đã
+          đủ parity cho SEO, tracking và conversion flow. Sprint 1 tập trung khóa dữ
+          liệu, route metadata, layout shell và JSON-LD foundation trước khi port UI
+          thật của homepage.
         </p>
       </section>
 
-      <section style={{ display: "grid", gap: "16px" }}>
-        <h2 style={{ fontSize: "1.5rem", color: "var(--v2-white)" }}>Routes cần giữ nguyên</h2>
-        <div
-          style={{
-            display: "grid",
-            gap: "16px",
-            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-          }}
-        >
+      <section className="page-shell__section">
+        <p className="page-shell__eyebrow">Acceptance Contract</p>
+        <h2 className="page-card__title">Những gì bản Next phải giữ nguyên trước khi cutover</h2>
+        <ul className="page-list">
+          <li>Preserve schedule → form prefill → scroll → focus.</li>
+          <li>Preserve GTM/GA4/Meta tracking semantics của production.</li>
+          <li>Form submit dùng Server Action với progressive enhancement, không mất lead khi JS tắt.</li>
+          <li>Zalo mobile dùng deeplink, desktop có fallback rõ ràng.</li>
+          <li>Location cards có cả Google Maps link và deep link nội bộ tới local pages.</li>
+          <li>Schema, sitemap, robots và canonical phải đi từ cùng source of truth.</li>
+        </ul>
+      </section>
+
+      <section className="page-shell__section">
+        <p className="page-shell__eyebrow">Current Scope</p>
+        <h2 className="page-card__title">4 route production cần giữ nguyên</h2>
+        <div className="page-shell__grid">
           {routeCards.map((route) => (
-            <Link
-              key={route.href}
-              href={route.href}
-              style={{
-                display: "grid",
-                gap: "10px",
-                padding: "20px",
-                background: "rgba(20,20,20,0.92)",
-                border: "1px solid rgba(200,245,66,0.1)",
-              }}
-            >
-              <span style={{ color: "var(--v2-lime)", fontSize: "0.85rem", fontWeight: 700 }}>
-                {route.href}
-              </span>
-              <strong style={{ color: "var(--v2-white)", fontSize: "1.05rem" }}>
-                {route.title}
-              </strong>
-              <span style={{ color: "var(--v2-muted)", lineHeight: 1.6 }}>{route.summary}</span>
+            <Link key={route.href} href={route.href} className="page-card">
+              <span className="page-card__meta">{route.href}</span>
+              <strong className="page-card__title">{route.title}</strong>
+              <p className="page-card__text">{route.summary}</p>
             </Link>
           ))}
         </div>
       </section>
 
-      <section
-        style={{
-          display: "grid",
-          gap: "14px",
-          padding: "28px",
-          background: "rgba(20,20,20,0.92)",
-          border: "1px solid rgba(200,245,66,0.1)",
-        }}
-      >
-        <h2 style={{ fontSize: "1.5rem", color: "var(--v2-white)" }}>
-          Acceptance Criteria Trước Khi Cutover
-        </h2>
-        <ul style={{ display: "grid", gap: "10px", color: "var(--v2-light)", paddingLeft: "20px" }}>
-          <li>Preserve schedule -&gt; form prefill -&gt; scroll -&gt; focus.</li>
-          <li>Preserve current GTM/GA4/Meta tracking semantics.</li>
-          <li>Form có server-side fallback qua <code>/api/lead</code>.</li>
-          <li>Zalo mobile dùng deeplink, desktop có fallback rõ ràng.</li>
-          <li>Location cards có cả Google Maps link và local deep link.</li>
-          <li>Schema, sitemap, robots, canonical parity với bản production hiện tại.</li>
-        </ul>
+      <section className="page-shell__section">
+        <p className="page-shell__eyebrow">Foundation Status</p>
+        <div className="page-shell__grid">
+          <article className="page-card">
+            <span className="page-card__meta">Locations</span>
+            <strong className="page-card__title">{courtLocations.length} sân đã vào source of truth</strong>
+            <p className="page-card__text">
+              Bao gồm structured address fields, maps links, image paths, local-page mapping
+              và root LocalBusiness fallback.
+            </p>
+          </article>
+          <article className="page-card">
+            <span className="page-card__meta">Pricing</span>
+            <strong className="page-card__title">
+              {pricingTiers.length} tier • {sitePriceRange ?? "n/a"}
+            </strong>
+            <p className="page-card__text">
+              Pricing dùng discriminated union để không làm drift giữa nhóm, 1 kèm 1 và
+              doanh nghiệp.
+            </p>
+          </article>
+          <article className="page-card">
+            <span className="page-card__meta">Schedule</span>
+            <strong className="page-card__title">{scheduleItems.length} slot đã normalize</strong>
+            <p className="page-card__text">
+              Schedule data đã có `prefillCourtId`, `prefillTimeSlotId` và message template
+              để Sprint 2 giữ nguyên flow conversion hiện tại.
+            </p>
+          </article>
+          <article className="page-card">
+            <span className="page-card__meta">FAQs</span>
+            <strong className="page-card__title">{homepageFaqCount} FAQ homepage schema-safe</strong>
+            <p className="page-card__text">
+              FAQ data tách riêng `answerText` và `schemaEligible` để UI và JSON-LD không bị
+              drift.
+            </p>
+          </article>
+        </div>
       </section>
 
-      <section style={{ display: "grid", gap: "16px" }}>
-        <h2 style={{ fontSize: "1.5rem", color: "var(--v2-white)" }}>
-          Money Pages Mở Rộng Sau Replatform
-        </h2>
-        <div
-          style={{
-            display: "grid",
-            gap: "12px",
-            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-          }}
-        >
+      <section className="page-shell__section">
+        <p className="page-shell__eyebrow">Money Pages</p>
+        <h2 className="page-card__title">Mở rộng sau khi core migration pass</h2>
+        <div className="page-shell__grid">
           {moneyPages.map((page) => (
-            <article
-              key={page.slug}
-              style={{
-                padding: "18px",
-                border: "1px solid rgba(200,245,66,0.08)",
-                background: "rgba(20,20,20,0.82)",
-              }}
-            >
-              <strong style={{ color: "var(--v2-white)" }}>{page.title}</strong>
-              <p style={{ color: "var(--v2-muted)", marginTop: "8px", lineHeight: 1.6 }}>
-                {page.intent}
-              </p>
+            <article key={page.slug} className="page-card">
+              <strong className="page-card__title">{page.title}</strong>
+              <p className="page-card__text">{page.intent}</p>
             </article>
           ))}
         </div>
       </section>
-    </main>
+    </div>
   );
 }

@@ -803,3 +803,160 @@ Kế hoạch này được xem là thành công khi:
 - V2 có mặt tốt cho các query local/commercial chính
 - branded search tăng
 - đội vận hành phản hồi lead nhanh và đo được pipeline từ query -> lead -> học thử -> trả phí
+
+---
+
+## 19. Critical Technical Controls Before Build
+
+Những mục dưới đây phải được khóa rõ trước khi bắt đầu build production features.
+
+### 19.1 Trailing slash policy
+
+Chốt rõ:
+
+- `trailingSlash: true`
+
+Lý do:
+
+- bản production hiện tại đang dùng URL có trailing slash
+- canonical hiện tại cũng đang theo trailing-slash URLs
+- tránh redirect chain và duplicate canonical state không cần thiết
+
+### 19.2 Lead storage decision
+
+Default recommendation cho phase replatform:
+
+- **Vercel Postgres**
+
+Chỉ dùng Supabase nếu sau này cần dashboard/data tooling riêng mạnh hơn.
+
+Lead tối thiểu phải lưu được:
+
+- `id`
+- `name`
+- `phone`
+- `level`
+- `court`
+- `time_slot`
+- `message`
+- `landing_page`
+- `page_type`
+- `referrer`
+- `utm_source`
+- `utm_medium`
+- `utm_campaign`
+- `utm_content`
+- `created_at`
+- `device_type`
+- `submission_method`
+
+Nguyên tắc:
+
+- lưu lead trước
+- notify sau
+- notification failure không được làm mất lead
+
+### 19.3 Form validation rules
+
+Validation phải có cả client-side lẫn server-side.
+
+Rules tối thiểu:
+
+- `name`: required, trim, min 2, max 100
+- `phone`: required, đúng format mobile Việt Nam
+- `level`: optional, phải thuộc enum cho phép
+- `court`: optional, phải thuộc enum cho phép
+- `time_slot`: optional, phải thuộc enum cho phép
+- `message`: optional, max 500
+
+Server-side không được tin dữ liệu từ client.
+
+### 19.4 Anti-spam and security controls
+
+Lead endpoint bắt buộc có:
+
+- honeypot field
+- Cloudflare Turnstile hoặc tương đương
+- rate limit
+- origin check nếu dùng Route Handler
+
+Rate limit mặc định:
+
+- `5 requests / IP / hour` cho `/api/lead`
+
+Kiến trúc ưu tiên:
+
+- dùng Server Action nếu phù hợp vì có progressive enhancement tự nhiên và giảm rủi ro CSRF
+
+### 19.5 Lead notification flow
+
+Flow chuẩn:
+
+1. submit tới `/api/lead`
+2. validate dữ liệu
+3. save vào database
+4. notify Telegram
+5. notify email backup
+6. response `2xx`
+7. client mới fire `generate_lead`
+
+Rule quan trọng:
+
+- **save first, notify second**
+- Telegram không được là single point of failure
+
+### 19.6 Monitoring and incident visibility
+
+Trước khi cutover production phải có:
+
+- Sentry cho client + API errors
+- uptime monitoring cho homepage và `/api/health`
+- alert channel cho lead failures
+- daily lead verification
+
+Audit tối thiểu mỗi tuần:
+
+- so sánh lead trong DB với `generate_lead` trong GA4
+- nếu lệch quá `10%` thì phải điều tra
+
+### 19.7 Privacy and consent
+
+Trước production cutover phải có:
+
+- `/chinh-sach-bao-mat`
+- disclosure form data dùng để làm gì
+- cookie consent tối thiểu cho GA4 / GTM / Meta Pixel
+
+Rule tracking:
+
+- không gửi tên
+- không gửi số điện thoại
+- không gửi note form
+
+vào GA4 hoặc Meta event params.
+
+### 19.8 `generate_lead` definition
+
+`generate_lead` chỉ được fire khi:
+
+- API trả `2xx`
+- lead đã được lưu thành công
+
+Không fire khi:
+
+- user click submit
+- validation fail
+- Telegram notify fail nhưng DB save chưa thành công
+
+Phải có anti-double-fire nếu user double-click hoặc form re-render.
+
+### 19.9 Reserved route space
+
+Reserve từ sớm để tránh conflict sau này:
+
+- `/san-pham/`
+- `/dich-vu/`
+- `/blog/`
+- `/khuyen-mai/`
+
+Chưa build ngay, nhưng không dùng các prefix này cho slugs hiện tại.

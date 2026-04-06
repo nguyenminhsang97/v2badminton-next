@@ -1,24 +1,56 @@
-import type { Metadata } from "next";
+import { JsonLd } from "@/components/ui/JsonLd";
+import { getFaqsForPage } from "@/lib/faqs";
+import { pricingTiers } from "@/lib/pricing";
+import { buildMetadata, canonicalUrl } from "@/lib/routes";
+import { buildBreadcrumbSchema, buildFaqPageSchema } from "@/lib/schema";
 
-export const metadata: Metadata = {
-  title: "Học Cầu Lông Cho Người Mới Bắt Đầu Tại TP.HCM",
-  description:
-    "Skeleton route for the newbie SEO page. This route will preserve the current static page URL and search intent.",
-};
+export const metadata = buildMetadata("/hoc-cau-long-cho-nguoi-moi/");
 
 export default function BeginnerPage() {
+  const beginnerFaqs = getFaqsForPage("nguoi_moi");
+  const visibleTiers = pricingTiers.filter((tier) => tier.kind !== "enterprise");
+
   return (
-    <main style={{ maxWidth: "960px", margin: "0 auto", padding: "64px 24px", display: "grid", gap: "20px" }}>
-      <p style={{ color: "var(--v2-lime)", textTransform: "uppercase", letterSpacing: "0.15em", fontSize: "0.8rem", fontWeight: 700 }}>
-        SEO Page Skeleton
-      </p>
-      <h1 style={{ color: "var(--v2-white)", fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
-        Học Cầu Lông Cho Người Mới Bắt Đầu Tại TP.HCM
-      </h1>
-      <p style={{ color: "var(--v2-muted)", lineHeight: 1.8 }}>
-        Đây là route placeholder cho trang người mới. Khi port nội dung thật, cần giữ nguyên intent,
-        metadata, FAQ, pricing clarity và CTA structure của bản production hiện tại.
-      </p>
-    </main>
+    <div className="page-shell">
+        <JsonLd
+        id="nguoi-moi-breadcrumb"
+        data={buildBreadcrumbSchema([
+          { name: "Trang chủ", item: canonicalUrl("/") },
+          { name: "Học cầu lông cho người mới bắt đầu" },
+        ])}
+      />
+      <JsonLd id="nguoi-moi-faq" data={buildFaqPageSchema("nguoi_moi")} />
+
+      <section className="page-shell__section">
+        <p className="page-shell__eyebrow">SEO Route Skeleton</p>
+        <h1 className="page-shell__title">Học Cầu Lông Cho Người Mới Bắt Đầu Tại TP.HCM</h1>
+        <p className="page-shell__text">
+          Route này sẽ là page SEO service mạnh nhất của site, nên Sprint 1 khóa luôn metadata,
+          pricing source-of-truth và FAQ data shape để Sprint 3 chỉ còn port content thật và schema.
+        </p>
+      </section>
+
+      <section className="page-shell__grid">
+        {visibleTiers.map((tier) => (
+          <article key={tier.id} className="page-card">
+            <span className="page-card__meta">{tier.shortLabel}</span>
+            <strong className="page-card__title">{tier.displayPrice}</strong>
+            <p className="page-card__text">{tier.description}</p>
+          </article>
+        ))}
+      </section>
+
+      <section className="page-shell__section">
+        <p className="page-shell__eyebrow">FAQ Shape</p>
+        <div className="page-shell__grid">
+          {beginnerFaqs.map((faq) => (
+            <article key={faq.id} className="page-card">
+              <strong className="page-card__title">{faq.question}</strong>
+              <p className="page-card__text">{faq.answerText}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }

@@ -460,3 +460,125 @@ Khi hoàn tất giai đoạn migration song song, bạn phải có:
 - 1 phương án rollback rõ ràng
 - 1 quyết định cutover có dữ liệu, không cảm tính
 
+---
+
+## 17. Locked Engineering Decisions Before Sprint 1
+
+Những quyết định dưới đây không được để mơ hồ trong lúc implementation.
+
+### 17.1 URL and routing
+
+- `trailingSlash: true`
+- giữ nguyên 4 URLs production hiện tại
+- reserve route space:
+  - `/san-pham/`
+  - `/dich-vu/`
+  - `/blog/`
+  - `/khuyen-mai/`
+
+### 17.2 Lead persistence
+
+Default choice cho bản Vercel:
+
+- **Vercel Postgres**
+
+Lead record tối thiểu phải có:
+
+- `id`
+- `name`
+- `phone`
+- `level`
+- `court`
+- `time_slot`
+- `message`
+- `landing_page`
+- `page_type`
+- `referrer`
+- `utm_source`
+- `utm_medium`
+- `utm_campaign`
+- `utm_content`
+- `created_at`
+- `device_type`
+- `submission_method`
+
+### 17.3 Validation contract
+
+Client validate trước submit, server re-validate lại toàn bộ.
+
+Rules tối thiểu:
+
+- `name`: required, min 2, max 100
+- `phone`: required, đúng format mobile Việt Nam
+- `level`: optional enum
+- `court`: optional enum
+- `time_slot`: optional enum
+- `message`: optional, max 500
+
+### 17.4 Anti-spam stack
+
+Form production phải có đủ:
+
+- honeypot field
+- Cloudflare Turnstile hoặc tương đương
+- rate limit `5 requests / IP / hour`
+- origin check nếu dùng Route Handler
+
+Preferred implementation:
+
+- ưu tiên Server Action nếu phù hợp
+
+### 17.5 Lead delivery flow
+
+Flow chuẩn của `/api/lead`:
+
+1. validate
+2. save DB
+3. async notify Telegram
+4. async notify email backup
+5. return `2xx`
+6. client fire `generate_lead`
+
+Rule cứng:
+
+- save first
+- notify second
+- notify failure không được block save
+
+### 17.6 Analytics trigger definition
+
+`generate_lead` chỉ fire khi:
+
+- response API là `2xx`
+- lead đã được lưu thành công
+
+Planned analytics additions sau parity:
+
+- `form_field_focus`
+- `form_abandon`
+- `time_to_submit`
+
+### 17.7 Monitoring baseline
+
+Trước cutover phải có:
+
+- Sentry cho form/API/client errors
+- uptime monitor cho homepage và `/api/health`
+- post-deploy smoke test
+- weekly DB lead count vs GA4 `generate_lead` audit
+
+### 17.8 Privacy and consent
+
+Trước production phải có:
+
+- privacy policy page
+- cookie consent tối thiểu cho GA4 / GTM / Meta
+- rule không gửi PII vào analytics
+
+### 17.9 SEO completeness extras
+
+Ngoài parity với bản cũ, bản Next nên có:
+
+- `Organization` schema trên homepage
+- `WebSite` schema trên homepage
+- OG image riêng cho từng page quan trọng nếu làm kịp trong Sprint 3

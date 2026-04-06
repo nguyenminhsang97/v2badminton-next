@@ -1,24 +1,64 @@
-import type { Metadata } from "next";
+import { JsonLd } from "@/components/ui/JsonLd";
+import { getFaqsForPage } from "@/lib/faqs";
+import { getCourtsForLocalPage } from "@/lib/locations";
+import { buildMetadata, canonicalUrl } from "@/lib/routes";
+import {
+  buildBreadcrumbSchema,
+  buildFaqPageSchema,
+  buildLocalPageBusinessSchema,
+} from "@/lib/schema";
 
-export const metadata: Metadata = {
-  title: "Lớp Cầu Lông Thủ Đức | Huệ Thiên, Khang Sport, Phúc Lộc",
-  description:
-    "Skeleton route for the Thủ Đức local landing page. Will preserve multi-location schema and decision-support sections.",
-};
+export const metadata = buildMetadata("/lop-cau-long-thu-duc/");
 
 export default function ThuDucPage() {
+  const courts = getCourtsForLocalPage("/lop-cau-long-thu-duc/");
+  const faqs = getFaqsForPage("thu_duc");
+
   return (
-    <main style={{ maxWidth: "960px", margin: "0 auto", padding: "64px 24px", display: "grid", gap: "20px" }}>
-      <p style={{ color: "var(--v2-lime)", textTransform: "uppercase", letterSpacing: "0.15em", fontSize: "0.8rem", fontWeight: 700 }}>
-        Local SEO Skeleton
-      </p>
-      <h1 style={{ color: "var(--v2-white)", fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
-        Lớp Cầu Lông Tại Thủ Đức — V2 Badminton
-      </h1>
-      <p style={{ color: "var(--v2-muted)", lineHeight: 1.8 }}>
-        Route placeholder cho local page Thủ Đức. Khi port nội dung thật, phải giữ root address,
-        location array schema, decision-support sections và FAQ parity của bản production hiện tại.
-      </p>
-    </main>
+    <div className="page-shell">
+      <JsonLd
+        id="thu-duc-breadcrumb"
+        data={buildBreadcrumbSchema([
+          { name: "Trang chủ", item: canonicalUrl("/") },
+          { name: "Lớp cầu lông Thủ Đức" },
+        ])}
+      />
+      <JsonLd
+        id="thu-duc-business"
+        data={buildLocalPageBusinessSchema("/lop-cau-long-thu-duc/")}
+      />
+      <JsonLd id="thu-duc-faq" data={buildFaqPageSchema("thu_duc")} />
+
+      <section className="page-shell__section">
+        <p className="page-shell__eyebrow">Local SEO Skeleton</p>
+        <h1 className="page-shell__title">Lớp Cầu Lông Tại Thủ Đức — V2 Badminton</h1>
+        <p className="page-shell__text">
+          Route này giữ cấu trúc multi-location cho Huệ Thiên, Khang Sport và Phúc Lộc,
+          cùng local schema và decision-support sections của production.
+        </p>
+      </section>
+
+      <section className="page-shell__grid">
+        {courts.map((court) => (
+          <article key={court.id} className="page-card">
+            <span className="page-card__meta">{court.districtLabel}</span>
+            <strong className="page-card__title">{court.name}</strong>
+            <p className="page-card__text">{court.addressText}</p>
+          </article>
+        ))}
+      </section>
+
+      <section className="page-shell__section">
+        <p className="page-shell__eyebrow">FAQ Shape</p>
+        <div className="page-shell__grid">
+          {faqs.map((faq) => (
+            <article key={faq.id} className="page-card">
+              <strong className="page-card__title">{faq.question}</strong>
+              <p className="page-card__text">{faq.answerText}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }
