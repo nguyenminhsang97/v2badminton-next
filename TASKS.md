@@ -205,6 +205,12 @@ Mục tiêu: port toàn bộ homepage content + conversion flows từ production
 đồng thời dựng luôn lead backend và monitoring baseline để preview QA có observability
 thật từ ngày đầu.
 
+### 2.0 Homepage metadata parity
+
+- Homepage phải dùng `buildMetadata("/")` từ `src/lib/routes.ts`
+- Title, description, canonical, OG phải đi từ route registry
+- Homepage metadata không được defer sang Sprint 3
+
 ### 2.1 Hero section
 
 - Animated heading "BẮT ĐẦU / HÀNH TRÌNH / CẦU LÔNG"
@@ -233,20 +239,18 @@ thật từ ngày đầu.
 
 ### 2.5 Schedule section với filter tabs
 
-- Tab filter: Tất cả / Bình Thạnh / Thủ Đức (hoặc by court)
+- Tab filter: Tất cả / Huệ Thiên / Green / Phúc Lộc / Khang Sport
 - Schedule cards từ `lib/schedule.ts`
 - **CRITICAL**: Click schedule card → prefill form (sân + giờ + message) → scroll to form → focus empty field
 - Client component vì cần interactivity
 - `form_start` tracking khi prefill triggers focus
 
-### 2.6 Location cards với deep links
+### 2.6 Location cards
 
 - 4 court cards từ `lib/locations.ts`
-- Mỗi card: ảnh, tên, địa chỉ, maps link + **deep link nội bộ**
-  - Green → `/lop-cau-long-binh-thanh/`
-  - Huệ Thiên/Khang Sport/Phúc Lộc → `/lop-cau-long-thu-duc/`
+- Mỗi card: ảnh, tên, địa chỉ, maps link
 - `map_click` tracking cho maps link
-- `cta_click` tracking cho deep link
+- Location cards giữ behavior maps-first giống production, không absorb internal-link CTA
 
 ### 2.7 SEO links + Business section + FAQ accordion
 
@@ -254,6 +258,8 @@ thật từ ngày đầu.
 - Business/doanh nghiệp section
 - FAQ accordion từ `lib/faqs.ts` (homepage set)
 - Accessible: keyboard nav, aria-expanded
+- Tất cả href nội bộ phải build từ `src/lib/routes.ts`, không hardcode ad hoc
+- Nếu route target chưa preview-ready thì không expose link trong homepage
 
 ### 2.8 ContactForm + Server Action + Lead pipeline (full vertical)
 
@@ -272,6 +278,8 @@ thật từ ngày đầu.
 - Phone regex: `/^(0[35789])\d{8}$/`
 - Success/error state UI
 - Anti-double-submit: disable button after click, re-enable on error
+- Contact section vẫn giữ direct contact-channel CTAs; không giảm homepage xuống chỉ còn form
+- Nếu có success state, giữ post-submit Zalo CTA parity với production
 
 **Server Action (`src/app/actions/submitLead.ts`):**
 
@@ -283,6 +291,7 @@ thật từ ngày đầu.
 6. Async: notify email backup (Resend or similar)
 7. Return `{ success: true, leadId }` hoặc `{ success: false, errors }`
 8. Client fires `generate_lead` ONLY when `success: true`
+9. Define server-side duplicate policy for retry/double-submit/no-JS resubmit
 
 **Tracking hooks trong form:**
 
@@ -294,9 +303,12 @@ thật từ ngày đầu.
 
 - **MIGRATION ACCEPTANCE CRITERION**
 - Click schedule card → set form values (court, time_slot, message) → smooth scroll to form → focus first empty field
+- Open optional fields disclosure trước khi focus
+- Nếu level đang trống và slot chỉ có `co_ban` thì prefill `moi-bat-dau`
+- Chỉ overwrite message khi field đang trống hoặc đang là auto-prefilled message
 - Must work on mobile
 - Corporate card click → clear schedule prefill → set business mode → scroll to form
-- Client-side state management (useState or useRef)
+- Một source of truth duy nhất cho prefill/business-mode/scroll/focus; không tách logic trùng ở ScheduleSection và ContactForm
 
 ### 2.10 Database setup (Vercel Postgres)
 
@@ -305,6 +317,8 @@ thật từ ngày đầu.
   - landing_page, page_type, referrer
   - utm_source, utm_medium, utm_campaign, utm_content
   - created_at, device_type, submission_method
+  - telegram_status, telegram_attempted_at, telegram_error
+  - email_status, email_attempted_at, email_error
 - Migration script (Drizzle or raw SQL)
 - Env vars: `POSTGRES_URL`, `POSTGRES_URL_NON_POOLING`
 
@@ -328,7 +342,8 @@ thật từ ngày đầu.
 
 - `src/app/api/health/route.ts`
 - Check DB connection
-- Return 200 + `{ ok: true, timestamp }`
+- Return 200 + `{ ok: true, timestamp }` only when DB is healthy
+- Return non-healthy response when DB connectivity fails
 
 ### 2.14 Anti-spam tiered strategy (Turnstile + no-JS fallback)
 
@@ -433,6 +448,7 @@ if (hasTurnstile) {
 - Trong Server Action: nếu DB save fail → Sentry capture + alert
 - Nếu cả Telegram lẫn email notify đều fail → Sentry capture + alert
 - Daily: verify ít nhất 1 health check pass
+- Provision thêm `TELEGRAM_OPS_CHAT_ID`
 
 ### 2.16 Floating CTAs + Scroll reveal
 
@@ -452,10 +468,14 @@ if (hasTurnstile) {
 Render via JsonLd component:
 
 - `LocalBusiness` (primary, with all locations)
-- `SportsActivityLocation`
 - `FAQPage` (homepage FAQs)
 - `Organization` (new)
 - `WebSite` (new)
+
+Ghi chú:
+
+- Separate top-level `SportsActivityLocation` nodes không bắt buộc cho Sprint 2
+- Homepage JSON-LD không được coi là optional work; đây là homepage parity requirement
 
 ---
 
