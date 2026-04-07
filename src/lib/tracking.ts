@@ -21,6 +21,8 @@ export type CtaName =
 export type CtaLocation =
   | "nav"
   | "hero"
+  | "pricing"
+  | "course_cards"
   | "business"
   | "seo_cta_block"
   | "location_cards";

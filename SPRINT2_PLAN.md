@@ -18,7 +18,7 @@ Deliver a working homepage preview with:
 - lead pipeline that **saves first**, then notifies Telegram and email
 - anti-spam baseline for both JS and no-JS paths
 - monitoring baseline active before QA starts
-- homepage metadata and homepage JSON-LD parity locked in
+- homepage metadata and homepage JSON-LD parity verified and preserved
 - contact section keeps live direct-contact CTAs, not only the form
 
 Sprint 2 does **not** aim to:
@@ -153,13 +153,18 @@ Hard rules:
 
 ### 4.4 Homepage SEO contract for Sprint 2
 
-- homepage metadata is owned by Sprint 2, not Sprint 3
-- homepage JSON-LD is owned by Sprint 2, not Sprint 3
+- homepage metadata ownership remains in Sprint 2, but the Sprint 1 baseline
+  must be preserved rather than rebuilt
+- homepage JSON-LD ownership remains in Sprint 2, but the Sprint 1 baseline
+  must be preserved rather than rebuilt
 - homepage SEO links must use route-registry values from
   [`src/lib/routes.ts`](/D:/V2/v2badminton-next/src/lib/routes.ts)
 - location cards stay maps-first like production
 - local-page internal links live in the standalone SEO-links block, not inside
   location cards
+- this maps-first location-card behavior is an intentional Sprint 2 deviation
+  from `MASTERPLAN.md` section 8.7 and should only be revisited after homepage
+  parity is stable
 - if a homepage SEO link target is not preview-ready, that link should not be
   exposed yet
 
@@ -167,7 +172,9 @@ Hard rules:
 
 - one client-side controller owns:
   - schedule prefill state
+  - course-intent state
   - business-mode state
+  - auto-prefilled message state
   - scroll-to-form behavior
   - focus-first-empty-field behavior
 - `ScheduleSection` and `ContactForm` must not each invent their own source of
@@ -205,7 +212,7 @@ Not yet required:
 Done when:
 
 - homepage section order matches production
-- route metadata is wired through `buildMetadata("/")`
+- route metadata remains wired through `buildMetadata("/")`
 - layout is stable on desktop and mobile
 
 ### Block B - Schedule plus prefill flow
@@ -225,11 +232,13 @@ Includes:
 - beginner-level prefill for basic-only schedule cards when level is empty
 - corporate card -> business-mode path
 - location cards keep maps-only CTA behavior
+- one shared conversion controller is implemented before task breakdown drifts
 
 Done when:
 
 - mobile flow works
 - no component rebuilds values outside `lib/schedule.ts`
+- scroll-settle focus behavior does not depend on `scrollend`
 - filter tabs match production:
   - `all`
   - `hue-thien`
@@ -306,12 +315,13 @@ Done when:
 
 ### A. Homepage parity
 
-- `S2-A0` Wire homepage metadata via `buildMetadata("/")`
+- `S2-A0` Verify homepage metadata parity survives the homepage UI port
 - `S2-A1` Port hero section from production homepage
 - `S2-A2` Port pricing section from `lib/pricing.ts`
 - `S2-A3` Port "Khac biet cua V2" section
 - `S2-A4` Port homepage SEO links block
-- `S2-A5` Port course cards section with production interactions
+- `S2-A5` Port course cards section and wire interactions through the shared
+  conversion controller
 - `S2-A6` Port business section
 - `S2-A7` Port homepage FAQ accordion from `lib/faqs.ts`
 - `S2-A8` Port direct contact CTAs in the contact section
@@ -319,11 +329,12 @@ Done when:
 ### B. Schedule parity
 
 - `S2-B1` Build schedule tabs and cards from `lib/schedule.ts`
-- `S2-B2` Implement schedule card -> prefill form flow
+- `S2-B2` Implement schedule card -> prefill form flow with explicit
+  scroll-settle focus behavior
 - `S2-B3` Implement corporate card -> business-mode form flow
 - `S2-B4` Keep location-card maps behavior in parity with production
 - `S2-B5` Only expose homepage SEO links that resolve `200` in preview
-- `S2-B6` Implement one owner for homepage conversion state
+- `S2-B6` Define and implement one owner for homepage conversion state
 
 ### C. Form baseline
 
@@ -334,8 +345,9 @@ Done when:
 
 ### D. Lead backend
 
-- `S2-D1` Create lead table schema
-- `S2-D2` Implement Server Action `submitLead`
+- `S2-D1` Create lead table schema with locked delivery-audit columns
+- `S2-D2` Implement Server Action `submitLead` with explicit
+  duplicate-submit policy
 - `S2-D3` Implement Telegram notify module
 - `S2-D4` Implement email backup notify module
 - `S2-D5` Implement `/api/health`
@@ -348,7 +360,8 @@ Done when:
 - `S2-E1` Add Sentry baseline
 - `S2-E2` Add uptime monitor setup notes and endpoint check
 - `S2-E3` Verify preview alerts and error capture
-- `S2-E4` Render homepage JSON-LD baseline from `src/lib/schema.ts`
+- `S2-E4` Verify homepage JSON-LD baseline from `src/lib/schema.ts`
+  survives the homepage rewrite
 
 ---
 
@@ -390,6 +403,7 @@ QA for Sprint 2 should stay focused on conversion-risk areas:
 
 - schedule card -> prefill works correctly
 - corporate card -> business mode works correctly
+- course cards dispatch into the same conversion controller semantics
 - no-JS submit still works
 - user-edited message is not clobbered by a later auto-prefill
 - contact section still exposes live contact-channel CTAs
@@ -397,7 +411,8 @@ QA for Sprint 2 should stay focused on conversion-risk areas:
 ### Data and backend
 
 - lead save succeeds
-- duplicate submit does not create duplicate leads
+- duplicate submit follows the server-side dedupe policy and does not create
+  duplicate leads
 - invalid phone is rejected
 - honeypot is rejected
 
@@ -407,6 +422,8 @@ QA for Sprint 2 should stay focused on conversion-risk areas:
 - homepage JSON-LD is present
 - internal homepage SEO links resolve `200`
 - route registry is used for homepage deep links
+- maps-only location-card behavior is treated as the intentional Sprint 2
+  homepage parity model, not as missing local-page links
 
 ### Ops
 
@@ -460,12 +477,12 @@ Sprint 2 is done when:
 - homepage preview on Vercel is usable end-to-end
 - JS and no-JS form submits both work
 - save-first lead flow is verified
-- server-side duplicate policy is verified
+- server-side duplicate policy is verified and documented
 - monitoring baseline is active
 - homepage metadata parity is active through `buildMetadata("/")`
-- homepage JSON-LD exists for `LocalBusiness`, homepage `FAQPage`,
+- homepage JSON-LD baseline still exists for `LocalBusiness`, homepage `FAQPage`,
   `Organization`, and `WebSite`
-- homepage SEO links and location deep links resolve `200` in preview
+- homepage SEO links resolve `200` in preview
 - lint and build pass
 - the team can enter Sprint 3 without reworking form/backend foundations
 

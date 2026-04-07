@@ -253,6 +253,447 @@ img {
   gap: 6px;
 }
 
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 0 20px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    background-color 0.18s ease,
+    color 0.18s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn:disabled {
+  opacity: 0.62;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn--primary {
+  background: var(--v2-lime);
+  color: var(--v2-black);
+  font-weight: 700;
+}
+
+.btn--outline {
+  border-color: var(--v2-border);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--v2-light);
+}
+
+.btn--lg {
+  min-height: 52px;
+  padding: 0 22px;
+}
+
+.hero,
+.section {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.hero {
+  padding: 72px 0 28px;
+}
+
+.hero__content,
+.section {
+  display: grid;
+  gap: 24px;
+}
+
+.hero__content,
+.pricing-card,
+.course-card,
+.location-card,
+.contact-form-shell,
+.contact-direct,
+.schedule-card,
+.seo-links,
+.business__panel,
+.faq-list,
+.why-grid__item {
+  padding: 24px;
+  background: rgba(20, 20, 20, 0.92);
+  border: 1px solid var(--v2-border);
+}
+
+.hero__heading {
+  max-width: 12ch;
+  color: var(--v2-white);
+  font-size: clamp(2.8rem, 7vw, 5.8rem);
+  line-height: 0.96;
+  text-transform: uppercase;
+}
+
+.hero__subheading,
+.section__subtitle,
+.pricing-card__desc,
+.course-card__desc,
+.location-card__address,
+.contact-form-shell__subtitle,
+.contact-form__hint,
+.contact-direct__label,
+.contact-direct__value,
+.business__points,
+.faq-item__answer,
+.why-grid__text {
+  color: var(--v2-muted);
+  line-height: 1.7;
+}
+
+.hero__cta-group,
+.contact-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.hero__trust-strip {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.hero__trust-item {
+  display: grid;
+  gap: 4px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.hero__trust-value,
+.contact-form-shell__title,
+.pricing-card__price {
+  color: var(--v2-white);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 800;
+}
+
+.hero__trust-label,
+.section__eyebrow,
+.contact-form-shell__eyebrow,
+.pricing-card__meta,
+.location-card__district,
+.contact-form__label {
+  color: var(--v2-lime);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.section {
+  padding: 18px 0;
+}
+
+.section__header {
+  display: grid;
+  gap: 10px;
+}
+
+.section__title {
+  color: var(--v2-white);
+  font-size: clamp(1.8rem, 5vw, 3rem);
+}
+
+.pricing-grid,
+.course-grid,
+.locations-grid,
+.why-grid,
+.seo-links__grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.pricing-card,
+.course-card,
+.location-card,
+.schedule-card,
+.why-grid__item {
+  display: grid;
+  gap: 14px;
+}
+
+.pricing-card__header {
+  display: grid;
+  gap: 6px;
+}
+
+.pricing-card__name,
+.course-card__title,
+.location-card__name,
+.contact-direct__title,
+.faq-item__question {
+  color: var(--v2-white);
+  font-size: 1.08rem;
+}
+
+.pricing-card__features,
+.business__points {
+  display: grid;
+  gap: 10px;
+  padding-left: 20px;
+}
+
+.course-card__cta,
+.pricing-card__cta,
+.location-card__cta {
+  justify-self: flex-start;
+}
+
+.schedule-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.schedule-tab {
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid var(--v2-border);
+  background: transparent;
+  color: var(--v2-light);
+  cursor: pointer;
+}
+
+.schedule-tab--active {
+  background: var(--v2-lime);
+  color: var(--v2-black);
+  font-weight: 700;
+}
+
+.schedule-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.schedule-card__info {
+  display: grid;
+  gap: 6px;
+}
+
+.schedule-card__court,
+.schedule-card__time {
+  color: var(--v2-white);
+  font-weight: 700;
+}
+
+.schedule-card__day,
+.schedule-card__level {
+  color: var(--v2-muted);
+}
+
+.faq-list {
+  display: grid;
+  gap: 14px;
+}
+
+.faq-item {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 14px;
+}
+
+.faq-item summary {
+  cursor: pointer;
+}
+
+.contact-section__body {
+  display: grid;
+  gap: 18px;
+}
+
+.contact-form-shell,
+.contact-direct {
+  display: grid;
+  gap: 16px;
+}
+
+.contact-form-shell__header {
+  display: grid;
+  gap: 8px;
+}
+
+.contact-form {
+  display: grid;
+  gap: 18px;
+}
+
+.contact-form__grid,
+.contact-form__optional-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.contact-form__field {
+  display: grid;
+  gap: 8px;
+}
+
+.contact-form__field input,
+.contact-form__field select,
+.contact-form__field textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--v2-white);
+}
+
+.contact-form__field textarea {
+  min-height: 128px;
+  resize: vertical;
+}
+
+.contact-form__field input:focus,
+.contact-form__field select:focus,
+.contact-form__field textarea:focus {
+  outline: 2px solid rgba(200, 245, 66, 0.28);
+  border-color: rgba(200, 245, 66, 0.4);
+}
+
+.contact-form__optional {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.contact-form__optional summary {
+  cursor: pointer;
+  color: var(--v2-white);
+  font-weight: 700;
+}
+
+.contact-form__error {
+  color: #ff8b8b;
+  font-size: 0.92rem;
+}
+
+.contact-form__status {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1px solid transparent;
+}
+
+.contact-form__status--error {
+  border-color: rgba(255, 107, 107, 0.28);
+  color: #ffb4b4;
+  background: rgba(255, 107, 107, 0.08);
+}
+
+.contact-form__status--submitting,
+.contact-form__success {
+  border-color: rgba(200, 245, 66, 0.2);
+  background: rgba(200, 245, 66, 0.08);
+  color: var(--v2-light);
+}
+
+.contact-form__success {
+  display: grid;
+  gap: 12px;
+}
+
+.contact-form__captcha {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.contact-form__captcha .cf-turnstile {
+  max-width: 100%;
+}
+
+.contact-form__captcha-note {
+  color: var(--v2-muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.contact-form__honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.contact-direct__channels {
+  display: grid;
+  gap: 10px;
+}
+
+.contact-direct__link {
+  display: grid;
+  gap: 4px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.contact-direct__value {
+  color: var(--v2-white);
+}
+
+.business__points {
+  margin-bottom: 4px;
+}
+
+.monitoring-test {
+  padding: 88px 0;
+}
+
+.monitoring-test__card {
+  width: min(720px, calc(100vw - 40px));
+  margin: 0 auto;
+  display: grid;
+  gap: 18px;
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.monitoring-test__eyebrow {
+  color: var(--v2-accent);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.monitoring-test__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.monitoring-test__status {
+  padding: 14px 16px;
+  border: 1px solid rgba(200, 245, 66, 0.2);
+  background: rgba(200, 245, 66, 0.08);
+  color: var(--v2-light);
+}
+
 @media (min-width: 960px) {
   .site-nav--desktop {
     display: flex;
@@ -268,5 +709,30 @@ img {
 @media (max-width: 959px) {
   .site-nav__cta {
     display: none;
+  }
+
+  .hero {
+    padding-top: 56px;
+  }
+
+  .hero__trust-strip,
+  .contact-form__grid,
+  .contact-form__optional-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .monitoring-test {
+    padding-top: 64px;
+  }
+
+  .contact-section__body {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 960px) {
+  .contact-section__body {
+    grid-template-columns: minmax(0, 1.7fr) minmax(280px, 0.9fr);
+    align-items: start;
   }
 }

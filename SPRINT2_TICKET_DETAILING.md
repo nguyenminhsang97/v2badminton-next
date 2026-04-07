@@ -39,7 +39,9 @@ This detailing exists so each ticket can be implemented without re-deciding scop
 - No ticket in Block C is considered done against a temporary or mocked submit path.
 - One owner controls homepage conversion state:
   - schedule prefill values
+  - course-intent state
   - business-mode state
+  - auto-prefilled message state
   - scroll-to-form
   - focus-first-empty-field
 - `ScheduleSection` and `ContactForm` must consume that owner, not compete with it.
@@ -52,12 +54,15 @@ This detailing exists so each ticket can be implemented without re-deciding scop
 
 **Goal**
 
-- Make homepage metadata owned by Sprint 2.
+- Verify the existing homepage metadata baseline survives the Sprint 2 homepage
+  rewrite.
 
 **Implementation**
 
-- In `src/app/page.tsx`, export metadata via `buildMetadata("/")`.
+- In `src/app/page.tsx`, keep `metadata` exported via `buildMetadata("/")`.
 - Do not hand-roll title/description/canonical/OG in the page file.
+- After the homepage UI port, verify title, canonical, and Open Graph still come
+  from the route registry rather than from copied page-local values.
 
 **Files**
 
@@ -70,6 +75,7 @@ This detailing exists so each ticket can be implemented without re-deciding scop
 - Canonical points to `/`.
 - Open Graph fields come from route registry.
 - No duplicate metadata logic outside `routes.ts`.
+- Sprint 2 homepage UI changes do not replace or bypass `buildMetadata("/")`.
 
 ---
 
@@ -184,10 +190,15 @@ This detailing exists so each ticket can be implemented without re-deciding scop
 
 **Implementation**
 
+- Depends on `S2-B6` for shared conversion-state ownership.
 - Render from pricing/course-related source data where possible.
 - Keep production behaviors:
-  - basic and advanced cards filter schedule and scroll to `#lich-hoc`
-  - enterprise card switches to business-mode form flow
+  - basic card dispatches `controller.setCourseIntent("co_ban")`, clears
+    business mode, and scrolls to `#lich-hoc`
+  - advanced card dispatches `controller.setCourseIntent("nang_cao")`, clears
+    business mode, and scrolls to `#lich-hoc`
+  - enterprise card dispatches `controller.enterBusinessMode()`, clears any
+    schedule-prefill state, and scrolls to `#lien-he`
 
 **Files**
 
@@ -198,6 +209,8 @@ This detailing exists so each ticket can be implemented without re-deciding scop
 - Three course cards render with correct imagery/copy.
 - Basic and advanced cards are not reduced to static cards.
 - Enterprise card is not treated like a schedule filter.
+- Course cards do not own independent conversion state outside the shared
+  homepage controller.
 
 ---
 
@@ -316,7 +329,10 @@ This detailing exists so each ticket can be implemented without re-deciding scop
 - if level is empty and the slot is basic-only, prefill beginner level
 - do not overwrite a user-edited message
 - then smooth scroll to form
-- then focus first empty field after scroll settles
+- then focus first empty field after scroll settles via an explicit
+  requestAnimationFrame settle loop, not via `scrollend`
+- settle success means the form container top is within 4px for two consecutive
+  frames, with an 800ms timeout fallback for browsers that keep bouncing
 
 **Files**
 
@@ -331,6 +347,7 @@ This detailing exists so each ticket can be implemented without re-deciding scop
 - Works on mobile.
 - Optional fields are open before focus lands.
 - Message is only auto-overwritten when empty or previously auto-prefilled.
+- Focus timing does not depend on `scrollend`.
 
 ---
 
@@ -357,7 +374,7 @@ This detailing exists so each ticket can be implemented without re-deciding scop
 
 ---
 
-### `S2-B4` Location-card deep links and maps links
+### `S2-B4` Location-card maps behavior
 
 **Goal**
 
@@ -367,6 +384,8 @@ This detailing exists so each ticket can be implemented without re-deciding scop
 
 - Maps URL comes from `locations.ts`.
 - Keep production behavior: location cards remain maps-first, not internal-link cards.
+- This is an intentional Sprint 2 deviation from `MASTERPLAN.md` section 8.7;
+  local-page internal links stay in the standalone SEO-links block for now.
 
 **Files**
 
@@ -377,6 +396,8 @@ This detailing exists so each ticket can be implemented without re-deciding scop
 
 - Maps links are separate from internal links.
 - Location cards do not absorb the standalone SEO-links behavior.
+- Reviewers can distinguish this from a missing feature because Sprint 2 treats
+  maps-only cards as the locked homepage parity model.
 
 ---
 
@@ -400,6 +421,47 @@ This detailing exists so each ticket can be implemented without re-deciding scop
 
 - Every exposed homepage internal SEO link resolves `200`.
 - No dead or placeholder internal links on preview.
+
+---
+
+### `S2-B6` One homepage conversion-state owner
+
+**Goal**
+
+- Define and implement one shared owner for all homepage conversion intent.
+
+**Implementation**
+
+- Create a single homepage conversion controller/provider before schedule,
+  course-card, and form interactions diverge.
+- Controller owns:
+  - `selectedSchedulePrefill`
+  - `selectedCourseIntent`
+  - `businessMode`
+  - `scrollTarget`
+  - `autoPrefilledMessage`
+  - `focusAfterScroll`
+- `ScheduleSection`, course cards, business CTA surfaces, and `ContactForm`
+  must all read/write through this owner.
+- Do not allow a second source of truth inside `ContactForm` or page-local
+  state for the same semantics.
+
+**Files**
+
+- `src/components/home/HomepageConversionProvider.tsx`
+- `src/components/home/ScheduleSection.tsx`
+- `src/components/home/ContactForm.tsx`
+- homepage composition entrypoint such as `src/app/page.tsx`
+
+**Acceptance**
+
+- Schedule card clicks, course card clicks, and business CTA clicks all flow
+  through the same controller semantics.
+- Business-mode entry clears schedule-prefill state.
+- Schedule-prefill entry clears incompatible business-mode intent.
+- Auto-prefilled message tracking is explicit so later clicks do not clobber
+  user-edited content.
+- There is no second conversion-state owner in component-local state.
 
 ---
 
@@ -511,7 +573,18 @@ This detailing exists so each ticket can be implemented without re-deciding scop
 
 - Add DB schema for fields defined in plan.
 - Include `submission_method`.
-- Include delivery-audit fields for notify outcomes, such as status and attempted/error timestamps.
+- Lock delivery-audit columns to:
+  - `telegram_status`
+  - `telegram_attempted_at`
+  - `telegram_error`
+  - `email_status`
+  - `email_attempted_at`
+  - `email_error`
+- Delivery status enum values are:
+  - `pending`
+  - `sent`
+  - `failed`
+  - `skipped`
 
 **Files**
 
@@ -521,6 +594,8 @@ This detailing exists so each ticket can be implemented without re-deciding scop
 **Acceptance**
 
 - DB schema supports homepage vertical slice without missing fields.
+- Delivery-audit columns match the agreed names exactly so backend and ops do
+  not drift later.
 
 ---
 
@@ -535,10 +610,23 @@ This detailing exists so each ticket can be implemented without re-deciding scop
 - Parse form data
 - validate
 - anti-spam checks
+- dedupe check (short-circuit):
+  - normalize `phone`, `name`, `court`, `time_slot`, `message`, and
+    `landing_page`
+  - derive a `dedupe_key` via `sha256(normalizedPayload)`
+  - 15-minute duplicate window
+  - if duplicate found: **short-circuit** → return `{ success: true, deduped: true }` immediately
+  - do not insert a second lead row
+  - do not retry notify on the duplicate request — if original notify
+    failed, that is an ops/cron concern, not piggyback on user retry
 - save to DB
-- notify async
+- schedule async notify via `after()` from `next/server`:
+  - `after()` runs callback after response is sent; runtime keeps the
+    function alive until the callback completes
+  - do NOT use unawaited promises (unreliable on serverless — function
+    may terminate before notify completes)
+  - Telegram and email run in parallel via `Promise.allSettled`
 - return typed success/error payload
-- define server-side duplicate policy for retry/double-submit scenarios
 
 **Files**
 
@@ -549,6 +637,8 @@ This detailing exists so each ticket can be implemented without re-deciding scop
 - Save happens before notify.
 - `generate_lead` is only allowed after success payload on the client.
 - Duplicate-submit handling is defined server-side, not only in UI state.
+- Duplicate-submit handling is concrete enough to implement without inventing a
+  second policy during backend work.
 
 ---
 
@@ -749,15 +839,18 @@ This detailing exists so each ticket can be implemented without re-deciding scop
 
 **Goal**
 
-- Make homepage schema parity explicit in Sprint 2.
+- Verify the existing homepage JSON-LD baseline survives the Sprint 2 homepage
+  rewrite.
 
 **Implementation**
 
-- Render:
+- Keep rendering:
   - `LocalBusiness`
   - homepage `FAQPage`
   - `Organization`
   - `WebSite`
+- Reuse `src/lib/schema.ts` and `src/components/ui/JsonLd.tsx`; do not rebuild
+  parallel homepage schema logic in the page component.
 
 **Files**
 
@@ -769,6 +862,8 @@ This detailing exists so each ticket can be implemented without re-deciding scop
 
 - JSON-LD is present in homepage HTML.
 - No duplicate hand-built schema exists in the page component.
+- Sprint 2 homepage work does not remove or bypass the existing schema builder
+  baseline.
 
 ---
 
@@ -778,9 +873,10 @@ Sprint 2 may hand off only when:
 
 - homepage is visually real, not placeholder
 - metadata is route-registry-owned
-- JSON-LD is rendered
+- JSON-LD baseline is preserved and rendered
 - exposed homepage links resolve `200`
 - schedule prefill flow is preserved
+- course cards and business CTA flow through one conversion controller
 - JS and no-JS submit both work
 - save-first rule is verified
 - monitoring is active and tested
