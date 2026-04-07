@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/nextjs";
 import { captureException } from "@/lib/monitoring";
 
 export const dynamic = "force-dynamic";
@@ -13,6 +14,7 @@ export async function POST() {
       area: "monitoring_test_server",
     },
   });
+  await Sentry.flush(2000);
 
   return Response.json(
     {
