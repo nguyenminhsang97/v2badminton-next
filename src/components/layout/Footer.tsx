@@ -2,6 +2,8 @@ import Link from "next/link";
 import { siteConfig } from "@/lib/site";
 
 export function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="site-footer">
       <div className="site-footer__inner">
@@ -43,7 +45,7 @@ export function Footer() {
 
         <div className="site-footer__meta">
           <span>Thông tin đăng ký được dùng để tư vấn lớp học phù hợp.</span>
-          <span>&copy; 2026 {siteConfig.name}.</span>
+          <span>&copy; {currentYear} {siteConfig.name}.</span>
         </div>
       </div>
     </footer>

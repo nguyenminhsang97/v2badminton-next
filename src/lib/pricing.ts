@@ -49,7 +49,8 @@ export const pricingTiers: readonly PricingTier[] = [
     billingModel: "monthly_package",
     name: "3 buổi / tuần",
     shortLabel: "3 buổi cơ bản",
-    description: "Lớp cơ bản dành cho người mới bắt đầu hoặc cần nền tảng chắc từ đầu.",
+    description:
+      "Lớp cơ bản dành cho người mới bắt đầu hoặc cần nền tảng chắc từ đầu.",
     groupSize: "2-6 người",
     sessionsPerWeek: 3,
     sessionsPerMonth: 12,
@@ -72,7 +73,8 @@ export const pricingTiers: readonly PricingTier[] = [
     billingModel: "monthly_package",
     name: "3 buổi / tuần nâng cao",
     shortLabel: "3 buổi nâng cao",
-    description: "Dành cho học viên đã có nền tảng và muốn tập đều để nâng kỹ thuật nhanh hơn.",
+    description:
+      "Dành cho học viên đã có nền tảng và muốn tập đều để nâng kỹ thuật nhanh hơn.",
     groupSize: "2-6 người",
     sessionsPerWeek: 3,
     sessionsPerMonth: 12,
@@ -118,7 +120,8 @@ export const pricingTiers: readonly PricingTier[] = [
     billingModel: "per_hour",
     name: "1 kèm 1",
     shortLabel: "1 kèm 1",
-    description: "Học viên tự lo sân, phù hợp khi cần lịch riêng và theo sát.",
+    description:
+      "Học viên tự lo sân, phù hợp khi cần lịch riêng và theo sát.",
     pricePerHour: 400_000,
     displayPrice: "400.000 VNĐ / giờ / học viên",
     priceRangeContribution: { min: 400_000, max: 400_000 },
@@ -158,45 +161,27 @@ export const pricingTiers: readonly PricingTier[] = [
 export function buildPriceRange(
   tiers: readonly PricingTier[],
 ): string | null {
-  const monthlyPrices = tiers
-    .filter((tier): tier is GroupTier => tier.kind === "group")
-    .map((tier) => tier.pricePerMonth);
-  const hourlyPrices = tiers
-    .filter((tier): tier is PrivateTier => tier.kind === "private")
-    .map((tier) => tier.pricePerHour);
+  const contributions = tiers
+    .map((tier) => tier.priceRangeContribution)
+    .filter(
+      (contribution): contribution is { min: number; max: number } =>
+        contribution !== null,
+    );
 
-  if (hourlyPrices.length > 0 && monthlyPrices.length > 0) {
-    return `${formatBilledValue(Math.min(...hourlyPrices), "giờ")} - ${formatBilledValue(Math.max(...monthlyPrices), "tháng")}`;
+  if (contributions.length === 0) {
+    return null;
   }
 
-  if (monthlyPrices.length > 0) {
-    return formatBilledRange(monthlyPrices, "tháng");
-  }
+  const min = Math.min(...contributions.map((contribution) => contribution.min));
+  const max = Math.max(...contributions.map((contribution) => contribution.max));
 
-  if (hourlyPrices.length > 0) {
-    return formatBilledRange(hourlyPrices, "giờ");
-  }
-
-  return null;
+  return min === max
+    ? formatVnd(min)
+    : `${formatVnd(min)} – ${formatVnd(max)}`;
 }
 
 export const sitePriceRange = buildPriceRange(pricingTiers);
 
 function formatVnd(value: number): string {
   return `${value.toLocaleString("vi-VN")} VNĐ`;
-}
-
-function formatBilledValue(value: number, unit: "giờ" | "tháng"): string {
-  return `${formatVnd(value)}/${unit}`;
-}
-
-function formatBilledRange(values: readonly number[], unit: "giờ" | "tháng"): string {
-  const min = Math.min(...values);
-  const max = Math.max(...values);
-
-  if (min === max) {
-    return formatBilledValue(min, unit);
-  }
-
-  return `${formatBilledValue(min, unit)} - ${formatBilledValue(max, unit)}`;
 }

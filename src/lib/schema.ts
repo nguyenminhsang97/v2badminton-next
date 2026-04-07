@@ -22,6 +22,11 @@ type BreadcrumbItem = {
   item?: string;
 };
 
+type CourseSchemaTier = Extract<
+  (typeof pricingTiers)[number],
+  { kind: "group" | "enterprise" }
+>;
+
 const siteFacebook = [siteConfig.facebookUrl];
 
 export function buildOrganizationSchema(): JsonLdNode {
@@ -69,7 +74,9 @@ export function buildFaqPageSchema(page: FaqPageId): JsonLdNode {
   };
 }
 
-export function buildBreadcrumbSchema(items: readonly BreadcrumbItem[]): JsonLdNode {
+export function buildBreadcrumbSchema(
+  items: readonly BreadcrumbItem[],
+): JsonLdNode {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -85,14 +92,13 @@ export function buildBreadcrumbSchema(items: readonly BreadcrumbItem[]): JsonLdN
 export function buildSportsLocationSchema(court: CourtLocation): JsonLdNode {
   return {
     "@context": "https://schema.org",
-    "@type": "SportsActivityLocation",
-    name: court.schemaName,
-    address: buildPostalAddress(court),
+    ...buildEmbeddedSportsLocation(court),
   };
 }
 
 export function buildHomepageLocalBusinessSchema(): JsonLdNode {
-  const primaryCourt = courtLocations.find((court) => court.primaryForSchema) ?? courtLocations[0];
+  const primaryCourt =
+    courtLocations.find((court) => court.primaryForSchema) ?? courtLocations[0];
 
   return {
     "@context": "https://schema.org",
@@ -100,29 +106,29 @@ export function buildHomepageLocalBusinessSchema(): JsonLdNode {
     "@id": `${siteConfig.siteUrl}/#location`,
     name: siteConfig.name,
     description:
-      "Lớp dạy cầu lông chuyên nghiệp tại Bình Thạnh và Thủ Đức, TP.HCM, dành cho người mới bắt đầu, nhân viên văn phòng và doanh nghiệp.",
+      "Lớp dạy cầu lông chuyên nghiệp tại Bình Thạnh và Thủ Đức, TP.HCM, dành cho người mới bắt đầu, người đi làm và doanh nghiệp.",
     url: siteConfig.siteUrl,
     telephone: siteConfig.phoneE164,
     priceRange: sitePriceRange ?? undefined,
     sport: "Badminton",
     address: buildPostalAddress(primaryCourt),
+    geo: buildGeoCoordinates(primaryCourt),
     sameAs: siteFacebook,
-    location: courtLocations.map((court) => ({
-      "@type": "SportsActivityLocation",
-      name: court.schemaName,
-      address: buildPostalAddress(court),
-    })),
+    location: courtLocations.map(buildEmbeddedSportsLocation),
   };
 }
 
-export function buildLocalPageBusinessSchema(path: Extract<
-  CoreRoutePath,
-  "/lop-cau-long-binh-thanh/" | "/lop-cau-long-thu-duc/"
->): JsonLdNode {
+export function buildLocalPageBusinessSchema(
+  path: Extract<
+    CoreRoutePath,
+    "/lop-cau-long-binh-thanh/" | "/lop-cau-long-thu-duc/"
+  >,
+): JsonLdNode {
   const courts = getCourtsForLocalPage(path);
   const primaryCourt =
     courts.find((court) => court.primaryForSchema) ?? courts[0];
-  const areaServed = path === "/lop-cau-long-binh-thanh/" ? "Bình Thạnh" : "Thủ Đức";
+  const areaServed =
+    path === "/lop-cau-long-binh-thanh/" ? "Bình Thạnh" : "Thủ Đức";
 
   return {
     "@context": "https://schema.org",
@@ -141,16 +147,13 @@ export function buildLocalPageBusinessSchema(path: Extract<
     priceRange: sitePriceRange ?? undefined,
     sport: "Badminton",
     address: buildPostalAddress(primaryCourt),
+    geo: buildGeoCoordinates(primaryCourt),
     areaServed: {
       "@type": "AdministrativeArea",
       name: areaServed,
     },
     sameAs: siteFacebook,
-    location: courts.map((court) => ({
-      "@type": "SportsActivityLocation",
-      name: court.schemaName,
-      address: buildPostalAddress(court),
-    })),
+    location: courts.map(buildEmbeddedSportsLocation),
   };
 }
 
@@ -159,41 +162,31 @@ export function buildCourseSchemas(): JsonLdNode[] {
     (tier) => tier.kind === "group" || tier.kind === "enterprise",
   );
 
-  return groupCourses.map((tier) => {
-    const name = buildCourseSchemaName(tier);
-
-    return {
-      "@context": "https://schema.org",
-      "@type": "Course",
-      name,
-      provider: {
-        "@type": "Organization",
-        name: siteConfig.name,
-        url: siteConfig.siteUrl,
-      },
-      courseMode: "Offline",
-      availableLanguage: "vi",
-      description: tier.description,
-    };
-  });
+  return groupCourses.map((tier) => ({
+    "@context": "https://schema.org",
+    "@type": "Course",
+    name: buildCourseSchemaName(tier),
+    provider: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: siteConfig.siteUrl,
+    },
+    courseMode: "Offline",
+    availableLanguage: "vi",
+    description: tier.description,
+  }));
 }
 
-function buildCourseSchemaName(
-  tier: (typeof pricingTiers)[number],
-): string {
+function buildCourseSchemaName(tier: CourseSchemaTier): string {
   if (tier.kind === "enterprise") {
     return "Chương trình Cầu Lông Doanh Nghiệp";
   }
 
-  if (tier.id === "group-advanced-3x") {
-    return "Khóa Cầu Lông Nâng Cao 3 Buổi/Tuần";
-  }
+  const courseLevel = tier.name.toLowerCase().includes("nâng cao")
+    ? "Nâng Cao"
+    : "Cơ Bản";
 
-  if (tier.id === "group-basic-2x") {
-    return "Khóa Cầu Lông Cơ Bản 2 Buổi/Tuần";
-  }
-
-  return "Khóa Cầu Lông Cơ Bản 3 Buổi/Tuần";
+  return `Khóa Cầu Lông ${courseLevel} ${tier.sessionsPerWeek} Buổi/Tuần`;
 }
 
 function buildPostalAddress(court: CourtLocation) {
@@ -203,5 +196,22 @@ function buildPostalAddress(court: CourtLocation) {
     addressLocality: court.addressLocality,
     addressRegion: court.addressRegion,
     addressCountry: court.addressCountry,
+  };
+}
+
+function buildGeoCoordinates(court: CourtLocation) {
+  return {
+    "@type": "GeoCoordinates",
+    latitude: court.geo.lat,
+    longitude: court.geo.lng,
+  };
+}
+
+function buildEmbeddedSportsLocation(court: CourtLocation) {
+  return {
+    "@type": "SportsActivityLocation",
+    name: court.schemaName,
+    address: buildPostalAddress(court),
+    geo: buildGeoCoordinates(court),
   };
 }

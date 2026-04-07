@@ -1,4 +1,4 @@
-import { courtLocationMap, type CourtId } from "@/lib/locations";
+import { courtLocationMap, type CourtId, type DistrictId } from "@/lib/locations";
 
 export type ScheduleLevel = "co_ban" | "nang_cao" | "doanh_nghiep";
 export type TimeSlotId =
@@ -183,3 +183,11 @@ export const scheduleItems: readonly ScheduleItem[] = [
     levelLabels: ["Cơ bản"],
   }),
 ] as const;
+
+export function getScheduleForDistrict(
+  districtId: DistrictId,
+): readonly ScheduleItem[] {
+  return scheduleItems.filter(
+    (item) => courtLocationMap[item.courtId].district === districtId,
+  );
+}
