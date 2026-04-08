@@ -1,5 +1,6 @@
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
+import { captureException } from "@/lib/monitoring";
 
 export type RateLimitPath = "js" | "no_js";
 
@@ -48,12 +49,30 @@ export async function checkRateLimit(ip: string, path: RateLimitPath) {
   }
 
   const limiter = path === "js" ? jsLimiter : noJsLimiter;
-  const result = await limiter.limit(ip);
+  try {
+    const result = await limiter.limit(ip);
 
-  return {
-    allowed: result.success,
-    limit: result.limit,
-    remaining: result.remaining,
-    reset: result.reset,
-  };
+    return {
+      allowed: result.success,
+      limit: result.limit,
+      remaining: result.remaining,
+      reset: result.reset,
+    };
+  } catch (error) {
+    console.error("Rate limit check failed", error);
+    captureException(error, {
+      tags: {
+        area: "rate_limit",
+        rate_limit_path: path,
+      },
+      extras: {
+        ip,
+      },
+    });
+    return {
+      allowed: true,
+      skipped: true as const,
+      error: "rate_limit_unavailable" as const,
+    };
+  }
 }
