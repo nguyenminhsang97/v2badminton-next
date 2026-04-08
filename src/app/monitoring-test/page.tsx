@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { MonitoringTestPanel } from "@/components/debug/MonitoringTestPanel";
+import { isMonitoringTestRoutesEnabled } from "@/lib/env";
 import { canonicalUrl } from "@/lib/routes";
 
 export const metadata: Metadata = {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 };
 
 export default function MonitoringTestPage() {
-  if (process.env.ENABLE_MONITORING_TEST_ROUTES !== "true") {
+  if (!isMonitoringTestRoutesEnabled()) {
     notFound();
   }
 

@@ -33,6 +33,8 @@ Verify error visibility and alert plumbing before wider QA or release.
 - preview-only verification routes:
   - `/monitoring-test`
   - `/api/monitoring-test`
+- production hardening:
+  - monitoring test routes are force-disabled when `VERCEL_ENV=production`, even if the env flag is mistakenly set
 
 ## Step 1 - Build Verification
 
@@ -76,6 +78,7 @@ Pass condition:
 
 - Sentry receives a server-side error for the failing path
 - lead-save success/failure matches the intended graceful-degradation behavior
+- if Upstash rate limiting degrades and `TELEGRAM_OPS_CHAT_ID` is configured, one throttled ops alert is delivered
 
 ## Step 4 - Health Check Monitoring
 

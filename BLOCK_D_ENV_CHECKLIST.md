@@ -17,7 +17,7 @@
 
 - `RESEND_API_KEY`
 - `NOTIFY_EMAIL_TO`
-- `NOTIFY_EMAIL_FROM` (recommended, optional fallback exists)
+- `NOTIFY_EMAIL_FROM` (required in production; preview can fall back to Resend sandbox)
 
 ### Turnstile
 
@@ -48,6 +48,8 @@
   - submit still works, but rate limit is skipped
 - `TELEGRAM` / `RESEND` vars missing:
   - lead save still works, notify audit fields should become `skipped`
+- `TELEGRAM_OPS_CHAT_ID` missing:
+  - Sentry still captures degraded integrations, but Telegram ops alerts are skipped
 
 ## One-Shot QA Flow
 

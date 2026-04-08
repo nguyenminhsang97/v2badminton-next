@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import { updateEmailAudit } from "@/lib/db";
+import { getNotifyEmailFromAddress } from "@/lib/env";
 import type { LeadNotificationPayload } from "@/lib/leadPipeline";
 import { captureException } from "@/lib/monitoring";
 
@@ -42,11 +43,13 @@ export async function notifyEmail(
   leadId: string,
   payload: LeadNotificationPayload,
 ) {
-  if (!process.env.RESEND_API_KEY || !process.env.NOTIFY_EMAIL_TO) {
+  const emailFrom = getNotifyEmailFromAddress();
+
+  if (!process.env.RESEND_API_KEY || !process.env.NOTIFY_EMAIL_TO || !emailFrom) {
     await writeEmailAudit(
       leadId,
       "skipped",
-      "RESEND_API_KEY or NOTIFY_EMAIL_TO is missing.",
+      "Email notification env is incomplete for the current environment.",
     );
     return;
   }
@@ -54,7 +57,7 @@ export async function notifyEmail(
   try {
     const resend = new Resend(process.env.RESEND_API_KEY);
     await resend.emails.send({
-      from: process.env.NOTIFY_EMAIL_FROM ?? "V2 Badminton <onboarding@resend.dev>",
+      from: emailFrom,
       to: [process.env.NOTIFY_EMAIL_TO],
       subject: `[V2 Badminton] Dang ky moi - ${payload.name} - ${payload.phone}`,
       text: buildEmailBody(payload),

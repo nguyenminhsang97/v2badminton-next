@@ -1,6 +1,7 @@
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { captureException } from "@/lib/monitoring";
+import { notifyOpsTelegram } from "@/lib/notify/ops";
 
 export type RateLimitPath = "js" | "no_js";
 
@@ -69,6 +70,11 @@ export async function checkRateLimit(ip: string, path: RateLimitPath) {
         ip,
       },
     });
+    await notifyOpsTelegram(
+      `rate_limit_unavailable:${path}`,
+      "Rate limit degraded",
+      `The ${path} limiter failed and the request path is now fail-open. Check Upstash credentials and runtime logs.`,
+    );
     return {
       allowed: true,
       skipped: true as const,

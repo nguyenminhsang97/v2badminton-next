@@ -1,10 +1,11 @@
 import * as Sentry from "@sentry/nextjs";
+import { isMonitoringTestRoutesEnabled } from "@/lib/env";
 import { captureException } from "@/lib/monitoring";
 
 export const dynamic = "force-dynamic";
 
 export async function POST() {
-  if (process.env.ENABLE_MONITORING_TEST_ROUTES !== "true") {
+  if (!isMonitoringTestRoutesEnabled()) {
     return Response.json({ status: "not_found" }, { status: 404 });
   }
 
