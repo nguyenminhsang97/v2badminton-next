@@ -3,12 +3,30 @@ import { Redis } from "@upstash/redis";
 
 export type RateLimitPath = "js" | "no_js";
 
-const hasUpstashConfig = Boolean(
-  process.env.UPSTASH_REDIS_REST_URL &&
-    process.env.UPSTASH_REDIS_REST_TOKEN,
-);
+function getUpstashRestConfig() {
+  const url =
+    process.env.UPSTASH_REDIS_REST_URL ??
+    process.env.UPSTASH_REDIS_REST_KV_REST_API_URL ??
+    null;
+  const token =
+    process.env.UPSTASH_REDIS_REST_TOKEN ??
+    process.env.UPSTASH_REDIS_REST_KV_REST_API_TOKEN ??
+    null;
 
-const redis = hasUpstashConfig ? Redis.fromEnv() : null;
+  if (!url || !token) {
+    return null;
+  }
+
+  return { url, token };
+}
+
+const upstashRestConfig = getUpstashRestConfig();
+const redis = upstashRestConfig
+  ? new Redis({
+      url: upstashRestConfig.url,
+      token: upstashRestConfig.token,
+    })
+  : null;
 const jsLimiter = redis
   ? new Ratelimit({
       redis,
