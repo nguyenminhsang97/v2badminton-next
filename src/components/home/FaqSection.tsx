@@ -1,8 +1,19 @@
-import { getFaqsForPage } from "@/lib/faqs";
+import { PortableText } from "@portabletext/react";
+import type { PortableTextBlock } from "@portabletext/types";
+import type { HomepageFaqSectionProps } from "./sectionProps";
 
-export function FaqSection() {
-  const faqs = getFaqsForPage("homepage");
+function FaqAnswer({
+  answer,
+  answerPlainText,
+}: Pick<HomepageFaqSectionProps["faqs"][number], "answer" | "answerPlainText">) {
+  if (answer.length === 0) {
+    return <p>{answerPlainText}</p>;
+  }
 
+  return <PortableText value={answer as PortableTextBlock[]} />;
+}
+
+export function FaqSection({ faqs }: HomepageFaqSectionProps) {
   return (
     <section className="section" id="hoi-dap">
       <div className="section__header">
@@ -13,11 +24,10 @@ export function FaqSection() {
           <details key={faq.id} className="faq-item">
             <summary className="faq-item__question">{faq.question}</summary>
             <div className="faq-item__answer">
-              {faq.answerHtml ? (
-                <div dangerouslySetInnerHTML={{ __html: faq.answerHtml }} />
-              ) : (
-                <p>{faq.answerText}</p>
-              )}
+              <FaqAnswer
+                answer={faq.answer}
+                answerPlainText={faq.answerPlainText}
+              />
             </div>
           </details>
         ))}

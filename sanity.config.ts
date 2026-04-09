@@ -5,14 +5,13 @@ import { structureTool } from "sanity/structure";
 import { schemaTypes } from "./src/sanity/schemaTypes";
 import { singletonActions, singletonTypes, structure } from "./src/sanity/structure";
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
+const envProjectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID?.trim();
+const envDataset = process.env.NEXT_PUBLIC_SANITY_DATASET?.trim();
 
-if (!projectId || !dataset) {
-  throw new Error(
-    "Missing Sanity environment variables. Expected NEXT_PUBLIC_SANITY_PROJECT_ID and NEXT_PUBLIC_SANITY_DATASET.",
-  );
-}
+export const isSanityStudioConfigured = Boolean(envProjectId && envDataset);
+
+const projectId = envProjectId ?? "missing-project-id";
+const dataset = envDataset ?? "production";
 
 export default defineConfig({
   name: "default",

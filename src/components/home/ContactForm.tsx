@@ -14,13 +14,12 @@ import {
   type FormEvent,
 } from "react";
 import { submitLead } from "@/app/actions/submitLead";
-import { courtLocations } from "@/lib/locations";
 import {
   EMPTY_LEAD_FORM_VALUES,
   INITIAL_SUBMIT_LEAD_RESULT,
 } from "@/lib/leadSubmission";
-import { siteConfig } from "@/lib/site";
-import { scheduleItems, type ScheduleLevel } from "@/lib/schedule";
+import type { SanityLocation, SanityScheduleBlock } from "@/lib/sanity";
+import type { ScheduleLevel } from "@/lib/schedule";
 import {
   trackEvent,
   type FormFieldName,
@@ -32,6 +31,11 @@ import {
   type LeadFormValues,
 } from "@/lib/validation/lead";
 import { useHomepageConversion } from "./HomepageConversionProvider";
+import type { HomeContactSettings } from "./contactSettings";
+import {
+  buildLegacyCourtOptions,
+  buildLegacyTimeSlotOptions,
+} from "./legacyScheduleCompatibility";
 
 type FormValues = LeadFormValues & {
   _gotcha: string;
@@ -39,6 +43,11 @@ type FormValues = LeadFormValues & {
 
 type FormErrors = LeadFieldErrors;
 type SubmitState = "idle" | "submitting" | "success" | "error";
+type ContactFormProps = {
+  contactSettings: HomeContactSettings;
+  locations: SanityLocation[];
+  scheduleBlocks: SanityScheduleBlock[];
+};
 
 const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
 const BUSINESS_MESSAGE =
@@ -49,10 +58,6 @@ const LEVEL_OPTIONS: readonly { value: ScheduleLevel; label: string }[] = [
   { value: "nang_cao", label: "Nang cao" },
   { value: "doanh_nghiep", label: "Doanh nghiep" },
 ] as const;
-
-const TIME_SLOT_OPTIONS = Array.from(
-  new Map(scheduleItems.map((item) => [item.timeSlotId, item.timeLabel])).entries(),
-).map(([value, label]) => ({ value, label }));
 
 const INITIAL_VALUES: FormValues = {
   ...EMPTY_LEAD_FORM_VALUES,
@@ -67,7 +72,11 @@ function buildLeadType(level: LeadFormValues["level"], businessMode: boolean) {
   return "individual" as const;
 }
 
-export function ContactForm() {
+export function ContactForm({
+  contactSettings,
+  locations,
+  scheduleBlocks,
+}: ContactFormProps) {
   const pathname = usePathname();
   const {
     selectedSchedulePrefill,
@@ -113,6 +122,14 @@ export function ContactForm() {
   const businessHeading = businessMode
     ? "Nhan tu van cho doanh nghiep"
     : "Dang ky hoc thu";
+  const courtOptions = useMemo(
+    () => buildLegacyCourtOptions(locations),
+    [locations],
+  );
+  const timeSlotOptions = useMemo(
+    () => buildLegacyTimeSlotOptions(scheduleBlocks),
+    [scheduleBlocks],
+  );
 
   const canAutoOverwriteMessage = useMemo(
     () =>
@@ -474,7 +491,7 @@ export function ContactForm() {
           <strong>Cam on ban da de lai thong tin.</strong>
           <p>{submitMessage}</p>
           <a
-            href={`https://zalo.me/${siteConfig.zaloNumber}`}
+            href={`https://zalo.me/${contactSettings.zaloNumber}`}
             className="btn btn--outline"
             target="_blank"
             rel="noopener noreferrer"
@@ -589,9 +606,9 @@ export function ContactForm() {
                       disabled={isPending}
                     >
                       <option value="">Chon san tap</option>
-                      {courtLocations.map((court) => (
-                        <option key={court.id} value={court.id}>
-                          {court.name}
+                      {courtOptions.map((court) => (
+                        <option key={court.value} value={court.value}>
+                          {court.label}
                         </option>
                       ))}
                     </select>
@@ -613,7 +630,7 @@ export function ContactForm() {
                       disabled={isPending}
                     >
                       <option value="">Chon khung gio</option>
-                      {TIME_SLOT_OPTIONS.map((slot) => (
+                      {timeSlotOptions.map((slot) => (
                         <option key={slot.value} value={slot.value}>
                           {slot.label}
                         </option>

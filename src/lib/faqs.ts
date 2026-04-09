@@ -1,3 +1,10 @@
+/**
+ * SPRINT 2 STATUS: Fallback-only.
+ * Imported exclusively by src/lib/sanity/queries.ts for getFallbackFaqs().
+ * Not imported directly by any page or component.
+ * Do not delete - fallback is required while Sanity dataset may be empty or unreachable.
+ * Scheduled for removal in Sprint 5 after production Sanity data is validated.
+ */
 export type FaqPageId = "homepage" | "nguoi_moi" | "binh_thanh" | "thu_duc";
 
 export type FaqItem = {

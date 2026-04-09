@@ -1,10 +1,8 @@
-import { getFaqsForPage, type FaqPageId } from "@/lib/faqs";
-import {
-  courtLocations,
-  getCourtsForLocalPage,
-  type CourtLocation,
-} from "@/lib/locations";
-import { pricingTiers, sitePriceRange } from "@/lib/pricing";
+import type {
+  SanityFaq,
+  SanityLocation,
+  SanityPricingTier,
+} from "@/lib/sanity";
 import { canonicalUrl, type CoreRoutePath } from "@/lib/routes";
 import { siteConfig } from "@/lib/site";
 
@@ -23,11 +21,79 @@ type BreadcrumbItem = {
 };
 
 type CourseSchemaTier = Extract<
-  (typeof pricingTiers)[number],
+  SanityPricingTier,
   { kind: "group" | "enterprise" }
 >;
 
 const siteFacebook = [siteConfig.facebookUrl];
+
+function buildPriceRange(tiers: readonly SanityPricingTier[]): string | null {
+  const prices = tiers
+    .map((tier) => {
+      switch (tier.kind) {
+        case "group":
+          return tier.pricePerMonth;
+        case "private":
+          return tier.pricePerHour;
+        case "enterprise":
+          return null;
+      }
+    })
+    .filter((price): price is number => price !== null);
+
+  if (prices.length === 0) {
+    return null;
+  }
+
+  const min = Math.min(...prices);
+  const max = Math.max(...prices);
+
+  const formatVnd = (value: number) =>
+    `${new Intl.NumberFormat("vi-VN").format(value)} VNĐ`;
+
+  return min === max
+    ? formatVnd(min)
+    : `${formatVnd(min)} – ${formatVnd(max)}`;
+}
+
+function buildPostalAddress(location: SanityLocation) {
+  return {
+    "@type": "PostalAddress",
+    streetAddress: location.addressText,
+    addressLocality: location.districtLabel,
+    addressRegion: "Hồ Chí Minh",
+    addressCountry: "VN",
+  };
+}
+
+function buildGeoCoordinates(location: SanityLocation) {
+  return {
+    "@type": "GeoCoordinates",
+    latitude: location.geoLat,
+    longitude: location.geoLng,
+  };
+}
+
+function buildEmbeddedSportsLocation(location: SanityLocation) {
+  return {
+    "@type": "SportsActivityLocation",
+    name: location.name,
+    address: buildPostalAddress(location),
+    geo: buildGeoCoordinates(location),
+  };
+}
+
+function buildCourseSchemaName(tier: CourseSchemaTier): string {
+  if (tier.kind === "enterprise") {
+    return "Chương trình Cầu Lông Doanh Nghiệp";
+  }
+
+  const courseLevel = tier.name.toLowerCase().includes("nâng cao")
+    ? "Nâng Cao"
+    : "Cơ Bản";
+
+  return `Khóa Cầu Lông ${courseLevel} ${tier.sessionsPerWeek} Buổi/Tuần`;
+}
 
 export function buildOrganizationSchema(): JsonLdNode {
   return {
@@ -55,15 +121,15 @@ export function buildWebsiteSchema(): JsonLdNode {
   };
 }
 
-export function buildFaqPageSchema(page: FaqPageId): JsonLdNode {
-  const mainEntity = getFaqsForPage(page)
-    .filter((faq) => faq.schemaEligible)
+export function buildFaqPageSchema(faqs: SanityFaq[]): JsonLdNode {
+  const mainEntity = faqs
+    .filter((faq) => faq.includeInSchema)
     .map((faq) => ({
       "@type": "Question",
       name: faq.question,
       acceptedAnswer: {
         "@type": "Answer",
-        text: faq.answerText,
+        text: faq.answerPlainText,
       },
     }));
 
@@ -89,16 +155,19 @@ export function buildBreadcrumbSchema(
   };
 }
 
-export function buildSportsLocationSchema(court: CourtLocation): JsonLdNode {
+export function buildSportsLocationSchema(location: SanityLocation): JsonLdNode {
   return {
     "@context": "https://schema.org",
-    ...buildEmbeddedSportsLocation(court),
+    ...buildEmbeddedSportsLocation(location),
   };
 }
 
-export function buildHomepageLocalBusinessSchema(): JsonLdNode {
-  const primaryCourt =
-    courtLocations.find((court) => court.primaryForSchema) ?? courtLocations[0];
+export function buildHomepageLocalBusinessSchema(
+  locations: SanityLocation[],
+  pricingTiers: SanityPricingTier[],
+): JsonLdNode {
+  const primaryLocation = locations[0];
+  const priceRange = buildPriceRange(pricingTiers);
 
   return {
     "@context": "https://schema.org",
@@ -109,12 +178,16 @@ export function buildHomepageLocalBusinessSchema(): JsonLdNode {
       "Lớp dạy cầu lông chuyên nghiệp tại Bình Thạnh và Thủ Đức, TP.HCM, dành cho người mới bắt đầu, người đi làm và doanh nghiệp.",
     url: siteConfig.siteUrl,
     telephone: siteConfig.phoneE164,
-    priceRange: sitePriceRange ?? undefined,
+    ...(priceRange ? { priceRange } : {}),
     sport: "Badminton",
-    address: buildPostalAddress(primaryCourt),
-    geo: buildGeoCoordinates(primaryCourt),
+    ...(primaryLocation
+      ? {
+          address: buildPostalAddress(primaryLocation),
+          geo: buildGeoCoordinates(primaryLocation),
+        }
+      : {}),
     sameAs: siteFacebook,
-    location: courtLocations.map(buildEmbeddedSportsLocation),
+    location: locations.map(buildEmbeddedSportsLocation),
   };
 }
 
@@ -123,10 +196,11 @@ export function buildLocalPageBusinessSchema(
     CoreRoutePath,
     "/lop-cau-long-binh-thanh/" | "/lop-cau-long-thu-duc/"
   >,
+  locations: SanityLocation[],
+  pricingTiers: SanityPricingTier[],
 ): JsonLdNode {
-  const courts = getCourtsForLocalPage(path);
-  const primaryCourt =
-    courts.find((court) => court.primaryForSchema) ?? courts[0];
+  const primaryLocation = locations[0];
+  const priceRange = buildPriceRange(pricingTiers);
   const areaServed =
     path === "/lop-cau-long-binh-thanh/" ? "Bình Thạnh" : "Thủ Đức";
 
@@ -144,25 +218,32 @@ export function buildLocalPageBusinessSchema(
         : "Lớp cầu lông tại Thủ Đức của V2 Badminton với các sân Huệ Thiên, Khang Sport (Bình Triệu) và Phúc Lộc, phù hợp cho người mới bắt đầu và người đi làm.",
     url: canonicalUrl(path),
     telephone: siteConfig.phoneE164,
-    priceRange: sitePriceRange ?? undefined,
+    ...(priceRange ? { priceRange } : {}),
     sport: "Badminton",
-    address: buildPostalAddress(primaryCourt),
-    geo: buildGeoCoordinates(primaryCourt),
+    ...(primaryLocation
+      ? {
+          address: buildPostalAddress(primaryLocation),
+          geo: buildGeoCoordinates(primaryLocation),
+        }
+      : {}),
     areaServed: {
       "@type": "AdministrativeArea",
       name: areaServed,
     },
     sameAs: siteFacebook,
-    location: courts.map(buildEmbeddedSportsLocation),
+    location: locations.map(buildEmbeddedSportsLocation),
   };
 }
 
-export function buildCourseSchemas(): JsonLdNode[] {
-  const groupCourses = pricingTiers.filter(
-    (tier) => tier.kind === "group" || tier.kind === "enterprise",
+export function buildCourseSchemas(
+  pricingTiers: SanityPricingTier[],
+): JsonLdNode[] {
+  const courseTiers = pricingTiers.filter(
+    (tier): tier is CourseSchemaTier =>
+      tier.kind === "group" || tier.kind === "enterprise",
   );
 
-  return groupCourses.map((tier) => ({
+  return courseTiers.map((tier) => ({
     "@context": "https://schema.org",
     "@type": "Course",
     name: buildCourseSchemaName(tier),
@@ -175,43 +256,4 @@ export function buildCourseSchemas(): JsonLdNode[] {
     availableLanguage: "vi",
     description: tier.description,
   }));
-}
-
-function buildCourseSchemaName(tier: CourseSchemaTier): string {
-  if (tier.kind === "enterprise") {
-    return "Chương trình Cầu Lông Doanh Nghiệp";
-  }
-
-  const courseLevel = tier.name.toLowerCase().includes("nâng cao")
-    ? "Nâng Cao"
-    : "Cơ Bản";
-
-  return `Khóa Cầu Lông ${courseLevel} ${tier.sessionsPerWeek} Buổi/Tuần`;
-}
-
-function buildPostalAddress(court: CourtLocation) {
-  return {
-    "@type": "PostalAddress",
-    streetAddress: court.streetAddress,
-    addressLocality: court.addressLocality,
-    addressRegion: court.addressRegion,
-    addressCountry: court.addressCountry,
-  };
-}
-
-function buildGeoCoordinates(court: CourtLocation) {
-  return {
-    "@type": "GeoCoordinates",
-    latitude: court.geo.lat,
-    longitude: court.geo.lng,
-  };
-}
-
-function buildEmbeddedSportsLocation(court: CourtLocation) {
-  return {
-    "@type": "SportsActivityLocation",
-    name: court.schemaName,
-    address: buildPostalAddress(court),
-    geo: buildGeoCoordinates(court),
-  };
 }

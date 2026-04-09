@@ -1,58 +1,142 @@
 "use client";
 
 import { useState } from "react";
-import { courtLocationMap, type CourtId } from "@/lib/locations";
-import { scheduleItems, type ScheduleItem } from "@/lib/schedule";
-import { useHomepageConversion } from "./HomepageConversionProvider";
+import type {
+  SanityScheduleBlock,
+  SanityScheduleLevel,
+} from "@/lib/sanity";
+import {
+  useHomepageConversion,
+  type SchedulePrefill,
+} from "./HomepageConversionProvider";
+import {
+  LEGACY_COURT_TAB_ORDER,
+  isLegacyTimeSlotId,
+  resolveLegacyCourtId,
+} from "./legacyScheduleCompatibility";
+import type { HomepageScheduleSectionProps } from "./sectionProps";
 
-// ---------------------------------------------------------------------------
-// Filter tabs — per-court, NOT per-district (S2-B1 spec)
-// ---------------------------------------------------------------------------
+const ALL_TAB_ID = "__all__";
 
-type TabId = "all" | CourtId;
+type SelectedCourseIntent = NonNullable<
+  ReturnType<typeof useHomepageConversion>["selectedCourseIntent"]
+>;
 
-const TABS: readonly { id: TabId; label: string }[] = [
-  { id: "all", label: "Tất cả" },
-  { id: "hue_thien", label: "Huệ Thiên" },
-  { id: "green", label: "Green" },
-  { id: "phuc_loc", label: "Phúc Lộc" },
-  { id: "khang_sport", label: "Khang Sport" },
-] as const;
+function buildSchedulePrefill(
+  scheduleBlock: SanityScheduleBlock,
+): SchedulePrefill | null {
+  const courtId = resolveLegacyCourtId(scheduleBlock);
 
-function filterSchedule(tab: TabId): readonly ScheduleItem[] {
-  if (tab === "all") return scheduleItems;
-  return scheduleItems.filter((item) => item.courtId === tab);
+  if (courtId === null || !isLegacyTimeSlotId(scheduleBlock.timeSlotId)) {
+    return null;
+  }
+
+  const isBasicOnly =
+    scheduleBlock.levels.length === 1 && scheduleBlock.levels[0] === "co_ban";
+
+  return {
+    courtId,
+    timeSlotId: scheduleBlock.timeSlotId,
+    message: `Quan tâm lịch: ${scheduleBlock.dayGroup} | ${scheduleBlock.timeLabel} | ${scheduleBlock.locationName}`,
+    levelHint: isBasicOnly ? "co_ban" : undefined,
+  };
 }
 
-// ---------------------------------------------------------------------------
-// Component
-// ---------------------------------------------------------------------------
+function getScheduleFilterLabel(level: SelectedCourseIntent): string {
+  switch (level) {
+    case "co_ban":
+      return "cơ bản";
+    case "nang_cao":
+      return "nâng cao";
+    case "doanh_nghiep":
+      return "doanh nghiệp";
+  }
+}
 
-export function ScheduleSection() {
-  const [activeTab, setActiveTab] = useState<TabId>("all");
+function getScheduleLevelUi(level: SanityScheduleLevel): {
+  label: string;
+  modifier: "co-ban" | "nang-cao" | "doanh-nghiep";
+} {
+  switch (level) {
+    case "co_ban":
+      return {
+        label: "Cơ bản",
+        modifier: "co-ban",
+      };
+    case "nang_cao":
+      return {
+        label: "Nâng cao",
+        modifier: "nang-cao",
+      };
+    case "doanh_nghiep":
+      return {
+        label: "Doanh nghiệp",
+        modifier: "doanh-nghiep",
+      };
+  }
+}
+
+export function ScheduleSection({
+  scheduleBlocks,
+}: HomepageScheduleSectionProps) {
+  const [activeTab, setActiveTab] = useState<string>(ALL_TAB_ID);
   const { setPrefill, selectedCourseIntent } = useHomepageConversion();
 
-  const filtered = filterSchedule(activeTab);
+  const tabs = scheduleBlocks.reduce<
+    Array<{
+      id: string;
+      label: string;
+      sortOrder: number;
+      discoveredAt: number;
+    }>
+  >((items, scheduleBlock, index) => {
+    if (items.some((item) => item.id === scheduleBlock.locationId)) {
+      return items;
+    }
 
-  // If a course intent is active, highlight matching level items
+    const legacyCourtId = resolveLegacyCourtId(scheduleBlock);
+
+    items.push({
+      id: scheduleBlock.locationId,
+      label: scheduleBlock.locationShortName || scheduleBlock.locationName,
+      sortOrder:
+        legacyCourtId === null
+          ? Number.MAX_SAFE_INTEGER
+          : LEGACY_COURT_TAB_ORDER[legacyCourtId],
+      discoveredAt: index,
+    });
+
+    return items;
+  }, []);
+
+  tabs.sort((left, right) => {
+    if (left.sortOrder !== right.sortOrder) {
+      return left.sortOrder - right.sortOrder;
+    }
+
+    return left.discoveredAt - right.discoveredAt;
+  });
+
+  const filteredByTab =
+    activeTab === ALL_TAB_ID
+      ? scheduleBlocks
+      : scheduleBlocks.filter((item) => item.locationId === activeTab);
+
   const displayItems = selectedCourseIntent
-    ? filtered.filter((item) => item.levels.includes(selectedCourseIntent))
-    : filtered;
+    ? filteredByTab.filter((item) => item.levels.includes(selectedCourseIntent))
+    : filteredByTab;
 
-  // Show all items but dimmed if course filter yields empty
-  const itemsToRender = displayItems.length > 0 ? displayItems : filtered;
+  const itemsToRender = displayItems.length > 0 ? displayItems : filteredByTab;
   const isFiltered = selectedCourseIntent !== null && displayItems.length > 0;
 
-  function handleCardClick(item: ScheduleItem) {
-    const isBasicOnly =
-      item.levels.length === 1 && item.levels[0] === "co_ban";
+  function handleCardClick(scheduleBlock: SanityScheduleBlock) {
+    const prefill = buildSchedulePrefill(scheduleBlock);
 
-    setPrefill({
-      courtId: item.prefillCourtId,
-      timeSlotId: item.prefillTimeSlotId,
-      message: item.prefillMessage,
-      levelHint: isBasicOnly ? "co_ban" : undefined,
-    });
+    if (prefill === null) {
+      return;
+    }
+
+    setPrefill(prefill);
   }
 
   return (
@@ -61,22 +145,30 @@ export function ScheduleSection() {
         <p className="section__eyebrow">Thời khóa biểu</p>
         <h2 className="section__title">LỊCH HỌC</h2>
         <p className="section__desc">
-          Lớp mở hàng tuần tại 4 sân. Buổi học có{" "}
-          <strong>Cơ bản + Nâng cao</strong> nghĩa là cùng giờ đó có lớp cho cả người mới lẫn người đã có nền tảng.
+          Lớp mở hàng tuần tại 4 sân. Buổi học có <strong>Cơ bản + Nâng cao</strong>{" "}
+          nghĩa là cùng giờ đó có lớp cho cả người mới lẫn người đã có nền tảng.
         </p>
-        {isFiltered && (
+        {isFiltered && selectedCourseIntent !== null && (
           <p className="section__filter-note">
-            Đang lọc theo trình độ{" "}
-            {selectedCourseIntent === "co_ban" ? "cơ bản" : "nâng cao"}
+            Đang lọc theo trình độ {getScheduleFilterLabel(selectedCourseIntent)}
           </p>
         )}
       </div>
 
-      {/* Filter tabs */}
       <div className="schedule-tabs" role="tablist" aria-label="Lọc theo sân">
-        {TABS.map((tab) => (
+        <button
+          type="button"
+          role="tab"
+          aria-selected={activeTab === ALL_TAB_ID}
+          className={`schedule-tab ${activeTab === ALL_TAB_ID ? "schedule-tab--active" : ""}`}
+          onClick={() => setActiveTab(ALL_TAB_ID)}
+        >
+          Tất cả
+        </button>
+        {tabs.map((tab) => (
           <button
             key={tab.id}
+            type="button"
             role="tab"
             aria-selected={activeTab === tab.id}
             className={`schedule-tab ${activeTab === tab.id ? "schedule-tab--active" : ""}`}
@@ -87,7 +179,6 @@ export function ScheduleSection() {
         ))}
       </div>
 
-      {/* Schedule cards */}
       <div className="schedule-grid">
         {itemsToRender.map((item) => (
           <article
@@ -96,36 +187,41 @@ export function ScheduleSection() {
             onClick={() => handleCardClick(item)}
             role="button"
             tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
                 handleCardClick(item);
               }
             }}
           >
             <div className="schedule-card__time">{item.timeLabel}</div>
-            <div className="schedule-card__days">{item.dayGroup}</div>
+            <div className="schedule-card__days schedule-card__day">
+              {item.dayGroup}
+            </div>
             <div className="schedule-card__location">
-              <span className="schedule-card__court">
-                {courtLocationMap[item.courtId].shortName}
-              </span>
+              <span className="schedule-card__court">{item.locationShortName}</span>
             </div>
             <div className="schedule-card__levels">
-              {item.levels.map((level) => (
-                <span
-                  key={level}
-                  className={`level-tag level-tag--${level === "co_ban" ? "co-ban" : "nang-cao"}`}
-                >
-                  {level === "co_ban" ? "Cơ bản" : "Nâng cao"}
-                </span>
-              ))}
+              {item.levels.map((level) => {
+                const levelUi = getScheduleLevelUi(level);
+
+                return (
+                  <span
+                    key={`${item.id}-${level}`}
+                    className={`level-tag level-tag--${levelUi.modifier}`}
+                  >
+                    {levelUi.label}
+                  </span>
+                );
+              })}
             </div>
           </article>
         ))}
       </div>
 
       <p className="schedule-note">
-        Đăng ký thử hoặc hỏi lịch học trực tiếp qua form bên dưới — V2 sẽ xếp lịch theo sân gần bạn nhất.
+        Đăng ký thử hoặc hỏi lịch học trực tiếp qua form bên dưới, V2 sẽ xếp lịch
+        theo sân gần bạn nhất.
       </p>
     </section>
   );

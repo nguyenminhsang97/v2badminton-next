@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
+import type { SiteChromeSettings } from "@/components/layout/siteSettings";
 import { coreRoutes } from "@/lib/routes";
-import { siteConfig } from "@/lib/site";
 import { trackEvent } from "@/lib/tracking";
 
 const primaryLinks = [
@@ -23,7 +23,11 @@ const seoPageLinks = coreRoutes
     label: route.navLabel,
   })) as readonly { href: string; label: string }[];
 
-export function Nav() {
+type NavProps = {
+  siteSettings: Pick<SiteChromeSettings, "siteName">;
+};
+
+export function Nav({ siteSettings }: NavProps) {
   const pathname = usePathname();
   const mobileNavRef = useRef<HTMLDetailsElement>(null);
   const pageType = coreRoutes.find(
@@ -50,8 +54,8 @@ export function Nav() {
   return (
     <header className="site-header">
       <div className="site-header__inner">
-        <Link href="/" className="site-logo" aria-label="V2 Badminton">
-          {siteConfig.name}
+        <Link href="/" className="site-logo" aria-label={siteSettings.siteName}>
+          {siteSettings.siteName}
         </Link>
 
         <nav className="site-nav site-nav--desktop" aria-label="Điều hướng chính">

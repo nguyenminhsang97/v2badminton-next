@@ -1,3 +1,14 @@
+/**
+ * SPRINT 2 STATUS: Partially active.
+ * ScheduleLevel, TimeSlotId types are still depended on by:
+ *   - src/lib/validation/lead.ts
+ *   - src/lib/leadPipeline.ts
+ *   - src/lib/db/types.ts
+ *   - src/components/home/legacyScheduleCompatibility.ts
+ *   - src/components/home/ContactForm.tsx
+ * scheduleItems data also used in queries.ts for fallback.
+ * Full deprecation blocked until lead pipeline migrates to Sanity-native IDs (Sprint 4+).
+ */
 import { courtLocationMap, type CourtId, type DistrictId } from "@/lib/locations";
 
 export type ScheduleLevel = "co_ban" | "nang_cao" | "doanh_nghiep";

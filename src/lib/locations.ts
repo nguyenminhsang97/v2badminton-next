@@ -1,3 +1,15 @@
+/**
+ * SPRINT 2 STATUS: Partially active.
+ * CourtId, DistrictId types are still depended on by:
+ *   - src/lib/schedule.ts
+ *   - src/lib/validation/lead.ts
+ *   - src/lib/leadPipeline.ts
+ *   - src/lib/db/types.ts
+ *   - src/components/home/legacyScheduleCompatibility.ts
+ *   - src/components/home/HomepageConversionProvider.tsx
+ * courtLocations/courtLocationMap data also used in queries.ts for fallback.
+ * Full deprecation blocked until lead pipeline migrates to Sanity-native location IDs (Sprint 4+).
+ */
 export type DistrictId = "binh_thanh" | "thu_duc";
 export type CourtId = "green" | "hue_thien" | "khang_sport" | "phuc_loc";
 

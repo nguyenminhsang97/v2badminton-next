@@ -1,17 +1,44 @@
 "use client";
 
-import {
-  pricingTiers,
-  sitePriceRange,
-  type GroupTier,
-  type PrivateTier,
-  type EnterpriseTier,
-  type PricingTier,
-} from "@/lib/pricing";
+import type {
+  SanityEnterprisePricingTier,
+  SanityGroupPricingTier,
+  SanityPricingTier,
+  SanityPrivatePricingTier,
+} from "@/lib/sanity";
 import { trackEvent } from "@/lib/tracking";
 import { useHomepageConversion } from "./HomepageConversionProvider";
+import type { HomepagePricingSectionProps } from "./sectionProps";
 
-function GroupCard({ tier }: { tier: GroupTier }) {
+function formatVnd(value: number): string {
+  return `${new Intl.NumberFormat("vi-VN").format(value)} VNĐ`;
+}
+
+function buildSitePriceRange(tiers: readonly SanityPricingTier[]): string | null {
+  const comparablePrices = tiers
+    .map((tier) => {
+      switch (tier.kind) {
+        case "group":
+          return tier.pricePerMonth;
+        case "private":
+          return tier.pricePerHour;
+        case "enterprise":
+          return null;
+      }
+    })
+    .filter((price): price is number => price !== null);
+
+  if (comparablePrices.length === 0) {
+    return null;
+  }
+
+  const min = Math.min(...comparablePrices);
+  const max = Math.max(...comparablePrices);
+
+  return min === max ? formatVnd(min) : `${formatVnd(min)} – ${formatVnd(max)}`;
+}
+
+function GroupCard({ tier }: { tier: SanityGroupPricingTier }) {
   return (
     <article className="pricing-card">
       <div className="pricing-card__header">
@@ -21,8 +48,8 @@ function GroupCard({ tier }: { tier: GroupTier }) {
       <p className="pricing-card__price">{tier.displayPrice}</p>
       <p className="pricing-card__desc">{tier.description}</p>
       <ul className="pricing-card__features">
-        {tier.features.map((f) => (
-          <li key={f}>{f}</li>
+        {tier.features.map((feature) => (
+          <li key={feature}>{feature}</li>
         ))}
       </ul>
       <a
@@ -30,20 +57,20 @@ function GroupCard({ tier }: { tier: GroupTier }) {
         className="btn btn--primary pricing-card__cta"
         onClick={() =>
           trackEvent("cta_click", {
-            cta_name: tier.cta.ctaName,
+            cta_name: tier.ctaAction,
             cta_location: "pricing",
             page_type: "homepage",
             page_path: "/",
           })
         }
       >
-        {tier.cta.label}
+        {tier.ctaLabel}
       </a>
     </article>
   );
 }
 
-function PrivateCard({ tier }: { tier: PrivateTier }) {
+function PrivateCard({ tier }: { tier: SanityPrivatePricingTier }) {
   return (
     <article className="pricing-card">
       <div className="pricing-card__header">
@@ -52,8 +79,8 @@ function PrivateCard({ tier }: { tier: PrivateTier }) {
       <p className="pricing-card__price">{tier.displayPrice}</p>
       <p className="pricing-card__desc">{tier.description}</p>
       <ul className="pricing-card__features">
-        {tier.features.map((f) => (
-          <li key={f}>{f}</li>
+        {tier.features.map((feature) => (
+          <li key={feature}>{feature}</li>
         ))}
       </ul>
       <a
@@ -61,20 +88,20 @@ function PrivateCard({ tier }: { tier: PrivateTier }) {
         className="btn btn--primary pricing-card__cta"
         onClick={() =>
           trackEvent("cta_click", {
-            cta_name: tier.cta.ctaName,
+            cta_name: tier.ctaAction,
             cta_location: "pricing",
             page_type: "homepage",
             page_path: "/",
           })
         }
       >
-        {tier.cta.label}
+        {tier.ctaLabel}
       </a>
     </article>
   );
 }
 
-function EnterpriseCard({ tier }: { tier: EnterpriseTier }) {
+function EnterpriseCard({ tier }: { tier: SanityEnterprisePricingTier }) {
   const { enterBusinessMode } = useHomepageConversion();
 
   return (
@@ -85,8 +112,8 @@ function EnterpriseCard({ tier }: { tier: EnterpriseTier }) {
       <p className="pricing-card__price">{tier.displayPrice}</p>
       <p className="pricing-card__desc">{tier.description}</p>
       <ul className="pricing-card__features">
-        {tier.features.map((f) => (
-          <li key={f}>{f}</li>
+        {tier.features.map((feature) => (
+          <li key={feature}>{feature}</li>
         ))}
       </ul>
       <button
@@ -95,20 +122,20 @@ function EnterpriseCard({ tier }: { tier: EnterpriseTier }) {
         onClick={() => {
           enterBusinessMode();
           trackEvent("cta_click", {
-            cta_name: tier.cta.ctaName,
+            cta_name: tier.ctaAction,
             cta_location: "pricing",
             page_type: "homepage",
             page_path: "/",
           });
         }}
       >
-        {tier.cta.label}
+        {tier.ctaLabel}
       </button>
     </article>
   );
 }
 
-function PricingCard({ tier }: { tier: PricingTier }) {
+function PricingCard({ tier }: { tier: SanityPricingTier }) {
   switch (tier.kind) {
     case "group":
       return <GroupCard tier={tier} />;
@@ -119,14 +146,16 @@ function PricingCard({ tier }: { tier: PricingTier }) {
   }
 }
 
-export function PricingSection() {
+export function PricingSection({
+  pricingTiers,
+}: HomepagePricingSectionProps) {
+  const sitePriceRange = buildSitePriceRange(pricingTiers);
+
   return (
     <section className="section" id="hoc-phi">
       <div className="section__header">
         <h2 className="section__title">Học phí</h2>
-        {sitePriceRange && (
-          <p className="section__subtitle">Từ {sitePriceRange}</p>
-        )}
+        {sitePriceRange && <p className="section__subtitle">Từ {sitePriceRange}</p>}
       </div>
       <div className="pricing-grid">
         {pricingTiers.map((tier) => (

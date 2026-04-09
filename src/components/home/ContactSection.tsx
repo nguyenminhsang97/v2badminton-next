@@ -4,14 +4,39 @@ import { siteConfig } from "@/lib/site";
 import { trackEvent } from "@/lib/tracking";
 import { ContactForm } from "./ContactForm";
 import { HomepageScrollCoordinator } from "./HomepageScrollCoordinator";
+import type { HomeContactSettings } from "./contactSettings";
+import type { HomepageContactSectionProps } from "./sectionProps";
 
 /**
  * S2-A8: Contact section wrapper.
  * Contains direct contact CTAs (phone, Zalo, Facebook) alongside the form.
- * The form itself (S2-C1) will be added inside this section in a later ticket.
  * Contact section MUST NOT be reduced to only a form.
  */
-export function ContactSection() {
+
+const FALLBACK_CONTACT_SETTINGS: HomeContactSettings = {
+  siteName: siteConfig.name,
+  phoneDisplay: siteConfig.phoneDisplay,
+  phoneE164: siteConfig.phoneE164,
+  zaloNumber: siteConfig.zaloNumber,
+  facebookUrl: siteConfig.facebookUrl,
+};
+
+export function ContactSection({
+  siteSettings,
+  locations,
+  scheduleBlocks,
+}: HomepageContactSectionProps) {
+  const contactSettings: HomeContactSettings =
+    siteSettings === null
+      ? FALLBACK_CONTACT_SETTINGS
+      : {
+          siteName: siteSettings.siteName,
+          phoneDisplay: siteSettings.phoneDisplay,
+          phoneE164: siteSettings.phoneE164,
+          zaloNumber: siteSettings.zaloNumber,
+          facebookUrl: siteSettings.facebookUrl,
+        };
+
   return (
     <section className="section contact-section" id="lien-he">
       <HomepageScrollCoordinator />
@@ -24,13 +49,17 @@ export function ContactSection() {
       </div>
 
       <div className="contact-section__body">
-        <ContactForm />
+        <ContactForm
+          contactSettings={contactSettings}
+          locations={locations}
+          scheduleBlocks={scheduleBlocks}
+        />
 
         <aside className="contact-direct">
           <h3 className="contact-direct__title">Lien he truc tiep</h3>
           <div className="contact-direct__channels">
             <a
-              href={`tel:${siteConfig.phoneE164}`}
+              href={`tel:${contactSettings.phoneE164}`}
               className="contact-direct__link"
               onClick={() =>
                 trackEvent("contact_click", {
@@ -42,11 +71,11 @@ export function ContactSection() {
             >
               <span className="contact-direct__label">Goi dien</span>
               <span className="contact-direct__value">
-                {siteConfig.phoneDisplay}
+                {contactSettings.phoneDisplay}
               </span>
             </a>
             <a
-              href={`https://zalo.me/${siteConfig.zaloNumber}`}
+              href={`https://zalo.me/${contactSettings.zaloNumber}`}
               className="contact-direct__link"
               target="_blank"
               rel="noopener noreferrer"
@@ -60,11 +89,11 @@ export function ContactSection() {
             >
               <span className="contact-direct__label">Zalo</span>
               <span className="contact-direct__value">
-                {siteConfig.zaloNumber}
+                {contactSettings.zaloNumber}
               </span>
             </a>
             <a
-              href={siteConfig.facebookUrl}
+              href={contactSettings.facebookUrl}
               className="contact-direct__link"
               target="_blank"
               rel="noopener noreferrer"
@@ -77,7 +106,9 @@ export function ContactSection() {
               }
             >
               <span className="contact-direct__label">Facebook</span>
-              <span className="contact-direct__value">V2 Badminton</span>
+              <span className="contact-direct__value">
+                {contactSettings.siteName}
+              </span>
             </a>
           </div>
         </aside>

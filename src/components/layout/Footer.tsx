@@ -1,23 +1,27 @@
 import Link from "next/link";
-import { siteConfig } from "@/lib/site";
+import type { SiteChromeSettings } from "@/components/layout/siteSettings";
 
-export function Footer() {
+type FooterProps = {
+  siteSettings: SiteChromeSettings;
+};
+
+export function Footer({ siteSettings }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="site-footer">
       <div className="site-footer__inner">
         <div className="site-footer__brand">
-          <strong>{siteConfig.name}</strong>
+          <strong>{siteSettings.siteName}</strong>
           <p>Dạy cầu lông tại Bình Thạnh &amp; Thủ Đức, TP.HCM.</p>
         </div>
 
         <div className="site-footer__links">
-          <a href={`tel:${siteConfig.phoneE164}`} className="site-footer__link">
-            ĐT/Zalo: {siteConfig.phoneDisplay}
+          <a href={`tel:${siteSettings.phoneE164}`} className="site-footer__link">
+            ĐT/Zalo: {siteSettings.phoneDisplay}
           </a>
           <a
-            href={`https://zalo.me/${siteConfig.zaloNumber}`}
+            href={`https://zalo.me/${siteSettings.zaloNumber}`}
             className="site-footer__link"
             target="_blank"
             rel="noopener noreferrer"
@@ -25,7 +29,7 @@ export function Footer() {
             Zalo
           </a>
           <a
-            href={siteConfig.facebookUrl}
+            href={siteSettings.facebookUrl}
             className="site-footer__link"
             target="_blank"
             rel="noopener noreferrer"
@@ -45,7 +49,7 @@ export function Footer() {
 
         <div className="site-footer__meta">
           <span>Thông tin đăng ký được dùng để tư vấn lớp học phù hợp.</span>
-          <span>&copy; {currentYear} {siteConfig.name}.</span>
+          <span>&copy; {currentYear} {siteSettings.siteName}.</span>
         </div>
       </div>
     </footer>

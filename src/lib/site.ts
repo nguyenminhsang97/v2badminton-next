@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: "V2 Badminton",
-  siteUrl: "https://v2badminton.com",
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://v2badminton.com",
   defaultOgImagePath: "/og-image.jpg",
   language: "vi-VN",
   locale: "vi_VN",

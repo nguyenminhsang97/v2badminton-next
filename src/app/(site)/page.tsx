@@ -1,5 +1,23 @@
+import { BusinessSection } from "@/components/home/BusinessSection";
+import { ContactSection } from "@/components/home/ContactSection";
+import { CourseSection } from "@/components/home/CourseSection";
+import { FaqSection } from "@/components/home/FaqSection";
+import { HeroSection } from "@/components/home/HeroSection";
+import { HomepageConversionProvider } from "@/components/home/HomepageConversionProvider";
+import { LocationsSection } from "@/components/home/LocationsSection";
+import { PricingSection } from "@/components/home/PricingSection";
+import { ScheduleSection } from "@/components/home/ScheduleSection";
+import { SeoLinksBlock } from "@/components/home/SeoLinksBlock";
+import { WhySection } from "@/components/home/WhySection";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { buildMetadata } from "@/lib/routes";
+import {
+  getFaqs,
+  getLocations,
+  getPricingTiers,
+  getScheduleBlocks,
+  getSiteSettings,
+} from "@/lib/sanity";
 import {
   buildCourseSchemas,
   buildFaqPageSchema,
@@ -8,45 +26,46 @@ import {
   buildWebsiteSchema,
 } from "@/lib/schema";
 
-import { HomepageConversionProvider } from "@/components/home/HomepageConversionProvider";
-import { HeroSection } from "@/components/home/HeroSection";
-import { PricingSection } from "@/components/home/PricingSection";
-import { WhySection } from "@/components/home/WhySection";
-import { SeoLinksBlock } from "@/components/home/SeoLinksBlock";
-import { CourseSection } from "@/components/home/CourseSection";
-import { ScheduleSection } from "@/components/home/ScheduleSection";
-import { LocationsSection } from "@/components/home/LocationsSection";
-import { BusinessSection } from "@/components/home/BusinessSection";
-import { FaqSection } from "@/components/home/FaqSection";
-import { ContactSection } from "@/components/home/ContactSection";
-
-// S2-A0: Homepage metadata — verify-only, already wired in Sprint 1
 export const metadata = buildMetadata("/");
 
-export default function Home() {
-  const courseSchemas = buildCourseSchemas();
+export default async function Home() {
+  const [pricingTiers, scheduleBlocks, locations, faqs, siteSettings] =
+    await Promise.all([
+      getPricingTiers(),
+      getScheduleBlocks(),
+      getLocations(),
+      getFaqs("homepage"),
+      getSiteSettings(),
+    ]);
+
+  const courseSchemas = buildCourseSchemas(pricingTiers);
 
   return (
     <>
-      {/* JSON-LD — S2-E4: verify baseline survives homepage rewrite */}
       <JsonLd id="organization-schema" data={buildOrganizationSchema()} />
       <JsonLd id="website-schema" data={buildWebsiteSchema()} />
-      <JsonLd id="homepage-business-schema" data={buildHomepageLocalBusinessSchema()} />
-      <JsonLd id="homepage-faq-schema" data={buildFaqPageSchema("homepage")} />
+      <JsonLd
+        id="homepage-business-schema"
+        data={buildHomepageLocalBusinessSchema(locations, pricingTiers)}
+      />
+      <JsonLd id="homepage-faq-schema" data={buildFaqPageSchema(faqs)} />
       <JsonLd id="homepage-course-schema" data={courseSchemas} />
 
-      {/* S2-B6: Single conversion-state owner wraps all interactive sections */}
       <HomepageConversionProvider>
         <HeroSection />
-        <PricingSection />
+        <PricingSection pricingTiers={pricingTiers} />
         <WhySection />
         <CourseSection />
-        <ScheduleSection />
-        <LocationsSection />
+        <ScheduleSection scheduleBlocks={scheduleBlocks} />
+        <LocationsSection locations={locations} />
         <SeoLinksBlock />
         <BusinessSection />
-        <FaqSection />
-        <ContactSection />
+        <FaqSection faqs={faqs} />
+        <ContactSection
+          siteSettings={siteSettings}
+          locations={locations}
+          scheduleBlocks={scheduleBlocks}
+        />
       </HomepageConversionProvider>
     </>
   );
