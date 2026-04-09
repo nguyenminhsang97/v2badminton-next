@@ -4,9 +4,10 @@ import { trackEvent } from "@/lib/tracking";
 import { useHomepageConversion } from "./HomepageConversionProvider";
 
 const PROOF_POINTS = [
-  "Thiet ke theo so luong nguoi va thoi luong",
-  "Tuy bien theo ngan sach doanh nghiep",
-  "Phu hop team building va lop noi bo",
+  "Thiết kế theo số lượng người và thời lượng",
+  "Tuỳ biến theo ngân sách doanh nghiệp",
+  "Phù hợp team building và lớp nội bộ",
+  "Tổ chức giải đấu nội bộ — gắn kết đội ngũ, rèn sức khỏe",
 ] as const;
 
 export function BusinessSection() {
@@ -15,9 +16,9 @@ export function BusinessSection() {
   return (
     <section className="section" id="doanh-nghiep">
       <div className="section__header">
-        <h2 className="section__title">Chuong trinh doanh nghiep</h2>
-        <p className="section__subtitle">
-          Team building, lop noi bo, lich theo ngan sach cua cong ty ban.
+        <h2 className="section__title">CHƯƠNG TRÌNH DOANH NGHIỆP</h2>
+        <p className="section__desc">
+          Team building, lớp nội bộ, lịch theo ngân sách của công ty bạn.
         </p>
       </div>
       <ul className="business__points">
@@ -38,7 +39,7 @@ export function BusinessSection() {
           });
         }}
       >
-        Nhan bao gia
+        Nhận báo giá
       </button>
     </section>
   );

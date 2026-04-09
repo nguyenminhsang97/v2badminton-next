@@ -6,7 +6,7 @@ export function FaqSection() {
   return (
     <section className="section" id="hoi-dap">
       <div className="section__header">
-        <h2 className="section__title">Cau hoi thuong gap</h2>
+        <h2 className="section__title">CÂU HỎI THƯỜNG GẶP</h2>
       </div>
       <div className="faq-list">
         {faqs.map((faq) => (

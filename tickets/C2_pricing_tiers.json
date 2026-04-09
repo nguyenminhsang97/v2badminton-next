@@ -1,0 +1,115 @@
+[
+  {
+    "_id": "pricingTier.group-basic-3x",
+    "_type": "pricing_tier",
+    "slug": { "_type": "slug", "current": "group-basic-3x" },
+    "name": "3 buổi / tuần",
+    "shortLabel": "3 buổi cơ bản",
+    "kind": "group",
+    "billingModel": "monthly_package",
+    "description": "Lớp cơ bản dành cho người mới bắt đầu hoặc cần nền tảng chắc từ đầu.",
+    "groupSize": "2-6 người",
+    "pricePerMonth": 1300000,
+    "displayPrice": "1.300.000 VNĐ / tháng",
+    "sessionsPerWeek": 3,
+    "sessionsPerMonth": 12,
+    "features": [
+      "Lớp nhóm nhỏ 2-6 người",
+      "Học 3 buổi mỗi tuần",
+      "Phù hợp người mới bắt đầu"
+    ],
+    "ctaLabel": "Đăng ký học thử",
+    "ctaAction": "dang_ky_hoc_thu",
+    "order": 1,
+    "isActive": true
+  },
+  {
+    "_id": "pricingTier.group-advanced-3x",
+    "_type": "pricing_tier",
+    "slug": { "_type": "slug", "current": "group-advanced-3x" },
+    "name": "3 buổi / tuần nâng cao",
+    "shortLabel": "3 buổi nâng cao",
+    "kind": "group",
+    "billingModel": "monthly_package",
+    "description": "Dành cho học viên đã có nền tảng và muốn tập đều để nâng kỹ thuật nhanh hơn.",
+    "groupSize": "2-6 người",
+    "pricePerMonth": 1500000,
+    "displayPrice": "1.500.000 VNĐ / tháng",
+    "sessionsPerWeek": 3,
+    "sessionsPerMonth": 12,
+    "features": [
+      "Lớp nhóm nhỏ 2-6 người",
+      "Học 3 buổi mỗi tuần",
+      "Phù hợp học viên đã có nền tảng"
+    ],
+    "ctaLabel": "Đăng ký học thử",
+    "ctaAction": "dang_ky_hoc_thu",
+    "order": 2,
+    "isActive": true
+  },
+  {
+    "_id": "pricingTier.group-basic-2x",
+    "_type": "pricing_tier",
+    "slug": { "_type": "slug", "current": "group-basic-2x" },
+    "name": "2 buổi / tuần",
+    "shortLabel": "2 buổi / tuần",
+    "kind": "group",
+    "billingModel": "monthly_package",
+    "description": "Phù hợp lịch làm việc bận nhưng vẫn muốn duy trì đều.",
+    "groupSize": "2-6 người",
+    "pricePerMonth": 1000000,
+    "displayPrice": "1.000.000 VNĐ / tháng",
+    "sessionsPerWeek": 2,
+    "sessionsPerMonth": 8,
+    "features": [
+      "Lớp nhóm nhỏ 2-6 người",
+      "Học 2 buổi mỗi tuần",
+      "Phù hợp người bận lịch làm việc"
+    ],
+    "ctaLabel": "Đăng ký học thử",
+    "ctaAction": "dang_ky_hoc_thu",
+    "order": 3,
+    "isActive": true
+  },
+  {
+    "_id": "pricingTier.private-1-1",
+    "_type": "pricing_tier",
+    "slug": { "_type": "slug", "current": "private-1-1" },
+    "name": "1 kèm 1",
+    "shortLabel": "1 kèm 1",
+    "kind": "private",
+    "billingModel": "per_hour",
+    "description": "Học viên tự lo sân, phù hợp khi cần lịch riêng và theo sát.",
+    "pricePerHour": 400000,
+    "displayPrice": "400.000 VNĐ / giờ / học viên",
+    "features": [
+      "Lịch học riêng theo nhu cầu",
+      "HLV theo sát từng buổi",
+      "Học viên tự lo sân tập"
+    ],
+    "ctaLabel": "Đăng ký học thử",
+    "ctaAction": "dang_ky_hoc_thu",
+    "order": 4,
+    "isActive": true
+  },
+  {
+    "_id": "pricingTier.enterprise",
+    "_type": "pricing_tier",
+    "slug": { "_type": "slug", "current": "enterprise" },
+    "name": "Doanh nghiệp",
+    "shortLabel": "Doanh nghiệp",
+    "kind": "enterprise",
+    "billingModel": "quote",
+    "description": "Thiết kế theo số lượng người, thời lượng và mục tiêu chương trình. Phù hợp cho team building, lớp nội bộ và lịch theo ngân sách doanh nghiệp.",
+    "displayPrice": "Giá thương lượng",
+    "features": [
+      "Thiết kế theo mục tiêu chương trình",
+      "Tùy biến theo ngân sách doanh nghiệp",
+      "Phù hợp team building và lớp nội bộ"
+    ],
+    "ctaLabel": "Nhận báo giá",
+    "ctaAction": "nhan_bao_gia",
+    "order": 5,
+    "isActive": true
+  }
+]

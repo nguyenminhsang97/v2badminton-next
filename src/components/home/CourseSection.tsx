@@ -1,70 +1,55 @@
 "use client";
 
-import { pricingTiers } from "@/lib/pricing";
 import { trackEvent } from "@/lib/tracking";
 import { useHomepageConversion } from "./HomepageConversionProvider";
 
 /**
- * Course cards derived from pricing tiers.
+ * Course cards — static copy matching production HTML.
  *
- * - Basic (group, co_ban): setCourseIntent("co_ban") + scroll to #lich-hoc
- * - Advanced (group, nang_cao): setCourseIntent("nang_cao") + scroll to #lich-hoc
- * - Enterprise: enterBusinessMode() + scroll to #lien-he
- *
- * Course cards MUST NOT own independent conversion state.
- * All actions flow through HomepageConversionProvider (S2-B6).
+ * - Cơ bản: setCourseIntent("co_ban") → scroll to #lich-hoc via HomepageConversionProvider
+ * - Nâng cao: setCourseIntent("nang_cao") → scroll to #lich-hoc
+ * - Doanh nghiệp: enterBusinessMode() → scroll to #lien-he
  */
-
-const basicTier = pricingTiers.find(
-  (t) => t.kind === "group" && !t.name.toLowerCase().includes("nang cao"),
-);
-const advancedTier = pricingTiers.find(
-  (t) => t.kind === "group" && t.name.toLowerCase().includes("nang cao"),
-);
-const enterpriseTier = pricingTiers.find((t) => t.kind === "enterprise");
 
 type CourseCardDef = {
   id: string;
+  badge?: string;
   title: string;
   description: string;
+  tags: readonly string[];
   ctaLabel: string;
   action: "basic" | "advanced" | "enterprise";
 };
 
-const courseCards: CourseCardDef[] = [
-  ...(basicTier
-    ? [
-        {
-          id: "course-basic",
-          title: "Khoa co ban",
-          description: basicTier.description,
-          ctaLabel: "Xem lich hoc co ban",
-          action: "basic" as const,
-        },
-      ]
-    : []),
-  ...(advancedTier
-    ? [
-        {
-          id: "course-advanced",
-          title: "Khoa nang cao",
-          description: advancedTier.description,
-          ctaLabel: "Xem lich hoc nang cao",
-          action: "advanced" as const,
-        },
-      ]
-    : []),
-  ...(enterpriseTier
-    ? [
-        {
-          id: "course-enterprise",
-          title: "Doanh nghiep",
-          description: enterpriseTier.description,
-          ctaLabel: enterpriseTier.cta.label,
-          action: "enterprise" as const,
-        },
-      ]
-    : []),
+const COURSE_CARDS: CourseCardDef[] = [
+  {
+    id: "course-basic",
+    badge: "Phổ biến",
+    title: "KHÓA CƠ BẢN",
+    description:
+      "Dành cho người mới bắt đầu. Học cầm vợt đúng cách, tư thế đứng, di chuyển chân, phát cầu và các đường đánh cơ bản. Xây dựng nền tảng vững chắc ngay từ đầu.",
+    tags: ["Người mới", "1 kèm 1 / Nhóm nhỏ", "Linh hoạt lịch"],
+    ctaLabel: "Xem lịch học →",
+    action: "basic",
+  },
+  {
+    id: "course-advanced",
+    title: "KHÓA NÂNG CAO",
+    description:
+      "Dành cho người đã có nền tảng. Tập trung vào kỹ thuật đập cầu (smash), cắt cầu, phòng thủ, chiến thuật thi đấu đơn & đôi. Nâng trình rõ rệt.",
+    tags: ["Có kinh nghiệm", "Chiến thuật", "Thi đấu"],
+    ctaLabel: "Xem lịch học →",
+    action: "advanced",
+  },
+  {
+    id: "course-enterprise",
+    title: "CẦU LÔNG DOANH NGHIỆP",
+    description:
+      "Chương trình team building qua cầu lông. Tổ chức giải đấu nội bộ, huấn luyện theo nhóm. Gắn kết đồng nghiệp, rèn sức khỏe — một chương trình, hai lợi ích.",
+    tags: ["Team building", "Giải đấu nội bộ", "Linh hoạt"],
+    ctaLabel: "Liên hệ tư vấn →",
+    action: "enterprise",
+  },
 ];
 
 export function CourseSection() {
@@ -105,20 +90,34 @@ export function CourseSection() {
   return (
     <section className="section" id="khoa-hoc">
       <div className="section__header">
-        <h2 className="section__title">Khoa hoc</h2>
+        <p className="section__eyebrow">Chương trình đào tạo</p>
+        <h2 className="section__title">KHÓA HỌC CẦU LÔNG</h2>
+        <p className="section__desc">
+          Chọn khóa phù hợp với trình độ và mục tiêu của bạn. Mọi khóa đều có HLV hướng dẫn trực tiếp — nhấn vào thẻ để xem lịch học.
+        </p>
       </div>
       <div className="course-grid">
-        {courseCards.map((card) => (
+        {COURSE_CARDS.map((card) => (
           <article key={card.id} className="course-card">
-            <h3 className="course-card__title">{card.title}</h3>
-            <p className="course-card__desc">{card.description}</p>
-            <button
-              type="button"
-              className={`btn ${card.action === "enterprise" ? "btn--outline" : "btn--primary"} course-card__cta`}
-              onClick={() => handleClick(card)}
-            >
-              {card.ctaLabel}
-            </button>
+            {card.badge && (
+              <div className="course-card__badge">{card.badge}</div>
+            )}
+            <div className="course-card__body">
+              <h3 className="course-card__title">{card.title}</h3>
+              <p className="course-card__desc">{card.description}</p>
+              <div className="course-card__tags">
+                {card.tags.map((tag) => (
+                  <span key={tag} className="course-card__tag">{tag}</span>
+                ))}
+              </div>
+              <button
+                type="button"
+                className="course-card__action"
+                onClick={() => handleClick(card)}
+              >
+                {card.ctaLabel}
+              </button>
+            </div>
           </article>
         ))}
       </div>

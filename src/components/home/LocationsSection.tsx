@@ -12,9 +12,9 @@ export function LocationsSection() {
   return (
     <section className="section" id="dia-diem">
       <div className="section__header">
-        <h2 className="section__title">4 san tap</h2>
-        <p className="section__subtitle">
-          Chon san gan nha hoac gan noi lam viec.
+        <h2 className="section__title">4 SÂN TẬP</h2>
+        <p className="section__desc">
+          Phủ sóng Bình Thạnh & Thủ Đức. Chọn sân gần nhà hoặc gần nơi làm việc.
         </p>
       </div>
       <div className="locations-grid">
@@ -31,7 +31,7 @@ export function LocationsSection() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Xem ban do
+              Xem bản đồ
             </a>
           </article>
         ))}

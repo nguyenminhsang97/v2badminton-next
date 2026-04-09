@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro } from "next/font/google";
-import { Footer } from "@/components/layout/Footer";
-import { TrackingBootstrap } from "@/components/providers/TrackingBootstrap";
-import { Nav } from "@/components/layout/Nav";
+import type { ReactNode } from "react";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
 
@@ -31,18 +29,11 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="vi" className={beVietnamPro.variable}>
-      <body>
-        <div className="app-shell">
-          <TrackingBootstrap />
-          <Nav />
-          <main className="site-main">{children}</main>
-          <Footer />
-        </div>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

@@ -12,10 +12,10 @@ import { useHomepageConversion } from "./HomepageConversionProvider";
 type TabId = "all" | CourtId;
 
 const TABS: readonly { id: TabId; label: string }[] = [
-  { id: "all", label: "Tat ca" },
-  { id: "hue_thien", label: "Hue Thien" },
+  { id: "all", label: "Tất cả" },
+  { id: "hue_thien", label: "Huệ Thiên" },
   { id: "green", label: "Green" },
-  { id: "phuc_loc", label: "Phuc Loc" },
+  { id: "phuc_loc", label: "Phúc Lộc" },
   { id: "khang_sport", label: "Khang Sport" },
 ] as const;
 
@@ -58,16 +58,22 @@ export function ScheduleSection() {
   return (
     <section className="section" id="lich-hoc">
       <div className="section__header">
-        <h2 className="section__title">Lich hoc</h2>
+        <p className="section__eyebrow">Thời khóa biểu</p>
+        <h2 className="section__title">LỊCH HỌC</h2>
+        <p className="section__desc">
+          Lớp mở hàng tuần tại 4 sân. Buổi học có{" "}
+          <strong>Cơ bản + Nâng cao</strong> nghĩa là cùng giờ đó có lớp cho cả người mới lẫn người đã có nền tảng.
+        </p>
         {isFiltered && (
-          <p className="section__subtitle">
-            Dang loc theo trinh do {selectedCourseIntent === "co_ban" ? "co ban" : "nang cao"}
+          <p className="section__filter-note">
+            Đang lọc theo trình độ{" "}
+            {selectedCourseIntent === "co_ban" ? "cơ bản" : "nâng cao"}
           </p>
         )}
       </div>
 
       {/* Filter tabs */}
-      <div className="schedule-tabs" role="tablist" aria-label="Loc theo san">
+      <div className="schedule-tabs" role="tablist" aria-label="Lọc theo sân">
         {TABS.map((tab) => (
           <button
             key={tab.id}
@@ -84,25 +90,43 @@ export function ScheduleSection() {
       {/* Schedule cards */}
       <div className="schedule-grid">
         {itemsToRender.map((item) => (
-          <article key={item.id} className="schedule-card">
-            <div className="schedule-card__info">
-              <p className="schedule-card__court">
+          <article
+            key={item.id}
+            className="schedule-card"
+            onClick={() => handleCardClick(item)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                handleCardClick(item);
+              }
+            }}
+          >
+            <div className="schedule-card__time">{item.timeLabel}</div>
+            <div className="schedule-card__days">{item.dayGroup}</div>
+            <div className="schedule-card__location">
+              <span className="schedule-card__court">
                 {courtLocationMap[item.courtId].shortName}
-              </p>
-              <p className="schedule-card__day">{item.dayGroup}</p>
-              <p className="schedule-card__time">{item.timeLabel}</p>
-              <p className="schedule-card__level">{item.levelLabel}</p>
+              </span>
             </div>
-            <button
-              type="button"
-              className="btn btn--primary schedule-card__cta"
-              onClick={() => handleCardClick(item)}
-            >
-              Dang ky
-            </button>
+            <div className="schedule-card__levels">
+              {item.levels.map((level) => (
+                <span
+                  key={level}
+                  className={`level-tag level-tag--${level === "co_ban" ? "co-ban" : "nang-cao"}`}
+                >
+                  {level === "co_ban" ? "Cơ bản" : "Nâng cao"}
+                </span>
+              ))}
+            </div>
           </article>
         ))}
       </div>
+
+      <p className="schedule-note">
+        Đăng ký thử hoặc hỏi lịch học trực tiếp qua form bên dưới — V2 sẽ xếp lịch theo sân gần bạn nhất.
+      </p>
     </section>
   );
 }
