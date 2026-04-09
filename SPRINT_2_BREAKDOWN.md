@@ -49,6 +49,7 @@ Static imports can wire:
 - Revalidation phai duoc chot ngay tu Group A va document ro operator expectation.
 - `robots.ts` va `sitemap.ts` nen dung `NEXT_PUBLIC_SITE_URL` lam canonical base. Chi fetch Sanity khi can content-derived URLs trong sprint sau.
 - OpenClaw chua setup, nen khong nam tren critical path cua Sprint 2.
+- `.env.example` hien dang bi pattern `.env*` ignore. Group A can chot cach track file nay trong git, khuyen nghi unignore ro rang.
 
 ## Group A: Sanity Read Infrastructure
 

@@ -19,6 +19,7 @@
   - Chot va document revalidation strategy
   - Export helper fetch wrapper null-safe
   - Update `.env.local` + `.env.example`
+  - Unignore `.env.example` trong `.gitignore` hoac force-add no vao git, vi repo hien dang ignore `.env*`
   - Install `@sanity/client` neu chua co
 - **Dependency:** Sprint 1
 - **Priority:** P0
@@ -120,11 +121,14 @@
 - **Scope:**
   - `ContactForm` nhan props:
     - locations
-    - schedule blocks
-    - site settings
+    - pre-computed `timeSlots`
+    - `zaloNumber`
   - Dropdown logic map tu Sanity types
   - Prefill message compose dung `location.name`, `dayGroup`, `timeLabel`
   - `ContactSection` wrap va pass props vao `ContactForm`
+  - Giu contract submit hien tai:
+    - `court` value van phai match legacy `CourtId`
+    - `time_slot` value van phai match legacy `TimeSlotId`
   - Khong doi form submit logic, validation, hay API endpoint
 - **Dependency:** S2-B2
 - **Priority:** P0
