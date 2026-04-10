@@ -1,11 +1,46 @@
+import type { Metadata } from "next";
+import { MoneyPageTemplate } from "@/components/money-page/MoneyPageTemplate";
 import { JsonLd } from "@/components/ui/JsonLd";
+import { buildMoneyPageMetadata } from "@/lib/moneyPageMetadata";
 import { buildMetadata, canonicalUrl } from "@/lib/routes";
-import { getFaqs, getPricingTiers } from "@/lib/sanity";
+import { getFaqs, getMoneyPage, getPricingTiers } from "@/lib/sanity";
 import { buildBreadcrumbSchema, buildFaqPageSchema } from "@/lib/schema";
 
-export const metadata = buildMetadata("/hoc-cau-long-cho-nguoi-moi/");
+const PATH = "/hoc-cau-long-cho-nguoi-moi/" as const;
+const SLUG = "hoc-cau-long-cho-nguoi-moi";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const moneyPage = await getMoneyPage(SLUG);
+
+  if (moneyPage) {
+    return buildMoneyPageMetadata(PATH, moneyPage);
+  }
+
+  return buildMetadata(PATH);
+}
 
 export default async function BeginnerPage() {
+  const moneyPage = await getMoneyPage(SLUG);
+
+  if (moneyPage) {
+    return (
+      <>
+        <JsonLd
+          id="nguoi-moi-breadcrumb"
+          data={buildBreadcrumbSchema([
+            { name: "Trang chủ", item: canonicalUrl("/") },
+            { name: "Học cầu lông cho người mới bắt đầu" },
+          ])}
+        />
+        <JsonLd
+          id="nguoi-moi-faq"
+          data={buildFaqPageSchema(moneyPage.relatedFaqs)}
+        />
+        <MoneyPageTemplate page={moneyPage} />
+      </>
+    );
+  }
+
   const [beginnerFaqs, pricingTiers] = await Promise.all([
     getFaqs("nguoi_moi"),
     getPricingTiers(),

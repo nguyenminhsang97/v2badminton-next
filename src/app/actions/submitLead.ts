@@ -117,7 +117,7 @@ export async function submitLead(
       if (checkHoneypot(formData)) {
         return buildResult({
           success: true,
-          message: "V2 da nhan thong tin. Chung toi se lien he som.",
+          message: "V2 đã nhận thông tin. Chúng tôi sẽ liên hệ sớm.",
           values,
           submissionMethod,
         });
@@ -133,7 +133,7 @@ export async function submitLead(
           values,
           submissionMethod,
           "validation",
-          "Vui long kiem tra lai thong tin truoc khi gui.",
+          "Vui lòng kiểm tra lại thông tin trước khi gửi.",
           validationErrors,
         );
       }
@@ -145,7 +145,7 @@ export async function submitLead(
           values,
           submissionMethod,
           "rate_limited",
-          "Ban da gui qua nhieu lan trong mot thoi gian ngan. Thu lai sau it phut nhe.",
+          "Bạn đã gửi quá nhiều lần trong một thời gian ngắn. Thử lại sau ít phút nhé.",
         );
       }
 
@@ -156,7 +156,7 @@ export async function submitLead(
             values,
             submissionMethod,
             "invalid_form_token",
-            "Form dang ky da het han hoac chua san sang. Vui long tai lai trang va thu lai.",
+            "Form đăng ký đã hết hạn hoặc chưa sẵn sàng. Vui lòng tải lại trang và thử lại.",
           );
         }
 
@@ -169,7 +169,7 @@ export async function submitLead(
             values,
             submissionMethod,
             "captcha_failed",
-            "Khong the xac minh captcha. Vui long thu lai.",
+            "Không thể xác minh captcha. Vui lòng thử lại.",
           );
         }
       }
@@ -179,7 +179,7 @@ export async function submitLead(
           values,
           submissionMethod,
           "server_error",
-          "He thong luu lead chua san sang. Vui long thu lai sau it phut.",
+          "Hệ thống lưu lead chưa sẵn sàng. Vui lòng thử lại sau ít phút.",
         );
       }
 
@@ -198,7 +198,7 @@ export async function submitLead(
           return buildResult({
             success: true,
             deduped: true,
-            message: "V2 da nhan thong tin. Chung toi se lien he som.",
+            message: "V2 đã nhận thông tin. Chúng tôi sẽ liên hệ sớm.",
             values,
             submissionMethod,
           });
@@ -241,7 +241,7 @@ export async function submitLead(
 
         return buildResult({
           success: true,
-          message: "V2 da nhan thong tin. Chung toi se lien he som.",
+          message: "V2 đã nhận thông tin. Chúng tôi sẽ liên hệ sớm.",
           values,
           submissionMethod,
         });
@@ -260,7 +260,7 @@ export async function submitLead(
           values,
           submissionMethod,
           "server_error",
-          "Khong the gui form luc nay. Vui long thu lai sau it phut.",
+          "Không thể gửi form lúc này. Vui lòng thử lại sau ít phút.",
         );
       }
     },

@@ -1,13 +1,23 @@
 import type {
+  SanityCoach,
   SanityFaq,
   SanityLocation,
   SanityPricingTier,
   SanityScheduleBlock,
   SanitySiteSettings,
+  SanityTestimonial,
 } from "@/lib/sanity";
+
+export type HomepageCoachSectionProps = {
+  coaches: SanityCoach[];
+};
 
 export type HomepageFaqSectionProps = {
   faqs: SanityFaq[];
+};
+
+export type HomepageTestimonialsSectionProps = {
+  testimonials: SanityTestimonial[];
 };
 
 export type HomepagePricingSectionProps = {

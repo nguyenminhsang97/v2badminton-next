@@ -25,7 +25,8 @@ export type CtaLocation =
   | "course_cards"
   | "business"
   | "seo_cta_block"
-  | "location_cards";
+  | "location_cards"
+  | (string & {});
 
 export type ContactMethod = "zalo" | "phone" | "messenger";
 export type MapLocation = "hue_thien" | "green" | "khang_sport" | "phuc_loc";

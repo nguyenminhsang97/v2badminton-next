@@ -69,15 +69,15 @@ export function validateLeadFields(values: LeadFormValues): LeadFieldErrors {
   const errors: LeadFieldErrors = {};
 
   if (values.name.trim().length < 2) {
-    errors.name = "Vui long nhap ho ten tu 2 ky tu tro len.";
+    errors.name = "Vui lòng nhập họ tên từ 2 ký tự trở lên.";
   }
 
   if (!VN_MOBILE_REGEX.test(values.phone.trim())) {
-    errors.phone = "So dien thoai chua dung dinh dang di dong Viet Nam.";
+    errors.phone = "Số điện thoại chưa đúng định dạng di động Việt Nam.";
   }
 
   if (values.message.trim().length > 500) {
-    errors.message = "Loi nhan toi da 500 ky tu.";
+    errors.message = "Lời nhắn tối đa 500 ký tự.";
   }
 
   return errors;
@@ -89,18 +89,18 @@ export function validateLeadFieldEnums(
   const errors: LeadFieldErrors = {};
 
   if (raw.level !== "" && !KNOWN_LEVELS.includes(raw.level as ScheduleLevel)) {
-    errors.level = "Trinh do khong hop le.";
+    errors.level = "Trình độ không hợp lệ.";
   }
 
   if (raw.court !== "" && !KNOWN_COURT_IDS.has(raw.court as CourtId)) {
-    errors.court = "San tap khong hop le.";
+    errors.court = "Sân tập không hợp lệ.";
   }
 
   if (
     raw.time_slot !== "" &&
     !KNOWN_TIME_SLOT_IDS.has(raw.time_slot as TimeSlotId)
   ) {
-    errors.time_slot = "Khung gio khong hop le.";
+    errors.time_slot = "Khung giờ không hợp lệ.";
   }
 
   return errors;

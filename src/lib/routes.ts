@@ -1,13 +1,20 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/site";
 
-export type PageType = "homepage" | "seo_local" | "seo_service" | "seo_support";
+export type PageType =
+  | "homepage"
+  | "seo_local"
+  | "seo_service"
+  | "seo_support";
 
 export type CoreRoutePath =
   | "/"
   | "/hoc-cau-long-cho-nguoi-moi/"
   | "/lop-cau-long-binh-thanh/"
-  | "/lop-cau-long-thu-duc/";
+  | "/lop-cau-long-thu-duc/"
+  | "/lop-cau-long-tre-em/"
+  | "/lop-cau-long-cho-nguoi-di-lam/"
+  | "/cau-long-doanh-nghiep/";
 
 export type RouteMetadataEntry = {
   path: CoreRoutePath;
@@ -61,13 +68,47 @@ export const coreRoutes: readonly RouteMetadataEntry[] = [
   {
     path: "/lop-cau-long-thu-duc/",
     pageType: "seo_local",
-    title: "Lớp Cầu Lông Thủ Đức | Huệ Thiên, Khang Sport, Phúc Lộc | V2 Badminton",
+    title:
+      "Lớp Cầu Lông Thủ Đức | Huệ Thiên, Khang Sport, Phúc Lộc | V2 Badminton",
     description:
       "Học cầu lông tại Thủ Đức với V2 Badminton. Có sân Huệ Thiên, Khang Sport (Bình Triệu) và Phúc Lộc, lịch chiều tối trong tuần và cuối tuần linh hoạt.",
     ogImage: siteConfig.defaultOgImagePath,
     navLabel: "Thủ Đức",
     summary:
       "Local page cho cụm Huệ Thiên, Khang Sport, Phúc Lộc cùng schema và decision-support content.",
+  },
+  {
+    path: "/lop-cau-long-tre-em/",
+    pageType: "seo_service",
+    title: "Lớp Cầu Lông Trẻ Em Tại TP.HCM | V2 Badminton",
+    description:
+      "Lớp cầu lông trẻ em tại TP.HCM với nhịp độ dễ theo, ưu tiên nền tảng vận động, phản xạ và cảm giác cầu trước khi tăng kỹ thuật.",
+    ogImage: siteConfig.defaultOgImagePath,
+    navLabel: "Trẻ em",
+    summary:
+      "Money page dành cho phụ huynh đang tìm lớp cầu lông nền tảng, dễ theo và phù hợp giai đoạn đầu cho trẻ.",
+  },
+  {
+    path: "/lop-cau-long-cho-nguoi-di-lam/",
+    pageType: "seo_service",
+    title: "Lớp Cầu Lông Cho Người Đi Làm Tại TP.HCM | V2 Badminton",
+    description:
+      "Lớp cầu lông cho người đi làm với lịch tối hoặc cuối tuần, phù hợp để duy trì tập luyện đều tại Bình Thạnh và Thủ Đức.",
+    ogImage: siteConfig.defaultOgImagePath,
+    navLabel: "Người đi làm",
+    summary:
+      "Money page cho học viên cần lịch học linh hoạt sau giờ làm và muốn giữ nhịp tập ổn định dài hạn.",
+  },
+  {
+    path: "/cau-long-doanh-nghiep/",
+    pageType: "seo_support",
+    title: "Chương Trình Cầu Lông Doanh Nghiệp Tại TP.HCM | V2 Badminton",
+    description:
+      "Giải pháp cầu lông cho doanh nghiệp: lớp nội bộ, hoạt động gắn kết và chương trình theo mục tiêu, ngân sách của từng team.",
+    ogImage: siteConfig.defaultOgImagePath,
+    navLabel: "Doanh nghiệp+",
+    summary:
+      "Money page B2B cho nhu cầu lớp nội bộ, team building thể thao và chương trình cầu lông theo mục tiêu doanh nghiệp.",
   },
 ] as const;
 

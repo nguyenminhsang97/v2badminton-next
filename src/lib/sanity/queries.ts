@@ -7,11 +7,13 @@ import { courtLocationMap, courtLocations } from "@/lib/locations";
 import { pricingTiers as staticPricingTiers } from "@/lib/pricing";
 import { scheduleItems as staticScheduleItems } from "@/lib/schedule";
 import {
+  AUDIENCE_OPTIONS,
   BILLING_MODEL_OPTIONS,
   CTA_ACTION_OPTIONS,
   DISTRICT_OPTIONS,
   FAQ_PAGE_OPTIONS,
   SCHEDULE_LEVEL_OPTIONS,
+  STUDENT_GROUP_OPTIONS,
 } from "@/sanity/schemaTypes/shared";
 import { sanityFetchOrFallback } from "./client";
 
@@ -21,6 +23,8 @@ export type SanityScheduleLevel = (typeof SCHEDULE_LEVEL_OPTIONS)[number]["value
 export type SanityBillingModel = (typeof BILLING_MODEL_OPTIONS)[number]["value"];
 export type SanityPricingCtaAction =
   (typeof CTA_ACTION_OPTIONS)[number]["value"];
+export type SanityStudentGroup = (typeof STUDENT_GROUP_OPTIONS)[number]["value"];
+export type SanityAudience = (typeof AUDIENCE_OPTIONS)[number]["value"];
 
 export type SanityPortableTextSpan = {
   _key?: string;
@@ -45,6 +49,25 @@ export type SanitySiteSettings = {
   zaloNumber: string;
   facebookUrl: string;
   defaultOgImageUrl: string | null;
+};
+
+export type SanityCoach = {
+  id: string;
+  name: string;
+  photoUrl: string | null;
+  photoAlt: string | null;
+  teachingGroup: string;
+  approach: string;
+  order: number;
+};
+
+export type SanityTestimonial = {
+  id: string;
+  studentName: string;
+  studentGroup: SanityStudentGroup;
+  contextLabel: string | null;
+  content: string;
+  order: number;
 };
 
 export type SanityLocation = {
@@ -135,6 +158,22 @@ export type SanityFaq = {
   pages: SanityFaqPage[];
   includeInSchema: boolean;
   order: number;
+};
+
+export type SanityMoneyPage = {
+  id: string;
+  slug: string;
+  audience: SanityAudience;
+  h1: string;
+  metaTitle: string;
+  metaDescription: string;
+  intro: SanityPortableTextBlock[];
+  body: SanityPortableTextBlock[];
+  heroImageUrl: string | null;
+  relatedLocations: SanityLocation[];
+  relatedPricing: SanityPricingTier[];
+  relatedFaqs: SanityFaq[];
+  ctaLabel: string;
 };
 
 const PUBLISHED_ONLY_FILTER = '!(_id in path("drafts.**"))';
@@ -282,6 +321,61 @@ function getFallbackFaqs(page?: SanityFaqPage): SanityFaq[] {
     .map(mapFallbackFaq);
 }
 
+const LOCATION_PROJECTION = `{
+  "id": _id,
+  "slug": slug.current,
+  name,
+  shortName,
+  district,
+  "districtLabel": select(
+    district == "binh_thanh" => "Bình Thạnh",
+    district == "thu_duc" => "Thủ Đức",
+    district
+  ),
+  "localPage": select(
+    district == "binh_thanh" => "/lop-cau-long-binh-thanh/",
+    district == "thu_duc" => "/lop-cau-long-thu-duc/",
+    null
+  ),
+  addressText,
+  mapsUrl,
+  "imageUrl": image.asset->url,
+  imageAlt,
+  geoLat,
+  geoLng,
+  "order": coalesce(order, 9999)
+}`;
+
+const PRICING_TIER_PROJECTION = `{
+  "id": _id,
+  "slug": slug.current,
+  name,
+  shortLabel,
+  kind,
+  billingModel,
+  description,
+  groupSize,
+  pricePerMonth,
+  pricePerHour,
+  displayPrice,
+  sessionsPerWeek,
+  sessionsPerMonth,
+  "features": coalesce(features, []),
+  ctaLabel,
+  ctaAction,
+  "order": coalesce(order, 9999)
+}`;
+
+const FAQ_PROJECTION = `{
+  "id": _id,
+  question,
+  "answer": coalesce(answer, []),
+  "answerPlainText": pt::text(answer),
+  "pages": coalesce(pages, []),
+  includeInSchema,
+  "order": coalesce(order, 9999)
+}`;
+
 const SITE_SETTINGS_QUERY = defineQuery(`
   *[
     _type == "site_settings" &&
@@ -297,6 +391,39 @@ const SITE_SETTINGS_QUERY = defineQuery(`
   }
 `);
 
+const COACHES_QUERY = defineQuery(`
+  *[
+    _type == "coach" &&
+    isActive == true &&
+    ${PUBLISHED_ONLY_FILTER}
+  ]
+  | order(coalesce(order, 9999) asc, _createdAt asc){
+    "id": _id,
+    name,
+    "photoUrl": coalesce(photo.asset->url, null),
+    "photoAlt": coalesce(photoAlt, null),
+    teachingGroup,
+    approach,
+    "order": coalesce(order, 9999)
+  }
+`);
+
+const TESTIMONIALS_QUERY = defineQuery(`
+  *[
+    _type == "testimonial" &&
+    isActive == true &&
+    ${PUBLISHED_ONLY_FILTER}
+  ]
+  | order(coalesce(order, 9999) asc, _createdAt asc){
+    "id": _id,
+    studentName,
+    studentGroup,
+    "contextLabel": coalesce(contextLabel, null),
+    content,
+    "order": coalesce(order, 9999)
+  }
+`);
+
 const LOCATIONS_QUERY = defineQuery(`
   *[
     _type == "location" &&
@@ -304,30 +431,8 @@ const LOCATIONS_QUERY = defineQuery(`
     defined(slug.current) &&
     ${PUBLISHED_ONLY_FILTER}
   ]
-  | order(coalesce(order, 9999) asc, _createdAt asc){
-    "id": _id,
-    "slug": slug.current,
-    name,
-    shortName,
-    district,
-    "districtLabel": select(
-      district == "binh_thanh" => "Bình Thạnh",
-      district == "thu_duc" => "Thủ Đức",
-      district
-    ),
-    "localPage": select(
-      district == "binh_thanh" => "/lop-cau-long-binh-thanh/",
-      district == "thu_duc" => "/lop-cau-long-thu-duc/",
-      null
-    ),
-    addressText,
-    mapsUrl,
-    "imageUrl": image.asset->url,
-    imageAlt,
-    geoLat,
-    geoLng,
-    "order": coalesce(order, 9999)
-  }
+  | order(coalesce(order, 9999) asc, _createdAt asc)
+  ${LOCATION_PROJECTION}
 `);
 
 const PRICING_TIERS_QUERY = defineQuery(`
@@ -337,25 +442,8 @@ const PRICING_TIERS_QUERY = defineQuery(`
     defined(slug.current) &&
     ${PUBLISHED_ONLY_FILTER}
   ]
-  | order(coalesce(order, 9999) asc, _createdAt asc){
-    "id": _id,
-    "slug": slug.current,
-    name,
-    shortLabel,
-    kind,
-    billingModel,
-    description,
-    groupSize,
-    pricePerMonth,
-    pricePerHour,
-    displayPrice,
-    sessionsPerWeek,
-    sessionsPerMonth,
-    "features": coalesce(features, []),
-    ctaLabel,
-    ctaAction,
-    "order": coalesce(order, 9999)
-  }
+  | order(coalesce(order, 9999) asc, _createdAt asc)
+  ${PRICING_TIER_PROJECTION}
 `);
 
 const SCHEDULE_BLOCKS_QUERY = defineQuery(`
@@ -387,14 +475,51 @@ const FAQS_QUERY = defineQuery(`
     (!defined($page) || $page in pages) &&
     ${PUBLISHED_ONLY_FILTER}
   ]
-  | order(coalesce(order, 9999) asc, _createdAt asc){
+  | order(coalesce(order, 9999) asc, _createdAt asc)
+  ${FAQ_PROJECTION}
+`);
+
+const MONEY_PAGE_QUERY = defineQuery(`
+  *[
+    _type == "money_page" &&
+    slug.current == $slug &&
+    ${PUBLISHED_ONLY_FILTER}
+  ][0]{
     "id": _id,
-    question,
-    "answer": coalesce(answer, []),
-    "answerPlainText": pt::text(answer),
-    "pages": coalesce(pages, []),
-    includeInSchema,
-    "order": coalesce(order, 9999)
+    "slug": slug.current,
+    audience,
+    h1,
+    metaTitle,
+    metaDescription,
+    "intro": coalesce(intro, []),
+    "body": coalesce(body, []),
+    "heroImageUrl": coalesce(heroImage.asset->url, null),
+    "relatedLocations": *[
+      _type == "location" &&
+      _id in coalesce(^.relatedLocations[]._ref, []) &&
+      isActive == true &&
+      defined(slug.current) &&
+      ${PUBLISHED_ONLY_FILTER}
+    ]
+    | order(coalesce(order, 9999) asc, _createdAt asc)
+    ${LOCATION_PROJECTION},
+    "relatedPricing": *[
+      _type == "pricing_tier" &&
+      _id in coalesce(^.relatedPricing[]._ref, []) &&
+      isActive == true &&
+      defined(slug.current) &&
+      ${PUBLISHED_ONLY_FILTER}
+    ]
+    | order(coalesce(order, 9999) asc, _createdAt asc)
+    ${PRICING_TIER_PROJECTION},
+    "relatedFaqs": *[
+      _type == "faq" &&
+      _id in coalesce(^.relatedFaqs[]._ref, []) &&
+      ${PUBLISHED_ONLY_FILTER}
+    ]
+    | order(coalesce(order, 9999) asc, _createdAt asc)
+    ${FAQ_PROJECTION},
+    ctaLabel
   }
 `);
 
@@ -404,6 +529,26 @@ export const getSiteSettings = cache(async (): Promise<SanitySiteSettings | null
     fallback: null,
     tags: ["sanity:site-settings"],
   });
+});
+
+export const getCoaches = cache(async (): Promise<SanityCoach[]> => {
+  const coaches = await sanityFetchOrFallback<SanityCoach[]>({
+    query: COACHES_QUERY,
+    fallback: [],
+    tags: ["sanity:coaches"],
+  });
+
+  return coaches ?? [];
+});
+
+export const getTestimonials = cache(async (): Promise<SanityTestimonial[]> => {
+  const testimonials = await sanityFetchOrFallback<SanityTestimonial[]>({
+    query: TESTIMONIALS_QUERY,
+    fallback: [],
+    tags: ["sanity:testimonials"],
+  });
+
+  return testimonials ?? [];
 });
 
 export const getLocations = cache(async (): Promise<SanityLocation[]> => {
@@ -462,5 +607,16 @@ export const getFaqs = cache(
     }
 
     return getFallbackFaqs(page);
+  },
+);
+
+export const getMoneyPage = cache(
+  async (slug: string): Promise<SanityMoneyPage | null> => {
+    return sanityFetchOrFallback<SanityMoneyPage | null>({
+      query: MONEY_PAGE_QUERY,
+      params: { slug },
+      fallback: null,
+      tags: ["sanity:money-pages", `sanity:money-page:${slug}`],
+    });
   },
 );
