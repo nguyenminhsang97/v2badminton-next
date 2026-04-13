@@ -9,19 +9,19 @@ import {
 
 function validateBillingModel(kind: unknown, value: unknown) {
   if (typeof value !== "string") {
-    return "Billing model is required.";
+    return "Hình thức tính phí là bắt buộc.";
   }
 
   if (kind === "group" && value !== "monthly_package") {
-    return "Group tiers must use monthly_package.";
+    return "Gói nhóm phải dùng hình thức Gói tháng.";
   }
 
   if (kind === "private" && value !== "per_hour") {
-    return "Private tiers must use per_hour.";
+    return "Gói kèm riêng phải dùng hình thức Theo giờ.";
   }
 
   if (kind === "enterprise" && value !== "quote") {
-    return "Enterprise tiers must use quote.";
+    return "Gói doanh nghiệp phải dùng hình thức Báo giá.";
   }
 
   return true;
@@ -29,7 +29,7 @@ function validateBillingModel(kind: unknown, value: unknown) {
 
 export const pricingTier = defineType({
   name: "pricing_tier",
-  title: "Pricing Tier",
+  title: "Gói học phí",
   type: "document",
   initialValue: {
     isActive: true,
@@ -37,7 +37,7 @@ export const pricingTier = defineType({
   fields: [
     defineField({
       name: "slug",
-      title: "Slug",
+      title: "Slug (URL)",
       type: "slug",
       options: {
         source: "name",
@@ -47,20 +47,23 @@ export const pricingTier = defineType({
     }),
     defineField({
       name: "name",
-      title: "Name",
+      title: "Tên gói",
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "shortLabel",
-      title: "Short Label",
+      title: "Nhãn ngắn",
       type: "string",
+      description: "Nhãn rút gọn hiển thị trên thẻ học phí. VD: Lớp nhóm, Kèm 1:1",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "kind",
-      title: "Kind",
+      title: "Loại gói",
       type: "string",
+      description:
+        "Nhóm: lớp 2–6 người. Kèm riêng: 1:1. Doanh nghiệp: báo giá theo yêu cầu.",
       options: {
         list: [...PRICING_KIND_OPTIONS],
       },
@@ -68,7 +71,7 @@ export const pricingTier = defineType({
     }),
     defineField({
       name: "billingModel",
-      title: "Billing Model",
+      title: "Hình thức tính phí",
       type: "string",
       options: {
         list: [...BILLING_MODEL_OPTIONS],
@@ -80,99 +83,113 @@ export const pricingTier = defineType({
     }),
     defineField({
       name: "description",
-      title: "Description",
+      title: "Mô tả gói",
       type: "text",
+      description:
+        "Mô tả ngắn hiển thị trên thẻ học phí trang chủ và các trang nội dung.",
       rows: 4,
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "groupSize",
-      title: "Group Size",
+      title: "Sĩ số nhóm",
       type: "string",
+      description: "VD: 2–4 người. Hiển thị trên thẻ gói nhóm.",
       hidden: ({ document }) => document?.kind !== "group",
       validation: (Rule) =>
         Rule.custom((value, context) => {
           if (context.document?.kind === "group" && typeof value !== "string") {
-            return "Group size is required for group tiers.";
+            return "Sĩ số nhóm là bắt buộc cho gói nhóm.";
           }
           return true;
         }),
     }),
     defineField({
       name: "pricePerMonth",
-      title: "Price Per Month",
+      title: "Học phí/tháng (số)",
       type: "number",
+      description:
+        "Nhập số nguyên, không có dấu chấm/phẩy. VD: 800000. Dùng để tính khoảng giá hiển thị.",
       hidden: ({ document }) => document?.kind !== "group",
       validation: (Rule) =>
         Rule.custom((value, context) => {
           if (context.document?.kind === "group" && typeof value !== "number") {
-            return "Price per month is required for group tiers.";
+            return "Học phí/tháng là bắt buộc cho gói nhóm.";
           }
           return true;
         }),
     }),
     defineField({
       name: "pricePerHour",
-      title: "Price Per Hour",
+      title: "Học phí/giờ (số)",
       type: "number",
+      description:
+        "Nhập số nguyên. VD: 250000. Dùng để tính khoảng giá hiển thị.",
       hidden: ({ document }) => document?.kind !== "private",
       validation: (Rule) =>
         Rule.custom((value, context) => {
           if (context.document?.kind === "private" && typeof value !== "number") {
-            return "Price per hour is required for private tiers.";
+            return "Học phí/giờ là bắt buộc cho gói kèm riêng.";
           }
           return true;
         }),
     }),
     defineField({
       name: "displayPrice",
-      title: "Display Price",
+      title: "Giá hiển thị",
       type: "string",
+      description:
+        "Chuỗi hiển thị trực tiếp trên thẻ học phí trang chủ và các trang nội dung. VD: 800.000đ/tháng",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "sessionsPerWeek",
-      title: "Sessions Per Week",
+      title: "Số buổi/tuần",
       type: "number",
       hidden: ({ document }) => document?.kind !== "group",
       validation: (Rule) =>
         Rule.custom((value, context) => {
           if (context.document?.kind === "group" && typeof value !== "number") {
-            return "Sessions per week is required for group tiers.";
+            return "Số buổi/tuần là bắt buộc cho gói nhóm.";
           }
           return true;
         }).integer().min(1),
     }),
     defineField({
       name: "sessionsPerMonth",
-      title: "Sessions Per Month",
+      title: "Số buổi/tháng",
       type: "number",
       hidden: ({ document }) => document?.kind !== "group",
       validation: (Rule) =>
         Rule.custom((value, context) => {
           if (context.document?.kind === "group" && typeof value !== "number") {
-            return "Sessions per month is required for group tiers.";
+            return "Số buổi/tháng là bắt buộc cho gói nhóm.";
           }
           return true;
         }).integer().min(1),
     }),
     defineField({
       name: "features",
-      title: "Features",
+      title: "Quyền lợi / Tính năng",
       type: "array",
+      description:
+        "Danh sách quyền lợi hiển thị trên thẻ học phí. VD: Sân chuẩn, HLV 1:1, Lịch linh hoạt",
       of: [defineArrayMember({ type: "string" })],
       validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
       name: "ctaLabel",
-      title: "CTA Label",
+      title: "Nội dung nút đăng ký",
       type: "string",
+      description: "VD: Đăng ký học thử, Nhận báo giá",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "ctaAction",
-      title: "CTA Action",
+      title: "Hành động nút đăng ký",
       type: "string",
+      description:
+        "Đăng ký học thử: mở form liên hệ. Nhận báo giá: chuyển sang chế độ doanh nghiệp.",
       options: {
         list: [...CTA_ACTION_OPTIONS],
       },
@@ -180,14 +197,16 @@ export const pricingTier = defineType({
     }),
     defineField({
       name: "order",
-      title: "Order",
+      title: "Thứ tự hiển thị",
       type: "number",
+      description: "Số nhỏ hơn hiển thị trước trên trang chủ và các trang nội dung.",
       validation: (Rule) => Rule.integer().min(0),
     }),
     defineField({
       name: "isActive",
-      title: "Is Active",
+      title: "Hiển thị trên web?",
       type: "boolean",
+      description: "Tắt để ẩn gói này khỏi website mà không cần xóa.",
       validation: (Rule) => Rule.required(),
     }),
   ],
@@ -198,7 +217,7 @@ export const pricingTier = defineType({
       displayPrice: "displayPrice",
     },
     prepare({ title, kind, displayPrice }) {
-      const kindLabel = PRICING_KIND_LABEL_BY_VALUE[kind] ?? kind ?? "Unknown kind";
+      const kindLabel = PRICING_KIND_LABEL_BY_VALUE[kind] ?? kind ?? "Chưa chọn loại";
       return {
         title,
         subtitle: [kindLabel, displayPrice].filter(Boolean).join(" - "),

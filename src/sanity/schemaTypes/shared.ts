@@ -1,55 +1,55 @@
 export const DISTRICT_OPTIONS = [
-  { title: "Binh Thanh", value: "binh_thanh" },
-  { title: "Thu Duc", value: "thu_duc" },
+  { title: "Bình Thạnh", value: "binh_thanh" },
+  { title: "Thủ Đức", value: "thu_duc" },
 ] as const;
 
 export const PRICING_KIND_OPTIONS = [
-  { title: "Group", value: "group" },
-  { title: "Private", value: "private" },
-  { title: "Enterprise", value: "enterprise" },
+  { title: "Nhóm", value: "group" },
+  { title: "Kèm riêng (1:1)", value: "private" },
+  { title: "Doanh nghiệp", value: "enterprise" },
 ] as const;
 
 export const BILLING_MODEL_OPTIONS = [
-  { title: "Monthly Package", value: "monthly_package" },
-  { title: "Per Hour", value: "per_hour" },
-  { title: "Quote", value: "quote" },
+  { title: "Gói tháng", value: "monthly_package" },
+  { title: "Theo giờ", value: "per_hour" },
+  { title: "Báo giá", value: "quote" },
 ] as const;
 
 export const CTA_ACTION_OPTIONS = [
-  { title: "Dang ky hoc thu", value: "dang_ky_hoc_thu" },
-  { title: "Nhan bao gia", value: "nhan_bao_gia" },
+  { title: "Đăng ký học thử", value: "dang_ky_hoc_thu" },
+  { title: "Nhận báo giá", value: "nhan_bao_gia" },
 ] as const;
 
 export const SCHEDULE_LEVEL_OPTIONS = [
-  { title: "Co ban", value: "co_ban" },
-  { title: "Nang cao", value: "nang_cao" },
-  { title: "Doanh nghiep", value: "doanh_nghiep" },
+  { title: "Cơ bản", value: "co_ban" },
+  { title: "Nâng cao", value: "nang_cao" },
+  { title: "Doanh nghiệp", value: "doanh_nghiep" },
 ] as const;
 
 export const FAQ_PAGE_OPTIONS = [
-  { title: "Homepage", value: "homepage" },
-  { title: "Nguoi moi", value: "nguoi_moi" },
-  { title: "Binh Thanh", value: "binh_thanh" },
-  { title: "Thu Duc", value: "thu_duc" },
-  { title: "Tre em", value: "tre_em" },
-  { title: "Nguoi di lam", value: "nguoi_di_lam" },
-  { title: "Doanh nghiep", value: "doanh_nghiep" },
-  { title: "Summer", value: "summer" },
+  { title: "Trang chủ", value: "homepage" },
+  { title: "Người mới", value: "nguoi_moi" },
+  { title: "Bình Thạnh", value: "binh_thanh" },
+  { title: "Thủ Đức", value: "thu_duc" },
+  { title: "Trẻ em", value: "tre_em" },
+  { title: "Người đi làm", value: "nguoi_di_lam" },
+  { title: "Doanh nghiệp", value: "doanh_nghiep" },
+  { title: "Hè", value: "summer" },
 ] as const;
 
 export const STUDENT_GROUP_OPTIONS = [
-  { title: "Tre em", value: "tre_em" },
-  { title: "Nguoi moi", value: "nguoi_moi" },
-  { title: "Nguoi di lam", value: "nguoi_di_lam" },
-  { title: "Doanh nghiep", value: "doanh_nghiep" },
+  { title: "Trẻ em", value: "tre_em" },
+  { title: "Người mới", value: "nguoi_moi" },
+  { title: "Người đi làm", value: "nguoi_di_lam" },
+  { title: "Doanh nghiệp", value: "doanh_nghiep" },
 ] as const;
 
 export const AUDIENCE_OPTIONS = [
-  { title: "Tre em", value: "tre_em" },
-  { title: "Nguoi moi", value: "nguoi_moi" },
-  { title: "Nguoi di lam", value: "nguoi_di_lam" },
-  { title: "Doanh nghiep", value: "doanh_nghiep" },
-  { title: "Local (quan/khu vuc)", value: "local" },
+  { title: "Trẻ em", value: "tre_em" },
+  { title: "Người mới", value: "nguoi_moi" },
+  { title: "Người đi làm", value: "nguoi_di_lam" },
+  { title: "Doanh nghiệp", value: "doanh_nghiep" },
+  { title: "Địa phương (quận/khu vực)", value: "local" },
 ] as const;
 
 export const DISTRICT_LABEL_BY_VALUE = Object.fromEntries(

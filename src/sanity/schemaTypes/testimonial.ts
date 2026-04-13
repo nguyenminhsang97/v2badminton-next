@@ -3,7 +3,7 @@ import { STUDENT_GROUP_OPTIONS } from "./shared";
 
 export const testimonial = defineType({
   name: "testimonial",
-  title: "Testimonial",
+  title: "Đánh giá học viên",
   type: "document",
   initialValue: {
     isActive: true,
@@ -11,13 +11,13 @@ export const testimonial = defineType({
   fields: [
     defineField({
       name: "studentName",
-      title: "Student Name",
+      title: "Tên học viên",
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "studentGroup",
-      title: "Student Group",
+      title: "Nhóm học viên",
       type: "string",
       options: {
         list: [...STUDENT_GROUP_OPTIONS],
@@ -26,27 +26,31 @@ export const testimonial = defineType({
     }),
     defineField({
       name: "contextLabel",
-      title: "Context Label",
+      title: "Ghi chú hiển thị",
       type: "string",
-      description: "VD: Phu huynh hoc vien lop he",
+      description:
+        "Dòng nhỏ hiển thị dưới tên học viên trên trang chủ. VD: Phụ huynh học viên lớp hè",
     }),
     defineField({
       name: "content",
-      title: "Content",
+      title: "Nội dung đánh giá",
       type: "text",
       rows: 5,
+      description: "Trích dẫn ngắn từ học viên hoặc phụ huynh. Hiển thị trên trang chủ.",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "order",
-      title: "Order",
+      title: "Thứ tự hiển thị",
       type: "number",
+      description: "Số nhỏ hơn hiển thị trước trên trang chủ.",
       validation: (Rule) => Rule.integer().min(0),
     }),
     defineField({
       name: "isActive",
-      title: "Is Active",
+      title: "Hiển thị trên web?",
       type: "boolean",
+      description: "Tắt để ẩn đánh giá này khỏi website mà không cần xóa.",
       validation: (Rule) => Rule.required(),
     }),
   ],

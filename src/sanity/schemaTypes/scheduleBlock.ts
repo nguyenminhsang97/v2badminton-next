@@ -55,7 +55,7 @@ async function slugifyScheduleBlock(
 
 export const scheduleBlock = defineType({
   name: "schedule_block",
-  title: "Schedule Block",
+  title: "Lịch học",
   type: "document",
   initialValue: {
     isActive: true,
@@ -63,10 +63,10 @@ export const scheduleBlock = defineType({
   fields: [
     defineField({
       name: "slug",
-      title: "Slug",
+      title: "Slug (URL)",
       type: "slug",
       description:
-        "Suggested pattern: location-timeslotid-daygroup. The initial value is generated from location, timeSlotId, and dayGroup.",
+        "Tự động tạo từ sân tập, mã ca và nhóm ngày. Không thay đổi sau khi đã publish.",
       options: {
         source: (document) => {
           const scheduleDocument = document as ScheduleSlugDocument | undefined;
@@ -84,33 +84,41 @@ export const scheduleBlock = defineType({
     }),
     defineField({
       name: "location",
-      title: "Location",
+      title: "Sân tập",
       type: "reference",
       to: [{ type: "location" }],
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "dayGroup",
-      title: "Day Group",
+      title: "Nhóm ngày",
       type: "string",
+      description:
+        "VD: Thứ 2–4–6, Cuối tuần. Hiển thị trên bảng lịch học trang chủ.",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "timeLabel",
-      title: "Time Label",
+      title: "Ca học",
       type: "string",
+      description:
+        "VD: 17:00 – 18:30. Hiển thị trên bảng lịch học trang chủ.",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "timeSlotId",
-      title: "Time Slot ID",
+      title: "Mã ca học",
       type: "string",
+      description:
+        "Mã liên kết ca học với form đăng ký khi user chọn lịch. VD: sang-thu-2-4-6",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "levels",
-      title: "Levels",
+      title: "Trình độ",
       type: "array",
+      description:
+        "Trình độ phù hợp cho ca học này. Hiển thị dưới dạng tag trên bảng lịch trang chủ.",
       of: [
         defineArrayMember({
           type: "string",
@@ -123,14 +131,16 @@ export const scheduleBlock = defineType({
     }),
     defineField({
       name: "order",
-      title: "Order",
+      title: "Thứ tự hiển thị",
       type: "number",
+      description: "Số nhỏ hơn hiển thị trước trên bảng lịch trang chủ.",
       validation: (Rule) => Rule.integer().min(0),
     }),
     defineField({
       name: "isActive",
-      title: "Is Active",
+      title: "Hiển thị trên web?",
       type: "boolean",
+      description: "Tắt để ẩn ca học này khỏi website mà không cần xóa.",
       validation: (Rule) => Rule.required(),
     }),
   ],

@@ -2,7 +2,7 @@ import { defineField, defineType } from "sanity";
 
 export const coach = defineType({
   name: "coach",
-  title: "Coach",
+  title: "Huấn luyện viên",
   type: "document",
   initialValue: {
     isActive: true,
@@ -10,49 +10,53 @@ export const coach = defineType({
   fields: [
     defineField({
       name: "name",
-      title: "Name",
+      title: "Họ tên HLV",
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "photo",
-      title: "Photo",
+      title: "Ảnh HLV",
       type: "image",
+      description:
+        "Ảnh hiển thị trên thẻ HLV trang chủ. Kích thước khuyến nghị: vuông 400×400px.",
       options: {
         hotspot: true,
       },
     }),
     defineField({
       name: "photoAlt",
-      title: "Photo Alt",
+      title: "Mô tả ảnh (alt text)",
       type: "string",
       hidden: ({ document }) => !document?.photo,
     }),
     defineField({
       name: "teachingGroup",
-      title: "Teaching Group",
+      title: "Nhóm học viên phụ trách",
       type: "string",
-      description: "VD: Lop co ban cho nguoi moi",
+      description: "VD: Lớp cơ bản người mới. Hiển thị dưới tên HLV trên trang chủ.",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "approach",
-      title: "Approach",
+      title: "Phương pháp giảng dạy",
       type: "text",
       rows: 3,
-      description: "1 cau mo ta phuong phap day",
+      description: "1 câu mô tả cách dạy. Hiển thị trên thẻ HLV trang chủ.",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "order",
-      title: "Order",
+      title: "Thứ tự hiển thị",
       type: "number",
+      description: "Số nhỏ hơn hiển thị trước trên trang chủ.",
       validation: (Rule) => Rule.integer().min(0),
     }),
     defineField({
       name: "isActive",
-      title: "Is Active",
+      title: "Hiển thị trên web?",
       type: "boolean",
+      description: "Tắt để ẩn HLV này khỏi website mà không cần xóa.",
       validation: (Rule) => Rule.required(),
     }),
   ],

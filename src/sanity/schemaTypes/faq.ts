@@ -3,7 +3,7 @@ import { FAQ_PAGE_OPTIONS } from "./shared";
 
 export const faq = defineType({
   name: "faq",
-  title: "FAQ",
+  title: "Câu hỏi thường gặp",
   type: "document",
   initialValue: {
     includeInSchema: true,
@@ -11,13 +11,13 @@ export const faq = defineType({
   fields: [
     defineField({
       name: "question",
-      title: "Question",
+      title: "Câu hỏi",
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "answer",
-      title: "Answer",
+      title: "Trả lời",
       type: "array",
       of: [
         defineArrayMember({
@@ -52,8 +52,10 @@ export const faq = defineType({
     }),
     defineField({
       name: "pages",
-      title: "Pages",
+      title: "Hiển thị ở trang",
       type: "array",
+      description:
+        "Chọn trang để câu hỏi này xuất hiện. Một câu hỏi có thể xuất hiện ở nhiều trang.",
       of: [
         defineArrayMember({
           type: "string",
@@ -69,14 +71,17 @@ export const faq = defineType({
     }),
     defineField({
       name: "includeInSchema",
-      title: "Include In Schema",
+      title: "Hiển thị trong Google FAQ?",
       type: "boolean",
+      description:
+        "Bật để câu hỏi này xuất hiện trong kết quả tìm kiếm Google dạng FAQ (rich result).",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "order",
-      title: "Order",
+      title: "Thứ tự hiển thị",
       type: "number",
+      description: "Số nhỏ hơn hiển thị trước. VD: 1 hiển thị trước 2.",
       validation: (Rule) => Rule.integer().min(0),
     }),
   ],
