@@ -1,0 +1,165 @@
+import type { Metadata } from "next";
+import { siteConfig } from "@/lib/site";
+
+export type PageType = "homepage" | "seo_local" | "seo_service" | "seo_support";
+
+export type CoreRoutePath =
+  | "/"
+  | "/hoc-cau-long-cho-nguoi-moi/"
+  | "/lop-cau-long-binh-thanh/"
+  | "/lop-cau-long-thu-duc/";
+
+export type RouteMetadataEntry = {
+  path: CoreRoutePath;
+  pageType: PageType;
+  title: string;
+  description: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage: string;
+  navLabel: string;
+  summary: string;
+};
+
+export const coreRoutes: readonly RouteMetadataEntry[] = [
+  {
+    path: "/",
+    pageType: "homepage",
+    title: "V2 Badminton — Dạy Cầu Lông Bình Thạnh & Thủ Đức | HCM",
+    description:
+      "V2 Badminton — Lớp dạy cầu lông chuyên nghiệp tại Bình Thạnh & Thủ Đức, TP.HCM. Dành cho người mới bắt đầu, nhân viên văn phòng và doanh nghiệp. Đăng ký học thử miễn phí!",
+    ogTitle: "V2 Badminton — Dạy Cầu Lông Bình Thạnh & Thủ Đức",
+    ogDescription:
+      "Lớp dạy cầu lông chuyên nghiệp cho người mới bắt đầu, nhân viên văn phòng và doanh nghiệp tại TP.HCM.",
+    ogImage: siteConfig.defaultOgImagePath,
+    navLabel: "Trang chủ",
+    summary:
+      "Landing chính cần giữ parity cho hero, schedule cards, form prefill, tracking và conversion flow.",
+  },
+  {
+    path: "/hoc-cau-long-cho-nguoi-moi/",
+    pageType: "seo_service",
+    title: "Học Cầu Lông Cho Người Mới Bắt Đầu Tại TP.HCM | V2 Badminton",
+    description:
+      "Chưa biết chơi cầu lông vẫn học được tại V2 Badminton. Khóa cơ bản dạy từ zero, lớp nhỏ 2-6 người hoặc kèm 1:1 tại TP.HCM.",
+    ogImage: siteConfig.defaultOgImagePath,
+    navLabel: "Người mới",
+    summary:
+      "Trang SEO mạnh nhất hiện tại, sau này sẽ là template tham chiếu cho service/support pages.",
+  },
+  {
+    path: "/lop-cau-long-binh-thanh/",
+    pageType: "seo_local",
+    title: "Lớp Cầu Lông Bình Thạnh | Sân Green | V2 Badminton",
+    description:
+      "Tìm lớp cầu lông tại Bình Thạnh? V2 Badminton nhận học viên tại sân Green, có lớp chiều tối trong tuần và lịch cuối tuần cho người mới bắt đầu.",
+    ogImage: siteConfig.defaultOgImagePath,
+    navLabel: "Bình Thạnh",
+    summary:
+      "Local page cho sân Green và decision-support content theo intent khu vực Bình Thạnh.",
+  },
+  {
+    path: "/lop-cau-long-thu-duc/",
+    pageType: "seo_local",
+    title: "Lớp Cầu Lông Thủ Đức | Huệ Thiên, Khang Sport, Phúc Lộc | V2 Badminton",
+    description:
+      "Học cầu lông tại Thủ Đức với V2 Badminton. Có sân Huệ Thiên, Khang Sport (Bình Triệu) và Phúc Lộc, lịch chiều tối trong tuần và cuối tuần linh hoạt.",
+    ogImage: siteConfig.defaultOgImagePath,
+    navLabel: "Thủ Đức",
+    summary:
+      "Local page cho cụm Huệ Thiên, Khang Sport, Phúc Lộc cùng schema và decision-support content.",
+  },
+] as const;
+
+export const coreRouteMap = Object.fromEntries(
+  coreRoutes.map((route) => [route.path, route]),
+) as Record<CoreRoutePath, RouteMetadataEntry>;
+
+export const routeCards = coreRoutes.map((route) => ({
+  href: route.path,
+  title: route.navLabel,
+  summary: route.summary,
+})) as readonly {
+  href: CoreRoutePath;
+  title: string;
+  summary: string;
+}[];
+
+export const reservedRoutePrefixes = [
+  "/san-pham/",
+  "/dich-vu/",
+  "/blog/",
+  "/khuyen-mai/",
+] as const;
+
+export function normalizeRoutePath(path: string): CoreRoutePath {
+  if (path === "/" || path === "") {
+    return "/";
+  }
+
+  const withTrailingSlash = path.endsWith("/") ? path : `${path}/`;
+  return withTrailingSlash as CoreRoutePath;
+}
+
+export function canonicalUrl(path: string): string {
+  if (/^https?:\/\//.test(path)) {
+    return path;
+  }
+
+  const withLeadingSlash = path.startsWith("/") ? path : `/${path}`;
+  const isAssetPath = /\.[a-z0-9]+$/i.test(withLeadingSlash);
+  const normalized =
+    withLeadingSlash === "/"
+      ? "/"
+      : isAssetPath
+        ? withLeadingSlash
+        : withLeadingSlash.endsWith("/")
+          ? withLeadingSlash
+          : `${withLeadingSlash}/`;
+
+  return `${siteConfig.siteUrl}${normalized}`;
+}
+
+export function getRouteMetadata(path: CoreRoutePath): RouteMetadataEntry {
+  return coreRouteMap[path];
+}
+
+export function buildMetadata(
+  path: CoreRoutePath,
+  overrides: Partial<Metadata> = {},
+): Metadata {
+  const route = getRouteMetadata(path);
+  const url = canonicalUrl(path);
+
+  const base: Metadata = {
+    title: {
+      absolute: route.title,
+    },
+    description: route.description,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title: route.ogTitle ?? route.title,
+      description: route.ogDescription ?? route.description,
+      url,
+      locale: siteConfig.locale,
+      siteName: siteConfig.name,
+      type: "website",
+      images: [canonicalUrl(route.ogImage)],
+    },
+  };
+
+  return {
+    ...base,
+    ...overrides,
+    alternates: {
+      ...base.alternates,
+      ...overrides.alternates,
+    },
+    openGraph: {
+      ...base.openGraph,
+      ...overrides.openGraph,
+    },
+  };
+}

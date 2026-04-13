@@ -4,14 +4,24 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "sanity:dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
+    "@sentry/nextjs": "^10.47.0",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.37.0",
+    "@vercel/postgres": "^0.10.0",
+    "jose": "^6.2.2",
     "next": "16.2.2",
+    "next-sanity": "^12.2.2",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "resend": "^6.10.0",
+    "sanity": "^5.20.0",
+    "styled-components": "^6.3.12"
   },
   "devDependencies": {
     "@types/node": "^20",
@@ -19,6 +29,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.2",
+    "playwright": "^1.59.1",
     "typescript": "^5"
   }
 }

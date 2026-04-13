@@ -44,10 +44,18 @@ This repo is the safe migration sandbox for the future Vercel version of the sit
 
 ```bash
 npm install
+cp .env.example .env.local
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
+
+For lead-pipeline and monitoring envs, use:
+
+- `.env.example`
+- `BLOCK_D_ENV_CHECKLIST.md`
+- `BLOCK_D_QA_RUNBOOK.md`
+- `BLOCK_E_MONITORING_RUNBOOK.md`
 
 ## Verification before cutover
 

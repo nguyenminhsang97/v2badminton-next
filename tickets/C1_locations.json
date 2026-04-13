@@ -1,0 +1,70 @@
+[
+  {
+    "_id": "location.green",
+    "_type": "location",
+    "slug": {
+      "_type": "slug",
+      "current": "san-green"
+    },
+    "name": "Sân Green",
+    "shortName": "Green",
+    "district": "binh_thanh",
+    "addressText": "154/9 đường Nguyễn Xí, phường 26, Bình Thạnh, Hồ Chí Minh",
+    "mapsUrl": "https://maps.app.goo.gl/UDemAGhNE2hiYHPq7",
+    "geoLat": 10.8159726,
+    "geoLng": 106.708611,
+    "order": 1,
+    "isActive": true
+  },
+  {
+    "_id": "location.hue_thien",
+    "_type": "location",
+    "slug": {
+      "_type": "slug",
+      "current": "san-hue-thien"
+    },
+    "name": "Sân Huệ Thiên",
+    "shortName": "Huệ Thiên",
+    "district": "thu_duc",
+    "addressText": "520 Quốc Lộ 13, Hiệp Bình Phước, Hiệp Bình, Hồ Chí Minh",
+    "mapsUrl": "https://maps.app.goo.gl/ZPetLoVBnimhjaEG6",
+    "geoLat": 10.845561,
+    "geoLng": 106.7185454,
+    "order": 2,
+    "isActive": true
+  },
+  {
+    "_id": "location.khang_sport",
+    "_type": "location",
+    "slug": {
+      "_type": "slug",
+      "current": "san-khang-sport-binh-trieu"
+    },
+    "name": "Sân Khang Sport (Bình Triệu)",
+    "shortName": "Khang Sport",
+    "district": "thu_duc",
+    "addressText": "8 Đường số 20, Hiệp Bình Chánh, Hiệp Bình, Hồ Chí Minh",
+    "mapsUrl": "https://maps.app.goo.gl/WK1JB7CCEhLQ8YN69",
+    "geoLat": 10.8443035,
+    "geoLng": 106.703096,
+    "order": 3,
+    "isActive": true
+  },
+  {
+    "_id": "location.phuc_loc",
+    "_type": "location",
+    "slug": {
+      "_type": "slug",
+      "current": "san-phuc-loc"
+    },
+    "name": "Sân Phúc Lộc",
+    "shortName": "Phúc Lộc",
+    "district": "thu_duc",
+    "addressText": "103/11B Đường số 20, Hiệp Bình Chánh, Hiệp Bình, Hồ Chí Minh",
+    "mapsUrl": "https://share.google/5w1gPPvDQbyTm3CxB",
+    "geoLat": 10.84495,
+    "geoLng": 106.70385,
+    "order": 4,
+    "isActive": true
+  }
+]

@@ -1,0 +1,548 @@
+[
+  {
+    "_id": "faq.home-zero",
+    "_type": "faq",
+    "question": "Tôi chưa bao giờ chơi cầu lông, có học được không?",
+    "answer": [
+      {
+        "_type": "block",
+        "_key": "block-home-zero",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-home-zero",
+            "marks": [],
+            "text": "Hoàn toàn được. Khóa cơ bản của V2 thiết kế cho người bắt đầu từ zero. HLV sẽ hướng dẫn từ cách cầm vợt, tư thế đứng, di chuyển chân đến phát cầu và đánh cơ bản để bạn tiến bộ rõ rệt sau vài buổi đầu."
+          }
+        ]
+      }
+    ],
+    "pages": [
+      "homepage"
+    ],
+    "includeInSchema": true,
+    "order": 1
+  },
+  {
+    "_id": "faq.home-locations",
+    "_type": "faq",
+    "question": "V2 Badminton dạy ở đâu?",
+    "answer": [
+      {
+        "_type": "block",
+        "_key": "block-home-locations",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-home-locations",
+            "marks": [],
+            "text": "V2 giảng dạy tại 4 sân ở TP.HCM: Sân Huệ Thiên, Sân Green, Sân Khang Sport (Bình Triệu) và Sân Phúc Lộc. Bạn có thể chọn sân gần nhà hoặc gần nơi làm việc và xem địa chỉ chi tiết ngay trong phần 4 sân tập."
+          }
+        ]
+      }
+    ],
+    "pages": [
+      "homepage"
+    ],
+    "includeInSchema": true,
+    "order": 2
+  },
+  {
+    "_id": "faq.home-pricing",
+    "_type": "faq",
+    "question": "Học phí và lịch học như thế nào?",
+    "answer": [
+      {
+        "_type": "block",
+        "_key": "block-home-pricing",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-home-pricing",
+            "marks": [],
+            "text": "Học phí hiện tại gồm: lớp cơ bản 3 ngày mỗi tuần 1.300.000 VNĐ một tháng, lớp nâng cao 3 ngày mỗi tuần 1.500.000 VNĐ một tháng, lớp 2 ngày mỗi tuần 1.000.000 VNĐ một tháng, 1 kèm 1 là 400.000 VNĐ mỗi giờ mỗi học viên và học viên tự lo sân. Chương trình doanh nghiệp có giá thương lượng. Lịch học có các khung sáng, chiều, tối và cả cuối tuần."
+          }
+        ]
+      }
+    ],
+    "pages": [
+      "homepage"
+    ],
+    "includeInSchema": true,
+    "order": 3
+  },
+  {
+    "_id": "faq.home-prep",
+    "_type": "faq",
+    "question": "Tôi cần chuẩn bị gì khi đến học?",
+    "answer": [
+      {
+        "_type": "block",
+        "_key": "block-home-prep",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-home-prep",
+            "marks": [],
+            "text": "Bạn chỉ cần mang giày thể thao đế không trơn, quần áo thoải mái và nước uống. Nếu chưa có vợt, bạn vẫn có thể đăng ký để được V2 tư vấn trước khi bắt đầu."
+          }
+        ]
+      }
+    ],
+    "pages": [
+      "homepage"
+    ],
+    "includeInSchema": true,
+    "order": 4
+  },
+  {
+    "_id": "faq.home-business",
+    "_type": "faq",
+    "question": "Công ty tôi muốn tổ chức team building, liên hệ thế nào?",
+    "answer": [
+      {
+        "_type": "block",
+        "_key": "block-home-business",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-home-business",
+            "marks": [],
+            "text": "Bạn có thể gọi điện, nhắn Zalo hoặc inbox Facebook cho V2 Badminton. Chỉ cần gửi số lượng người, thời gian mong muốn và ngân sách dự kiến, đội ngũ sẽ tư vấn chương trình phù hợp."
+          }
+        ]
+      }
+    ],
+    "pages": [
+      "homepage"
+    ],
+    "includeInSchema": true,
+    "order": 5
+  },
+  {
+    "_id": "faq.nguoi-moi-zero",
+    "_type": "faq",
+    "question": "Chưa biết gì có học được không?",
+    "answer": [
+      {
+        "_type": "block",
+        "_key": "block-nguoi-moi-zero",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-nguoi-moi-zero",
+            "marks": [],
+            "text": "Có. Khóa cơ bản của V2 Badminton được thiết kế cho người bắt đầu từ zero, nên bạn không cần biết chơi trước khi đăng ký."
+          }
+        ]
+      }
+    ],
+    "pages": [
+      "nguoi_moi"
+    ],
+    "includeInSchema": true,
+    "order": 1
+  },
+  {
+    "_id": "faq.nguoi-moi-first-session",
+    "_type": "faq",
+    "question": "Buổi đầu học những gì?",
+    "answer": [
+      {
+        "_type": "block",
+        "_key": "block-nguoi-moi-first-session",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-nguoi-moi-first-session",
+            "marks": [],
+            "text": "Buổi đầu thường học cách cầm vợt, tư thế đứng, di chuyển chân cơ bản và phát cầu nền tảng để làm quen đúng kỹ thuật."
+          }
+        ]
+      }
+    ],
+    "pages": [
+      "nguoi_moi"
+    ],
+    "includeInSchema": true,
+    "order": 2
+  },
+  {
+    "_id": "faq.nguoi-moi-gear",
+    "_type": "faq",
+    "question": "Cần mang theo gì khi đến học?",
+    "answer": [
+      {
+        "_type": "block",
+        "_key": "block-nguoi-moi-gear",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-nguoi-moi-gear",
+            "marks": [],
+            "text": "Bạn nên mang giày thể thao đế không trơn, quần áo thoải mái và nước uống. Nếu chưa có vợt, bạn vẫn có thể đăng ký để được V2 tư vấn trước."
+          }
+        ]
+      }
+    ],
+    "pages": [
+      "nguoi_moi"
+    ],
+    "includeInSchema": true,
+    "order": 3
+  },
+  {
+    "_id": "faq.nguoi-moi-progress",
+    "_type": "faq",
+    "question": "Học bao lâu thì chơi được?",
+    "answer": [
+      {
+        "_type": "block",
+        "_key": "block-nguoi-moi-progress",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-nguoi-moi-progress",
+            "marks": [],
+            "text": "Thông thường sau khoảng 8 đến 12 buổi, học viên mới đã có thể tự đánh rally cơ bản và di chuyển đúng hơn trên sân."
+          }
+        ]
+      }
+    ],
+    "pages": [
+      "nguoi_moi"
+    ],
+    "includeInSchema": true,
+    "order": 4
+  },
+  {
+    "_id": "faq.nguoi-moi-group-size",
+    "_type": "faq",
+    "question": "Lớp học mấy người?",
+    "answer": [
+      {
+        "_type": "block",
+        "_key": "block-nguoi-moi-group-size",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-nguoi-moi-group-size",
+            "marks": [],
+            "text": "V2 có lớp nhóm nhỏ từ 2 đến 6 người và cả hình thức 1 kèm 1 nếu bạn muốn được theo sát hơn."
+          }
+        ]
+      }
+    ],
+    "pages": [
+      "nguoi_moi"
+    ],
+    "includeInSchema": true,
+    "order": 5
+  },
+  {
+    "_id": "faq.nguoi-moi-pricing",
+    "_type": "faq",
+    "question": "Học phí cho người mới bắt đầu là bao nhiêu?",
+    "answer": [
+      {
+        "_type": "block",
+        "_key": "block-nguoi-moi-pricing",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-nguoi-moi-pricing",
+            "marks": [],
+            "text": "Người mới có thể bắt đầu với lớp cơ bản 3 buổi mỗi tuần giá 1.300.000 VNĐ một tháng hoặc lớp 2 buổi mỗi tuần giá 1.000.000 VNĐ một tháng. Nếu muốn học riêng, hình thức 1 kèm 1 là 400.000 VNĐ mỗi giờ mỗi học viên và học viên tự lo sân."
+          }
+        ]
+      }
+    ],
+    "pages": [
+      "nguoi_moi"
+    ],
+    "includeInSchema": true,
+    "order": 6
+  },
+  {
+    "_id": "faq.binh-thanh-where",
+    "_type": "faq",
+    "question": "V2 dạy ở sân nào tại Bình Thạnh?",
+    "answer": [
+      {
+        "_type": "block",
+        "_key": "block-binh-thanh-where",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-binh-thanh-where",
+            "marks": [],
+            "text": "V2 Badminton hiện nhận học viên khu vực Bình Thạnh tại Sân Green. Đây là điểm tập chính của V2 cho người học muốn ưu tiên khu vực Bình Thạnh."
+          }
+        ]
+      }
+    ],
+    "pages": [
+      "binh_thanh"
+    ],
+    "includeInSchema": true,
+    "order": 1
+  },
+  {
+    "_id": "faq.binh-thanh-schedule",
+    "_type": "faq",
+    "question": "Lịch học tại Bình Thạnh thế nào?",
+    "answer": [
+      {
+        "_type": "block",
+        "_key": "block-binh-thanh-schedule",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-binh-thanh-schedule",
+            "marks": [],
+            "text": "Sân Green có khung 08:00-10:00 cuối tuần, 14:00-15:30 vào T3-T5-T7, 18:00-20:00 và 20:00-22:00 vào T3-T5. Đây là nhóm lịch phù hợp cho cả người mới bắt đầu và người đi làm."
+          }
+        ]
+      }
+    ],
+    "pages": [
+      "binh_thanh"
+    ],
+    "includeInSchema": true,
+    "order": 2
+  },
+  {
+    "_id": "faq.binh-thanh-night",
+    "_type": "faq",
+    "question": "Có lớp buổi tối ở Bình Thạnh không?",
+    "answer": [
+      {
+        "_type": "block",
+        "_key": "block-binh-thanh-night",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-binh-thanh-night",
+            "marks": [],
+            "text": "Có. Sân Green có lớp tối 18:00-20:00 và 20:00-22:00 vào T3-T5, phù hợp cho người học sau giờ làm."
+          }
+        ]
+      }
+    ],
+    "pages": [
+      "binh_thanh"
+    ],
+    "includeInSchema": true,
+    "order": 3
+  },
+  {
+    "_id": "faq.binh-thanh-fit",
+    "_type": "faq",
+    "question": "Nếu tôi ở Bình Thạnh thì sân Green có phù hợp không?",
+    "answer": [
+      {
+        "_type": "block",
+        "_key": "block-binh-thanh-fit",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-binh-thanh-fit",
+            "marks": [],
+            "text": "Có, nếu bạn ưu tiên đi lại thuận tiện ở Bình Thạnh và muốn học cố định tại Sân Green. Nếu bạn cần thêm lựa chọn sân gần Hiệp Bình hoặc lịch khác, V2 vẫn có thể tư vấn các sân thuộc cụm Thủ Đức."
+          }
+        ]
+      }
+    ],
+    "pages": [
+      "binh_thanh"
+    ],
+    "includeInSchema": true,
+    "order": 4
+  },
+  {
+    "_id": "faq.binh-thanh-time",
+    "_type": "faq",
+    "question": "Người đi làm ở Bình Thạnh nên chọn khung giờ nào?",
+    "answer": [
+      {
+        "_type": "block",
+        "_key": "block-binh-thanh-time",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-binh-thanh-time",
+            "marks": [],
+            "text": "Nếu bạn đi làm giờ hành chính, khung 18:00-20:00 hoặc 20:00-22:00 vào T3-T5 là lựa chọn thuận tiện nhất. Nếu bạn muốn học nhẹ hơn, có thể chọn khung sáng cuối tuần 08:00-10:00."
+          }
+        ]
+      }
+    ],
+    "pages": [
+      "binh_thanh"
+    ],
+    "includeInSchema": true,
+    "order": 5
+  },
+  {
+    "_id": "faq.thu-duc-where",
+    "_type": "faq",
+    "question": "V2 dạy ở sân nào tại Thủ Đức?",
+    "answer": [
+      {
+        "_type": "block",
+        "_key": "block-thu-duc-where",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-thu-duc-where",
+            "marks": [],
+            "text": "V2 Badminton hiện có 3 lựa chọn tại khu vực Thủ Đức là Sân Huệ Thiên, Sân Khang Sport (Bình Triệu) và Sân Phúc Lộc, đều có link Google Maps để xem đường đi."
+          }
+        ]
+      }
+    ],
+    "pages": [
+      "thu_duc"
+    ],
+    "includeInSchema": true,
+    "order": 1
+  },
+  {
+    "_id": "faq.thu-duc-address",
+    "_type": "faq",
+    "question": "Sân Huệ Thiên, Khang Sport (Bình Triệu) và Phúc Lộc ở đâu?",
+    "answer": [
+      {
+        "_type": "block",
+        "_key": "block-thu-duc-address",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-thu-duc-address",
+            "marks": [],
+            "text": "Sân Huệ Thiên ở 520 Quốc Lộ 13, Hiệp Bình Phước, Hiệp Bình, Hồ Chí Minh. Sân Khang Sport (Bình Triệu) ở 8 Đường số 20, Hiệp Bình Chánh, Hiệp Bình, Hồ Chí Minh. Sân Phúc Lộc ở 103/11B Đường số 20, Hiệp Bình Chánh, Hiệp Bình, Hồ Chí Minh."
+          }
+        ]
+      }
+    ],
+    "pages": [
+      "thu_duc"
+    ],
+    "includeInSchema": true,
+    "order": 2
+  },
+  {
+    "_id": "faq.thu-duc-night",
+    "_type": "faq",
+    "question": "Có lớp buổi tối ở Thủ Đức không?",
+    "answer": [
+      {
+        "_type": "block",
+        "_key": "block-thu-duc-night",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-thu-duc-night",
+            "marks": [],
+            "text": "Có. Huệ Thiên có các khung tối 18:00-20:00 và 20:00-22:00 trong tuần. Phúc Lộc cũng có lớp 18:00-20:00 và 20:00-22:00 vào T2-T4-T6, phù hợp cho người đi làm."
+          }
+        ]
+      }
+    ],
+    "pages": [
+      "thu_duc"
+    ],
+    "includeInSchema": true,
+    "order": 3
+  },
+  {
+    "_id": "faq.thu-duc-weekend",
+    "_type": "faq",
+    "question": "Cuối tuần có lớp ở Thủ Đức không?",
+    "answer": [
+      {
+        "_type": "block",
+        "_key": "block-thu-duc-weekend",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-thu-duc-weekend",
+            "marks": [],
+            "text": "Có. Huệ Thiên có lớp sáng cuối tuần 07:00-09:00, 09:00-11:00 và 17:00-18:00. Khang Sport có khung 11:30-13:00 thứ 7 và 12:00-14:00 vào T7-CN."
+          }
+        ]
+      }
+    ],
+    "pages": [
+      "thu_duc"
+    ],
+    "includeInSchema": true,
+    "order": 4
+  },
+  {
+    "_id": "faq.thu-duc-which-court",
+    "_type": "faq",
+    "question": "Nếu học tại Thủ Đức thì nên chọn sân nào?",
+    "answer": [
+      {
+        "_type": "block",
+        "_key": "block-thu-duc-which-court",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-thu-duc-which-court",
+            "marks": [],
+            "text": "Nếu bạn cần nhiều khung giờ nhất thì nên chọn Huệ Thiên. Nếu ưu tiên cuối tuần hoặc khu Bình Triệu thì Khang Sport phù hợp hơn. Nếu muốn cố định lịch T2-T4-T6, đặc biệt cho lớp chiều và tối, Phúc Lộc là lựa chọn dễ theo lâu dài."
+          }
+        ]
+      }
+    ],
+    "pages": [
+      "thu_duc"
+    ],
+    "includeInSchema": true,
+    "order": 5
+  }
+]
