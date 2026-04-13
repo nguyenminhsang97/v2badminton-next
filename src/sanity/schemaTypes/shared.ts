@@ -37,6 +37,13 @@ export const FAQ_PAGE_OPTIONS = [
   { title: "Summer", value: "summer" },
 ] as const;
 
+export const STUDENT_GROUP_OPTIONS = [
+  { title: "Tre em", value: "tre_em" },
+  { title: "Nguoi moi", value: "nguoi_moi" },
+  { title: "Nguoi di lam", value: "nguoi_di_lam" },
+  { title: "Doanh nghiep", value: "doanh_nghiep" },
+] as const;
+
 export const AUDIENCE_OPTIONS = [
   { title: "Tre em", value: "tre_em" },
   { title: "Nguoi moi", value: "nguoi_moi" },

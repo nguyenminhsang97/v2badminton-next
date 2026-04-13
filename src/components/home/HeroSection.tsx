@@ -19,17 +19,22 @@ export function HeroSection() {
       <div className="hero__content">
         <p className="hero__eyebrow">{HERO_EYEBROW}</p>
         <h1 className="hero__heading">
-          HỌC CẦU LÔNG<br />
-          TẠI TP.HCM<br />
+          HỌC CẦU LÔNG
+          <br />
+          TẠI TP.HCM
+          <br />
           <span className="hero__heading-accent">BÌNH THẠNH &amp; THỦ ĐỨC</span>
         </h1>
         <p className="hero__subheading">{HERO_SUBHEADING}</p>
 
         <p className="hero__quick-links">
           Tìm nhanh:{" "}
-          <a href="/hoc-cau-long-cho-nguoi-moi/">học cầu lông cho người mới</a>,{" "}
-          <a href="/lop-cau-long-binh-thanh/">lớp cầu lông Bình Thạnh</a>,{" "}
-          <a href="/lop-cau-long-thu-duc/">lớp cầu lông Thủ Đức</a>.
+          <a href="/hoc-cau-long-cho-nguoi-moi/">người mới</a>,{" "}
+          <a href="/lop-cau-long-binh-thanh/">Bình Thạnh</a>,{" "}
+          <a href="/lop-cau-long-thu-duc/">Thủ Đức</a>,{" "}
+          <a href="/lop-cau-long-tre-em/">trẻ em</a>,{" "}
+          <a href="/lop-cau-long-cho-nguoi-di-lam/">người đi làm</a>,{" "}
+          <a href="/cau-long-doanh-nghiep/">doanh nghiệp</a>.
         </p>
 
         <div className="hero__cta-group">
@@ -45,7 +50,7 @@ export function HeroSection() {
               })
             }
           >
-            Đăng ký học thử ➜
+            Đăng ký học thử →
           </a>
           <a
             href="#khoa-hoc"
@@ -73,7 +78,7 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Decorative orb — hidden from assistive tech */}
+      {/* Decorative orb - hidden from assistive tech */}
       <div className="hero__shuttle" aria-hidden="true">
         <div className="hero__shuttle-ring" />
         <div className="hero__shuttle-ring" />

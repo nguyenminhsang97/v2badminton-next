@@ -51,12 +51,12 @@ type ContactFormProps = {
 
 const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
 const BUSINESS_MESSAGE =
-  "Quan tam chuong trinh cau long danh cho doanh nghiep, can tu van them ve lich va bao gia.";
+  "Quan tâm chương trình cầu lông dành cho doanh nghiệp, cần tư vấn thêm về lịch và báo giá.";
 
 const LEVEL_OPTIONS: readonly { value: ScheduleLevel; label: string }[] = [
-  { value: "co_ban", label: "Co ban" },
-  { value: "nang_cao", label: "Nang cao" },
-  { value: "doanh_nghiep", label: "Doanh nghiep" },
+  { value: "co_ban", label: "Cơ bản" },
+  { value: "nang_cao", label: "Nâng cao" },
+  { value: "doanh_nghiep", label: "Doanh nghiệp" },
 ] as const;
 
 const INITIAL_VALUES: FormValues = {
@@ -120,8 +120,8 @@ export function ContactForm({
   const lastTrackedSuccessRef = useRef<string | null>(null);
 
   const businessHeading = businessMode
-    ? "Nhan tu van cho doanh nghiep"
-    : "Dang ky hoc thu";
+    ? "Nhận tư vấn cho doanh nghiệp"
+    : "Đăng ký học thử";
   const courtOptions = useMemo(
     () => buildLegacyCourtOptions(locations),
     [locations],
@@ -431,7 +431,7 @@ export function ContactForm({
       if (!captchaToken?.trim()) {
         event.preventDefault();
         setDirtySinceServer(true);
-        setSubmitMessage("Vui long hoan tat captcha truoc khi gui thong tin.");
+        setSubmitMessage("Vui lòng hoàn tất captcha trước khi gửi thông tin.");
         trackEvent("form_error", {
           error_code: "captcha_required",
           page_type: "homepage",
@@ -455,7 +455,7 @@ export function ContactForm({
     if (Object.keys(clientErrors).length > 0) {
       event.preventDefault();
       setDirtySinceServer(true);
-      setSubmitMessage("Vui long kiem tra lai thong tin truoc khi gui.");
+      setSubmitMessage("Vui lòng kiểm tra lại thông tin trước khi gửi.");
 
       for (const [fieldName, errorMessage] of Object.entries(clientErrors)) {
         trackEvent("form_error", {
@@ -477,18 +477,18 @@ export function ContactForm({
     <div className="contact-form-shell">
       <div className="contact-form-shell__header">
         <p className="contact-form-shell__eyebrow">
-          {businessMode ? "Che do doanh nghiep" : "Dang ky nhanh"}
+          {businessMode ? "Chế độ doanh nghiệp" : "Đăng ký nhanh"}
         </p>
         <h3 className="contact-form-shell__title">{businessHeading}</h3>
         <p className="contact-form-shell__subtitle">
-          Dien thong tin can thiet. Lich hoc, san tap va loi nhan se duoc luu san
-          khi ban chon tu lich.
+          Điền thông tin cần thiết. Lịch học, sân tập và lời nhắn sẽ được lưu sẵn
+          khi bạn chọn từ lịch.
         </p>
       </div>
 
       {submitState === "success" ? (
         <div className="contact-form__success" role="status" aria-live="polite">
-          <strong>Cam on ban da de lai thong tin.</strong>
+          <strong>Cảm ơn bạn đã để lại thông tin.</strong>
           <p>{submitMessage}</p>
           <a
             href={`https://zalo.me/${contactSettings.zaloNumber}`}
@@ -496,7 +496,7 @@ export function ContactForm({
             target="_blank"
             rel="noopener noreferrer"
           >
-            Nhan Zalo tu van
+            Nhắn Zalo tư vấn
           </a>
         </div>
       ) : (
@@ -514,7 +514,7 @@ export function ContactForm({
 
           <div className="contact-form__grid">
             <label className="contact-form__field">
-              <span className="contact-form__label">Ho ten *</span>
+              <span className="contact-form__label">Họ tên *</span>
               <input
                 data-field-name="name"
                 name="name"
@@ -524,7 +524,7 @@ export function ContactForm({
                 onFocus={handleInputFocus}
                 aria-invalid={Boolean(errors.name)}
                 aria-describedby={errors.name ? "contact-error-name" : undefined}
-                placeholder="Nhap ho ten"
+                placeholder="Nhập họ tên"
                 disabled={isPending}
               />
               {errors.name && (
@@ -535,7 +535,7 @@ export function ContactForm({
             </label>
 
             <label className="contact-form__field">
-              <span className="contact-form__label">So dien thoai *</span>
+              <span className="contact-form__label">Số điện thoại *</span>
               <input
                 data-field-name="phone"
                 name="phone"
@@ -564,11 +564,11 @@ export function ContactForm({
             }
             data-optional-fields="true"
           >
-            <summary>Bo sung muc tieu hoc va khung gio mong muon</summary>
+            <summary>Bổ sung mục tiêu học và khung giờ mong muốn</summary>
 
             <div className="contact-form__optional-grid">
               <label className="contact-form__field">
-                <span className="contact-form__label">Trinh do</span>
+                <span className="contact-form__label">Trình độ</span>
                 <select
                   data-field-name="level"
                   name="level"
@@ -579,7 +579,7 @@ export function ContactForm({
                   onFocus={handleInputFocus}
                   disabled={isPending}
                 >
-                  <option value="">Chon trinh do</option>
+                  <option value="">Chọn trình độ</option>
                   {LEVEL_OPTIONS.map((option) => (
                     <option key={option.value} value={option.value}>
                       {option.label}
@@ -591,7 +591,7 @@ export function ContactForm({
               {!businessMode && (
                 <>
                   <label className="contact-form__field">
-                    <span className="contact-form__label">San tap</span>
+                    <span className="contact-form__label">Sân tập</span>
                     <select
                       data-field-name="court"
                       name="court"
@@ -605,7 +605,7 @@ export function ContactForm({
                       onFocus={handleInputFocus}
                       disabled={isPending}
                     >
-                      <option value="">Chon san tap</option>
+                      <option value="">Chọn sân tập</option>
                       {courtOptions.map((court) => (
                         <option key={court.value} value={court.value}>
                           {court.label}
@@ -615,7 +615,7 @@ export function ContactForm({
                   </label>
 
                   <label className="contact-form__field">
-                    <span className="contact-form__label">Khung gio</span>
+                    <span className="contact-form__label">Khung giờ</span>
                     <select
                       data-field-name="time_slot"
                       name="time_slot"
@@ -629,7 +629,7 @@ export function ContactForm({
                       onFocus={handleInputFocus}
                       disabled={isPending}
                     >
-                      <option value="">Chon khung gio</option>
+                      <option value="">Chọn khung giờ</option>
                       {timeSlotOptions.map((slot) => (
                         <option key={slot.value} value={slot.value}>
                           {slot.label}
@@ -644,7 +644,7 @@ export function ContactForm({
 
           <label className="contact-form__field">
             <span className="contact-form__label">
-              {businessMode ? "Nhu cau doanh nghiep" : "Loi nhan"}
+              {businessMode ? "Nhu cầu doanh nghiệp" : "Lời nhắn"}
             </span>
             <textarea
               data-field-name="message"
@@ -657,8 +657,8 @@ export function ContactForm({
               aria-describedby={errors.message ? "contact-error-message" : undefined}
               placeholder={
                 businessMode
-                  ? "Mo ta so luong nguoi, muc tieu va ngan sach du kien"
-                  : "Ban muon hoc vao khung gio nao, o khu vuc nao?"
+                  ? "Mô tả số lượng người, mục tiêu và ngân sách dự kiến"
+                  : "Bạn muốn học vào khung giờ nào, ở khu vực nào?"
               }
               disabled={isPending}
             />
@@ -698,8 +698,8 @@ export function ContactForm({
               </div>
               <p className="contact-form__captcha-note">
                 {formToken
-                  ? "Hoan tat captcha de gui form bang nhanh JS an toan."
-                  : "Dang khoi tao lop bao ve. Neu token chua san sang, form se roi sang nhanh du phong."}
+                  ? "Hoàn tất captcha để gửi form bằng luồng JS an toàn."
+                  : "Đang khởi tạo lớp bảo vệ. Nếu token chưa sẵn sàng, form sẽ rơi sang luồng dự phòng."}
               </p>
             </>
           ) : null}
@@ -720,11 +720,11 @@ export function ContactForm({
               className="btn btn--primary btn--lg"
               disabled={isPending}
             >
-              {isPending ? "Dang gui..." : "Gui thong tin"}
+              {isPending ? "Đang gửi..." : "Gửi thông tin"}
             </button>
             <p className="contact-form__hint">
-              Ban co the de trong cac truong tuy chon. V2 se goi lai de chot lich
-              phu hop.
+              Bạn có thể để trống các trường tùy chọn. V2 sẽ gọi lại để chốt lịch
+              phù hợp.
             </p>
           </div>
         </form>

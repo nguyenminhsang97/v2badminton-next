@@ -1,11 +1,5 @@
 import { defineField, defineType } from "sanity";
-
-const STUDENT_GROUP_OPTIONS = [
-  { title: "Tre em", value: "tre_em" },
-  { title: "Nguoi moi", value: "nguoi_moi" },
-  { title: "Nguoi di lam", value: "nguoi_di_lam" },
-  { title: "Doanh nghiep", value: "doanh_nghiep" },
-] as const;
+import { STUDENT_GROUP_OPTIONS } from "./shared";
 
 export const testimonial = defineType({
   name: "testimonial",

@@ -1,20 +1,18 @@
 import Link from "next/link";
 import { coreRoutes, type CoreRoutePath } from "@/lib/routes";
 
-/**
- * Routes that are preview-ready in Sprint 2.
- * Maintain this list: only expose links that resolve 200 in preview.
- * When Sprint 3 pages land, add their paths here.
- */
 const PREVIEW_READY_ROUTES: readonly CoreRoutePath[] = [
   "/hoc-cau-long-cho-nguoi-moi/",
   "/lop-cau-long-binh-thanh/",
   "/lop-cau-long-thu-duc/",
+  "/lop-cau-long-tre-em/",
+  "/lop-cau-long-cho-nguoi-di-lam/",
+  "/cau-long-doanh-nghiep/",
 ] as const;
 
 const seoPageRoutes = coreRoutes.filter(
-  (r): r is (typeof coreRoutes)[number] =>
-    r.path !== "/" && PREVIEW_READY_ROUTES.includes(r.path),
+  (route): route is (typeof coreRoutes)[number] =>
+    route.path !== "/" && PREVIEW_READY_ROUTES.includes(route.path),
 );
 
 export function SeoLinksBlock() {
