@@ -381,6 +381,20 @@ img {
   border: 1px solid var(--v2-border);
 }
 
+.hero__campaign-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 0.375rem 1rem;
+  background: rgba(200, 245, 66, 0.14);
+  border: 1px solid rgba(200, 245, 66, 0.28);
+  border-radius: 9999px;
+  color: var(--v2-lime);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
 .hero__eyebrow {
   color: var(--v2-lime);
   font-size: 0.85rem;
@@ -395,6 +409,12 @@ img {
   font-size: clamp(2.8rem, 7vw, 5.8rem);
   line-height: 0.96;
   text-transform: uppercase;
+}
+
+.hero__heading--campaign {
+  max-width: 16ch;
+  line-height: 1.02;
+  text-wrap: balance;
 }
 
 .hero__heading-accent {
@@ -652,12 +672,15 @@ img {
 .contact-section__body {
   display: grid;
   gap: 18px;
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .contact-form-shell,
 .contact-direct {
   display: grid;
   gap: 16px;
+  width: 100%;
+  min-width: 0;
 }
 
 .contact-form-shell__header {

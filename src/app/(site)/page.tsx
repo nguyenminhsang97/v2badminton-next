@@ -16,6 +16,7 @@ import { WhySection } from "@/components/home/WhySection";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { buildMetadata } from "@/lib/routes";
 import {
+  getActiveCampaign,
   getCoaches,
   getFaqs,
   getLocations,
@@ -36,6 +37,7 @@ export const metadata = buildMetadata("/");
 
 export default async function Home() {
   const [
+    campaign,
     pricingTiers,
     scheduleBlocks,
     locations,
@@ -45,6 +47,7 @@ export default async function Home() {
     testimonials,
   ] =
     await Promise.all([
+      getActiveCampaign(),
       getPricingTiers(),
       getScheduleBlocks(),
       getLocations(),
@@ -71,7 +74,7 @@ export default async function Home() {
         <Suspense fallback={null}>
           <HomepageBusinessModeInitializer />
         </Suspense>
-        <HeroSection />
+        <HeroSection campaign={campaign} />
         <PricingSection pricingTiers={pricingTiers} />
         <WhySection />
         <CourseSection />

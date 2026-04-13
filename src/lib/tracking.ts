@@ -15,6 +15,8 @@ export type CtaName =
   | "dang_ky_ngay"
   | "dang_ky_hoc_thu"
   | "xem_khoa_hoc"
+  | "campaign_primary"
+  | "campaign_secondary"
   | "nhan_bao_gia"
   | "nhan_zalo_tu_van";
 

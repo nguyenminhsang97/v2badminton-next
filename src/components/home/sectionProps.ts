@@ -1,4 +1,5 @@
 import type {
+  SanityActiveCampaign,
   SanityCoach,
   SanityFaq,
   SanityLocation,
@@ -7,6 +8,10 @@ import type {
   SanitySiteSettings,
   SanityTestimonial,
 } from "@/lib/sanity";
+
+export type HomepageHeroSectionProps = {
+  campaign: SanityActiveCampaign | null;
+};
 
 export type HomepageCoachSectionProps = {
   coaches: SanityCoach[];

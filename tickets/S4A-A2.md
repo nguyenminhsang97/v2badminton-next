@@ -99,7 +99,7 @@ export const getActiveCampaign = cache(
   async (): Promise<SanityActiveCampaign | null> => {
     // Vietnam is UTC+7 with no daylight saving.
     // new Date().toISOString() returns UTC — can be 1 day behind local time
-    // between midnight and 01:00 ICT. Use explicit offset to get the correct date.
+    // between midnight and 06:59 ICT. Use explicit offset to get the correct date.
     const now = new Date();
     const vnTime = new Date(now.getTime() + 7 * 60 * 60 * 1000);
     const today = vnTime.toISOString().split("T")[0]; // e.g. "2026-06-15"

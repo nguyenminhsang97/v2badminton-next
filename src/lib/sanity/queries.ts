@@ -181,6 +181,24 @@ export type SanityMoneyPageLoadResult = {
   degraded: boolean;
 };
 
+export type SanityActiveCampaign = {
+  id: string;
+  slug: string;
+  name: string;
+  status: "active";
+  startDate: string;
+  endDate: string;
+  badgeText: string | null;
+  heroTitle: string | null;
+  heroDescription: string | null;
+  primaryCtaLabel: string | null;
+  primaryCtaUrl: string | null;
+  secondaryCtaLabel: string | null;
+  secondaryCtaUrl: string | null;
+  featuredAudience: SanityAudience | null;
+  linkedPageSlug: string | null;
+};
+
 const PUBLISHED_ONLY_FILTER = '!(_id in path("drafts.**"))';
 
 function toPortableTextBlocks(text: string): SanityPortableTextBlock[] {
@@ -528,6 +546,33 @@ const MONEY_PAGE_QUERY = defineQuery(`
   }
 `);
 
+const ACTIVE_CAMPAIGN_QUERY = defineQuery(`
+  *[
+    _type == "campaign" &&
+    status == "active" &&
+    startDate <= $today &&
+    endDate >= $today &&
+    ${PUBLISHED_ONLY_FILTER}
+  ]
+  | order(startDate desc)[0]{
+    "id": _id,
+    "slug": slug.current,
+    name,
+    status,
+    startDate,
+    endDate,
+    "badgeText": coalesce(badgeText, null),
+    "heroTitle": coalesce(heroTitle, null),
+    "heroDescription": coalesce(heroDescription, null),
+    "primaryCtaLabel": coalesce(primaryCtaLabel, null),
+    "primaryCtaUrl": coalesce(primaryCtaUrl, null),
+    "secondaryCtaLabel": coalesce(secondaryCtaLabel, null),
+    "secondaryCtaUrl": coalesce(secondaryCtaUrl, null),
+    "featuredAudience": coalesce(featuredAudience, null),
+    "linkedPageSlug": linkedPage->slug.current
+  }
+`);
+
 export const getSiteSettings = cache(async (): Promise<SanitySiteSettings | null> => {
   return sanityFetchOrFallback<SanitySiteSettings>({
     query: SITE_SETTINGS_QUERY,
@@ -628,5 +673,23 @@ export const getMoneyPage = cache(
       page: result.data,
       degraded: result.state !== "success",
     };
+  },
+);
+
+export const getActiveCampaign = cache(
+  async (): Promise<SanityActiveCampaign | null> => {
+    // Vietnam is UTC+7 with no daylight saving.
+    // Raw ISO dates are UTC-based and can be one day behind local time
+    // between midnight and 06:59 ICT.
+    const now = new Date();
+    const vnTime = new Date(now.getTime() + 7 * 60 * 60 * 1000);
+    const today = vnTime.toISOString().split("T")[0];
+
+    return sanityFetchOrFallback<SanityActiveCampaign>({
+      query: ACTIVE_CAMPAIGN_QUERY,
+      params: { today },
+      fallback: null,
+      tags: ["sanity:campaign"],
+    });
   },
 );

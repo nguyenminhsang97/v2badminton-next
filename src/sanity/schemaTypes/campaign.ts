@@ -2,14 +2,20 @@ import { defineField, defineType } from "sanity";
 import { AUDIENCE_OPTIONS, slugifyValue } from "./shared";
 
 const CAMPAIGN_STATUS_OPTIONS = [
-  { title: "Draft", value: "draft" },
-  { title: "Active", value: "active" },
-  { title: "Ended", value: "ended" },
+  { title: "Nháp", value: "draft" },
+  { title: "Đang chạy", value: "active" },
+  { title: "Đã kết thúc", value: "ended" },
 ] as const;
+
+const STATUS_LABEL: Record<string, string> = {
+  draft: "Nháp",
+  active: "Đang chạy",
+  ended: "Đã kết thúc",
+};
 
 export const campaign = defineType({
   name: "campaign",
-  title: "Campaign",
+  title: "Chiến dịch",
   type: "document",
   initialValue: {
     status: "draft",
@@ -17,8 +23,9 @@ export const campaign = defineType({
   fields: [
     defineField({
       name: "slug",
-      title: "Slug",
+      title: "Slug (URL)",
       type: "slug",
+      description: "Tự động tạo từ tên chiến dịch.",
       options: {
         source: "name",
         slugify: slugifyValue,
@@ -27,14 +34,15 @@ export const campaign = defineType({
     }),
     defineField({
       name: "name",
-      title: "Name",
+      title: "Tên chiến dịch",
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "status",
-      title: "Status",
+      title: "Trạng thái",
       type: "string",
+      description: 'Chỉ chiến dịch "Đang chạy" mới hiển thị trên homepage.',
       options: {
         list: [...CAMPAIGN_STATUS_OPTIONS],
       },
@@ -42,74 +50,87 @@ export const campaign = defineType({
     }),
     defineField({
       name: "startDate",
-      title: "Start Date",
+      title: "Ngày bắt đầu",
       type: "date",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "endDate",
-      title: "End Date",
+      title: "Ngày kết thúc",
       type: "date",
       validation: (Rule) =>
         Rule.required().custom((endDate, context) => {
           const startDate = context.document?.startDate as string | undefined;
           if (typeof endDate === "string" && startDate && endDate <= startDate) {
-            return "End date must be after start date";
+            return "Ngày kết thúc phải sau ngày bắt đầu.";
           }
           return true;
         }),
     }),
     defineField({
       name: "badgeText",
-      title: "Badge Text",
+      title: "Dòng badge trên hero",
       type: "string",
-      description: "VD: Lop he dang mo dang ky",
+      description:
+        "VD: Lớp hè đang mở đăng ký. Hiển thị dạng tag nhỏ trên hero homepage.",
     }),
     defineField({
       name: "heroTitle",
-      title: "Hero Title Override",
+      title: "Tiêu đề hero (thay thế)",
       type: "string",
+      description:
+        "Nếu có: thay thế tiêu đề chính trên hero homepage trong suốt chiến dịch.",
     }),
     defineField({
       name: "heroDescription",
-      title: "Hero Description Override",
+      title: "Mô tả hero (thay thế)",
       type: "text",
       rows: 3,
+      description:
+        "Nếu có: thay thế đoạn mô tả dưới tiêu đề hero homepage.",
     }),
     defineField({
       name: "primaryCtaLabel",
-      title: "Primary CTA Label",
+      title: "Nút CTA chính — nội dung",
       type: "string",
+      description:
+        'VD: Đăng ký lớp hè →. Thay thế nút "Đăng ký học thử" trên hero.',
     }),
     defineField({
       name: "primaryCtaUrl",
-      title: "Primary CTA URL",
+      title: "Nút CTA chính — link",
       type: "string",
-      description: "Cho phep internal path nhu /lop-he-2026 hoac absolute URL",
+      description:
+        "Cho phép internal path như /lop-he-cau-long-tphcm/ hoặc anchor #lien-he.",
     }),
     defineField({
       name: "secondaryCtaLabel",
-      title: "Secondary CTA Label",
+      title: "Nút CTA phụ — nội dung",
       type: "string",
+      description: "VD: Xem lịch lớp hè",
     }),
     defineField({
       name: "secondaryCtaUrl",
-      title: "Secondary CTA URL",
+      title: "Nút CTA phụ — link",
       type: "string",
-      description: "Cho phep internal path nhu /lop-he-2026 hoac absolute URL",
+      description: "Cho phép internal path như /lop-he-cau-long-tphcm/ hoặc anchor #lien-he.",
     }),
     defineField({
       name: "featuredAudience",
-      title: "Featured Audience",
+      title: "Đối tượng ưu tiên",
       type: "string",
+      description:
+        "Dùng để tùy chỉnh trải nghiệm form theo đối tượng (nếu có).",
       options: {
         list: [...AUDIENCE_OPTIONS],
       },
     }),
     defineField({
       name: "linkedPage",
-      title: "Linked Page",
+      title: "Trang nội dung liên kết",
       type: "reference",
+      description:
+        "Trang money page gắn với chiến dịch này. VD: trang Lớp hè.",
       to: [{ type: "money_page" }],
     }),
   ],
@@ -121,7 +142,7 @@ export const campaign = defineType({
     prepare({ title, subtitle }) {
       return {
         title,
-        subtitle,
+        subtitle: STATUS_LABEL[subtitle] ?? subtitle,
       };
     },
   },
