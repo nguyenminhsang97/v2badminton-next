@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { MoneyPageStructuredData } from "@/components/money-page/MoneyPageStructuredData";
 import { MoneyPageTemplate } from "@/components/money-page/MoneyPageTemplate";
 import { buildMoneyPageMetadata } from "@/lib/moneyPageMetadata";
 import { getMoneyPage } from "@/lib/sanity";
@@ -24,5 +25,19 @@ export default async function OfficeWorkerMoneyPage() {
     notFound();
   }
 
-  return <MoneyPageTemplate page={moneyPage} />;
+  return (
+    <>
+      <MoneyPageStructuredData
+        path={PATH}
+        breadcrumbId="nguoi-di-lam-breadcrumb"
+        breadcrumbLabel="Lớp cầu lông cho người đi làm"
+        faqId="nguoi-di-lam-faq"
+        businessId="nguoi-di-lam-business"
+        faqs={moneyPage.relatedFaqs}
+        locations={moneyPage.relatedLocations}
+        pricingTiers={moneyPage.relatedPricing}
+      />
+      <MoneyPageTemplate page={moneyPage} />
+    </>
+  );
 }
