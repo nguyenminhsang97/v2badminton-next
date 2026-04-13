@@ -15,6 +15,7 @@ export type PricingCardsProps = {
   ctaHref: string;
   trackingLocation: string;
   onEnterBusinessMode?: () => void;
+  enterpriseCtaHref?: string;
 };
 
 function normalizePathname(pathname: string): string {
@@ -26,15 +27,21 @@ function normalizePathname(pathname: string): string {
 }
 
 function getTrackingPageType(pathname: string): PageType {
-  if (pathname === "/") {
+  const normalizedPathname = normalizePathname(pathname);
+
+  if (normalizedPathname === "/") {
     return "homepage";
   }
 
   if (
-    pathname === "/lop-cau-long-binh-thanh/" ||
-    pathname === "/lop-cau-long-thu-duc/"
+    normalizedPathname === "/lop-cau-long-binh-thanh/" ||
+    normalizedPathname === "/lop-cau-long-thu-duc/"
   ) {
     return "seo_local";
+  }
+
+  if (normalizedPathname === "/cau-long-doanh-nghiep/") {
+    return "seo_support";
   }
 
   return "seo_service";
@@ -124,12 +131,14 @@ function PrivateCard({
 
 function EnterpriseCard({
   ctaHref,
+  enterpriseCtaHref,
   onEnterBusinessMode,
   pathname,
   tier,
   trackingLocation,
 }: {
   ctaHref: string;
+  enterpriseCtaHref?: string;
   onEnterBusinessMode?: () => void;
   pathname: string;
   tier: SanityEnterprisePricingTier;
@@ -175,7 +184,7 @@ function EnterpriseCard({
         ))}
       </ul>
       <a
-        href={ctaHref}
+        href={enterpriseCtaHref ?? ctaHref}
         className="btn btn--outline pricing-card__cta"
         onClick={() => trackPricingCta(pathname, trackingLocation, tier.ctaAction)}
       >
@@ -187,12 +196,14 @@ function EnterpriseCard({
 
 function PricingCard({
   ctaHref,
+  enterpriseCtaHref,
   onEnterBusinessMode,
   pathname,
   tier,
   trackingLocation,
 }: {
   ctaHref: string;
+  enterpriseCtaHref?: string;
   onEnterBusinessMode?: () => void;
   pathname: string;
   tier: SanityPricingTier;
@@ -221,6 +232,7 @@ function PricingCard({
       return (
         <EnterpriseCard
           ctaHref={ctaHref}
+          enterpriseCtaHref={enterpriseCtaHref}
           onEnterBusinessMode={onEnterBusinessMode}
           pathname={pathname}
           tier={tier}
@@ -235,6 +247,7 @@ export function PricingCards({
   ctaHref,
   trackingLocation,
   onEnterBusinessMode,
+  enterpriseCtaHref,
 }: PricingCardsProps) {
   const pathname = normalizePathname(usePathname() ?? "/");
 
@@ -244,6 +257,7 @@ export function PricingCards({
         <PricingCard
           key={tier.id}
           ctaHref={ctaHref}
+          enterpriseCtaHref={enterpriseCtaHref}
           onEnterBusinessMode={onEnterBusinessMode}
           pathname={pathname}
           tier={tier}

@@ -19,7 +19,7 @@ const PATH = "/lop-cau-long-thu-duc/" as const;
 const SLUG = "lop-cau-long-thu-duc";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const moneyPage = await getMoneyPage(SLUG);
+  const { page: moneyPage } = await getMoneyPage(SLUG);
 
   if (moneyPage) {
     return buildMoneyPageMetadata(PATH, moneyPage);
@@ -29,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ThuDucPage() {
-  const moneyPage = await getMoneyPage(SLUG);
+  const { page: moneyPage } = await getMoneyPage(SLUG);
 
   if (moneyPage) {
     const localLocations = moneyPage.relatedLocations.filter(

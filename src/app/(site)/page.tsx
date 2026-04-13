@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import { BusinessSection } from "@/components/home/BusinessSection";
+import { HomepageBusinessModeInitializer } from "@/components/home/HomepageBusinessModeInitializer";
 import { CoachSection } from "@/components/home/CoachSection";
 import { ContactSection } from "@/components/home/ContactSection";
 import { CourseSection } from "@/components/home/CourseSection";
@@ -66,6 +68,9 @@ export default async function Home() {
       <JsonLd id="homepage-course-schema" data={courseSchemas} />
 
       <HomepageConversionProvider>
+        <Suspense fallback={null}>
+          <HomepageBusinessModeInitializer />
+        </Suspense>
         <HeroSection />
         <PricingSection pricingTiers={pricingTiers} />
         <WhySection />

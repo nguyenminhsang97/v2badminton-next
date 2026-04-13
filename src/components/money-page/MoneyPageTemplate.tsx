@@ -11,6 +11,11 @@ export type MoneyPageTemplateProps = {
 };
 
 export function MoneyPageTemplate({ page }: MoneyPageTemplateProps) {
+  const ctaHref =
+    page.audience === "doanh_nghiep"
+      ? "/?mode=business#lien-he"
+      : "/#lien-he";
+
   return (
     <div className="money-page">
       <section className="money-page__hero">
@@ -27,6 +32,7 @@ export function MoneyPageTemplate({ page }: MoneyPageTemplateProps) {
           <PricingCards
             tiers={page.relatedPricing}
             ctaHref="/#lien-he"
+            enterpriseCtaHref="/?mode=business#lien-he"
             trackingLocation={`money_page:${page.slug}:pricing`}
           />
         </section>
@@ -49,7 +55,7 @@ export function MoneyPageTemplate({ page }: MoneyPageTemplateProps) {
       ) : null}
 
       <section className="money-page__cta">
-        <Link href="/#lien-he" className="btn btn--primary btn--lg">
+        <Link href={ctaHref} className="btn btn--primary btn--lg">
           {page.ctaLabel}
         </Link>
       </section>

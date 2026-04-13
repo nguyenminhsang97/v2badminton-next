@@ -53,15 +53,25 @@ export type SanityFetchOptions<TResult> = {
   tags?: readonly string[];
 };
 
-export async function sanityFetchOrFallback<TResult>({
+export type SanityFetchState = "success" | "missing_config" | "query_error";
+
+export type SanityFetchResult<TResult> = {
+  data: TResult | null;
+  state: SanityFetchState;
+};
+
+export async function sanityFetchWithStatus<TResult>({
   query,
   params,
   fallback,
   tags = [],
-}: SanityFetchOptions<TResult>): Promise<TResult | null> {
+}: SanityFetchOptions<TResult>): Promise<SanityFetchResult<TResult>> {
   if (!sanityReadClient) {
     warnMissingSanityConfig();
-    return fallback ?? null;
+    return {
+      data: fallback ?? null,
+      state: "missing_config",
+    };
   }
 
   try {
@@ -74,15 +84,28 @@ export async function sanityFetchOrFallback<TResult>({
       useCdn: true,
     });
 
-    return result ?? fallback ?? null;
+    return {
+      data: result ?? fallback ?? null,
+      state: "success",
+    };
   } catch (error) {
     console.error("[sanity] Read query failed. Falling back to safe value.", {
       tags: Array.from(new Set([...SANITY_CACHE_TAGS, ...tags])),
       error,
     });
 
-    return fallback ?? null;
+    return {
+      data: fallback ?? null,
+      state: "query_error",
+    };
   }
+}
+
+export async function sanityFetchOrFallback<TResult>(
+  options: SanityFetchOptions<TResult>,
+): Promise<TResult | null> {
+  const result = await sanityFetchWithStatus(options);
+  return result.data;
 }
 
 function warnMissingSanityConfig() {

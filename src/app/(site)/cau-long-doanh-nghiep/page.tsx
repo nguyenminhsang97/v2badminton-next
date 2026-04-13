@@ -3,27 +3,35 @@ import { notFound } from "next/navigation";
 import { MoneyPageStructuredData } from "@/components/money-page/MoneyPageStructuredData";
 import { MoneyPageTemplate } from "@/components/money-page/MoneyPageTemplate";
 import { buildMoneyPageMetadata } from "@/lib/moneyPageMetadata";
+import { buildPublishedMoneyPageFallback } from "@/lib/moneyPageFallback";
+import { buildMetadata } from "@/lib/routes";
 import { getMoneyPage } from "@/lib/sanity";
 
 const PATH = "/cau-long-doanh-nghiep/";
 const SLUG = "cau-long-doanh-nghiep";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const moneyPage = await getMoneyPage(SLUG);
+  const { page: moneyPage, degraded } = await getMoneyPage(SLUG);
 
-  if (!moneyPage) {
-    return {};
+  if (moneyPage) {
+    return buildMoneyPageMetadata(PATH, moneyPage);
   }
 
-  return buildMoneyPageMetadata(PATH, moneyPage);
+  if (degraded) {
+    return buildMetadata(PATH);
+  }
+
+  return {};
 }
 
 export default async function EnterpriseMoneyPage() {
-  const moneyPage = await getMoneyPage(SLUG);
+  const { page: moneyPage, degraded } = await getMoneyPage(SLUG);
 
-  if (!moneyPage) {
+  if (!moneyPage && !degraded) {
     notFound();
   }
+
+  const resolvedPage = moneyPage ?? buildPublishedMoneyPageFallback(PATH);
 
   return (
     <>
@@ -33,11 +41,11 @@ export default async function EnterpriseMoneyPage() {
         breadcrumbLabel="Chương trình cầu lông doanh nghiệp"
         faqId="doanh-nghiep-faq"
         businessId="doanh-nghiep-business"
-        faqs={moneyPage.relatedFaqs}
-        locations={moneyPage.relatedLocations}
-        pricingTiers={moneyPage.relatedPricing}
+        faqs={resolvedPage.relatedFaqs}
+        locations={resolvedPage.relatedLocations}
+        pricingTiers={resolvedPage.relatedPricing}
       />
-      <MoneyPageTemplate page={moneyPage} />
+      <MoneyPageTemplate page={resolvedPage} />
     </>
   );
 }

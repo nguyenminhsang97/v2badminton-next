@@ -10,7 +10,7 @@ const PATH = "/hoc-cau-long-cho-nguoi-moi/" as const;
 const SLUG = "hoc-cau-long-cho-nguoi-moi";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const moneyPage = await getMoneyPage(SLUG);
+  const { page: moneyPage } = await getMoneyPage(SLUG);
 
   if (moneyPage) {
     return buildMoneyPageMetadata(PATH, moneyPage);
@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function BeginnerPage() {
-  const moneyPage = await getMoneyPage(SLUG);
+  const { page: moneyPage } = await getMoneyPage(SLUG);
 
   if (moneyPage) {
     return (

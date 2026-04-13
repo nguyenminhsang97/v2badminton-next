@@ -15,7 +15,7 @@ import {
   SCHEDULE_LEVEL_OPTIONS,
   STUDENT_GROUP_OPTIONS,
 } from "@/sanity/schemaTypes/shared";
-import { sanityFetchOrFallback } from "./client";
+import { sanityFetchOrFallback, sanityFetchWithStatus } from "./client";
 
 export type SanityDistrict = (typeof DISTRICT_OPTIONS)[number]["value"];
 export type SanityFaqPage = (typeof FAQ_PAGE_OPTIONS)[number]["value"];
@@ -174,6 +174,11 @@ export type SanityMoneyPage = {
   relatedPricing: SanityPricingTier[];
   relatedFaqs: SanityFaq[];
   ctaLabel: string;
+};
+
+export type SanityMoneyPageLoadResult = {
+  page: SanityMoneyPage | null;
+  degraded: boolean;
 };
 
 const PUBLISHED_ONLY_FILTER = '!(_id in path("drafts.**"))';
@@ -611,12 +616,17 @@ export const getFaqs = cache(
 );
 
 export const getMoneyPage = cache(
-  async (slug: string): Promise<SanityMoneyPage | null> => {
-    return sanityFetchOrFallback<SanityMoneyPage | null>({
+  async (slug: string): Promise<SanityMoneyPageLoadResult> => {
+    const result = await sanityFetchWithStatus<SanityMoneyPage | null>({
       query: MONEY_PAGE_QUERY,
       params: { slug },
       fallback: null,
       tags: ["sanity:money-pages", `sanity:money-page:${slug}`],
     });
+
+    return {
+      page: result.data,
+      degraded: result.state !== "success",
+    };
   },
 );
