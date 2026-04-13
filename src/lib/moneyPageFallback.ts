@@ -32,7 +32,7 @@ const MONEY_PAGE_FALLBACKS: Record<
     intro:
       "V2 Badminton đang cập nhật nội dung chi tiết cho lộ trình trẻ em. Phụ huynh vẫn có thể để lại thông tin để nhận tư vấn về độ tuổi phù hợp, lịch học và sân tập gần nhất.",
     body:
-      "Chúng tôi thiết kế lớp theo nhịp độ dễ theo, ưu tiên nền tảng vận động, phản xạ và cảm giác cầu trước khi tăng kỹ thuật. Khi nội dung đầy đủ từ Sanity sẵn sàng, trang này sẽ tự hiển thị phiên bản hoàn chỉnh mà không cần đổi route.",
+      "Chúng tôi thiết kế lớp theo nhịp độ dễ theo, ưu tiên nền tảng vận động, phản xạ và cảm giác cầu trước khi tăng kỹ thuật. Nội dung chi tiết đang được cập nhật và sẽ hiển thị đầy đủ trong thời gian sớm nhất.",
     ctaLabel: "Nhận tư vấn cho phụ huynh",
   },
   "/lop-cau-long-cho-nguoi-di-lam/": {
@@ -42,7 +42,7 @@ const MONEY_PAGE_FALLBACKS: Record<
     intro:
       "V2 Badminton đang cập nhật nội dung chi tiết cho nhóm học viên đi làm. Bạn vẫn có thể để lại thông tin để được gợi ý lịch tối hoặc cuối tuần phù hợp.",
     body:
-      "Các lớp hiện được thiết kế để giữ nhịp tập đều, dễ quay lại sau giờ làm và phù hợp cả người mới bắt đầu lẫn người cần duy trì thể lực. Khi dữ liệu Sanity sẵn sàng trở lại, trang sẽ tự hiển thị nội dung hoàn chỉnh.",
+      "Các lớp hiện được thiết kế để giữ nhịp tập đều, dễ quay lại sau giờ làm và phù hợp cả người mới bắt đầu lẫn người cần duy trì thể lực. Nội dung chi tiết đang được cập nhật và sẽ hiển thị đầy đủ trong thời gian sớm nhất.",
     ctaLabel: "Nhận tư vấn lịch học",
   },
   "/cau-long-doanh-nghiep/": {
@@ -52,7 +52,7 @@ const MONEY_PAGE_FALLBACKS: Record<
     intro:
       "V2 Badminton đang cập nhật nội dung chi tiết cho gói doanh nghiệp. Doanh nghiệp vẫn có thể gửi nhu cầu để nhận tư vấn về mục tiêu, ngân sách và hình thức triển khai phù hợp.",
     body:
-      "Chương trình có thể bao gồm lớp nội bộ, hoạt động gắn kết hoặc mô hình huấn luyện theo mục tiêu riêng của từng team. Khi kết nối Sanity ổn định, trang này sẽ tự hiển thị lại toàn bộ nội dung chi tiết.",
+      "Chương trình có thể bao gồm lớp nội bộ, hoạt động gắn kết hoặc mô hình huấn luyện theo mục tiêu riêng của từng team. Nội dung chi tiết đang được cập nhật và sẽ hiển thị đầy đủ trong thời gian sớm nhất.",
     ctaLabel: "Nhận tư vấn cho doanh nghiệp",
   },
 };
