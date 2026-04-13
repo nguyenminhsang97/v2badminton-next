@@ -3,7 +3,13 @@
 import * as Sentry from "@sentry/nextjs";
 import { after } from "next/server";
 import { headers } from "next/headers";
-import { checkHoneypot, verifyFormToken, verifyTurnstile } from "@/lib/antispam";
+import {
+  checkHoneypot,
+  isFormTokenProtectionEnabled,
+  isTurnstileProtectionEnabled,
+  verifyFormToken,
+  verifyTurnstile,
+} from "@/lib/antispam";
 import { insertLead, isDatabaseConfigured } from "@/lib/db";
 import { findRecentDuplicate, buildDedupeKey } from "@/lib/dedupe";
 import {
@@ -100,7 +106,12 @@ export async function submitLead(
       const values = coerceLeadFormValues(rawValues);
       const formToken = String(formData.get("_form_token") ?? "");
       const turnstileToken = String(formData.get("cf-turnstile-response") ?? "");
-      const submissionMethod: SubmissionMethod = formToken.trim() ? "js" : "no_js";
+      const requiresFormToken = isFormTokenProtectionEnabled();
+      const requiresTurnstile = isTurnstileProtectionEnabled();
+      const submissionMethod: SubmissionMethod =
+        requiresFormToken || requiresTurnstile || formToken.trim()
+          ? "js"
+          : "no_js";
       const landingPage = getLandingPage(requestHeaders, formData);
 
       if (checkHoneypot(formData)) {
@@ -138,7 +149,7 @@ export async function submitLead(
         );
       }
 
-      if (submissionMethod === "js") {
+      if (requiresFormToken) {
         const formTokenCheck = await verifyFormToken(formToken);
         if (!formTokenCheck.ok) {
           return buildErrorResult(
@@ -149,6 +160,9 @@ export async function submitLead(
           );
         }
 
+      }
+
+      if (requiresTurnstile) {
         const turnstileCheck = await verifyTurnstile(turnstileToken, clientIp);
         if (!turnstileCheck.ok) {
           return buildErrorResult(

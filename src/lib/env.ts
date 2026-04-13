@@ -1,9 +1,4 @@
-const REQUIRED_PRODUCTION_VARS = [
-  "FORM_TOKEN_SECRET",
-  "POSTGRES_URL",
-  "POSTGRES_URL_NON_POOLING",
-  "NOTIFY_EMAIL_FROM",
-] as const;
+const REQUIRED_PRODUCTION_VARS = ["FORM_TOKEN_SECRET"] as const;
 
 const OPTIONAL_WARNING_GROUPS = [
   {
@@ -11,7 +6,7 @@ const OPTIONAL_WARNING_GROUPS = [
     message: "Telegram lead notifications will be skipped.",
   },
   {
-    vars: ["RESEND_API_KEY", "NOTIFY_EMAIL_TO"] as const,
+    vars: ["RESEND_API_KEY", "NOTIFY_EMAIL_TO", "NOTIFY_EMAIL_FROM"] as const,
     message: "Email lead notifications will be skipped.",
   },
   {
@@ -77,6 +72,16 @@ export function validateRuntimeEnv() {
   if (isProductionDeployment() && missingProductionVars.length > 0) {
     throw new Error(
       `[env] Missing required production environment variables: ${missingProductionVars.join(", ")}`,
+    );
+  }
+
+  if (
+    isProductionDeployment() &&
+    !hasValue(process.env.POSTGRES_URL) &&
+    !hasValue(process.env.POSTGRES_URL_NON_POOLING)
+  ) {
+    throw new Error(
+      "[env] Missing required production environment variables: POSTGRES_URL or POSTGRES_URL_NON_POOLING",
     );
   }
 }

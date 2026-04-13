@@ -12,6 +12,14 @@ function getFormTokenSecret() {
   return new TextEncoder().encode(process.env.FORM_TOKEN_SECRET);
 }
 
+export function isFormTokenProtectionEnabled() {
+  return getFormTokenSecret() !== null;
+}
+
+export function isTurnstileProtectionEnabled() {
+  return Boolean(process.env.TURNSTILE_SECRET_KEY?.trim());
+}
+
 export function checkHoneypot(formData: FormData) {
   const honeypotValue = formData.get("_gotcha");
   return typeof honeypotValue === "string" && honeypotValue.trim().length > 0;
@@ -49,9 +57,11 @@ export async function verifyFormToken(token: string) {
 }
 
 export async function verifyTurnstile(token: string, ip: string) {
-  if (!process.env.TURNSTILE_SECRET_KEY) {
+  if (!isTurnstileProtectionEnabled()) {
     return { ok: true, skipped: true as const };
   }
+
+  const secret = process.env.TURNSTILE_SECRET_KEY!.trim();
 
   if (!token.trim()) {
     return { ok: false, error: "missing_token" as const };
@@ -59,7 +69,7 @@ export async function verifyTurnstile(token: string, ip: string) {
 
   try {
     const body = new URLSearchParams({
-      secret: process.env.TURNSTILE_SECRET_KEY,
+      secret,
       response: token,
       remoteip: ip,
     });
