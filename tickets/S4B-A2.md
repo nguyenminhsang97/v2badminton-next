@@ -43,9 +43,12 @@ vercel env ls production
 
 | Biến | Ví dụ | Mục đích |
 |------|-------|---------|
-| `POSTGRES_URL` | `postgresql://...` | Connection string Vercel Postgres |
+| `POSTGRES_URL` | `postgresql://...` | Connection string Vercel Postgres (pooling) |
+| `POSTGRES_URL_NON_POOLING` | `postgresql://...` | Non-pooling URL (Vercel serverless alternative) |
 
-**Nếu thiếu:** Form submit thành công nhưng không lưu lead vào database. Mất data.
+**Runtime chấp nhận cả hai** (`src/lib/db/index.ts` và `src/lib/env.ts`): chỉ cần 1 trong 2 biến — không cần cả hai. Nếu đang dùng Vercel Postgres integration, thường có cả hai được inject tự động.
+
+**Nếu thiếu cả hai:** Form submit thành công nhưng không lưu lead vào database. Mất data.
 
 **Cách verify thêm:** Đảm bảo table `leads` tồn tại. Nếu chưa tạo, chạy SQL từ `src/lib/db/schema.sql`.
 
@@ -112,7 +115,7 @@ Ghi lại kết quả:
 ✅/❌ NEXT_PUBLIC_SANITY_PROJECT_ID
 ✅/❌ NEXT_PUBLIC_SANITY_DATASET
 ✅/❌ SANITY_API_READ_TOKEN
-✅/❌ POSTGRES_URL
+✅/❌ POSTGRES_URL hoặc POSTGRES_URL_NON_POOLING (ít nhất 1)
 ✅/❌ TELEGRAM_BOT_TOKEN
 ✅/❌ TELEGRAM_CHAT_ID
 ✅/❌ UPSTASH_REDIS_REST_URL (hoặc KV alias)

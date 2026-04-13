@@ -118,7 +118,7 @@ export const getActiveCampaign = cache(
 Vì campaign không có fallback nào cần show. Nếu Sanity lỗi → return null → hero render bình thường. Không cần degraded mode.
 
 **Tại sao tính Vietnam timezone thủ công?**
-Vietnam là UTC+7, không có daylight saving. `new Date().toISOString()` trả UTC — có thể lệch 1 ngày so với giờ Việt Nam trong khoảng 00:00–01:00 ICT. Nếu không xử lý: campaign bắt đầu ngày 1/6 có thể không active cho đến 01:00 sáng ngày 1/6 ICT. Cộng thêm 7 giờ (= 25200 giây × 1000ms) trước khi split.
+Vietnam là UTC+7, không có daylight saving. `new Date().toISOString()` trả UTC — lệch 1 ngày so với giờ Việt Nam trong khoảng 00:00–06:59 ICT (tức là khi UTC vẫn là ngày hôm trước). Nếu không xử lý: campaign bắt đầu ngày 1/6 sẽ không active từ 00:00 đến 06:59 sáng ngày 1/6 ICT. Cộng thêm 7 giờ (= 7 × 3600 × 1000 ms) trước khi split là đủ.
 
 ---
 

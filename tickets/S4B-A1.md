@@ -123,7 +123,7 @@ Nếu chưa setup:
 
 Submit form **6 lần từ cùng một IP** trong vòng 1 giờ, mỗi lần dùng số điện thoại khác nhau (VD: 0999000001, 0999000002, ...). Lần submit thứ 6 phải trigger rate limit (giới hạn là 5/giờ cho JS client).
 
-**Mong đợi:** Lần submit thứ 6 hiện message "Bạn đã gửi yêu cầu gần đây..." hoặc HTTP 429.
+**Mong đợi:** Lần submit thứ 6 hiện error message trên form (VD: "Bạn đã gửi yêu cầu gần đây..."). Vì form dùng Next.js Server Action, không phải REST endpoint — không có HTTP 429. Lỗi trả về qua structured error state, hiển thị trong UI.
 
 **Nếu lần thứ 6 submit thành công bình thường:** Rate limit không hoạt động. Kiểm tra:
 - `UPSTASH_REDIS_REST_URL` và `UPSTASH_REDIS_REST_TOKEN` đã set trên Vercel chưa (xem S4B-A2)
