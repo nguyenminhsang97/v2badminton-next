@@ -55,19 +55,21 @@ export function Breadcrumb({ currentPath }: BreadcrumbProps) {
   }
 
   return (
-    <nav className="breadcrumb" aria-label="Breadcrumb">
-      <ol className="breadcrumb__list">
-        <li className="breadcrumb__item">
-          <Link href="/" className="breadcrumb__link">
-            Trang chu
-          </Link>
-        </li>
-        <li className="breadcrumb__item breadcrumb__item--current" aria-current="page">
-          {route.navLabel}
-        </li>
-      </ol>
+    <div className="breadcrumb-block">
+      <nav className="breadcrumb" aria-label="Breadcrumb">
+        <ol className="breadcrumb__list">
+          <li className="breadcrumb__item">
+            <Link href="/" className="breadcrumb__link">
+              Trang chu
+            </Link>
+          </li>
+          <li className="breadcrumb__item breadcrumb__item--current" aria-current="page">
+            {route.navLabel}
+          </li>
+        </ol>
+      </nav>
       <p className="page-kicker">{route.navLabel}</p>
-    </nav>
+    </div>
   );
 }
 ```
@@ -90,9 +92,13 @@ import type { CoreRoutePath } from "@/lib/routes";
 
 export type MoneyPageTemplateProps = {
   page: SanityMoneyPage;
-  path: CoreRoutePath;  // ← them
+  path?: CoreRoutePath;  // ← optional — Phase 1 pages chua co trong coreRoutes
 };
 ```
+
+**Tai sao optional?** S5C-A3 tao 5 money pages moi theo Phase 1 (chi co type + fallback + page file). Cac pages nay chua nam trong `coreRoutes` va `coreRouteMap`, nen `Breadcrumb` component khong the look up route info. Khi path la `undefined`, Breadcrumb return null — page van render binh thuong, chi khong co breadcrumb.
+
+Khi Phase 2 activate (them vao `coreRoutes`), chi can them `path={PATH}` vao `<MoneyPageTemplate>` call la breadcrumb tu dong hien.
 
 ### 2b. Render breadcrumb truoc hero
 
@@ -102,7 +108,7 @@ export function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) {
 
   return (
     <div className="money-page">
-      <Breadcrumb currentPath={path} />
+      {path ? <Breadcrumb currentPath={path} /> : null}
       <section className="money-page__hero">
         {/* ... existing */}
       </section>
@@ -112,15 +118,17 @@ export function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) {
 }
 ```
 
-### 2c. Update tat ca money page files
+### 2c. Update existing money page files
 
-Moi file `page.tsx` trong cac route money page can truyen `path` prop:
+Chi update cac money page **da co trong coreRoutes** (da qua Phase 2). Tim `<MoneyPageTemplate` va them `path={PATH}`:
 
 ```tsx
 <MoneyPageTemplate page={resolvedPage} path={PATH} />
 ```
 
-**Files can sua:** Tat ca money page `page.tsx` files — tim `<MoneyPageTemplate` va them `path={PATH}`.
+**Existing pages can sua:** `/lop-cau-long-tre-em/`, `/lop-cau-long-cho-nguoi-di-lam/`, `/cau-long-doanh-nghiep/`, va cac page khac da co trong `coreRoutes`.
+
+**S5C-A3 Phase 1 pages:** Khong can them `path` — `<MoneyPageTemplate page={resolvedPage} />` van compile va render. Breadcrumb se tu dong hien khi Phase 2 activate va them `path` prop.
 
 ---
 
@@ -129,8 +137,14 @@ Moi file `page.tsx` trong cac route money page can truyen `path` prop:
 Them vao `globals.css`:
 
 ```css
-.breadcrumb {
+.breadcrumb-block {
+  display: grid;
+  gap: 8px;
   padding: 12px 0 24px;
+}
+
+.breadcrumb {
+  /* no extra padding — breadcrumb-block owns spacing */
 }
 
 .breadcrumb__list {

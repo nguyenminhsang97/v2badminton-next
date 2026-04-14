@@ -165,7 +165,8 @@ Page-kicker: color: #c8f542; font-size: 0.82rem; font-weight: 600; letter-spacin
 
 **Analytics event names (keep continuity):**
 ```
-cta_click, contact_click, map_click, form_start, generate_lead
+From static V2 tracking.js: cta_click, contact_click, map_click, form_start
+Carry-forward from Next app: generate_lead (added in Sprint 3, not in static site)
 ```
 
 ### From Figma (polish — secondary)
