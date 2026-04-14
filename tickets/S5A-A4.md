@@ -36,6 +36,13 @@ Next.js `<Image>` component tu dong:
 
 ### Van de 2: Money page heroImage khong render
 
+### Visual direction cho ticket nay
+
+- `D:\V2\landing-page\hoc-cau-long-cho-nguoi-moi\index.html` cho thay money/SEO page can hero ngan, de scan, khong qua "editorial".
+- `D:\V2\Badminton Academy Enrollment Screens\src\app\pages\HomePage.tsx` cho thay image placement co the tang hierarchy neu duoc dat gon.
+
+Vi vay, hero image can ho tro H1 va intro, khong duoc day content chinh xuong qua xa.
+
 `moneyPage.ts` schema co field `heroImage` (type `image` voi hotspot). Nhung `MoneyPageTemplate.tsx` khong render no — hero chi co `<h1>` va `<PortableText>` intro.
 
 ---

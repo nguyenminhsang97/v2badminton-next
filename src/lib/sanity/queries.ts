@@ -569,7 +569,7 @@ const ACTIVE_CAMPAIGN_QUERY = defineQuery(`
     "secondaryCtaLabel": coalesce(secondaryCtaLabel, null),
     "secondaryCtaUrl": coalesce(secondaryCtaUrl, null),
     "featuredAudience": coalesce(featuredAudience, null),
-    "linkedPageSlug": linkedPage->slug.current
+    "linkedPageSlug": coalesce(linkedPage->slug.current, null)
   }
 `);
 

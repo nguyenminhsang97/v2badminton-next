@@ -30,6 +30,14 @@ Sau S5D-A1, GTM nhan tat ca events tu `window.dataLayer`. Nhung GA4 chua biet ev
 | `contact_click` | Click Zalo/phone/messenger | method |
 | `map_click` | Click xem ban do | location |
 
+**Analytics rule cho ticket nay:** funnel moi nen giu lien ket voi tu duy event cua static site (`D:\V2\landing-page\tracking.js`) thay vi tao he thong ten moi hoan toan.
+
+Ly do:
+
+1. de doi chieu voi website cu de hon
+2. de business side doc event names quen thuoc hon
+3. de phan tich CTA -> form -> lead it "thuong mai" hon, it technical hon
+
 ---
 
 ## Buoc 1 — GTM: Tao GA4 Event tags

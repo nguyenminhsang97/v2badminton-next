@@ -14,6 +14,12 @@ Khi review Sprint 4, phat hien nhieu component render CSS class ma `globals.css`
 
 **Nguyen tac:** Moi class moi phai follow design tokens da co (`:root` variables), khong hardcode color/font-size moi. Xem `:root` block (dong 0-10) va cac pattern da co de match style.
 
+**Nguon tham chieu UI cho ticket nay:**
+
+1. `VERSION_C_BLUEPRINT.md` va `VERSION_C_IMPLEMENTATION_PLAN.md` quyet dinh component nao ton tai va nam o dau.
+2. `D:\V2\landing-page\index.html` va `D:\V2\landing-page\seo-common.css` quyet dinh business feel, CTA contrast, va section rhythm.
+3. `D:\V2\Badminton Academy Enrollment Screens\src\app\pages\HomePage.tsx` quyet dinh card hierarchy va visual polish.
+
 ---
 
 ## File can sua
@@ -49,6 +55,16 @@ Them vao group text muted (khoang dong 497-511), them `.section__desc` vao selec
 
 **Tai sao gop vao group co san?** Vi `.section__desc` can cung style voi cac description text khac — mau muted, line-height thoang. Khong tao rule rieng.
 
+Them rieng 1 rule cho `.section__desc` de gioi han chieu rong — khong de text chay tran toan bo container:
+
+```css
+.section__desc {
+  max-width: 760px;
+}
+```
+
+**Tai sao 760px?** Figma export dung khoang rong tuong tu cho description text de giu readability (65-75 ky tu moi dong). Static site cung khong de desc text full-width.
+
 ---
 
 ## Buoc 2 — Fix `.section__filter-note` (ScheduleSection)
@@ -65,7 +81,7 @@ Them sau `.section__desc` fix o buoc 1. Day la text nho hien khi user dang filte
 
 ---
 
-## Buoc 3 — Fix WhySection naming mismatch
+## Buoc 3 — Fix WhySection naming mismatch + hover accent
 
 Component render `.why-card`, `.why-card__title`, `.why-card__desc`. Nhung CSS co `.why-grid__item` (dong 378) va `.why-grid__text` (dong 508).
 
@@ -120,6 +136,44 @@ Them vao group title cac card (dong 593-600):
   font-size: 1.08rem;
 }
 ```
+
+### 3e. Them hover lift + top accent bar (tu static site)
+
+Static site V2 (`D:\V2\landing-page`) dung `.why-card::before` tao thanh accent lime 2px phia tren card, animate tu `scaleX(0)` → `scaleX(1)` khi hover. Card cung lift len `translateY(-4px)`. Day la pattern rat hieu qua — tao visual feedback ro ma khong phai thay doi structure.
+
+Them sau `.why-card` rules:
+
+```css
+.why-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.why-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--v2-lime);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.why-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(200, 245, 66, 0.25);
+}
+
+.why-card:hover::before {
+  transform: scaleX(1);
+}
+```
+
+**Tai sao copy pattern nay?** Static site dung no tren tat ca why-cards va user da quen visual nay. Giu consistency giua 2 versions.
 
 ---
 
@@ -181,7 +235,7 @@ Tags list va individual tag pill:
 
 ### 4d. `.course-card__action`
 
-Button "Xem lich hoc" / "Lien he tu van". Khong dung `.btn` class nen can style rieng, nhung nen follow btn pattern:
+Button "Xem lich hoc" / "Lien he tu van". Khong dung `.btn` class nen can style rieng, nhung nen follow V2 static site CTA pattern (clip-path diagonal corners la brand signature):
 
 ```css
 .course-card__action {
@@ -193,14 +247,18 @@ Button "Xem lich hoc" / "Lien he tu van". Khong dung `.btn` class nen can style 
   font-weight: 600;
   font-size: 0.92rem;
   cursor: pointer;
-  transition: background 0.18s ease, color 0.18s ease;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  transition: all 0.3s;
 }
 
 .course-card__action:hover {
   background: var(--v2-lime);
   color: var(--v2-black);
+  transform: translateY(-1px);
 }
 ```
+
+**Tai sao clip-path?** Static site V2 dung diagonal cut corners tren tat ca primary buttons — day la brand signature, khong phai decoration. Figma dung `rounded-xl` nhung per UI Rules, static site owns business tone.
 
 ---
 
@@ -243,7 +301,7 @@ Moi card la `<Link>` chua title + description:
 
 ---
 
-## Buoc 6 — ScheduleSection (7 class)
+## Buoc 6 — ScheduleSection (7 class + visual fixes)
 
 ### 6a. `.schedule-card__days` (naming)
 
@@ -268,6 +326,20 @@ Component render `className="schedule-card__days schedule-card__day"` — ca 2 c
   gap: 6px;
 }
 ```
+
+### 6f. Fix `.schedule-card__time` color (tu static site)
+
+Static site V2 highlight gio tap bang lime color va font-size lon — day la visual hierarchy quan trong de user scan nhanh gio nao co lop. Kiem tra `.schedule-card__time` trong CSS — neu chua co color lime, them/sua:
+
+```css
+.schedule-card__time {
+  color: var(--v2-lime);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+```
+
+**Tai sao lime?** Gio tap la thong tin quan trong nhat tren schedule card. Static site da chon lime de tao contrast voi text trang — user nhin vao card thay gio ngay.
 
 ### 6d. Level tag system
 
@@ -360,7 +432,43 @@ Da co trong group dong 609-613 (`justify-self: flex-start`). Kiem tra lai — ne
 
 ---
 
-## Buoc 9 — Responsive adjustments
+## Buoc 9 — Card hover lift pattern (shared)
+
+Static site V2 dung `translateY(-2px)` khi hover tren hau het cac cards (schedule-card, pricing-card, seo-links__card). Day la micro-interaction nho nhung tao cam giac "interactive" ro rang.
+
+Them hover lift cho cac card chua co:
+
+```css
+.schedule-card {
+  transition: transform 0.2s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.schedule-card:hover {
+  transform: translateY(-2px);
+}
+
+.pricing-card {
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.pricing-card:hover {
+  transform: translateY(-2px);
+}
+
+.seo-links__card {
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.seo-links__card:hover {
+  transform: translateY(-2px);
+}
+```
+
+**Luu y:** Neu card da co `transition` rule (vd `.schedule-card` trong S5B-A3), merge `transform` vao existing rule — khong tao duplicate. `.why-card` dung `translateY(-4px)` (Buoc 3e) vi card lon hon, visual impact can manh hon.
+
+---
+
+## Buoc 10 — Responsive adjustments
 
 Them vao `@media (min-width: 960px)` block (dong 999+):
 

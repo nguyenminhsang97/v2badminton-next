@@ -29,6 +29,33 @@ Ticket nay khong bat buoc moi element phai dung `.btn` — tab buttons co UI kha
 3. Khong co button nao thieu hover effect
 4. Font weight nhat quan cho CTA text
 
+**Nguyen tac quan trong — clip-path la brand signature:**
+
+Static site V2 (`D:\V2\landing-page`) dung diagonal cut corners (clip-path) tren **tat ca** primary CTA buttons:
+
+```css
+/* Static site CTA pattern */
+clip-path: polygon(
+  0 0, calc(100% - 10px) 0, 100% 10px,
+  100% 100%, 10px 100%, 0 calc(100% - 10px)
+);
+```
+
+Day la brand signature cua V2, khong phai decoration. Figma export dung `rounded-xl` (border-radius 16px) — nhung per SPRINT_5_UI_RULES.md Rule 2, static V2 owns business tone, nen clip-path la correct choice cho primary CTA.
+
+**Audit phai dam bao:**
+- `.btn--primary` va `.btn--outline` giu clip-path diagonal corners
+- Schedule tabs dung clip-path nho hon (padding `0.45rem 1.1rem`, corner 6px thay vi 10px)
+- `.course-card__action` da co clip-path (S5A-A1 Buoc 4d)
+- Khong co CTA nao dung `border-radius` thay the clip-path (tru badge pills)
+
+**Figma polish van co gia tri cho:**
+- Transition timing (0.18-0.2s)
+- Hover scale effect nhe (`hover:scale-105`) — co the apply cho icon buttons
+- Shadow-based depth cho card hover (khong apply cho buttons)
+
+Khong duoc lam CTA system thanh "generic nice buttons" ma mat di do sac cua V2.
+
 ---
 
 ## File can sua
@@ -58,7 +85,7 @@ Review tung interactive element va danh dau:
 
 ---
 
-## Buoc 2 — Fix schedule tab hover
+## Buoc 2 — Fix schedule tab hover + clip-path
 
 Sau `.schedule-tab--active` (dong 630):
 
@@ -66,6 +93,14 @@ Sau `.schedule-tab--active` (dong 630):
 .schedule-tab:hover:not(.schedule-tab--active) {
   border-color: rgba(200, 245, 66, 0.35);
   color: var(--v2-white);
+}
+```
+
+Kiem tra `.schedule-tab` da co clip-path chua. Static site dung diagonal corners cho tabs (nho hon buttons: corner 6px). Neu chua co, them vao `.schedule-tab` rule:
+
+```css
+.schedule-tab {
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
 }
 ```
 

@@ -24,6 +24,17 @@ window.dataLayer.push({
 
 Nhung chua co GTM container nao doc `dataLayer`. Events push vao void. Ticket nay connect GTM de events chay len GA4.
 
+**Nguon tham chieu analytics can giu:** `D:\V2\landing-page\tracking.js`
+
+Static site dang dung cac event names cuc ky thuc dung cho business:
+
+- `cta_click`
+- `contact_click`
+- `map_click`
+- `form_start`
+
+Sprint 5 nen uu tien giu continuity voi naming do, roi moi bo sung event moi tren tracking layer hien tai neu can.
+
 **GTM vs GA4 direct:** Dung GTM (khong paste GA4 snippet truc tiep) vi:
 1. Co the them/sua tags khong can deploy code
 2. Co the them Facebook Pixel, Hotjar, etc. sau ma khong can code

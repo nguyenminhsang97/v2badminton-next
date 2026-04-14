@@ -16,6 +16,14 @@ Blog la route **khong nam trong `CoreRoutePath`** — no la dynamic route (`/blo
 
 `/blog/` prefix da duoc reserved trong `reservedRoutePrefixes` (routes.ts dong 131).
 
+**Nguon tham chieu noi dung va UI:** Blog la noi mo rong SEO, nhung van phai song trong cung he UI cua V2.
+
+- Layout/spacing system: theo Sprint 5 A/B da polish
+- Business tone va CTA framing: hoc tu `D:\V2\landing-page`
+- Visual polish card/header: co the hoc them tu `D:\V2\Badminton Academy Enrollment Screens`
+
+Khong duoc de blog trong nhu mot theme rieng khong lien quan den homepage va money pages.
+
 ---
 
 ## Files can tao/sua
