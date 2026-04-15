@@ -89,44 +89,55 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     <article className="blog-post">
       <JsonLd id="blog-article-schema" data={articleSchema} />
 
-      <header className="blog-post__header">
-        <Link href="/blog/" className="blog-post__back">
-          ← Blog
-        </Link>
-        <span className="blog-post__category">{getCategoryLabel(post.category)}</span>
-        <h1 className="blog-post__title">{post.title}</h1>
-        {post.publishedAt ? (
-          <time className="blog-post__date" dateTime={post.publishedAt}>
-            {new Date(post.publishedAt).toLocaleDateString("vi-VN", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </time>
+      <header className="blog-post__hero">
+        <div className="blog-post__hero-copy">
+          <Link href="/blog/" className="blog-post__back">
+            ← Blog
+          </Link>
+          <span className="blog-post__category">{getCategoryLabel(post.category)}</span>
+          <h1 className="blog-post__title">{post.title}</h1>
+          {post.publishedAt ? (
+            <time className="blog-post__date" dateTime={post.publishedAt}>
+              {new Date(post.publishedAt).toLocaleDateString("vi-VN", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </time>
+          ) : null}
+        </div>
+
+        {post.coverImageUrl ? (
+          <div className="blog-post__hero-media">
+            <Image
+              src={post.coverImageUrl}
+              alt={post.title}
+              className="blog-post__cover"
+              width={1120}
+              height={630}
+              priority
+              sizes="(max-width: 959px) calc(100vw - 32px), 42vw"
+            />
+          </div>
         ) : null}
       </header>
 
-      {post.coverImageUrl ? (
-        <Image
-          src={post.coverImageUrl}
-          alt={post.title}
-          className="blog-post__cover"
-          width={1120}
-          height={630}
-          priority
-          sizes="(max-width: 760px) calc(100vw - 32px), 720px"
-        />
-      ) : null}
-
-      <div className="blog-post__body">
-        <PortableText value={post.body as PortableTextBlock[]} />
-      </div>
+      <section className="blog-post__content-shell">
+        <div className="blog-post__body">
+          <PortableText value={post.body as PortableTextBlock[]} />
+        </div>
+      </section>
 
       {relatedRoute ? (
         <aside className="blog-post__related">
-          <p className="blog-post__related-label">Liên kết phù hợp</p>
-          <Link href={relatedRoute.path} className="btn btn--outline">
-            {relatedRoute.navLabel} →
+          <p className="section__eyebrow">Liên kết phù hợp</p>
+          <h2 className="section__title">Tiếp tục với trang phù hợp nhất</h2>
+          <p className="section__desc">
+            Nếu bạn đang tìm lộ trình cụ thể hơn, chuyển sang trang dịch vụ tương
+            ứng để xem học phí, sân tập và câu hỏi thường gặp.
+          </p>
+          <Link href={relatedRoute.path} className="btn btn--primary">
+            {relatedRoute.navLabel}
           </Link>
         </aside>
       ) : null}

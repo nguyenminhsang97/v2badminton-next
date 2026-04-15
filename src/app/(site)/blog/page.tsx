@@ -2,10 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { canonicalUrl } from "@/lib/routes";
-import {
-  getPublishedPosts,
-  type SanityPostCategory,
-} from "@/lib/sanity";
+import { getPublishedPosts, type SanityPostCategory } from "@/lib/sanity";
 
 const BLOG_CATEGORY_OPTIONS: ReadonlyArray<{
   value: "all" | SanityPostCategory;
@@ -53,14 +50,22 @@ export default async function BlogListPage({
 
   return (
     <div className="blog-list">
-      <div className="section__header">
-        <p className="section__eyebrow">Nội dung chuyên sâu</p>
-        <h1 className="section__title">Blog V2 Badminton</h1>
-        <p className="section__desc">
-          Tips, hướng dẫn và cẩm nang cầu lông cho người mới bắt đầu, người đi
-          làm và phụ huynh đang tìm lộ trình phù hợp tại TP.HCM.
-        </p>
-      </div>
+      <section className="blog-list__hero">
+        <div className="section__header">
+          <p className="section__eyebrow">Nội dung chuyên sâu</p>
+          <h1 className="section__title">Blog V2 Badminton</h1>
+          <p className="section__desc">
+            Tips, hướng dẫn và cẩm nang cầu lông cho người mới bắt đầu, người đi
+            làm và phụ huynh đang tìm lộ trình phù hợp tại TP.HCM.
+          </p>
+        </div>
+        <div className="blog-list__hero-meta">
+          <span className="blog-list__hero-chip">
+            {filteredPosts.length} bài viết hiển thị
+          </span>
+          <span className="blog-list__hero-chip">Chuẩn bị cho người mới và phụ huynh</span>
+        </div>
+      </section>
 
       <div className="blog-filter" aria-label="Lọc bài viết theo chủ đề">
         {BLOG_CATEGORY_OPTIONS.map((option) => {
@@ -84,41 +89,52 @@ export default async function BlogListPage({
       </div>
 
       {filteredPosts.length === 0 ? (
-        <p className="blog-list__empty">
-          Chưa có bài viết nào trong chủ đề này. Mình sẽ cập nhật sớm.
-        </p>
+        <section className="blog-list__empty-card">
+          <p className="page-kicker">Sắp cập nhật</p>
+          <h2 className="section__title">Chưa có bài viết trong chủ đề này</h2>
+          <p className="section__desc">
+            V2 sẽ bổ sung thêm nội dung khi có bài viết mới phù hợp với chủ đề
+            bạn đang xem.
+          </p>
+        </section>
       ) : (
-        <div className="blog-list__grid">
+        <section className="blog-list__grid" aria-label="Danh sách bài viết">
           {filteredPosts.map((post) => (
-            <Link
-              key={post.id}
-              href={`/blog/${post.slug}/`}
-              className="blog-card"
-            >
-              {post.coverImageUrl ? (
-                <Image
-                  src={post.coverImageUrl}
-                  alt={post.title}
-                  className="blog-card__cover"
-                  width={400}
-                  height={225}
-                  sizes="(max-width: 960px) calc(100vw - 32px), 360px"
-                />
-              ) : (
-                <div className="blog-card__cover blog-card__cover--placeholder" />
-              )}
+            <article key={post.id} className="blog-card">
+              <Link href={`/blog/${post.slug}/`} className="blog-card__media">
+                {post.coverImageUrl ? (
+                  <Image
+                    src={post.coverImageUrl}
+                    alt={post.title}
+                    className="blog-card__cover"
+                    width={720}
+                    height={405}
+                    sizes="(max-width: 960px) calc(100vw - 32px), 360px"
+                  />
+                ) : (
+                  <div
+                    className="blog-card__cover blog-card__cover--placeholder"
+                    aria-hidden="true"
+                  />
+                )}
+              </Link>
               <div className="blog-card__body">
                 <span className="blog-card__category">
                   {getCategoryLabel(post.category)}
                 </span>
-                <h2 className="blog-card__title">{post.title}</h2>
+                <Link href={`/blog/${post.slug}/`} className="blog-card__title-link">
+                  <h2 className="blog-card__title">{post.title}</h2>
+                </Link>
                 {post.excerpt ? (
                   <p className="blog-card__excerpt">{post.excerpt}</p>
                 ) : null}
+                <Link href={`/blog/${post.slug}/`} className="blog-card__cta">
+                  Đọc bài viết →
+                </Link>
               </div>
-            </Link>
+            </article>
           ))}
-        </div>
+        </section>
       )}
     </div>
   );
