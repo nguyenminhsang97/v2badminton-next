@@ -199,6 +199,29 @@ export type SanityActiveCampaign = {
   linkedPageSlug: string | null;
 };
 
+export type SanityPostStatus = "draft" | "published";
+export type SanityPostCategory = "tips" | "how-to" | "beginner" | "campaign";
+
+export type SanityPost = {
+  id: string;
+  slug: string;
+  title: string;
+  status: SanityPostStatus;
+  category: SanityPostCategory;
+  publishedAt: string | null;
+  excerpt: string | null;
+  coverImageUrl: string | null;
+  body: SanityPortableTextBlock[];
+  metaTitle: string | null;
+  metaDescription: string | null;
+  relatedMoneyPageSlug: string | null;
+};
+
+export type SanityPostListItem = Pick<
+  SanityPost,
+  "id" | "slug" | "title" | "category" | "publishedAt" | "excerpt" | "coverImageUrl"
+>;
+
 const PUBLISHED_ONLY_FILTER = '!(_id in path("drafts.**"))';
 
 function toPortableTextBlocks(text: string): SanityPortableTextBlock[] {
@@ -573,6 +596,46 @@ const ACTIVE_CAMPAIGN_QUERY = defineQuery(`
   }
 `);
 
+const PUBLISHED_POSTS_QUERY = defineQuery(`
+  *[
+    _type == "post" &&
+    status == "published" &&
+    defined(slug.current) &&
+    ${PUBLISHED_ONLY_FILTER}
+  ]
+  | order(coalesce(publishedAt, _createdAt) desc){
+    "id": _id,
+    "slug": slug.current,
+    title,
+    category,
+    publishedAt,
+    "excerpt": coalesce(excerpt, null),
+    "coverImageUrl": coalesce(coverImage.asset->url, null)
+  }
+`);
+
+const POST_BY_SLUG_QUERY = defineQuery(`
+  *[
+    _type == "post" &&
+    slug.current == $slug &&
+    status == "published" &&
+    ${PUBLISHED_ONLY_FILTER}
+  ][0]{
+    "id": _id,
+    "slug": slug.current,
+    title,
+    status,
+    category,
+    publishedAt,
+    "excerpt": coalesce(excerpt, null),
+    "coverImageUrl": coalesce(coverImage.asset->url, null),
+    "body": coalesce(body, []),
+    "metaTitle": coalesce(metaTitle, null),
+    "metaDescription": coalesce(metaDescription, null),
+    "relatedMoneyPageSlug": coalesce(relatedMoneyPage->slug.current, null)
+  }
+`);
+
 export const getSiteSettings = cache(async (): Promise<SanitySiteSettings | null> => {
   return sanityFetchOrFallback<SanitySiteSettings>({
     query: SITE_SETTINGS_QUERY,
@@ -690,6 +753,27 @@ export const getActiveCampaign = cache(
       params: { today },
       fallback: null,
       tags: ["sanity:campaign"],
+    });
+  },
+);
+
+export const getPublishedPosts = cache(async (): Promise<SanityPostListItem[]> => {
+  const posts = await sanityFetchOrFallback<SanityPostListItem[]>({
+    query: PUBLISHED_POSTS_QUERY,
+    fallback: [],
+    tags: ["sanity:posts"],
+  });
+
+  return posts ?? [];
+});
+
+export const getPostBySlug = cache(
+  async (slug: string): Promise<SanityPost | null> => {
+    return sanityFetchOrFallback<SanityPost>({
+      query: POST_BY_SLUG_QUERY,
+      params: { slug },
+      fallback: null,
+      tags: ["sanity:posts", `sanity:post:${slug}`],
     });
   },
 );

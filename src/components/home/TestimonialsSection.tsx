@@ -1,5 +1,20 @@
 import type { HomepageTestimonialsSectionProps } from "./sectionProps";
 
+function getGroupLabel(
+  group: HomepageTestimonialsSectionProps["testimonials"][number]["studentGroup"],
+): string {
+  switch (group) {
+    case "tre_em":
+      return "Phụ huynh & trẻ em";
+    case "nguoi_moi":
+      return "Người mới bắt đầu";
+    case "nguoi_di_lam":
+      return "Người đi làm";
+    case "doanh_nghiep":
+      return "Doanh nghiệp";
+  }
+}
+
 export function TestimonialsSection({
   testimonials,
 }: HomepageTestimonialsSectionProps) {
@@ -20,6 +35,9 @@ export function TestimonialsSection({
       <div className="testimonials-grid">
         {testimonials.map((testimonial) => (
           <blockquote key={testimonial.id} className="testimonial-card">
+            <span className="testimonial-card__kicker">
+              {getGroupLabel(testimonial.studentGroup)}
+            </span>
             <p className="testimonial-card__content">{testimonial.content}</p>
             <footer className="testimonial-card__footer">
               <strong className="testimonial-card__name">

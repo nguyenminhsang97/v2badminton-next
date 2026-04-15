@@ -38,12 +38,16 @@ export function WhySection() {
         <p className="section__eyebrow">Tại sao chọn V2</p>
         <h2 className="section__title">KHÁC BIỆT CỦA V2 BADMINTON</h2>
         <p className="section__desc">
-          Không chỉ dạy đánh cầu — V2 xây dựng nền tảng kỹ thuật đúng từ đầu, giúp bạn tiến bộ nhanh và tránh chấn thương.
+          Không chỉ dạy đánh cầu — V2 xây dựng nền tảng kỹ thuật đúng từ đầu,
+          giúp bạn tiến bộ nhanh và tránh chấn thương.
         </p>
       </div>
       <div className="why-grid">
-        {DIFFERENTIATORS.map((item) => (
+        {DIFFERENTIATORS.map((item, index) => (
           <article key={item.title} className="why-card">
+            <span className="why-card__index">
+              {String(index + 1).padStart(2, "0")}
+            </span>
             <h3 className="why-card__title">{item.title}</h3>
             <p className="why-card__desc">{item.description}</p>
           </article>

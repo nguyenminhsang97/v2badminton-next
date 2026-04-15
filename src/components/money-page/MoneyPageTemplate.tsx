@@ -1,16 +1,20 @@
+import Image from "next/image";
 import Link from "next/link";
 import { PortableText } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
 import { FaqList } from "@/components/blocks/FaqList";
 import { LocationsGrid } from "@/components/blocks/LocationsGrid";
 import { PricingCards } from "@/components/blocks/PricingCards";
+import type { CoreRoutePath } from "@/lib/routes";
 import type { SanityMoneyPage } from "@/lib/sanity";
+import { Breadcrumb } from "./Breadcrumb";
 
 export type MoneyPageTemplateProps = {
   page: SanityMoneyPage;
+  path?: CoreRoutePath;
 };
 
-export function MoneyPageTemplate({ page }: MoneyPageTemplateProps) {
+export function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) {
   const ctaHref =
     page.audience === "doanh_nghiep"
       ? "/?mode=business#lien-he"
@@ -18,7 +22,19 @@ export function MoneyPageTemplate({ page }: MoneyPageTemplateProps) {
 
   return (
     <div className="money-page">
+      {path ? <Breadcrumb currentPath={path} /> : null}
       <section className="money-page__hero">
+        {page.heroImageUrl ? (
+          <Image
+            src={page.heroImageUrl}
+            alt={page.h1}
+            className="money-page__hero-image"
+            width={1120}
+            height={400}
+            priority
+            sizes="(max-width: 1120px) calc(100vw - 32px), 1120px"
+          />
+        ) : null}
         <h1 className="money-page__title">{page.h1}</h1>
         {page.intro.length > 0 ? (
           <div className="money-page__intro">

@@ -1,197 +1,54 @@
-# S5A-A2 · Loading UX hardening
+# S5A-A2 - Hero section rewrite
 
-**Muc tieu:** Khi trang dang load data, user thay feedback visual thay vi blank screen. Khong yeu cau full per-section skeleton — chi can route-level loading va targeted improvements.
+**Muc tieu:** Rewrite homepage hero theo Figma: 2-column layout, hero image o ben phai, trust strip, 3 CTA, visual hierarchy ro rang hon.
 
-**Thoi gian uoc luong:** 1 gio
+**Thoi gian uoc luong:** 2 gio
 
-**Phu thuoc:** Khong (co the lam song song voi S5A-A1)
+**Phu thuoc:** `S5A-A1`
 
-**Rui ro:** Thap. Them file moi, khong sua logic hien tai.
+**Rui ro:** Trung binh. Hero la first paint quan trong nhat cua homepage.
 
----
+## Files chinh
 
-## Context cho junior
+- `src/components/home/HeroSection.tsx`
+- `src/app/globals.css`
+- `src/app/(site)/page.tsx` chi neu can prop / layout wrapper nho
 
-Hien tai homepage `page.tsx` (dong 38-58) dung 1 `Promise.all` voi 8 data sources. Trong khi cho response, user thay **blank page** vi:
+## Scope
 
-1. Khong co `loading.tsx` file nao trong project (da verify: `src/app/**/loading.tsx` khong ton tai)
-2. `Suspense fallback={null}` (dong 74) chi wrap `HomepageBusinessModeInitializer`, khong wrap content chinh
+1. Hero chuyen sang 2 cot desktop, stack tren mobile
+2. Them image / visual panel theo direction Figma
+3. Them trust strip: avatar stack, rating, hoc vien count
+4. Giu 3 CTA nhung restyle theo Figma
+5. Giu campaign override logic va quick links neu dang co business value
 
-**Khong refactor data fetching vong nay.** Muon per-section streaming can tach moi section thanh async component rieng + Suspense boundary — do la refactor lon, de sprint sau. Vong nay chi lam:
+## Acceptance criteria
 
-1. Route-level `loading.tsx` — App Router convention, tu dong hien khi route dang load
-2. `not-found.tsx` — custom 404 page thay vi Next.js default
-3. CSS cho loading skeleton
+1. Hero nhin ro Figma-first bang mat thuong
+2. Heading, subheading, CTA row, trust row co hierarchy ro
+3. Hero image / panel co that, khong chi la background mau
+4. Mobile stack khong vo layout
+5. Existing CTA destinations va tracking behavior van dung
 
----
+## Implementation notes
 
-## Files can tao
+- Copy va route phai la V2, khong copy Eagle text tu Figma.
+- Neu Figma co element khong phu hop conversion flow cua V2, uu tien giu conversion flow.
 
-1. `src/app/(site)/loading.tsx` — tao moi
-2. `src/app/(site)/not-found.tsx` — tao moi
-3. `src/app/globals.css` — them loading skeleton styles
+### Campaign override logic (PHAI GIU)
 
----
+- Component nhan `{ campaign: SanityActiveCampaign | null }`
+- Khi `campaign` ton tai: override hero title, subheading, primary CTA (label + url)
+- Fallback chain: `primaryCtaUrl` → `linkedPageSlug` → `#lien-he`
+- Tracking: `trackEvent` tren moi CTA voi location context (hero, hero_quick_links, hero_aside)
 
-## Buoc 1 — Tao route-level loading.tsx
+### Hardcoded data hien tai
 
-Tao file `src/app/(site)/loading.tsx`:
+- `QUICK_LINKS`: array of internal nav links — quyet dinh giu hay remove khi rewrite
+- `HERO_HIGHLIGHTS`: trust signals — co the merge vao trust strip moi
+- `TRUST_STATS`: so lieu nhu "500+ hoc vien" — map vao trust strip Figma
 
-```tsx
-export default function Loading() {
-  return (
-    <div className="loading-shell">
-      <div className="loading-shell__hero">
-        <div className="skeleton skeleton--eyebrow" />
-        <div className="skeleton skeleton--heading" />
-        <div className="skeleton skeleton--text" />
-        <div className="skeleton skeleton--text skeleton--text-short" />
-      </div>
-      <div className="loading-shell__grid">
-        <div className="skeleton skeleton--card" />
-        <div className="skeleton skeleton--card" />
-        <div className="skeleton skeleton--card" />
-      </div>
-    </div>
-  );
-}
-```
+### Image source
 
-**Tai sao minimal skeleton?** Loading state chi hien trong khoang 0.5-2 giay (Sanity + DB response time). Khong can replicate chinh xac layout homepage — chi can cho user biet "dang load" va giu layout shift thap.
-
-**Tai sao khong dung Suspense per section?** Vi page.tsx hien fetch tat ca data trong 1 `Promise.all` roi render dong bo. De stream tung section can tach thanh async components — refactor lon, khong phu hop vong nay.
-
----
-
-## Buoc 2 — Tao custom not-found.tsx
-
-Tao file `src/app/(site)/not-found.tsx`:
-
-```tsx
-import Link from "next/link";
-
-export default function NotFound() {
-  return (
-    <div className="not-found">
-      <h1 className="not-found__title">404</h1>
-      <p className="not-found__desc">
-        Trang ban tim khong ton tai hoac da duoc di chuyen.
-      </p>
-      <Link href="/" className="btn btn--primary">
-        Ve trang chu
-      </Link>
-    </div>
-  );
-}
-```
-
----
-
-## Buoc 3 — CSS cho loading skeleton + 404
-
-Them vao `globals.css`, truoc `@media` block (khoang dong 958):
-
-```css
-/* Loading skeleton */
-.loading-shell {
-  display: grid;
-  gap: 48px;
-  padding: 88px 0 48px;
-  width: min(1120px, calc(100% - 32px));
-  margin: 0 auto;
-}
-
-.loading-shell__hero {
-  display: grid;
-  gap: 16px;
-  max-width: 640px;
-}
-
-.loading-shell__grid {
-  display: grid;
-  gap: 16px;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-}
-
-.skeleton {
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 4px;
-  animation: skeletonPulse 1.8s ease-in-out infinite;
-}
-
-.skeleton--eyebrow {
-  height: 14px;
-  width: 120px;
-}
-
-.skeleton--heading {
-  height: 48px;
-  width: 80%;
-}
-
-.skeleton--text {
-  height: 16px;
-  width: 100%;
-}
-
-.skeleton--text-short {
-  width: 60%;
-}
-
-.skeleton--card {
-  height: 200px;
-}
-
-@keyframes skeletonPulse {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.8; }
-}
-
-/* 404 page */
-.not-found {
-  display: grid;
-  gap: 16px;
-  justify-items: center;
-  text-align: center;
-  padding: 120px 24px;
-}
-
-.not-found__title {
-  color: var(--v2-lime);
-  font-size: clamp(4rem, 10vw, 8rem);
-  font-weight: 800;
-  line-height: 1;
-}
-
-.not-found__desc {
-  color: var(--v2-muted);
-  font-size: 1.1rem;
-  max-width: 400px;
-}
-```
-
-Them vao `@media (prefers-reduced-motion: reduce)`:
-
-```css
-@media (prefers-reduced-motion: reduce) {
-  .hero__shuttle-ring {
-    animation: none;
-  }
-
-  .skeleton {
-    animation: none;
-    opacity: 0.6;
-  }
-}
-```
-
----
-
-## Cach verify
-
-1. `npm run build` — pass
-2. Dev server → homepage: load binh thuong (loading.tsx chi flash nhanh)
-3. Test loading state: them `await new Promise(r => setTimeout(r, 3000))` tam vao `page.tsx` truoc `Promise.all` → thay skeleton
-4. Xoa `setTimeout` sau khi test
-5. Truy cap URL khong ton tai (VD: `/abc-xyz/`) → thay custom 404 voi brand styling
-6. Mobile: skeleton va 404 hien dung tren man hinh nho
+- Hero image: dung asset tu `/public/images/` (vd: `hero-logo.webp`, `course-*.webp`, hoac new asset)
+- Figma cho thay image panel ben phai — can chon 1 hero image phu hop

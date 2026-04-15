@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { HomepageCoachSectionProps } from "./sectionProps";
 
 export function CoachSection({ coaches }: HomepageCoachSectionProps) {
@@ -19,19 +20,19 @@ export function CoachSection({ coaches }: HomepageCoachSectionProps) {
         {coaches.map((coach) => (
           <article key={coach.id} className="coach-card">
             {coach.photoUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              <Image
                 src={coach.photoUrl}
                 alt={coach.photoAlt ?? coach.name}
                 className="coach-card__photo"
                 width={120}
                 height={120}
-                loading="lazy"
+                sizes="120px"
               />
             ) : (
               <div className="coach-card__photo coach-card__photo--placeholder" />
             )}
             <div className="coach-card__body">
+              <p className="coach-card__badge">HLV phụ trách</p>
               <h3 className="coach-card__name">{coach.name}</h3>
               <p className="coach-card__group">{coach.teachingGroup}</p>
               <p className="coach-card__approach">{coach.approach}</p>

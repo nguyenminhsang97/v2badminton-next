@@ -21,7 +21,12 @@ export function SeoLinksBlock() {
   return (
     <section className="section seo-links" id="seo-links">
       <div className="section__header">
-        <h2 className="section__title">Tìm lớp cầu lông phù hợp</h2>
+        <p className="section__eyebrow">Lộ trình theo nhu cầu</p>
+        <h2 className="section__title">TÌM LỚP CẦU LÔNG PHÙ HỢP</h2>
+        <p className="section__desc">
+          Đi theo đúng trang dành cho khu vực hoặc mục tiêu tập luyện của bạn để
+          xem nội dung cô đọng hơn, dễ so sánh hơn.
+        </p>
       </div>
       <div className="seo-links__grid">
         {seoPageRoutes.map((route) => (

@@ -45,7 +45,7 @@ export default async function ChildrenMoneyPage() {
         locations={resolvedPage.relatedLocations}
         pricingTiers={resolvedPage.relatedPricing}
       />
-      <MoneyPageTemplate page={resolvedPage} />
+      <MoneyPageTemplate page={resolvedPage} path={PATH} />
     </>
   );
 }

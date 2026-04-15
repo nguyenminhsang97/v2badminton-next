@@ -14,6 +14,7 @@ const primaryLinks = [
   { href: "/#dia-diem", label: "Địa điểm" },
   { href: "/#doanh-nghiep", label: "Doanh nghiệp" },
   { href: "/#hoi-dap", label: "Hỏi đáp" },
+  { href: "/blog/", label: "Blog" },
 ] as const;
 
 const seoPageLinks = coreRoutes
@@ -64,11 +65,6 @@ export function Nav({ siteSettings }: NavProps) {
               {link.label}
             </Link>
           ))}
-          {seoPageLinks.map((link) => (
-            <Link key={link.href} href={link.href} className="site-nav__link">
-              {link.label}
-            </Link>
-          ))}
         </nav>
 
         <Link
@@ -86,6 +82,7 @@ export function Nav({ siteSettings }: NavProps) {
             Menu
           </summary>
           <div className="site-nav__panel">
+            <p className="site-nav__group-title">Menu chính</p>
             {primaryLinks.map((link) => (
               <Link
                 key={link.href}
@@ -96,6 +93,8 @@ export function Nav({ siteSettings }: NavProps) {
                 {link.label}
               </Link>
             ))}
+
+            <p className="site-nav__group-title">Trang nổi bật</p>
             {seoPageLinks.map((link) => (
               <Link
                 key={link.href}
@@ -106,6 +105,7 @@ export function Nav({ siteSettings }: NavProps) {
                 {link.label}
               </Link>
             ))}
+
             <Link
               href="/#lien-he"
               className="site-nav__mobile-cta"

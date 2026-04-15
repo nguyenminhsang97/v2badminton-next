@@ -36,7 +36,7 @@ export default async function BeginnerPage() {
           id="nguoi-moi-faq"
           data={buildFaqPageSchema(moneyPage.relatedFaqs)}
         />
-        <MoneyPageTemplate page={moneyPage} />
+        <MoneyPageTemplate page={moneyPage} path={PATH} />
       </>
     );
   }

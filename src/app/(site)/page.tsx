@@ -3,6 +3,7 @@ import { BusinessSection } from "@/components/home/BusinessSection";
 import { HomepageBusinessModeInitializer } from "@/components/home/HomepageBusinessModeInitializer";
 import { CoachSection } from "@/components/home/CoachSection";
 import { ContactSection } from "@/components/home/ContactSection";
+import { ContactFormErrorBoundary } from "@/components/home/ContactFormErrorBoundary";
 import { CourseSection } from "@/components/home/CourseSection";
 import { FaqSection } from "@/components/home/FaqSection";
 import { HeroSection } from "@/components/home/HeroSection";
@@ -85,11 +86,13 @@ export default async function Home() {
         <SeoLinksBlock />
         <BusinessSection />
         <FaqSection faqs={faqs} />
-        <ContactSection
-          siteSettings={siteSettings}
-          locations={locations}
-          scheduleBlocks={scheduleBlocks}
-        />
+        <ContactFormErrorBoundary>
+          <ContactSection
+            siteSettings={siteSettings}
+            locations={locations}
+            scheduleBlocks={scheduleBlocks}
+          />
+        </ContactFormErrorBoundary>
       </HomepageConversionProvider>
     </>
   );

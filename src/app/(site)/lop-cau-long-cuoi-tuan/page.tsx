@@ -1,0 +1,50 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { MoneyPageStructuredData } from "@/components/money-page/MoneyPageStructuredData";
+import { MoneyPageTemplate } from "@/components/money-page/MoneyPageTemplate";
+import { buildMoneyPageMetadata } from "@/lib/moneyPageMetadata";
+import { buildPublishedMoneyPageFallback } from "@/lib/moneyPageFallback";
+import { getMoneyPage } from "@/lib/sanity";
+
+const PATH = "/lop-cau-long-cuoi-tuan/";
+const SLUG = "lop-cau-long-cuoi-tuan";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { page: moneyPage, degraded } = await getMoneyPage(SLUG);
+
+  if (moneyPage) {
+    return buildMoneyPageMetadata(PATH, moneyPage);
+  }
+
+  if (degraded) {
+    return buildMoneyPageMetadata(PATH, buildPublishedMoneyPageFallback(PATH));
+  }
+
+  return {};
+}
+
+export default async function WeekendMoneyPage() {
+  const { page: moneyPage, degraded } = await getMoneyPage(SLUG);
+
+  if (!moneyPage && !degraded) {
+    notFound();
+  }
+
+  const resolvedPage = moneyPage ?? buildPublishedMoneyPageFallback(PATH);
+
+  return (
+    <>
+      <MoneyPageStructuredData
+        path={PATH}
+        breadcrumbId="cuoi-tuan-breadcrumb"
+        breadcrumbLabel="Lớp cầu lông cuối tuần"
+        faqId="cuoi-tuan-faq"
+        businessId="cuoi-tuan-business"
+        faqs={resolvedPage.relatedFaqs}
+        locations={resolvedPage.relatedLocations}
+        pricingTiers={resolvedPage.relatedPricing}
+      />
+      <MoneyPageTemplate page={resolvedPage} />
+    </>
+  );
+}

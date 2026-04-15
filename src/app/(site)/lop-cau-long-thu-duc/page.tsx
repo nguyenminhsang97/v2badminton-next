@@ -62,6 +62,7 @@ export default async function ThuDucPage() {
             ...moneyPage,
             relatedLocations: localLocations,
           }}
+          path={PATH}
         />
       </>
     );

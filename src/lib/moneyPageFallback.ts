@@ -11,6 +11,11 @@ export type PublishedMoneyPagePath = Extract<
   | "/lop-cau-long-cho-nguoi-di-lam/"
   | "/cau-long-doanh-nghiep/"
   | "/lop-he-cau-long-tphcm/"
+  | "/hoc-cau-long-1-kem-1/"
+  | "/lop-cau-long-cuoi-tuan/"
+  | "/lop-cau-long-buoi-toi/"
+  | "/gia-hoc-cau-long-tphcm/"
+  | "/team-building-cau-long/"
 >;
 
 type PublishedMoneyPageFallbackConfig = {
@@ -79,6 +84,71 @@ const MONEY_PAGE_FALLBACKS: Record<
     body:
       "Chương trình hè được thiết kế cho trẻ em và người mới bắt đầu, với lịch học linh hoạt và lớp nhỏ tại các sân ở Bình Thạnh và Thủ Đức. Nội dung chi tiết đang được cập nhật và sẽ hiển thị đầy đủ trong thời gian sớm nhất.",
     ctaLabel: "Nhận thông báo lớp hè",
+  },
+  "/hoc-cau-long-1-kem-1/": {
+    slug: "hoc-cau-long-1-kem-1",
+    audience: "nguoi_moi",
+    metaTitle: "Học Cầu Lông 1 Kèm 1 Tại TP.HCM | V2 Badminton",
+    metaDescription:
+      "Chương trình cầu lông 1 kèm 1 tại TP.HCM cho học viên cần HLV theo sát, lộ trình cá nhân hóa và lịch linh hoạt.",
+    h1: "Học cầu lông 1 kèm 1 tại TP.HCM",
+    intro:
+      "Chương trình kèm riêng 1:1 giúp học viên tiến bộ nhanh với lộ trình cá nhân hóa và HLV theo sát từng buổi.",
+    body:
+      "V2 Badminton thiết kế buổi học linh hoạt theo mục tiêu của từng học viên: sửa kỹ thuật cơ bản, nâng trình các pha cầu hoặc giữ nhịp tập ổn định. Nội dung chi tiết đang được cập nhật.",
+    ctaLabel: "Đăng ký kèm riêng",
+  },
+  "/lop-cau-long-cuoi-tuan/": {
+    slug: "lop-cau-long-cuoi-tuan",
+    audience: "nguoi_di_lam",
+    metaTitle: "Lớp Cầu Lông Cuối Tuần Tại TP.HCM | V2 Badminton",
+    metaDescription:
+      "Lớp cầu lông cuối tuần cho người bận trong tuần, lịch linh hoạt tại Bình Thạnh và Thủ Đức.",
+    h1: "Lớp cầu lông cuối tuần tại TP.HCM",
+    intro:
+      "Khung lịch thứ 7 và chủ nhật phù hợp cho người đi làm, sinh viên hoặc bất kỳ ai muốn giữ nhịp tập mà không ảnh hưởng giờ hành chính.",
+    body:
+      "V2 Badminton mở lớp cuối tuần tại các sân ở Bình Thạnh và Thủ Đức, giữ nhịp buổi học gọn và dễ theo. Nội dung chi tiết đang được cập nhật.",
+    ctaLabel: "Xem lịch cuối tuần",
+  },
+  "/lop-cau-long-buoi-toi/": {
+    slug: "lop-cau-long-buoi-toi",
+    audience: "nguoi_di_lam",
+    metaTitle: "Lớp Cầu Lông Buổi Tối Tại TP.HCM | V2 Badminton",
+    metaDescription:
+      "Lớp cầu lông buổi tối cho người đi làm, phù hợp với giờ sau giờ hành chính tại Bình Thạnh và Thủ Đức.",
+    h1: "Lớp cầu lông buổi tối tại TP.HCM",
+    intro:
+      "V2 Badminton có các khung giờ sau giờ làm để bạn duy trì tập luyện đều đặn mà không cần hy sinh lịch cá nhân ban ngày.",
+    body:
+      "Lịch buổi tối phù hợp cho người cần tập sau giờ hành chính, với lộ trình linh hoạt và nhịp tập ổn định. Nội dung chi tiết đang được cập nhật.",
+    ctaLabel: "Xem lịch buổi tối",
+  },
+  "/gia-hoc-cau-long-tphcm/": {
+    slug: "gia-hoc-cau-long-tphcm",
+    audience: "nguoi_moi",
+    metaTitle: "Giá Học Cầu Lông Tại TP.HCM 2026 | V2 Badminton",
+    metaDescription:
+      "Tổng hợp giá học cầu lông tại TP.HCM: lớp nhóm, kèm riêng và chương trình doanh nghiệp tại V2 Badminton.",
+    h1: "Giá học cầu lông tại TP.HCM 2026",
+    intro:
+      "Trang này giúp học viên so sánh nhanh các mô hình học phí để chọn phương án phù hợp với mục tiêu và ngân sách.",
+    body:
+      "V2 Badminton có nhiều gợi ý học phí từ lớp nhóm, kèm riêng đến chương trình doanh nghiệp. Nội dung chi tiết đang được cập nhật để bạn so sánh dễ hơn.",
+    ctaLabel: "Xem bảng giá",
+  },
+  "/team-building-cau-long/": {
+    slug: "team-building-cau-long",
+    audience: "doanh_nghiep",
+    metaTitle: "Team Building Cầu Lông Cho Doanh Nghiệp | V2 Badminton",
+    metaDescription:
+      "Giải pháp team building cầu lông cho doanh nghiệp tại TP.HCM với format linh hoạt, gắn kết và có thể tùy biến theo team.",
+    h1: "Team building cầu lông cho doanh nghiệp",
+    intro:
+      "V2 Badminton thiết kế chương trình team building qua cầu lông để doanh nghiệp có một hoạt động thể thao dùng được vào đúng mục tiêu gắn kết.",
+    body:
+      "Chương trình có thể bao gồm buổi làm quen, mini game, giải đấu nội bộ hoặc format theo đội nhóm. Nội dung chi tiết đang được cập nhật.",
+    ctaLabel: "Nhận báo giá team building",
   },
 };
 

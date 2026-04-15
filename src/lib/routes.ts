@@ -15,7 +15,12 @@ export type CoreRoutePath =
   | "/lop-cau-long-tre-em/"
   | "/lop-cau-long-cho-nguoi-di-lam/"
   | "/cau-long-doanh-nghiep/"
-  | "/lop-he-cau-long-tphcm/";
+  | "/lop-he-cau-long-tphcm/"
+  | "/hoc-cau-long-1-kem-1/"
+  | "/lop-cau-long-cuoi-tuan/"
+  | "/lop-cau-long-buoi-toi/"
+  | "/gia-hoc-cau-long-tphcm/"
+  | "/team-building-cau-long/";
 
 export type RouteMetadataEntry = {
   path: CoreRoutePath;

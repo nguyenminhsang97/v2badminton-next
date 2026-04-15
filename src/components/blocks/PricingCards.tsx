@@ -74,6 +74,7 @@ function GroupCard({
   return (
     <article className="pricing-card">
       <div className="pricing-card__header">
+        <p className="pricing-card__tier">Nhóm nhỏ</p>
         <h3 className="pricing-card__name">{tier.name}</h3>
         <p className="pricing-card__meta">{tier.groupSize}</p>
       </div>
@@ -109,6 +110,7 @@ function PrivateCard({
   return (
     <article className="pricing-card">
       <div className="pricing-card__header">
+        <p className="pricing-card__tier">1 kèm 1</p>
         <h3 className="pricing-card__name">{tier.name}</h3>
       </div>
       <p className="pricing-card__price">{tier.displayPrice}</p>
@@ -148,6 +150,7 @@ function EnterpriseCard({
     return (
       <article className="pricing-card pricing-card--enterprise">
         <div className="pricing-card__header">
+          <p className="pricing-card__tier">Doanh nghiệp</p>
           <h3 className="pricing-card__name">{tier.name}</h3>
         </div>
         <p className="pricing-card__price">{tier.displayPrice}</p>
@@ -174,6 +177,7 @@ function EnterpriseCard({
   return (
     <article className="pricing-card pricing-card--enterprise">
       <div className="pricing-card__header">
+        <p className="pricing-card__tier">Doanh nghiệp</p>
         <h3 className="pricing-card__name">{tier.name}</h3>
       </div>
       <p className="pricing-card__price">{tier.displayPrice}</p>

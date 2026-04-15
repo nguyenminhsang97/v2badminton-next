@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { GoogleTagManager, GoogleTagManagerNoscript } from "@/components/analytics/GoogleTagManager";
 import { Footer } from "@/components/layout/Footer";
 import { Nav } from "@/components/layout/Nav";
 import type { SiteChromeSettings } from "@/components/layout/siteSettings";
@@ -23,9 +24,13 @@ export default async function SiteLayout({
 
   return (
     <div className="app-shell">
+      <GoogleTagManager />
       <TrackingBootstrap />
       <Nav siteSettings={siteSettings} />
-      <main className="site-main">{children}</main>
+      <main className="site-main">
+        <GoogleTagManagerNoscript />
+        {children}
+      </main>
       <Footer siteSettings={siteSettings} />
     </div>
   );

@@ -215,6 +215,7 @@ export function ScheduleSection({
                 );
               })}
             </div>
+            <div className="schedule-card__prompt">Nhấn để điền form theo lịch này</div>
           </article>
         ))}
       </div>

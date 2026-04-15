@@ -15,6 +15,12 @@ const FALLBACK_CONTACT_SETTINGS: HomeContactSettings = {
   facebookUrl: siteConfig.facebookUrl,
 };
 
+const CONTACT_PROOF_POINTS = [
+  "Phản hồi trong ngày",
+  "Hỗ trợ chọn sân gần bạn",
+  "Có thể tư vấn cả lớp doanh nghiệp",
+] as const;
+
 export function ContactSection({
   siteSettings,
   locations,
@@ -36,9 +42,12 @@ export function ContactSection({
       <HomepageScrollCoordinator />
 
       <div className="section__header">
-        <h2 className="section__title">Liên hệ</h2>
+        <p className="section__eyebrow">Đăng ký & tư vấn</p>
+        <h2 className="section__title">LIÊN HỆ</h2>
         <p className="section__subtitle">
-          Đăng ký học thử hoặc liên hệ trực tiếp với V2 Badminton.
+          Đăng ký học thử hoặc liên hệ trực tiếp với V2 Badminton. Nếu bạn đã
+          chọn lịch, sân hoặc mục tiêu học, form bên dưới sẽ giúp giữ mạch tư
+          vấn nhanh hơn.
         </p>
       </div>
 
@@ -50,7 +59,22 @@ export function ContactSection({
         />
 
         <aside className="contact-direct">
-          <h3 className="contact-direct__title">Liên hệ trực tiếp</h3>
+          <div className="contact-direct__header">
+            <h3 className="contact-direct__title">Liên hệ trực tiếp</h3>
+            <p className="contact-direct__intro">
+              Muốn chốt nhanh sân, lịch học hoặc hỏi riêng về chương trình doanh
+              nghiệp? Gọi, nhắn Zalo hoặc Facebook đều được.
+            </p>
+          </div>
+
+          <div className="contact-direct__badges">
+            {CONTACT_PROOF_POINTS.map((point) => (
+              <span key={point} className="contact-direct__badge">
+                {point}
+              </span>
+            ))}
+          </div>
+
           <div className="contact-direct__channels">
             <a
               href={`tel:${contactSettings.phoneE164}`}
