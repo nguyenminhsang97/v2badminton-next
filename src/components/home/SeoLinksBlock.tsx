@@ -19,7 +19,7 @@ export function SeoLinksBlock() {
   if (seoPageRoutes.length === 0) return null;
 
   return (
-    <section className="section seo-links" id="seo-links">
+    <section className="section seo-links seo-links--support" id="seo-links">
       <div className="section__header">
         <p className="section__eyebrow">Lộ trình theo nhu cầu</p>
         <h2 className="section__title">TÌM LỚP CẦU LÔNG PHÙ HỢP</h2>

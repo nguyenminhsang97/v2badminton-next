@@ -76,15 +76,13 @@ export default async function Home() {
           <HomepageBusinessModeInitializer />
         </Suspense>
         <HeroSection campaign={campaign} />
-        <PricingSection pricingTiers={pricingTiers} />
-        <WhySection />
         <CourseSection />
+        <WhySection />
         <CoachSection coaches={coaches} />
-        <TestimonialsSection testimonials={testimonials} />
+        <PricingSection pricingTiers={pricingTiers} />
         <ScheduleSection scheduleBlocks={scheduleBlocks} />
+        <TestimonialsSection testimonials={testimonials} />
         <LocationsSection locations={locations} />
-        <SeoLinksBlock />
-        <BusinessSection />
         <FaqSection faqs={faqs} />
         <ContactFormErrorBoundary>
           <ContactSection
@@ -93,6 +91,8 @@ export default async function Home() {
             scheduleBlocks={scheduleBlocks}
           />
         </ContactFormErrorBoundary>
+        <BusinessSection />
+        <SeoLinksBlock />
       </HomepageConversionProvider>
     </>
   );

@@ -179,29 +179,43 @@ export function ScheduleSection({
         ))}
       </div>
 
-      <div className="schedule-grid">
+      <div className="schedule-table" role="table" aria-label="Lịch học V2 Badminton">
+        <div className="schedule-table__head" role="row">
+          <span className="schedule-table__cell schedule-table__cell--label" role="columnheader">
+            Buổi học
+          </span>
+          <span className="schedule-table__cell schedule-table__cell--label" role="columnheader">
+            Khung giờ
+          </span>
+          <span className="schedule-table__cell schedule-table__cell--label" role="columnheader">
+            Sân tập
+          </span>
+          <span className="schedule-table__cell schedule-table__cell--label" role="columnheader">
+            Trình độ
+          </span>
+        </div>
+
         {itemsToRender.map((item) => (
-          <article
+          <button
             key={item.id}
-            className="schedule-card"
+            type="button"
+            className="schedule-row"
             onClick={() => handleCardClick(item)}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(event) => {
-              if (event.key === "Enter" || event.key === " ") {
-                event.preventDefault();
-                handleCardClick(item);
-              }
-            }}
+            role="row"
           >
-            <div className="schedule-card__time">{item.timeLabel}</div>
-            <div className="schedule-card__days schedule-card__day">
+            <span className="schedule-table__cell schedule-row__days">
               {item.dayGroup}
-            </div>
-            <div className="schedule-card__location">
-              <span className="schedule-card__court">{item.locationShortName}</span>
-            </div>
-            <div className="schedule-card__levels">
+            </span>
+            <strong className="schedule-table__cell schedule-row__time">
+              {item.timeLabel}
+            </strong>
+            <span className="schedule-table__cell schedule-row__location">
+              <span className="schedule-row__court">{item.locationShortName}</span>
+              <span className="schedule-row__location-note">
+                Nhấn để điền form theo lịch này
+              </span>
+            </span>
+            <span className="schedule-table__cell schedule-row__levels">
               {item.levels.map((level) => {
                 const levelUi = getScheduleLevelUi(level);
 
@@ -214,9 +228,8 @@ export function ScheduleSection({
                   </span>
                 );
               })}
-            </div>
-            <div className="schedule-card__prompt">Nhấn để điền form theo lịch này</div>
-          </article>
+            </span>
+          </button>
         ))}
       </div>
 

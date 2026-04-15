@@ -12,8 +12,8 @@ const primaryLinks = [
   { href: "/#khoa-hoc", label: "Khóa học" },
   { href: "/#lich-hoc", label: "Lịch học" },
   { href: "/#dia-diem", label: "Địa điểm" },
-  { href: "/#doanh-nghiep", label: "Doanh nghiệp" },
   { href: "/#hoi-dap", label: "Hỏi đáp" },
+  { href: "/#doanh-nghiep", label: "Doanh nghiệp" },
   { href: "/blog/", label: "Blog" },
 ] as const;
 
@@ -25,7 +25,10 @@ const seoPageLinks = coreRoutes
   })) as readonly { href: string; label: string }[];
 
 type NavProps = {
-  siteSettings: Pick<SiteChromeSettings, "siteName">;
+  siteSettings: Pick<
+    SiteChromeSettings,
+    "siteName" | "phoneDisplay" | "phoneE164"
+  >;
 };
 
 export function Nav({ siteSettings }: NavProps) {
@@ -67,15 +70,21 @@ export function Nav({ siteSettings }: NavProps) {
           ))}
         </nav>
 
-        <Link
-          href="/#lien-he"
-          className="site-nav__cta"
-          data-cta-name="dang_ky_ngay"
-          data-cta-location="nav"
-          onClick={trackNavCtaClick}
-        >
-          Đăng ký ngay
-        </Link>
+        <div className="site-nav__actions">
+          <a href={`tel:${siteSettings.phoneE164}`} className="site-nav__phone">
+            <span className="site-nav__phone-label">Hotline</span>
+            <strong>{siteSettings.phoneDisplay}</strong>
+          </a>
+          <Link
+            href="/#lien-he"
+            className="site-nav__cta"
+            data-cta-name="dang_ky_ngay"
+            data-cta-location="nav"
+            onClick={trackNavCtaClick}
+          >
+            Đăng ký ngay
+          </Link>
+        </div>
 
         <details ref={mobileNavRef} className="site-nav site-nav--mobile">
           <summary className="site-nav__summary" aria-label="Mở menu">
@@ -105,6 +114,10 @@ export function Nav({ siteSettings }: NavProps) {
                 {link.label}
               </Link>
             ))}
+
+            <a href={`tel:${siteSettings.phoneE164}`} className="site-nav__mobile-phone">
+              Gọi {siteSettings.phoneDisplay}
+            </a>
 
             <Link
               href="/#lien-he"

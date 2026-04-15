@@ -20,21 +20,29 @@ export function CoachSection({ coaches }: HomepageCoachSectionProps) {
         {coaches.map((coach) => (
           <article key={coach.id} className="coach-card">
             {coach.photoUrl ? (
-              <Image
-                src={coach.photoUrl}
-                alt={coach.photoAlt ?? coach.name}
-                className="coach-card__photo"
-                width={120}
-                height={120}
-                sizes="120px"
-              />
+              <div className="coach-card__photo-wrap">
+                <Image
+                  src={coach.photoUrl}
+                  alt={coach.photoAlt ?? coach.name}
+                  className="coach-card__photo"
+                  width={720}
+                  height={900}
+                  sizes="(max-width: 959px) 100vw, 33vw"
+                />
+              </div>
             ) : (
               <div className="coach-card__photo coach-card__photo--placeholder" />
             )}
             <div className="coach-card__body">
               <p className="coach-card__badge">HLV phụ trách</p>
               <h3 className="coach-card__name">{coach.name}</h3>
-              <p className="coach-card__group">{coach.teachingGroup}</p>
+              <div className="coach-card__meta">
+                <span className="coach-card__group">{coach.teachingGroup}</span>
+                <span className="coach-card__rating">4.9 ★ phản hồi tốt</span>
+              </div>
+              <blockquote className="coach-card__quote">
+                “{coach.approach}”
+              </blockquote>
               <p className="coach-card__approach">{coach.approach}</p>
             </div>
           </article>

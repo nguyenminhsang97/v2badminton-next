@@ -15,7 +15,7 @@ export function BusinessSection() {
   const { enterBusinessMode } = useHomepageConversion();
 
   return (
-    <section className="section" id="doanh-nghiep">
+    <section className="section business-section" id="doanh-nghiep">
       <div className="section__header">
         <p className="section__eyebrow">Giải pháp theo đội nhóm</p>
         <h2 className="section__title">CHƯƠNG TRÌNH DOANH NGHIỆP</h2>

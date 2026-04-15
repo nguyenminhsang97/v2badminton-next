@@ -15,6 +15,15 @@ function getGroupLabel(
   }
 }
 
+function getInitials(name: string): string {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? "")
+    .join("");
+}
+
 export function TestimonialsSection({
   testimonials,
 }: HomepageTestimonialsSectionProps) {
@@ -35,19 +44,27 @@ export function TestimonialsSection({
       <div className="testimonials-grid">
         {testimonials.map((testimonial) => (
           <blockquote key={testimonial.id} className="testimonial-card">
+            <div className="testimonial-card__stars" aria-hidden="true">
+              ★★★★★
+            </div>
             <span className="testimonial-card__kicker">
               {getGroupLabel(testimonial.studentGroup)}
             </span>
             <p className="testimonial-card__content">{testimonial.content}</p>
             <footer className="testimonial-card__footer">
-              <strong className="testimonial-card__name">
-                {testimonial.studentName}
-              </strong>
-              {testimonial.contextLabel ? (
-                <span className="testimonial-card__context">
-                  {testimonial.contextLabel}
-                </span>
-              ) : null}
+              <span className="testimonial-card__avatar">
+                {getInitials(testimonial.studentName)}
+              </span>
+              <span className="testimonial-card__person">
+                <strong className="testimonial-card__name">
+                  {testimonial.studentName}
+                </strong>
+                {testimonial.contextLabel ? (
+                  <span className="testimonial-card__context">
+                    {testimonial.contextLabel}
+                  </span>
+                ) : null}
+              </span>
             </footer>
           </blockquote>
         ))}

@@ -60,6 +60,93 @@ function trackPricingCta(
   });
 }
 
+function getTierBadge(tier: SanityPricingTier): string {
+  switch (tier.kind) {
+    case "group":
+      return "Phổ biến";
+    case "private":
+      return "Linh hoạt";
+    case "enterprise":
+      return "Theo quy mô";
+  }
+}
+
+function getTierLabel(tier: SanityPricingTier): string {
+  switch (tier.kind) {
+    case "group":
+      return "Nhóm nhỏ";
+    case "private":
+      return "1 kèm 1";
+    case "enterprise":
+      return "Doanh nghiệp";
+  }
+}
+
+function getTierTags(tier: SanityPricingTier): readonly string[] {
+  switch (tier.kind) {
+    case "group":
+      return ["4-6 học viên", "HLV theo sát"];
+    case "private":
+      return ["Theo lịch riêng", "Tăng tốc kỹ thuật"];
+    case "enterprise":
+      return ["Báo giá riêng", "Team building"];
+  }
+}
+
+function PricingFeatureList({ features }: { features: string[] }) {
+  return (
+    <ul className="pricing-card__features">
+      {features.map((feature) => (
+        <li key={feature}>{feature}</li>
+      ))}
+    </ul>
+  );
+}
+
+function PricingCardShell({
+  badge,
+  children,
+  cta,
+  featured = false,
+  name,
+  price,
+  tags,
+  tier,
+}: {
+  badge: string;
+  children: React.ReactNode;
+  cta: React.ReactNode;
+  featured?: boolean;
+  name: string;
+  price: string;
+  tags: readonly string[];
+  tier: string;
+}) {
+  return (
+    <article
+      className={`pricing-card ${featured ? "pricing-card--featured" : ""}`}
+    >
+      <div className="pricing-card__header">
+        <div className="pricing-card__eyebrow">
+          <p className="pricing-card__tier">{tier}</p>
+          <span className="pricing-card__badge">{badge}</span>
+        </div>
+        <h3 className="pricing-card__name">{name}</h3>
+        <p className="pricing-card__price">{price}</p>
+      </div>
+      <div className="pricing-card__tags">
+        {tags.map((tag) => (
+          <span key={tag} className="pricing-card__tag">
+            {tag}
+          </span>
+        ))}
+      </div>
+      {children}
+      {cta}
+    </article>
+  );
+}
+
 function GroupCard({
   ctaHref,
   pathname,
@@ -72,27 +159,29 @@ function GroupCard({
   trackingLocation: string;
 }) {
   return (
-    <article className="pricing-card">
-      <div className="pricing-card__header">
-        <p className="pricing-card__tier">Nhóm nhỏ</p>
-        <h3 className="pricing-card__name">{tier.name}</h3>
-        <p className="pricing-card__meta">{tier.groupSize}</p>
-      </div>
-      <p className="pricing-card__price">{tier.displayPrice}</p>
+    <PricingCardShell
+      badge={getTierBadge(tier)}
+      featured
+      name={tier.name}
+      price={tier.displayPrice}
+      tags={getTierTags(tier)}
+      tier={getTierLabel(tier)}
+      cta={
+        <a
+          href={ctaHref}
+          className="btn btn--primary pricing-card__cta"
+          onClick={() =>
+            trackPricingCta(pathname, trackingLocation, tier.ctaAction)
+          }
+        >
+          {tier.ctaLabel}
+        </a>
+      }
+    >
       <p className="pricing-card__desc">{tier.description}</p>
-      <ul className="pricing-card__features">
-        {tier.features.map((feature) => (
-          <li key={feature}>{feature}</li>
-        ))}
-      </ul>
-      <a
-        href={ctaHref}
-        className="btn btn--primary pricing-card__cta"
-        onClick={() => trackPricingCta(pathname, trackingLocation, tier.ctaAction)}
-      >
-        {tier.ctaLabel}
-      </a>
-    </article>
+      <p className="pricing-card__meta">{tier.groupSize}</p>
+      <PricingFeatureList features={tier.features} />
+    </PricingCardShell>
   );
 }
 
@@ -108,26 +197,27 @@ function PrivateCard({
   trackingLocation: string;
 }) {
   return (
-    <article className="pricing-card">
-      <div className="pricing-card__header">
-        <p className="pricing-card__tier">1 kèm 1</p>
-        <h3 className="pricing-card__name">{tier.name}</h3>
-      </div>
-      <p className="pricing-card__price">{tier.displayPrice}</p>
+    <PricingCardShell
+      badge={getTierBadge(tier)}
+      name={tier.name}
+      price={tier.displayPrice}
+      tags={getTierTags(tier)}
+      tier={getTierLabel(tier)}
+      cta={
+        <a
+          href={ctaHref}
+          className="btn btn--outline pricing-card__cta"
+          onClick={() =>
+            trackPricingCta(pathname, trackingLocation, tier.ctaAction)
+          }
+        >
+          {tier.ctaLabel}
+        </a>
+      }
+    >
       <p className="pricing-card__desc">{tier.description}</p>
-      <ul className="pricing-card__features">
-        {tier.features.map((feature) => (
-          <li key={feature}>{feature}</li>
-        ))}
-      </ul>
-      <a
-        href={ctaHref}
-        className="btn btn--primary pricing-card__cta"
-        onClick={() => trackPricingCta(pathname, trackingLocation, tier.ctaAction)}
-      >
-        {tier.ctaLabel}
-      </a>
-    </article>
+      <PricingFeatureList features={tier.features} />
+    </PricingCardShell>
   );
 }
 
@@ -146,55 +236,39 @@ function EnterpriseCard({
   tier: SanityEnterprisePricingTier;
   trackingLocation: string;
 }) {
-  if (onEnterBusinessMode) {
-    return (
-      <article className="pricing-card pricing-card--enterprise">
-        <div className="pricing-card__header">
-          <p className="pricing-card__tier">Doanh nghiệp</p>
-          <h3 className="pricing-card__name">{tier.name}</h3>
-        </div>
-        <p className="pricing-card__price">{tier.displayPrice}</p>
-        <p className="pricing-card__desc">{tier.description}</p>
-        <ul className="pricing-card__features">
-          {tier.features.map((feature) => (
-            <li key={feature}>{feature}</li>
-          ))}
-        </ul>
-        <button
-          type="button"
-          className="btn btn--outline pricing-card__cta"
-          onClick={() => {
-            onEnterBusinessMode();
-            trackPricingCta(pathname, trackingLocation, tier.ctaAction);
-          }}
-        >
-          {tier.ctaLabel}
-        </button>
-      </article>
-    );
-  }
+  const button = onEnterBusinessMode ? (
+    <button
+      type="button"
+      className="btn btn--outline pricing-card__cta"
+      onClick={() => {
+        onEnterBusinessMode();
+        trackPricingCta(pathname, trackingLocation, tier.ctaAction);
+      }}
+    >
+      {tier.ctaLabel}
+    </button>
+  ) : (
+    <a
+      href={enterpriseCtaHref ?? ctaHref}
+      className="btn btn--outline pricing-card__cta"
+      onClick={() => trackPricingCta(pathname, trackingLocation, tier.ctaAction)}
+    >
+      {tier.ctaLabel}
+    </a>
+  );
 
   return (
-    <article className="pricing-card pricing-card--enterprise">
-      <div className="pricing-card__header">
-        <p className="pricing-card__tier">Doanh nghiệp</p>
-        <h3 className="pricing-card__name">{tier.name}</h3>
-      </div>
-      <p className="pricing-card__price">{tier.displayPrice}</p>
+    <PricingCardShell
+      badge={getTierBadge(tier)}
+      name={tier.name}
+      price={tier.displayPrice}
+      tags={getTierTags(tier)}
+      tier={getTierLabel(tier)}
+      cta={button}
+    >
       <p className="pricing-card__desc">{tier.description}</p>
-      <ul className="pricing-card__features">
-        {tier.features.map((feature) => (
-          <li key={feature}>{feature}</li>
-        ))}
-      </ul>
-      <a
-        href={enterpriseCtaHref ?? ctaHref}
-        className="btn btn--outline pricing-card__cta"
-        onClick={() => trackPricingCta(pathname, trackingLocation, tier.ctaAction)}
-      >
-        {tier.ctaLabel}
-      </a>
-    </article>
+      <PricingFeatureList features={tier.features} />
+    </PricingCardShell>
   );
 }
 

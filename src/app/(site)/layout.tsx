@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { GoogleTagManager, GoogleTagManagerNoscript } from "@/components/analytics/GoogleTagManager";
 import { Footer } from "@/components/layout/Footer";
+import { FloatingCta } from "@/components/layout/FloatingCta";
 import { Nav } from "@/components/layout/Nav";
 import type { SiteChromeSettings } from "@/components/layout/siteSettings";
 import { TrackingBootstrap } from "@/components/providers/TrackingBootstrap";
@@ -31,6 +32,7 @@ export default async function SiteLayout({
         <GoogleTagManagerNoscript />
         {children}
       </main>
+      <FloatingCta siteSettings={siteSettings} />
       <Footer siteSettings={siteSettings} />
     </div>
   );

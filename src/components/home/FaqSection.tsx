@@ -3,7 +3,7 @@ import type { HomepageFaqSectionProps } from "./sectionProps";
 
 export function FaqSection({ faqs }: HomepageFaqSectionProps) {
   return (
-    <section className="section" id="hoi-dap">
+    <section className="section faq-section" id="hoi-dap">
       <div className="section__header">
         <p className="section__eyebrow">Hỏi trước khi đăng ký</p>
         <h2 className="section__title">CÂU HỎI THƯỜNG GẶP</h2>
