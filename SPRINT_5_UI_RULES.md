@@ -1,213 +1,220 @@
-# Sprint 5 UI Rules
+# Sprint 5 UI Rules — Figma Design
 
 ## Purpose
 
-This file exists to prevent Sprint 5 from becoming only a "CSS bug fix" sprint.
+Sprint 5 is a visual overhaul. The target design is Version B (Figma).
+This file defines how to translate Figma into the Next.js codebase.
 
-Sprint 5 should produce a UI that is:
+## Rule 1: Figma owns the design
 
-- structurally aligned with Version C
-- commercially aligned with the current static V2 site
-- visually polished with lessons from the Figma export
+Primary reference:
+- Published: `https://lemon-speck-28354326.figma.site`
+- Local: `D:\V2\Badminton Academy Enrollment Screens`
 
-## Rule 1: Blueprint owns structure
+Follow Figma for:
+- Layout patterns (grid columns, section arrangement)
+- Component structure (what goes inside each card)
+- Typography hierarchy (sizes, weights, colors)
+- Spacing rhythm (section padding, card gaps)
+- Card treatment (radius, shadows, image slots)
+- Color system (backgrounds, accents, text colors)
+- Trust elements (ratings, student count, credentials)
+- Footer structure (4-column)
 
-Use:
+## Rule 2: V2 brand replaces Eagle brand
 
-- `VERSION_C_BLUEPRINT.md`
-- `VERSION_C_IMPLEMENTATION_PLAN.md`
+Figma uses "Eagle Badminton Academy" as placeholder.
+Replace with V2 Badminton content everywhere:
+- Brand name: V2 Badminton
+- Locations: Hue Thien, Phuc Loc, Green, Khang Sport (real V2 locations)
+- Pricing: V2's real pricing (1.000.000 / 1.300.000 / 1.500.000 / 400.000)
+- Coaches: V2's real coach info from Sanity
+- Phone: 0907 911 886
+- Copy tone: keep V2's direct, concise Vietnamese
 
-Implications:
+## Rule 3: Infrastructure stays untouched
 
-- do not arbitrarily reorder the homepage
-- do not turn the homepage into a wizard
-- do not turn money pages into editorial article pages
+Do not modify:
+- `src/lib/sanity/` (queries, types, client)
+- `src/lib/routes.ts` (routing system)
+- `src/lib/tracking.ts` (analytics events)
+- `src/lib/moneyPageFallback.ts` (fallback system)
+- `src/app/(site)/[slug]/page.tsx` patterns (money page architecture)
+- Contact form logic in `ContactForm.tsx` (validation, submission, Postgres)
 
-## Rule 2: Static V2 owns business tone
+Only modify the **render output** and **CSS** of components — not their data contracts.
 
-Use:
+## Rule 4: Sanity drives content
 
-- `D:\V2\landing-page\index.html`
-- `D:\V2\landing-page\seo-common.css`
-- `D:\V2\landing-page\tracking.js`
+Do not hardcode content that comes from Sanity:
+- Course data → from Sanity schedules/courses
+- Coach profiles → from Sanity (when available)
+- Pricing → from Sanity money page fallbacks
+- Testimonials → from Sanity (when available)
 
-Borrow from static V2:
+For sections where Sanity schemas don't exist yet (coaches, testimonials),
+use static data in the component as a temporary bridge, but structure it
+so Sanity integration is straightforward later.
 
-- concise CTA copy
-- quick-link and trust-strip thinking
-- breadcrumb + page-kicker rhythm
-- compact CTA block at the end of money pages
-- familiar analytics event names
+## Rule 5: Color system from Figma
 
-Do not borrow:
+Figma's color palette (adapt to CSS variables):
 
-- one-off page implementations that bypass the component system
+```css
+:root {
+  /* Primary */
+  --primary: #0d4a28;           /* dark green */
+  --primary-light: #e8f5e9;     /* light green bg */
+  --primary-surface: rgba(13, 74, 40, 0.08); /* subtle green bg */
 
-## Rule 3: Figma owns polish, not architecture
+  /* Accent */
+  --accent: #f97316;            /* orange — primary CTA */
+  --accent-hover: #ea580c;      /* orange darker */
 
-Use:
+  /* Neutral */
+  --bg-white: #ffffff;
+  --bg-light: #f8faf8;          /* off-white sections */
+  --bg-dark: #1a2e23;           /* dark sections */
+  --bg-footer: #0f1f17;         /* footer */
 
-- `D:\V2\Badminton Academy Enrollment Screens\src\app\pages\HomePage.tsx`
-- `D:\V2\Badminton Academy Enrollment Screens\src\app\pages\EnrollmentPage.tsx`
-- `D:\V2\Badminton Academy Enrollment Screens\src\styles\theme.css`
+  /* Text */
+  --text-primary: #1a1a1a;
+  --text-secondary: #6b7280;
+  --text-light: #ffffff;
+  --text-muted: #9ca3af;
 
-Borrow from Figma:
+  /* Border */
+  --border: #e5e7eb;
+  --border-card: rgba(0, 0, 0, 0.06);
 
-- stronger hero hierarchy
-- richer card treatment
-- better spacing rhythm
-- more deliberate trust/testimonial presentation
-- clearer CTA emphasis
-
-Do not borrow:
-
-- Eagle Academy branding
-- orange-first identity
-- multi-step enrollment flow as the main homepage interaction
-
-## Rule 4: Homepage goals
-
-After Sprint 5, the homepage should feel:
-
-- faster to scan
-- more trustworthy
-- more clearly conversion-oriented
-
-Targets:
-
-1. Hero has stronger hierarchy and trust cues.
-2. Course, pricing, and schedule cards feel fully designed.
-3. Coach and testimonial sections feel like a trust layer.
-4. Contact section feels like the final conversion zone.
-
-## Rule 5: Money-page goals
-
-After Sprint 5, money pages should feel like focused landing pages.
-
-Targets:
-
-1. Visual breadcrumb exists.
-2. Hero image supports the page when Sanity provides one.
-3. Intro density stays compact and readable.
-4. CTA block is clear and easy to act on.
-
-## Rule 6: Interaction quality matters
-
-Sprint 5 must improve the feel of the interface, not only the layout.
-
-Required:
-
-- focus-visible states
-- intentional hover states
-- branded loading UI
-- branded error UI
-- mobile-safe tap targets
-
-## Rule 7: Brand guardrails
-
-Keep:
-
-- dark background direction
-- lime accent identity
-- V2 copy tone
-- conversion-first layout
-
-Avoid:
-
-- pastel redesigns
-- generic SaaS styling
-- a new unrelated button/card system
-
-## Rule 8: One visual system
-
-Blog pages and future money pages must inherit the same improved UI language.
-Do not let homepage, money pages, and blog drift into three separate styles.
-
----
-
-## Concrete CSS reference values
-
-These values were extracted from cross-referencing `D:\V2\landing-page` (static V2) and `D:\V2\Badminton Academy Enrollment Screens` (Figma export). Use as primary reference when implementing Sprint 5 tickets.
-
-### From Static V2 (business tone — priority)
-
-**CTA clip-path (brand signature):**
-```
-clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
-```
-- Primary buttons: corner 10px
-- Tab buttons: corner 6px, padding `0.45rem 1.1rem`
-- Course card action: corner 8px (smaller pill)
-
-**Why-card hover accent bar:**
-```
-.why-card::before { height: 2px; background: #c8f542; transform: scaleX(0→1); }
-.why-card:hover { transform: translateY(-4px); }
+  /* Card */
+  --card-bg: #ffffff;
+  --card-shadow: 0 2px 20px rgba(0, 0, 0, 0.07);
+  --card-radius: 16px;          /* rounded-2xl */
+}
 ```
 
-**Schedule time highlight:**
-```
-color: #c8f542; font-size: 1.5rem; font-weight: 700;
+**Section background pattern (alternating):**
+- Hero: dark green gradient + photo
+- Courses: white/light
+- Why V2: white/light
+- Coaches: dark green
+- Testimonials: white/light
+- Schedule: white/light
+- Locations: dark
+- Contact: dark
+- Footer: darkest
+
+## Rule 6: Button system from Figma
+
+```css
+/* Primary CTA — orange, rounded */
+.btn-primary {
+  background: var(--accent);
+  color: white;
+  border-radius: 12px;
+  padding: 14px 28px;
+  font-weight: 700;
+}
+
+/* Secondary — outlined */
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--primary);
+  color: var(--primary);
+  border-radius: 12px;
+  padding: 14px 28px;
+}
+
+/* Ghost — text only with icon */
+.btn-ghost {
+  background: transparent;
+  color: var(--primary);
+  padding: 14px 28px;
+}
 ```
 
-**Card hover lift (shared):**
-```
-transform: translateY(-2px);
-```
-Applied to: schedule-card, pricing-card, seo-links__card.
+Note: Figma does NOT use clip-path diagonal corners.
+Previous Sprint 5 plan used V2 static site's clip-path — that is now replaced
+by Figma's rounded buttons.
 
-**Breadcrumb + page-kicker:**
-```
-Separator: → (arrow, not >)
-Link color: var(--v2-light)
-Page-kicker: color: #c8f542; font-size: 0.82rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
-```
+## Rule 7: Card system from Figma
 
-**Analytics event names (keep continuity):**
-```
-From static V2 tracking.js: cta_click, contact_click, map_click, form_start
-Carry-forward from Next app: generate_lead (added in Sprint 3, not in static site)
-```
+```css
+.card {
+  background: var(--card-bg);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
 
-### From Figma (polish — secondary)
-
-**Spacing rhythm:**
-```
-Section padding: py-20 (80px)
-Card gap: 24px
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
 ```
 
-**Card treatment:**
+Cards with images: image fills top portion, content below.
+Cards without images: padding all around.
+
+## Rule 8: Typography from Figma
+
 ```
-border-radius: 16px (rounded-2xl) — for badges/pills only, NOT buttons
-shadow: 0 2px 20px rgba(0,0,0,0.07) — optional for card hover depth
+Font: Inter or system-ui (Figma uses Inter)
+Section kicker: 14px, 600, uppercase, tracking 0.1em, primary color, pill bg
+Section title: clamp(28px, 4vw, 42px), 900, dark
+Section desc: 16px, 400, secondary color, max-width 600px
+Card title: 18px, 700, dark
+Card desc: 14px, 400, secondary
+Price: 24px, 900, primary
+Label: 12px, 600, uppercase, tracking 0.08em
 ```
 
-**Button hover micro-interaction:**
-```
-hover:scale-105 — for icon buttons only, not primary CTA
-transition: 0.18-0.2s ease
+## Rule 9: Section kicker badge
+
+Every major section has a kicker badge above the title:
+
+```html
+<span class="section-kicker">KHÓA HỌC CẦU LÔNG</span>
 ```
 
-**Level tag colors:**
-```
-Co ban (lime):    background: rgba(200, 245, 66, 0.12); color: var(--v2-lime);
-Nang cao (blue):  background: rgba(59, 130, 246, 0.12); color: #93bbfd;
-Doanh nghiep (purple): background: rgba(168, 85, 247, 0.12); color: #c4a5f7;
+```css
+.section-kicker {
+  display: inline-flex;
+  padding: 6px 16px;
+  background: var(--primary-surface);
+  border: 1px solid rgba(13, 74, 40, 0.15);
+  border-radius: 9999px;
+  color: var(--primary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
 ```
 
-**Section desc max-width:**
-```
-max-width: 760px; (65-75 characters per line for readability)
-```
+## Rule 10: Mobile responsive
 
-### Conflicts resolved
+Figma shows desktop-first but must work on mobile:
+- Grid columns collapse: 4-col → 2-col → 1-col
+- Hero: 2-col → 1-col (image below or hidden)
+- Schedule table: horizontal scroll on mobile
+- Footer: 4-col → 2-col → 1-col
+- Nav: hamburger menu on mobile
+- Section padding: 80px → 48px on mobile
+- Floating CTA: always visible
 
-| Element | Static V2 | Figma | Decision |
-|---------|-----------|-------|----------|
-| Button shape | clip-path diagonal | rounded-xl | **Static V2** (brand signature) |
-| Card border-radius | 0 (sharp) | 16px | **Static V2** (dark theme, sharp edges) |
-| Pill/badge radius | 9999px | 9999px | **Same** |
-| Color scheme | dark + lime | light + green | **Static V2** (brand identity) |
-| Hover style | translateY | scale | **Static V2** for cards, Figma scale for icons |
-| Section label | none | pill badge | **Figma** (adds hierarchy without breaking brand) |
+## Figma Section Reference
+
+| Section | Figma pattern | Key elements |
+|---------|--------------|--------------|
+| Hero | Dark bg, photo right, trust strip | Kicker pill, H1, desc, 3 CTAs, avatar stack + 4.9★ + 1200+ |
+| Courses | Light bg, 4-col cards | Photo, badge, title, age, desc, freq+price, CTA |
+| Why V2 | Light bg, 2-col (text + images) | Icon list, stat box (98%), 2 photos |
+| Coaches | Dark bg, 3-col cards | Large photo, name overlay, credentials, quote, stars + student count |
+| Testimonials | Light bg, 3-col cards | Stars, quote, avatar + name + role |
+| Schedule | Light bg, table layout | Day, time (bold), course, location, level tags (colored) |
+| Locations | Dark bg, vertical list | Icon, name, address, phone, hours |
+| Contact | Dark bg, 2-col | Title + desc + 2 CTAs (orange + outline) |
+| Footer | Darkest bg, 4-col | Brand + desc + social, Courses links, Academy links, Contact info |

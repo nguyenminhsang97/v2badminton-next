@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Version C Preview — V2 Badminton</title>
+<style>
+  /* ─── TOKENS ─── */
+  :root {
+    --lime: #c8f542;
+    --lime-dim: rgba(200,245,66,0.08);
+    --lime-border: rgba(200,245,66,0.2);
+    --black: #0a0a0a;
+    --dark: #141414;
+    --card: rgba(20,20,20,0.95);
+    --border: rgba(255,255,255,0.08);
+    --white: #f5f5f0;
+    --light: #e8e8e8;
+    --muted: #888;
+    --radius: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--black);
+    color: var(--light);
+    font-family: "Be Vietnam Pro", "Segoe UI", sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  a { text-decoration: none; color: inherit; }
+  img { display: block; max-width: 100%; }
+
+  /* ─── UTILITIES ─── */
+  .lime { color: var(--lime); }
+  .muted { color: var(--muted); }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 14px;
+    border: 1px solid var(--lime-border);
+    border-radius: 9999px;
+    background: var(--lime-dim);
+    color: var(--lime);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .kicker::before { content: "●"; font-size: 0.5rem; }
+
+  /* ─── BUTTONS ─── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 0.75rem 1.6rem;
+    font-weight: 700; font-size: 0.95rem;
+    cursor: pointer; border: none;
+    clip-path: polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+    transition: all 0.2s;
+  }
+  .btn-primary { background: var(--lime); color: #000; }
+  .btn-primary:hover { background: #d3fb58; transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent; color: var(--lime);
+    border: 1px solid var(--lime);
+    clip-path: polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+  }
+  .btn-outline:hover { background: var(--lime-dim); transform: translateY(-2px); }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px; height: 60px;
+    background: rgba(10,10,10,0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--lime-border);
+  }
+  .nav-logo { font-size: 1.2rem; font-weight: 900; letter-spacing: -0.02em; color: var(--white); }
+  .nav-logo span { color: var(--lime); }
+  .nav-links { display: flex; gap: 28px; font-size: 0.85rem; font-weight: 500; color: var(--muted); }
+  .nav-links a:hover { color: var(--lime); }
+  .nav-cta { padding: 0.45rem 1.1rem; font-size: 0.85rem; }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: grid; place-items: center;
+    padding: 80px 24px 60px;
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 40%, rgba(200,245,66,0.06) 0%, transparent 70%),
+      var(--black);
+  }
+  .hero-grid {
+    max-width: 1100px; width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 48px; align-items: center;
+  }
+  .hero-eyebrow { margin-bottom: 20px; }
+  .hero-title {
+    font-size: clamp(2.4rem, 5vw, 4.2rem);
+    font-weight: 900; line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--white);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .hero-sub {
+    color: var(--muted); font-size: 1.05rem; line-height: 1.7;
+    max-width: 480px; margin-bottom: 32px;
+  }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+  /* Trust strip */
+  .trust-strip {
+    display: flex; align-items: center; gap: 16px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+  .avatar-stack { display: flex; }
+  .avatar-stack span {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 2px solid var(--black);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; font-weight: 700; color: var(--white);
+    margin-left: -10px;
+  }
+  .avatar-stack span:first-child { margin-left: 0; }
+  .avatar-stack span:nth-child(1) { background: #2d6a4f; }
+  .avatar-stack span:nth-child(2) { background: #1b4332; }
+  .avatar-stack span:nth-child(3) { background: #40916c; }
+  .avatar-stack span:nth-child(4) { background: #74c69d; color: #000; }
+  .trust-text { font-size: 0.88rem; color: var(--muted); }
+  .trust-text strong { color: var(--white); }
+  .stars { color: var(--lime); font-size: 0.85rem; }
+  /* Stats */
+  .hero-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 16px; margin-top: 32px;
+  }
+  .stat { text-align: center; }
+  .stat-num { font-size: 2rem; font-weight: 900; color: var(--lime); line-height: 1; }
+  .stat-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+  /* Hero image side */
+  .hero-visual {
+    position: relative;
+    height: 520px;
+  }
+  .hero-img-main {
+    width: 100%; height: 420px;
+    object-fit: cover;
+    border-radius: 16px;
+    border: 1px solid var(--lime-border);
+  }
+  .hero-badge {
+    position: absolute; bottom: 0; left: -20px;
+    background: var(--card);
+    border: 1px solid var(--lime-border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    backdrop-filter: blur(8px);
+  }
+  .hero-badge-num { font-size: 2rem; font-weight: 900; color: var(--lime); line-height: 1; }
+  .hero-badge-label { font-size: 0.78rem; color: var(--muted); }
+
+  /* ─── SECTION BASE ─── */
+  section { padding: 80px 24px; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-header { text-align: center; margin-bottom: 48px; }
+  .section-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 900; color: var(--white);
+    letter-spacing: -0.03em; line-height: 1.1;
+    margin: 12px 0 16px;
+  }
+  .section-desc { color: var(--muted); max-width: 600px; margin: 0 auto; }
+
+  /* ─── COURSES ─── */
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .course-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .course-card:hover { transform: translateY(-4px); border-color: var(--lime-border); }
+  .course-card-img {
+    position: relative; height: 180px; overflow: hidden;
+  }
+  .course-card-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.4s;
+  }
+  .course-card:hover .course-card-img img { transform: scale(1.06); }
+  .course-badge {
+    position: absolute; top: 12px; left: 12px;
+    padding: 3px 10px; border-radius: 9999px;
+    background: var(--lime); color: #000;
+    font-size: 0.72rem; font-weight: 800;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    clip-path: polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));
+  }
+  .course-body { padding: 20px; }
+  .course-audience {
+    font-size: 0.75rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;
+  }
+  .course-title {
+    font-size: 1.1rem; font-weight: 800; color: var(--white);
+    margin-bottom: 8px; line-height: 1.3;
+  }
+  .course-desc { font-size: 0.88rem; color: var(--muted); margin-bottom: 16px; line-height: 1.6; }
+  .course-meta {
+    display: flex; align-items: baseline; gap: 8px;
+    margin-bottom: 16px;
+  }
+  .course-price { font-size: 1.4rem; font-weight: 900; color: var(--lime); }
+  .course-freq { font-size: 0.8rem; color: var(--muted); }
+  .course-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+  .course-tag {
+    padding: 2px 8px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 0.75rem; color: var(--muted);
+  }
+  .course-action {
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; padding: 0.55rem;
+    border: 1px solid var(--lime);
+    background: transparent; color: var(--lime);
+    font-weight: 700; font-size: 0.88rem;
+    cursor: pointer;
+    clip-path: polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+    transition: all 0.2s;
+  }
+  .course-action:hover { background: var(--lime); color: #000; }
+
+  /* ─── WHY SECTION ─── */
+  .why-section { background: #0d0d0d; }
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px; align-items: center;
+  }
+  .why-content-list { display: grid; gap: 24px; }
+  .why-item { display: flex; gap: 16px; align-items: flex-start; }
+  .why-icon {
+    flex-shrink: 0;
+    width: 44px; height: 44px;
+    border: 1px solid var(--lime-border);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--lime); font-size: 1.2rem;
+    background: var(--lime-dim);
+  }
+  .why-item-title { font-weight: 700; color: var(--white); margin-bottom: 4px; }
+  .why-item-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+  .why-stat-box {
+    display: inline-block;
+    padding: 16px 24px;
+    background: var(--lime-dim);
+    border: 1px solid var(--lime-border);
+    border-radius: 8px;
+    margin-top: 24px;
+  }
+  .why-stat-num { font-size: 2rem; font-weight: 900; color: var(--lime); }
+  .why-stat-label { font-size: 0.82rem; color: var(--muted); }
+  .why-visual { position: relative; }
+  .why-img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .why-img-grid img {
+    width: 100%; aspect-ratio: 1;
+    object-fit: cover; border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .why-img-grid img:first-child { grid-row: 1 / 3; aspect-ratio: auto; height: 100%; }
+
+  /* ─── PRICING ─── */
+  .pricing-section { background: #0d0d0d; }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+  }
+  .pricing-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    display: flex; flex-direction: column; gap: 16px;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .pricing-card:hover { transform: translateY(-4px); border-color: var(--lime-border); }
+  .pricing-card--featured {
+    border-color: var(--lime-border);
+    background: linear-gradient(160deg, rgba(200,245,66,0.06) 0%, var(--card) 60%);
+  }
+  .pricing-tag {
+    display: inline-flex; align-items: center;
+    padding: 3px 10px; border-radius: 9999px;
+    font-size: 0.72rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    width: fit-content;
+  }
+  .pricing-tag--featured { background: var(--lime); color: #000; }
+  .pricing-tag--standard { background: var(--lime-dim); color: var(--lime); border: 1px solid var(--lime-border); }
+  .pricing-name { font-size: 1rem; font-weight: 700; color: var(--white); }
+  .pricing-freq { font-size: 0.8rem; color: var(--muted); }
+  .pricing-amount { font-size: 2rem; font-weight: 900; color: var(--lime); line-height: 1; }
+  .pricing-unit { font-size: 0.85rem; color: var(--muted); }
+  .pricing-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+  .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .pricing-features li {
+    font-size: 0.88rem; color: var(--light);
+    display: flex; gap: 8px; align-items: flex-start;
+  }
+  .pricing-features li::before { content: "✓"; color: var(--lime); font-weight: 700; flex-shrink: 0; }
+
+  /* ─── COACHES ─── */
+  .coaches-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  .coach-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .coach-card:hover { transform: translateY(-4px); border-color: var(--lime-border); }
+  .coach-photo {
+    height: 260px; overflow: hidden; position: relative;
+  }
+  .coach-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+  .coach-photo-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
+    padding: 20px 16px 16px;
+  }
+  .coach-name { font-size: 1.15rem; font-weight: 800; color: var(--white); }
+  .coach-role { font-size: 0.82rem; color: var(--lime); font-weight: 600; }
+  .coach-body { padding: 16px; }
+  .coach-credentials { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .coach-cred {
+    padding: 3px 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 0.75rem; color: var(--muted);
+  }
+  .coach-quote {
+    font-size: 0.88rem; color: var(--muted);
+    font-style: italic; line-height: 1.6;
+    border-left: 2px solid var(--lime-border);
+    padding-left: 12px; margin-bottom: 12px;
+  }
+  .coach-stats { display: flex; gap: 16px; }
+  .coach-stat { font-size: 0.82rem; color: var(--muted); }
+  .coach-stat strong { color: var(--lime); }
+
+  /* ─── SCHEDULE ─── */
+  .schedule-section { background: #0d0d0d; }
+  .schedule-table {
+    width: 100%; border-collapse: collapse;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .schedule-table thead { background: rgba(200,245,66,0.08); }
+  .schedule-table th {
+    padding: 14px 20px;
+    text-align: left; font-size: 0.82rem;
+    color: var(--lime); text-transform: uppercase;
+    letter-spacing: 0.1em; font-weight: 700;
+    border-bottom: 1px solid var(--lime-border);
+  }
+  .schedule-table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem; color: var(--light);
+    vertical-align: middle;
+  }
+  .schedule-table tr:last-child td { border-bottom: none; }
+  .schedule-table tr:hover td { background: rgba(200,245,66,0.03); }
+  .schedule-time { color: var(--lime); font-weight: 800; font-size: 1rem; white-space: nowrap; }
+  .level-tag {
+    display: inline-flex; padding: 2px 8px;
+    border-radius: 4px; font-size: 0.75rem; font-weight: 700;
+  }
+  .level-tag--co-ban { background: rgba(200,245,66,0.12); color: var(--lime); }
+  .level-tag--nang-cao { background: rgba(59,130,246,0.12); color: #93bbfd; }
+  .level-tag--thi-dau { background: rgba(249,115,22,0.12); color: #fdba74; }
+
+  /* ─── TESTIMONIALS ─── */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .testimonial-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .testimonial-card:hover { transform: translateY(-2px); border-color: var(--lime-border); }
+  .testimonial-stars { color: var(--lime); font-size: 1rem; letter-spacing: 2px; margin-bottom: 12px; }
+  .testimonial-quote {
+    font-size: 0.92rem; color: var(--light);
+    line-height: 1.7; margin-bottom: 16px;
+    font-style: italic;
+  }
+  .testimonial-author { display: flex; align-items: center; gap: 10px; }
+  .testimonial-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--lime-dim); border: 1px solid var(--lime-border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--lime); font-weight: 800; font-size: 0.85rem;
+  }
+  .testimonial-name { font-weight: 700; color: var(--white); font-size: 0.9rem; }
+  .testimonial-meta { font-size: 0.78rem; color: var(--muted); }
+
+  /* ─── LOCATIONS ─── */
+  .locations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .location-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .location-card:hover { transform: translateY(-3px); border-color: var(--lime-border); }
+  .location-img { height: 160px; overflow: hidden; }
+  .location-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+  .location-card:hover .location-img img { transform: scale(1.05); }
+  .location-body { padding: 16px; }
+  .location-area {
+    font-size: 0.72rem; color: var(--lime);
+    text-transform: uppercase; letter-spacing: 0.12em;
+    font-weight: 700; margin-bottom: 6px;
+  }
+  .location-name { font-size: 1rem; font-weight: 800; color: var(--white); margin-bottom: 4px; }
+  .location-address { font-size: 0.82rem; color: var(--muted); margin-bottom: 12px; }
+  .location-info { display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px; }
+  .location-info-row { display: flex; gap: 6px; align-items: center; font-size: 0.82rem; color: var(--muted); }
+  .location-info-icon { color: var(--lime); width: 14px; }
+
+  /* ─── CONTACT ─── */
+  .contact-section {
+    background: linear-gradient(160deg, rgba(200,245,66,0.04) 0%, var(--black) 50%);
+  }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  .contact-channels { display: flex; flex-direction: column; gap: 12px; }
+  .contact-channel {
+    display: flex; gap: 14px; align-items: center;
+    padding: 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .contact-channel:hover { border-color: var(--lime-border); transform: translateX(4px); }
+  .contact-channel-icon {
+    width: 44px; height: 44px; flex-shrink: 0;
+    border: 1px solid var(--lime-border);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--lime); font-size: 1.2rem;
+    background: var(--lime-dim);
+  }
+  .contact-channel-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .contact-channel-value { font-size: 0.95rem; font-weight: 700; color: var(--white); }
+  .contact-form-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+  }
+  .form-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 6px; }
+  .form-input {
+    width: 100%; padding: 12px 14px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 6px; color: var(--light);
+    font-size: 0.9rem; margin-bottom: 14px;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus { outline: none; border-color: var(--lime-border); }
+  .form-submit {
+    width: 100%; padding: 0.85rem;
+    font-size: 0.95rem; font-weight: 800;
+    letter-spacing: 0.02em;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+    padding: 48px 24px 24px;
+  }
+  .footer-inner { max-width: 1100px; margin: 0 auto; }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 40px; margin-bottom: 40px;
+  }
+  .footer-brand-name { font-size: 1.1rem; font-weight: 900; color: var(--white); margin-bottom: 8px; }
+  .footer-brand-name span { color: var(--lime); }
+  .footer-brand-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; margin-bottom: 16px; }
+  .footer-social { display: flex; gap: 10px; }
+  .footer-social-btn {
+    width: 36px; height: 36px; border-radius: 8px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 0.9rem;
+    transition: all 0.2s;
+  }
+  .footer-social-btn:hover { border-color: var(--lime-border); color: var(--lime); }
+  .footer-col-title { font-size: 0.78rem; color: var(--white); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a { font-size: 0.85rem; color: var(--muted); transition: color 0.2s; }
+  .footer-links a:hover { color: var(--lime); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 24px; border-top: 1px solid var(--border);
+    font-size: 0.8rem; color: var(--muted);
+  }
+  .footer-legal { display: flex; gap: 16px; }
+  .footer-legal a { color: var(--muted); }
+  .footer-legal a:hover { color: var(--lime); }
+
+  /* ─── FLOATING CTA ─── */
+  .floating-cta {
+    position: fixed; bottom: 24px; right: 20px; z-index: 99;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .floating-btn {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    background: var(--card);
+    border: 1px solid var(--lime-border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--lime); font-size: 1.3rem;
+    cursor: pointer; transition: all 0.2s;
+    backdrop-filter: blur(8px);
+    text-decoration: none;
+  }
+  .floating-btn:hover { background: var(--lime); color: #000; transform: scale(1.1); }
+
+  /* ─── SCROLL ANIMATION ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp 0.6s ease both; }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+  .delay-4 { animation-delay: 0.4s; }
+
+  /* ─── LABEL BANNER ─── */
+  .preview-banner {
+    background: var(--lime); color: #000;
+    text-align: center; padding: 8px;
+    font-size: 0.82rem; font-weight: 700; letter-spacing: 0.05em;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  }
+  nav { top: 36px; }
+  .hero { padding-top: 120px; }
+</style>
+</head>
+<body>
+
+<div class="preview-banner">⚡ PREVIEW — Version C sau khi Visual Overhaul (dark + lime, V2 brand)</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">V2 <span>BADMINTON</span></div>
+  <div class="nav-links">
+    <a href="#">Khóa học</a>
+    <a href="#">Lịch tập</a>
+    <a href="#">HLV</a>
+    <a href="#">Địa điểm</a>
+    <a href="#">Blog</a>
+  </div>
+  <button class="btn btn-primary nav-cta">Đăng ký học thử</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-eyebrow">
+        <span class="kicker">Bình Thạnh &amp; Thủ Đức — TP.HCM</span>
+      </div>
+      <h1 class="hero-title fade-up">
+        Học cầu lông<br>
+        tại <span class="lime">TP.HCM</span>
+      </h1>
+      <p class="hero-sub fade-up delay-1">
+        V2 Badminton có lớp cho người mới bắt đầu, người đi làm cần lịch buổi tối hoặc cuối tuần, và học viên muốn học 1 kèm 1 bài bản tại 4 sân ở Bình Thạnh và Thủ Đức.
+      </p>
+      <div class="hero-actions fade-up delay-2">
+        <button class="btn btn-primary">Đăng ký học thử →</button>
+        <button class="btn btn-outline">Xem khóa học</button>
+      </div>
+      <!-- Trust strip -->
+      <div class="trust-strip fade-up delay-3">
+        <div class="avatar-stack">
+          <span>NH</span><span>VA</span><span>MK</span><span>TL</span>
+        </div>
+        <div>
+          <div class="stars">★★★★★ <strong style="color:var(--white)">4.9</strong></div>
+          <div class="trust-text">Từ <strong>1.200+ học viên</strong> tại TP.HCM</div>
+        </div>
+      </div>
+      <!-- Stats -->
+      <div class="hero-stats fade-up delay-4">
+        <div class="stat">
+          <div class="stat-num">4</div>
+          <div class="stat-label">Sân tập</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">2</div>
+          <div class="stat-label">Quận</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">8+</div>
+          <div class="stat-label">Năm kinh nghiệm</div>
+        </div>
+      </div>
+    </div>
+    <!-- Hero visual -->
+    <div class="hero-visual fade-up delay-2">
+      <img class="hero-img-main" src="/images/course-basic.webp" alt="Sân tập V2 Badminton">
+      <div class="hero-badge">
+        <div class="hero-badge-num">98%</div>
+        <div class="hero-badge-label">Học viên hài lòng</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section>
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="kicker">Khóa học cầu lông</span>
+      <h2 class="section-title">Chương trình phù hợp<br><span class="lime">cho mọi người</span></h2>
+      <p class="section-desc">Từ người mới bắt đầu đến doanh nghiệp — V2 có khóa học phù hợp với lịch và mục tiêu của bạn.</p>
+    </div>
+    <div class="courses-grid">
+      <!-- Card 1 -->
+      <div class="course-card">
+        <div class="course-card-img">
+          <img src="/images/course-basic.webp" alt="Lớp cơ bản">
+          <span class="course-badge">Phổ biến</span>
+        </div>
+        <div class="course-body">
+          <div class="course-audience">Người mới bắt đầu</div>
+          <div class="course-title">Lớp cơ bản nhóm nhỏ</div>
+          <div class="course-desc">Học kỹ thuật nền tảng từ đầu — cầm vợt, di chuyển chân, đập cầu cơ bản.</div>
+          <div class="course-meta">
+            <span class="course-price">1.300.000đ</span>
+            <span class="course-freq">/ tháng · 3 buổi/tuần</span>
+          </div>
+          <div class="course-tags">
+            <span class="course-tag">2-6 người</span>
+            <span class="course-tag">Mọi lứa tuổi</span>
+          </div>
+          <button class="course-action">Xem lịch học →</button>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="course-card">
+        <div class="course-card-img">
+          <img src="/images/course-advanced.webp" alt="Lớp nâng cao">
+        </div>
+        <div class="course-body">
+          <div class="course-audience">Đã có nền tảng</div>
+          <div class="course-title">Lớp nâng cao</div>
+          <div class="course-desc">Nâng cấp kỹ thuật: smash, cắt cầu, chiến thuật đánh đơn và đánh đôi.</div>
+          <div class="course-meta">
+            <span class="course-price">1.500.000đ</span>
+            <span class="course-freq">/ tháng · 3 buổi/tuần</span>
+          </div>
+          <div class="course-tags">
+            <span class="course-tag">2-6 người</span>
+            <span class="course-tag">Nâng cao</span>
+          </div>
+          <button class="course-action">Xem lịch học →</button>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="course-card">
+        <div class="course-card-img">
+          <img src="/images/biz-team-building.webp" alt="Doanh nghiệp">
+        </div>
+        <div class="course-body">
+          <div class="course-audience">Doanh nghiệp</div>
+          <div class="course-title">Team building &amp; Doanh nghiệp</div>
+          <div class="course-desc">Tổ chức hoạt động cầu lông cho công ty — gắn kết đội ngũ, rèn sức khỏe.</div>
+          <div class="course-meta">
+            <span class="course-price">Liên hệ</span>
+            <span class="course-freq">báo giá theo nhóm</span>
+          </div>
+          <div class="course-tags">
+            <span class="course-tag">Team building</span>
+            <span class="course-tag">Linh hoạt</span>
+          </div>
+          <button class="course-action">Liên hệ tư vấn →</button>
+        </div>
+      </div>
+      <!-- Card 4 -->
+      <div class="course-card">
+        <div class="course-card-img" style="background:linear-gradient(135deg,#1a1a1a,#0f2a1a);display:flex;align-items:center;justify-content:center;">
+          <span style="font-size:3rem;">🏸</span>
+        </div>
+        <div class="course-body">
+          <div class="course-audience">Cá nhân</div>
+          <div class="course-title">Học 1 kèm 1</div>
+          <div class="course-desc">HLV theo sát từng động tác, lộ trình cá nhân hóa hoàn toàn theo mục tiêu.</div>
+          <div class="course-meta">
+            <span class="course-price">400.000đ</span>
+            <span class="course-freq">/ giờ / học viên</span>
+          </div>
+          <div class="course-tags">
+            <span class="course-tag">1:1</span>
+            <span class="course-tag">Mọi trình độ</span>
+          </div>
+          <button class="course-action">Đặt lịch 1 kèm 1 →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY V2 — layout 2 cột với ảnh -->
+<section class="why-section">
+  <div class="section-inner">
+    <div class="why-grid">
+      <div>
+        <span class="kicker">Tại sao chọn V2</span>
+        <h2 class="section-title" style="text-align:left;margin:12px 0 32px;">Chúng tôi đào tạo<br><span class="lime">bằng cả trái tim</span></h2>
+        <div class="why-content-list">
+          <div class="why-item">
+            <div class="why-icon">📋</div>
+            <div>
+              <div class="why-item-title">Giáo trình bài bản</div>
+              <div class="why-item-desc">Lộ trình rõ ràng theo từng cấp độ — từ cầm vợt đến kỹ thuật đập cầu, mỗi buổi đều có mục tiêu cụ thể.</div>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-icon">👥</div>
+            <div>
+              <div class="why-item-title">Kèm riêng &amp; nhóm nhỏ</div>
+              <div class="why-item-desc">Lớp 1 kèm 1 hoặc nhóm nhỏ 2–6 người để HLV theo sát từng học viên. Không đông đúc, không bỏ sót.</div>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-icon">📍</div>
+            <div>
+              <div class="why-item-title">4 sân tiện lợi</div>
+              <div class="why-item-desc">Phủ sóng Bình Thạnh &amp; Thủ Đức. Bạn chọn sân gần nhà hoặc gần công ty.</div>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-icon">🕐</div>
+            <div>
+              <div class="why-item-title">Linh hoạt lịch học</div>
+              <div class="why-item-desc">Sáng, chiều, tối — kể cả cuối tuần. Phù hợp cho nhân viên văn phòng, sinh viên và người đi làm bận rộn.</div>
+            </div>
+          </div>
+        </div>
+        <div class="why-stat-box">
+          <div class="why-stat-num">98%</div>
+          <div class="why-stat-label">Học viên hài lòng sau khóa học đầu tiên</div>
+        </div>
+      </div>
+      <div class="why-visual">
+        <div class="why-img-grid">
+          <img src="/images/course-basic.webp" alt="Sân tập" style="grid-row:1/3;height:360px;object-fit:cover;">
+          <img src="/images/hue-thien.webp" alt="Sân Huệ Thiện" style="aspect-ratio:1;height:170px;object-fit:cover;">
+          <img src="/images/phuc-loc.webp" alt="Sân Phúc Lộc" style="aspect-ratio:1;height:170px;object-fit:cover;">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="kicker">Học phí</span>
+      <h2 class="section-title">Học phí <span class="lime">minh bạch</span></h2>
+      <p class="section-desc">Chọn gói phù hợp với lịch và mục tiêu của bạn. Không phí ẩn.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <span class="pricing-tag pricing-tag--standard">Nhóm nhỏ</span>
+        <div>
+          <div class="pricing-name">Lớp cơ bản</div>
+          <div class="pricing-freq">2 buổi / tuần · 2–6 người</div>
+        </div>
+        <div>
+          <div class="pricing-amount">1.000.000đ</div>
+          <div class="pricing-unit">/ tháng</div>
+        </div>
+        <div class="pricing-desc">Phù hợp lịch làm việc bận nhưng vẫn muốn duy trì đều.</div>
+        <ul class="pricing-features">
+          <li>Lớp nhóm nhỏ 2–6 người</li>
+          <li>HLV theo sát từng buổi</li>
+          <li>Linh hoạt chọn sân</li>
+        </ul>
+        <button class="btn btn-outline" style="width:100%;justify-content:center;">Đăng ký học thử</button>
+      </div>
+      <div class="pricing-card pricing-card--featured">
+        <span class="pricing-tag pricing-tag--featured">Phổ biến nhất</span>
+        <div>
+          <div class="pricing-name">Lớp cơ bản</div>
+          <div class="pricing-freq">3 buổi / tuần · 2–6 người</div>
+        </div>
+        <div>
+          <div class="pricing-amount">1.300.000đ</div>
+          <div class="pricing-unit">/ tháng</div>
+        </div>
+        <div class="pricing-desc">Lớp cơ bản dành cho người mới bắt đầu hoặc cần nền tảng chắc từ đầu.</div>
+        <ul class="pricing-features">
+          <li>Lớp nhóm nhỏ 2–6 người</li>
+          <li>Học 3 buổi mỗi tuần</li>
+          <li>Phù hợp người mới bắt đầu</li>
+          <li>Ưu tiên xếp lịch theo yêu cầu</li>
+        </ul>
+        <button class="btn btn-primary" style="width:100%;justify-content:center;">Đăng ký học thử</button>
+      </div>
+      <div class="pricing-card">
+        <span class="pricing-tag pricing-tag--standard">Nâng cao</span>
+        <div>
+          <div class="pricing-name">Lớp nâng cao</div>
+          <div class="pricing-freq">3 buổi / tuần nâng cao</div>
+        </div>
+        <div>
+          <div class="pricing-amount">1.500.000đ</div>
+          <div class="pricing-unit">/ tháng</div>
+        </div>
+        <div class="pricing-desc">Dành cho học viên đã có nền tảng và muốn tập đều để nâng kỹ thuật nhanh hơn.</div>
+        <ul class="pricing-features">
+          <li>Lớp nhóm nhỏ 2–6 người</li>
+          <li>Học 3 buổi mỗi tuần</li>
+          <li>Phù hợp học viên đã có nền tảng</li>
+        </ul>
+        <button class="btn btn-outline" style="width:100%;justify-content:center;">Đăng ký học thử</button>
+      </div>
+      <div class="pricing-card">
+        <span class="pricing-tag pricing-tag--standard">Cá nhân</span>
+        <div>
+          <div class="pricing-name">1 kèm 1</div>
+          <div class="pricing-freq">Linh hoạt lịch cá nhân</div>
+        </div>
+        <div>
+          <div class="pricing-amount">400.000đ</div>
+          <div class="pricing-unit">/ giờ / học viên</div>
+        </div>
+        <div class="pricing-desc">Học viên tự lo sân, phù hợp khi cần lịch riêng và theo sát cá nhân.</div>
+        <ul class="pricing-features">
+          <li>HLV theo sát 100%</li>
+          <li>Lộ trình cá nhân hóa</li>
+          <li>Linh hoạt giờ học</li>
+        </ul>
+        <button class="btn btn-outline" style="width:100%;justify-content:center;">Liên hệ đặt lịch</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COACHES -->
+<section>
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="kicker">Đội ngũ huấn luyện viên</span>
+      <h2 class="section-title">Học từ những <span class="lime">chuyên gia thực thụ</span></h2>
+      <p class="section-desc">Đồng hành cùng bạn từ những buổi đầu làm quen đến giai đoạn nâng trình.</p>
+    </div>
+    <div class="coaches-grid">
+      <div class="coach-card">
+        <div class="coach-photo">
+          <img src="/images/course-basic.webp" alt="HLV cơ bản" style="object-position:center 20%;">
+          <div class="coach-photo-overlay">
+            <div class="coach-name">HLV phụ trách</div>
+            <div class="coach-role">HLV lớp cơ bản</div>
+          </div>
+        </div>
+        <div class="coach-body">
+          <div class="coach-credentials">
+            <span class="coach-cred">HLV cấp quốc gia</span>
+            <span class="coach-cred">8 năm kinh nghiệm</span>
+          </div>
+          <div class="coach-quote">"Kỹ thuật đúng từ đầu sẽ giúp bạn tiến bộ nhanh hơn và tránh chấn thương lâu dài."</div>
+          <div class="coach-stats">
+            <div class="coach-stat"><strong>320+</strong> học viên</div>
+            <div class="coach-stat"><strong>★ 4.9</strong> đánh giá</div>
+          </div>
+        </div>
+      </div>
+      <div class="coach-card">
+        <div class="coach-photo">
+          <img src="/images/course-advanced.webp" alt="HLV nâng cao" style="object-position:center 15%;">
+          <div class="coach-photo-overlay">
+            <div class="coach-name">HLV phụ trách</div>
+            <div class="coach-role">HLV lớp nâng cao &amp; 1:1</div>
+          </div>
+        </div>
+        <div class="coach-body">
+          <div class="coach-credentials">
+            <span class="coach-cred">Cựu VĐV tỉnh</span>
+            <span class="coach-cred">12 năm thi đấu</span>
+          </div>
+          <div class="coach-quote">"Tôi tin rằng mỗi học viên đều có tiềm năng riêng — nhiệm vụ của tôi là giúp họ tìm ra và phát triển nó."</div>
+          <div class="coach-stats">
+            <div class="coach-stat"><strong>180+</strong> học viên</div>
+            <div class="coach-stat"><strong>★ 5.0</strong> đánh giá</div>
+          </div>
+        </div>
+      </div>
+      <div class="coach-card">
+        <div class="coach-photo">
+          <img src="/images/biz-team-building.webp" alt="HLV doanh nghiệp">
+          <div class="coach-photo-overlay">
+            <div class="coach-name">HLV phụ trách</div>
+            <div class="coach-role">HLV doanh nghiệp &amp; nhóm lớn</div>
+          </div>
+        </div>
+        <div class="coach-body">
+          <div class="coach-credentials">
+            <span class="coach-cred">Chuyên gia team building</span>
+            <span class="coach-cred">6 năm kinh nghiệm</span>
+          </div>
+          <div class="coach-quote">"Nuôi dưỡng tinh yêu thể thao từ sớm là nền tảng để trẻ phát triển toàn diện."</div>
+          <div class="coach-stats">
+            <div class="coach-stat"><strong>250+</strong> học viên</div>
+            <div class="coach-stat"><strong>★ 4.8</strong> đánh giá</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section class="schedule-section">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="kicker">Lịch tập</span>
+      <h2 class="section-title">Lịch học linh hoạt <span class="lime">7 ngày</span></h2>
+      <p class="section-desc">Nhiều khung giờ sáng, chiều, tối và cuối tuần — chọn giờ phù hợp với lịch của bạn.</p>
+    </div>
+    <table class="schedule-table">
+      <thead>
+        <tr>
+          <th>Ngày</th>
+          <th>Giờ học</th>
+          <th>Khóa học</th>
+          <th>Sân</th>
+          <th>Trình độ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>T2 – T4 – T6</td>
+          <td><span class="schedule-time">06:00 – 08:00</span></td>
+          <td>Người mới bắt đầu</td>
+          <td>Huệ Thiện</td>
+          <td><span class="level-tag level-tag--co-ban">Cơ bản</span></td>
+        </tr>
+        <tr>
+          <td>T2 – T4 – T6</td>
+          <td><span class="schedule-time">20:00 – 22:00</span></td>
+          <td>Người đi làm</td>
+          <td>Phúc Lộc</td>
+          <td><span class="level-tag level-tag--co-ban">Cơ bản</span> <span class="level-tag level-tag--nang-cao" style="margin-left:4px">Nâng cao</span></td>
+        </tr>
+        <tr>
+          <td>T3 – T5</td>
+          <td><span class="schedule-time">19:00 – 21:00</span></td>
+          <td>Người đi làm</td>
+          <td>Green</td>
+          <td><span class="level-tag level-tag--co-ban">Cơ bản</span></td>
+        </tr>
+        <tr>
+          <td>T7 &amp; CN</td>
+          <td><span class="schedule-time">07:00 – 09:00</span></td>
+          <td>Cuối tuần</td>
+          <td>Khang Sport</td>
+          <td><span class="level-tag level-tag--co-ban">Cơ bản</span></td>
+        </tr>
+        <tr>
+          <td>T7 &amp; CN</td>
+          <td><span class="schedule-time">15:00 – 17:00</span></td>
+          <td>Nâng cao &amp; Thi đấu</td>
+          <td>Huệ Thiện</td>
+          <td><span class="level-tag level-tag--nang-cao">Nâng cao</span> <span class="level-tag level-tag--thi-dau" style="margin-left:4px">Thi đấu</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="text-align:center;margin-top:16px;font-size:0.85rem;color:var(--muted);">* Lịch có thể thay đổi. Đăng ký học thử hoặc hỏi lịch học trực tiếp qua form bên dưới.</p>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section>
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="kicker">Cảm nhận học viên</span>
+      <h2 class="section-title">Học viên nói gì về <span class="lime">V2 Badminton?</span></h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-quote">"Lịch học buổi tối rất phù hợp với lịch công việc của tôi. Chỉ sau 2 tháng đã đánh được những cú smash đầu tiên — cảm giác rất tuyệt vời!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">VA</div>
+          <div>
+            <div class="testimonial-name">Văn An</div>
+            <div class="testimonial-meta">Kỹ sư IT · Lớp người đi làm</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-quote">"Thầy Nam dạy rất dễ hiểu và hay chơi cùng tụi mình. Vừa học được kỹ thuật vừa có bạn mới. Mình hay mong tới buổi tiếp theo!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">MK</div>
+          <div>
+            <div class="testimonial-name">Minh Khoa</div>
+            <div class="testimonial-meta">Sinh viên · Lớp cơ bản</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-quote">"Công ty chúng tôi đã tổ chức team building cầu lông với V2. Đội ngũ rất chuyên nghiệp, nhân viên ai cũng thích, sẽ làm lại lần nữa."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">TL</div>
+          <div>
+            <div class="testimonial-name">Thu Lan</div>
+            <div class="testimonial-meta">HR Manager · Team building</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATIONS -->
+<section style="background:#0d0d0d;">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="kicker">4 sân đang hoạt động</span>
+      <h2 class="section-title">Sân tập <span class="lime">gần bạn nhất</span></h2>
+      <p class="section-desc">Phủ sóng Bình Thạnh và Thủ Đức — chọn sân gần nhà hoặc gần công ty.</p>
+    </div>
+    <div class="locations-grid">
+      <div class="location-card">
+        <div class="location-img"><img src="/images/hue-thien.webp" alt="Huệ Thiện"></div>
+        <div class="location-body">
+          <div class="location-area">Bình Thạnh</div>
+          <div class="location-name">Sân Huệ Thiện</div>
+          <div class="location-address">Bình Thạnh, TP.HCM</div>
+          <div class="location-info">
+            <div class="location-info-row"><span class="location-info-icon">🕐</span> T2–CN: 6:00 – 22:00</div>
+            <div class="location-info-row"><span class="location-info-icon">📞</span> 0907 911 886</div>
+          </div>
+          <button class="btn btn-outline" style="width:100%;justify-content:center;font-size:0.85rem;padding:0.5rem;">Xem bản đồ →</button>
+        </div>
+      </div>
+      <div class="location-card">
+        <div class="location-img"><img src="/images/phuc-loc.webp" alt="Phúc Lộc"></div>
+        <div class="location-body">
+          <div class="location-area">Bình Thạnh</div>
+          <div class="location-name">Sân Phúc Lộc</div>
+          <div class="location-address">Bình Thạnh, TP.HCM</div>
+          <div class="location-info">
+            <div class="location-info-row"><span class="location-info-icon">🕐</span> T2–CN: 6:00 – 22:00</div>
+            <div class="location-info-row"><span class="location-info-icon">📞</span> 0907 911 886</div>
+          </div>
+          <button class="btn btn-outline" style="width:100%;justify-content:center;font-size:0.85rem;padding:0.5rem;">Xem bản đồ →</button>
+        </div>
+      </div>
+      <div class="location-card">
+        <div class="location-img"><img src="/images/green.webp" alt="Green"></div>
+        <div class="location-body">
+          <div class="location-area">Thủ Đức</div>
+          <div class="location-name">Sân Green</div>
+          <div class="location-address">Thủ Đức, TP.HCM</div>
+          <div class="location-info">
+            <div class="location-info-row"><span class="location-info-icon">🕐</span> T2–CN: 6:00 – 22:00</div>
+            <div class="location-info-row"><span class="location-info-icon">📞</span> 0907 911 886</div>
+          </div>
+          <button class="btn btn-outline" style="width:100%;justify-content:center;font-size:0.85rem;padding:0.5rem;">Xem bản đồ →</button>
+        </div>
+      </div>
+      <div class="location-card">
+        <div class="location-img"><img src="/images/khang-sport.webp" alt="Khang Sport"></div>
+        <div class="location-body">
+          <div class="location-area">Thủ Đức</div>
+          <div class="location-name">Sân Khang Sport</div>
+          <div class="location-address">Thủ Đức, TP.HCM</div>
+          <div class="location-info">
+            <div class="location-info-row"><span class="location-info-icon">🕐</span> T3–CN: 7:00 – 21:00</div>
+            <div class="location-info-row"><span class="location-info-icon">📞</span> 0907 911 886</div>
+          </div>
+          <button class="btn btn-outline" style="width:100%;justify-content:center;font-size:0.85rem;padding:0.5rem;">Xem bản đồ →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="kicker">Đăng ký &amp; Tư vấn</span>
+      <h2 class="section-title">Liên hệ <span class="lime">ngay hôm nay</span></h2>
+      <p class="section-desc">Đăng ký học thử hoặc liên hệ trực tiếp. V2 sẽ phản hồi trong vòng 30 phút.</p>
+    </div>
+    <div class="contact-grid">
+      <div>
+        <p style="color:var(--muted);font-size:0.9rem;margin-bottom:20px;">Liên hệ trực tiếp qua:</p>
+        <div class="contact-channels">
+          <div class="contact-channel">
+            <div class="contact-channel-icon">💬</div>
+            <div>
+              <div class="contact-channel-label">Zalo</div>
+              <div class="contact-channel-value">0907 911 886</div>
+            </div>
+          </div>
+          <div class="contact-channel">
+            <div class="contact-channel-icon">📞</div>
+            <div>
+              <div class="contact-channel-label">Gọi điện</div>
+              <div class="contact-channel-value">0907 911 886</div>
+            </div>
+          </div>
+          <div class="contact-channel">
+            <div class="contact-channel-icon">💙</div>
+            <div>
+              <div class="contact-channel-label">Facebook Messenger</div>
+              <div class="contact-channel-value">V2 Badminton Academy</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form-box">
+        <p class="kicker" style="margin-bottom:16px;">Đăng ký nhanh</p>
+        <h3 style="color:var(--white);font-size:1.2rem;font-weight:800;margin-bottom:16px;">Đăng ký học thử</h3>
+        <label class="form-label">Họ tên *</label>
+        <input class="form-input" type="text" placeholder="Nhập họ tên">
+        <label class="form-label">Số điện thoại *</label>
+        <input class="form-input" type="tel" placeholder="0907 911 886">
+        <button class="btn btn-primary form-submit">Đăng ký học thử miễn phí →</button>
+        <p style="font-size:0.78rem;color:var(--muted);margin-top:10px;text-align:center;">Phản hồi trong vòng 30 phút trong giờ làm việc</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">V2 <span>BADMINTON</span></div>
+        <p class="footer-brand-desc">Học viện cầu lông chuyên nghiệp tại TP.HCM — Bình Thạnh &amp; Thủ Đức. Đào tạo từ cơ bản đến nâng cao cho mọi lứa tuổi.</p>
+        <div class="footer-social">
+          <a class="footer-social-btn" href="#">f</a>
+          <a class="footer-social-btn" href="#">▶</a>
+          <a class="footer-social-btn" href="#">Z</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Khóa học</div>
+        <ul class="footer-links">
+          <li><a href="#">Người mới bắt đầu</a></li>
+          <li><a href="#">Lớp nâng cao</a></li>
+          <li><a href="#">Học 1 kèm 1</a></li>
+          <li><a href="#">Cuối tuần</a></li>
+          <li><a href="#">Doanh nghiệp</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Học viên</div>
+        <ul class="footer-links">
+          <li><a href="#">Lịch tập</a></li>
+          <li><a href="#">Địa điểm sân</a></li>
+          <li><a href="#">Đội ngũ HLV</a></li>
+          <li><a href="#">Blog &amp; Tin tức</a></li>
+          <li><a href="#">Đăng ký học thử</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Liên hệ</div>
+        <ul class="footer-links">
+          <li><a href="#">📍 Bình Thạnh, TP.HCM</a></li>
+          <li><a href="#">📍 Thủ Đức, TP.HCM</a></li>
+          <li><a href="#">📞 0907 911 886</a></li>
+          <li><a href="#">T2–CN: 6:00 – 22:00</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 V2 Badminton Academy. Bảo lưu mọi quyền.</span>
+      <div class="footer-legal">
+        <a href="#">Chính sách bảo mật</a>
+        <a href="#">Điều khoản dịch vụ</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING CTA -->
+<div class="floating-cta">
+  <a class="floating-btn" href="#" title="Zalo">💬</a>
+  <a class="floating-btn" href="#" title="Gọi điện">📞</a>
+</div>
+
+</body>
+</html>
