@@ -91,7 +91,7 @@ function PricingStrip({ tiers }: { tiers: readonly SanityPricingTier[] }) {
     <div className="pricing-strip" id="hoc-phi">
       <div className="pricing-strip__header">
         <p className="pricing-strip__eyebrow">Chi tiết học phí</p>
-        <h3 className="pricing-strip__title">So sánh nhanh các mức học phí hiện tại</h3>
+        <h3 className="pricing-strip__title">Mức học phí hiện tại</h3>
       </div>
       <div className="pricing-strip__grid">
         {groupTiers.map((tier) => (
@@ -123,12 +123,10 @@ function EnterpriseTeaser({ onRequestQuote }: { onRequestQuote: () => void }) {
       <div className="enterprise-teaser__copy">
         <span className="enterprise-teaser__badge">Doanh nghiệp</span>
         <div className="enterprise-teaser__headline">
-          <h3 className="enterprise-teaser__title">
-            Team building, lớp nội bộ và chương trình cầu lông theo ngân sách
-          </h3>
+          <h3 className="enterprise-teaser__title">Giải pháp cầu lông cho doanh nghiệp</h3>
           <p className="enterprise-teaser__desc">
-            Giữ phần B2B ở dạng compact trên homepage, còn chi tiết đầy đủ vẫn đi về money page
-            doanh nghiệp hoặc form báo giá.
+            Team building, lớp nội bộ hoặc hoạt động sức khỏe định kỳ. V2 sẽ tư vấn trực tiếp theo
+            quy mô, lịch và ngân sách của đội ngũ bạn.
           </p>
         </div>
       </div>
@@ -149,21 +147,6 @@ function EnterpriseTeaser({ onRequestQuote }: { onRequestQuote: () => void }) {
         >
           Nhận báo giá
         </button>
-        <a
-          href="/cau-long-doanh-nghiep/"
-          className="enterprise-teaser__link"
-          onClick={() =>
-            trackEvent("cta_click", {
-              cta_name: "xem_khoa_hoc",
-              cta_location: "enterprise_teaser",
-              page_type: "homepage",
-              page_path: "/",
-            })
-          }
-        >
-          Xem chi tiết
-          <ArrowRightIcon className="enterprise-teaser__link-icon" />
-        </a>
       </div>
     </div>
   );
@@ -181,9 +164,9 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
       title: "Thiếu nhi nền tảng",
       subtitle: "7-12 tuổi · Nhóm nhỏ theo sát",
       description:
-        "Xây tư thế, di chuyển, cảm giác vợt và phản xạ đầu tiên theo nhịp dễ theo cho phụ huynh lẫn học viên mới.",
+        "Xây tư thế, di chuyển và phản xạ đầu tiên theo nhịp dễ theo cho cả phụ huynh lẫn học viên mới.",
       price: groupPrice,
-      meta: "2-3 buổi/tuần · Bình Thạnh & Thủ Đức",
+      meta: "Nhóm nhỏ · Bình Thạnh & Thủ Đức",
       href: "/lop-cau-long-tre-em/",
       imageSrc: "/images/course-basic.webp",
       imageAlt: "Hướng dẫn học viên nhỏ tuổi tập cầu lông với huấn luyện viên",
@@ -195,9 +178,9 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
       title: "Người lớn bắt đầu từ đầu",
       subtitle: "Lộ trình cầm vợt tới di chuyển",
       description:
-        "Dành cho người muốn học bài bản ngay từ buổi đầu, sửa lỗi sớm và vào nhịp tập ổn định thay vì tự mò kéo dài.",
+        "Dành cho người muốn học bài bản ngay từ buổi đầu, sửa lỗi sớm và vào nhịp tập ổn định.",
       price: groupPrice,
-      meta: "Nhóm 4-6 người · Có lớp tối và cuối tuần",
+      meta: "4-6 người · Có lớp tối & cuối tuần",
       href: "/hoc-cau-long-cho-nguoi-moi/",
       imageSrc: "/images/course-advanced.webp",
       imageAlt: "Nhóm học viên người lớn đang tập cầu lông cùng huấn luyện viên",
@@ -209,9 +192,9 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
       title: "Lớp tối và cuối tuần",
       subtitle: "Giữ nhịp tập đều dù lịch bận",
       description:
-        "Phù hợp người đi làm cần lịch ổn định sau giờ hành chính, gần sân, ít phải thay đổi nhịp sinh hoạt hằng tuần.",
+        "Phù hợp người đi làm cần lịch ổn định sau giờ hành chính và sân tập gần để giữ nhịp đều hằng tuần.",
       price: groupPrice,
-      meta: "Ca tối 18:00-21:00 · Ưu tiên sân gần bạn",
+      meta: "Ca tối 18:00-21:00 · Ưu tiên sân gần",
       href: "/lop-cau-long-cho-nguoi-di-lam/",
       imageSrc: "/images/green.webp",
       imageAlt: "Học viên tham gia lớp cầu lông buổi tối tại sân trong nhà",
@@ -223,9 +206,9 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
       title: "Lộ trình cá nhân hóa",
       subtitle: "Tăng tốc kỹ thuật theo mục tiêu riêng",
       description:
-        "Khi bạn cần HLV theo sát, chỉnh lỗi trực tiếp theo trình độ hiện tại và linh hoạt theo lịch công việc riêng.",
+        "Khi bạn cần HLV theo sát và chỉnh trực tiếp theo trình độ hiện tại cùng lịch cá nhân riêng.",
       price: privatePrice,
-      meta: "Linh hoạt khung giờ · Tiến độ cá nhân",
+      meta: "Linh hoạt giờ · Theo mục tiêu riêng",
       href: "/hoc-cau-long-1-kem-1/",
       imageSrc: "/images/course-enterprise.webp",
       imageAlt: "Hướng dẫn học viên trong buổi học 1 kèm 1",
@@ -239,8 +222,8 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
         <p className="section__eyebrow">Chương trình & học phí</p>
         <h2 className="section__title">Chọn lộ trình phù hợp ngay từ buổi đầu</h2>
         <p className="section__desc">
-          V2 giữ cách chọn theo &quot;bạn là ai&quot; để dễ matching, rồi đặt bảng học phí chi tiết ngay bên
-          dưới để bạn biết nhanh mức phù hợp trước khi để lại thông tin.
+          Chọn theo nhu cầu trước, rồi xem mức học phí ngay bên dưới để biết lựa chọn nào hợp với
+          lịch và ngân sách của bạn.
         </p>
       </div>
 
