@@ -5,7 +5,7 @@
  *   - src/lib/validation/lead.ts
  *   - src/lib/leadPipeline.ts
  *   - src/lib/db/types.ts
- *   - src/components/home/legacyScheduleCompatibility.ts
+ *   - src/components/home/compat/legacyScheduleCompatibility.ts
  *   - src/components/home/HomepageConversionProvider.tsx
  * courtLocations/courtLocationMap data also used in queries.ts for fallback.
  * Full deprecation blocked until lead pipeline migrates to Sanity-native location IDs (Sprint 4+).

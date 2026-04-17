@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { HomepageBusinessModeInitializer } from "@/components/home/conversion/HomepageBusinessModeInitializer";
 import { HomepageConversionProvider } from "@/components/home/conversion/HomepageConversionProvider";
 import { HomepageScrollCoordinator } from "@/components/home/conversion/HomepageScrollCoordinator";
+import { assertLegacyScheduleCompatibility } from "@/components/home/compat/legacyScheduleCompatibility";
 import { ContactForm } from "@/components/home/forms/ContactForm";
 import { ContactFormErrorBoundary } from "@/components/home/forms/ContactFormErrorBoundary";
 import { CoachSection } from "@/components/home/sections/CoachSection";
@@ -75,6 +76,8 @@ export default async function Home() {
   const homepageTestimonials = toHomepageTestimonials(
     testimonials.length > 0 ? testimonials : HOMEPAGE_TESTIMONIAL_FALLBACKS,
   );
+
+  assertLegacyScheduleCompatibility(homepageLocations, homepageScheduleBlocks);
 
   return (
     <>

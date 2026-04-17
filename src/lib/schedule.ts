@@ -4,8 +4,8 @@
  *   - src/lib/validation/lead.ts
  *   - src/lib/leadPipeline.ts
  *   - src/lib/db/types.ts
- *   - src/components/home/legacyScheduleCompatibility.ts
- *   - src/components/home/ContactForm.tsx
+ *   - src/components/home/compat/legacyScheduleCompatibility.ts
+ *   - src/components/home/forms/ContactForm.tsx
  * scheduleItems data also used in queries.ts for fallback.
  * Full deprecation blocked until lead pipeline migrates to Sanity-native IDs (Sprint 4+).
  */

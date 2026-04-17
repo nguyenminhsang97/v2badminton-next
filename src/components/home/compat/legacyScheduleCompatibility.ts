@@ -36,6 +36,16 @@ const VALID_TIME_SLOT_IDS = new Set<TimeSlotId>([
   "toi-20-22",
 ]);
 
+export type LegacyScheduleCompatibilityIssue = {
+  kind: "unmapped_location" | "invalid_time_slot";
+  source: "location" | "schedule";
+  id: string;
+  label: string;
+  value: string;
+};
+
+let lastReportedIssueKey: string | null = null;
+
 function normalizeLocationKey(value: string): string {
   return value
     .normalize("NFD")
@@ -109,4 +119,97 @@ export function buildLegacyTimeSlotOptions(
     value,
     label,
   }));
+}
+
+export function collectLegacyScheduleCompatibilityIssues(
+  locations: HomepageLocation[],
+  scheduleBlocks: HomepageScheduleBlock[],
+): LegacyScheduleCompatibilityIssue[] {
+  const issues: LegacyScheduleCompatibilityIssue[] = [];
+
+  for (const location of locations) {
+    if (resolveLegacyCourtId(location) !== null) {
+      continue;
+    }
+
+    issues.push({
+      kind: "unmapped_location",
+      source: "location",
+      id: location.id,
+      label: location.name,
+      value: location.shortName || location.name,
+    });
+  }
+
+  for (const scheduleBlock of scheduleBlocks) {
+    if (resolveLegacyCourtId(scheduleBlock) === null) {
+      issues.push({
+        kind: "unmapped_location",
+        source: "schedule",
+        id: scheduleBlock.id,
+        label: scheduleBlock.locationName,
+        value: scheduleBlock.locationShortName || scheduleBlock.locationName,
+      });
+    }
+
+    if (!isLegacyTimeSlotId(scheduleBlock.timeSlotId)) {
+      issues.push({
+        kind: "invalid_time_slot",
+        source: "schedule",
+        id: scheduleBlock.id,
+        label: scheduleBlock.locationName,
+        value: scheduleBlock.timeSlotId,
+      });
+    }
+  }
+
+  return issues;
+}
+
+function formatCompatibilityIssue(
+  issue: LegacyScheduleCompatibilityIssue,
+): string {
+  if (issue.kind === "invalid_time_slot") {
+    return `- [schedule] ${issue.label} (${issue.id}) has unsupported timeSlotId "${issue.value}"`;
+  }
+
+  return `- [${issue.source}] ${issue.label} (${issue.id}) could not be mapped to a legacy CourtId from "${issue.value}"`;
+}
+
+export function assertLegacyScheduleCompatibility(
+  locations: HomepageLocation[],
+  scheduleBlocks: HomepageScheduleBlock[],
+) {
+  const issues = collectLegacyScheduleCompatibilityIssues(
+    locations,
+    scheduleBlocks,
+  );
+
+  if (issues.length === 0) {
+    return;
+  }
+
+  const message = [
+    "[legacy-schedule] Found unmapped schedule compatibility data.",
+    "Migrate the affected locations/schedule blocks before removing the legacy bridge.",
+    ...issues.map(formatCompatibilityIssue),
+  ].join("\n");
+
+  if (
+    process.env.CI === "true" ||
+    process.env.NEXT_STRICT_SCHEDULE_COMPAT === "true"
+  ) {
+    throw new Error(message);
+  }
+
+  const issueKey = issues
+    .map((issue) => `${issue.kind}:${issue.source}:${issue.id}:${issue.value}`)
+    .join("|");
+
+  if (lastReportedIssueKey === issueKey) {
+    return;
+  }
+
+  lastReportedIssueKey = issueKey;
+  console.warn(message);
 }
