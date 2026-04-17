@@ -30,6 +30,7 @@ export type HomepageScheduleSectionProps = {
 
 export type HomepageLocationsSectionProps = {
   locations: SanityLocation[];
+  siteSettings: SanitySiteSettings | null;
 };
 
 export type HomepageContactSectionProps = {

@@ -1,7 +1,14 @@
 import { LocationsGrid } from "@/components/blocks/LocationsGrid";
+import { resolveHomeContactSettings } from "./contactSettings";
+import { QuickContactCard } from "./QuickContactCard";
 import type { HomepageLocationsSectionProps } from "./sectionProps";
 
-export function LocationsSection({ locations }: HomepageLocationsSectionProps) {
+export function LocationsSection({
+  locations,
+  siteSettings,
+}: HomepageLocationsSectionProps) {
+  const contactSettings = resolveHomeContactSettings(siteSettings);
+
   return (
     <section className="section locations-section" id="dia-diem">
       <div className="section__header">
@@ -11,7 +18,11 @@ export function LocationsSection({ locations }: HomepageLocationsSectionProps) {
           Ưu tiên khu vực gần nhà hoặc gần chỗ làm để giữ lịch đều hơn mỗi tuần.
         </p>
       </div>
-      <LocationsGrid locations={locations} showSupportCard={false} />
+
+      <div className="locations-cluster">
+        <LocationsGrid locations={locations} showSupportCard={false} />
+        <QuickContactCard contactSettings={contactSettings} />
+      </div>
     </section>
   );
 }

@@ -81,7 +81,7 @@ export default async function Home() {
           <CoachSection coaches={coaches} />
           <TestimonialsSection testimonials={testimonials} />
           <ScheduleSection scheduleBlocks={scheduleBlocks} />
-          <LocationsSection locations={locations} />
+          <LocationsSection locations={locations} siteSettings={siteSettings} />
           <FaqSection faqs={faqs} />
           <ContactFormErrorBoundary>
             <ContactSection

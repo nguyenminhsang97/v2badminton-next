@@ -479,7 +479,7 @@ export function ContactForm({
         <p className="contact-form-shell__eyebrow">
           {businessMode ? "Chế độ doanh nghiệp" : "Đăng ký nhanh"}
         </p>
-        <h3 className="contact-form-shell__title">{businessHeading}</h3>
+        <h2 className="contact-form-shell__title">{businessHeading}</h2>
         <p className="contact-form-shell__subtitle">
           Điền thông tin cần thiết. Lịch học, sân tập và lời nhắn sẽ được lưu sẵn
           khi bạn chọn từ lịch.
