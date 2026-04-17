@@ -58,14 +58,25 @@ export type SanityCoach = {
   photoAlt: string | null;
   teachingGroup: string;
   approach: string;
+  roleBadge: string | null;
+  credentialTags: string[];
+  quote: string | null;
+  focusLine: string | null;
+  proofLabel: string | null;
+  showStars: boolean;
   order: number;
 };
 
 export type SanityTestimonial = {
   id: string;
   studentName: string;
+  avatarUrl: string | null;
+  avatarAlt: string | null;
   studentGroup: SanityStudentGroup;
+  kicker: string | null;
+  rating: number;
   contextLabel: string | null;
+  shortQuote: string | null;
   content: string;
   order: number;
 };
@@ -450,6 +461,12 @@ const COACHES_QUERY = defineQuery(`
     "photoAlt": coalesce(photoAlt, null),
     teachingGroup,
     approach,
+    "roleBadge": coalesce(roleBadge, null),
+    "credentialTags": coalesce(credentialTags, []),
+    "quote": coalesce(quote, null),
+    "focusLine": coalesce(focusLine, null),
+    "proofLabel": coalesce(proofLabel, null),
+    "showStars": coalesce(showStars, true),
     "order": coalesce(order, 9999)
   }
 `);
@@ -463,8 +480,13 @@ const TESTIMONIALS_QUERY = defineQuery(`
   | order(coalesce(order, 9999) asc, _createdAt asc){
     "id": _id,
     studentName,
+    "avatarUrl": coalesce(avatar.asset->url, null),
+    "avatarAlt": coalesce(avatarAlt, null),
     studentGroup,
+    "kicker": coalesce(kicker, null),
+    "rating": coalesce(rating, 5),
     "contextLabel": coalesce(contextLabel, null),
+    "shortQuote": coalesce(shortQuote, null),
     content,
     "order": coalesce(order, 9999)
   }

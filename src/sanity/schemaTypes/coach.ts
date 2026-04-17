@@ -38,12 +38,57 @@ export const coach = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "roleBadge",
+      title: "Badge vai trò",
+      type: "string",
+      description:
+        'Dòng badge nhỏ trên ảnh. VD: "HLV phụ trách", "Trưởng bộ môn". Để trống nếu không cần hiển thị.',
+    }),
+    defineField({
+      name: "credentialTags",
+      title: "Credential tags",
+      type: "array",
+      description:
+        "Tối đa 3 chip ngắn hiển thị dưới ảnh. VD: HLV cấp quốc gia, 8 năm kinh nghiệm.",
+      of: [{ type: "string" }],
+      validation: (Rule) => Rule.max(3),
+    }),
+    defineField({
       name: "approach",
       title: "Phương pháp giảng dạy",
       type: "text",
       rows: 3,
       description: "1 câu mô tả cách dạy. Hiển thị trên thẻ HLV trang chủ.",
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "quote",
+      title: "Quote hiển thị",
+      type: "text",
+      rows: 3,
+      description:
+        "Câu quote ngắn trong hộp highlight. Nếu để trống, frontend sẽ dùng phương pháp giảng dạy hiện tại.",
+    }),
+    defineField({
+      name: "focusLine",
+      title: "Focus line",
+      type: "string",
+      description:
+        "1 dòng ngắn tóm tắt điểm mạnh của HLV. Hiển thị ở phần footer card nếu có.",
+    }),
+    defineField({
+      name: "proofLabel",
+      title: "Proof label",
+      type: "string",
+      description:
+        'Dòng proof nhỏ cạnh stars. VD: "320+ học viên", "8 năm kinh nghiệm". Để trống nếu không cần.',
+    }),
+    defineField({
+      name: "showStars",
+      title: "Hiện stars?",
+      type: "boolean",
+      initialValue: true,
+      description: "Bật để hiển thị dải sao ở footer card.",
     }),
     defineField({
       name: "order",

@@ -1,9 +1,16 @@
+import Image from "next/image";
 import type { HomepageTestimonialsSectionProps } from "./sectionProps";
 
 const FALLBACK_TESTIMONIALS = [
   {
     id: "fallback-parent",
+    avatarUrl: null,
+    avatarAlt: null,
     studentGroup: "tre_em" as const,
+    kicker: "Phụ huynh & trẻ em",
+    rating: 5,
+    shortQuote:
+      "Con đi học khá hào hứng, buổi nào cũng có mục tiêu rõ nên phụ huynh nhìn vào thấy yên tâm hơn.",
     content:
       "Con đi học khá hào hứng vì được HLV chỉ rất sát và buổi nào cũng có mục tiêu rõ. Phụ huynh nhìn vào cũng thấy yên tâm hơn hẳn.",
     studentName: "Chị Linh",
@@ -12,7 +19,13 @@ const FALLBACK_TESTIMONIALS = [
   },
   {
     id: "fallback-beginner",
+    avatarUrl: null,
+    avatarAlt: null,
     studentGroup: "nguoi_moi" as const,
+    kicker: "Người mới bắt đầu",
+    rating: 5,
+    shortQuote:
+      "Mình bắt đầu từ con số 0 nhưng vẫn theo kịp lớp nhỏ, sửa lỗi nhanh và thấy tự tin hơn sau vài tuần.",
     content:
       "Mình bắt đầu từ con số 0 nhưng vẫn theo kịp vì lớp nhỏ, sửa lỗi nhanh và lịch học dễ bám theo. Sau vài tuần đã thấy tự tin vào sân hơn.",
     studentName: "Anh Huy",
@@ -21,7 +34,13 @@ const FALLBACK_TESTIMONIALS = [
   },
   {
     id: "fallback-working",
+    avatarUrl: null,
+    avatarAlt: null,
     studentGroup: "nguoi_di_lam" as const,
+    kicker: "Người đi làm",
+    rating: 5,
+    shortQuote:
+      "Lớp buổi tối đúng lịch mong muốn, không khí vừa phải nên mình vẫn theo được đều mà không áp lực.",
     content:
       "Mình cần lớp buổi tối gần công ty và V2 xếp đúng lịch mong muốn. Không khí học rất vừa phải, không áp lực mà vẫn lên trình đều.",
     studentName: "Chị Trâm",
@@ -74,17 +93,37 @@ export function TestimonialsSection({
       <div className="testimonials-grid">
         {visibleTestimonials.map((testimonial) => (
           <blockquote key={testimonial.id} className="testimonial-card">
-            <div className="testimonial-card__stars" aria-hidden="true">
-              ★★★★★
-            </div>
-            <span className="testimonial-card__kicker">
-              {getGroupLabel(testimonial.studentGroup)}
-            </span>
-            <p className="testimonial-card__content">{testimonial.content}</p>
-            <footer className="testimonial-card__footer">
-              <span className="testimonial-card__avatar">
-                {getInitials(testimonial.studentName)}
+            {testimonial.rating > 0 ? (
+              <div className="testimonial-card__stars" aria-hidden="true">
+                {"★".repeat(Math.min(testimonial.rating, 5))}
+              </div>
+            ) : null}
+            {testimonial.kicker ? (
+              <span className="testimonial-card__kicker">{testimonial.kicker}</span>
+            ) : (
+              <span className="testimonial-card__kicker">
+                {getGroupLabel(testimonial.studentGroup)}
               </span>
+            )}
+            <p className="testimonial-card__content">
+              {testimonial.shortQuote ?? testimonial.content}
+            </p>
+            <footer className="testimonial-card__footer">
+              {testimonial.avatarUrl ? (
+                <span className="testimonial-card__avatar testimonial-card__avatar--image">
+                  <Image
+                    src={testimonial.avatarUrl}
+                    alt={testimonial.avatarAlt ?? testimonial.studentName}
+                    fill
+                    className="testimonial-card__avatar-image"
+                    sizes="46px"
+                  />
+                </span>
+              ) : (
+                <span className="testimonial-card__avatar">
+                  {getInitials(testimonial.studentName)}
+                </span>
+              )}
               <span className="testimonial-card__person">
                 <strong className="testimonial-card__name">
                   {testimonial.studentName}

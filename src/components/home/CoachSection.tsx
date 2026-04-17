@@ -8,56 +8,18 @@ const FALLBACK_COACH_IMAGES = [
   "/images/course-enterprise.webp",
 ] as const;
 
-const COACH_CREDENTIALS = [
-  ["Kèm sát buổi đầu", "Nhóm nhỏ 2-6 người", "Phụ huynh dễ theo dõi"],
-  ["Nâng trình thực chiến", "Sửa lỗi theo video", "Lộ trình rõ theo tuần"],
-  ["Lịch linh hoạt", "Cá nhân hóa mục tiêu", "Phù hợp người bận rộn"],
-] as const;
-
-const COACH_SUMMARY = [
-  "Kèm sát từ buổi đầu để sửa nền tảng",
-  "Giữ nhịp sửa lỗi rõ trong từng buổi",
-  "Phù hợp người bận rộn cần lịch đều",
-] as const;
-
-const FALLBACK_COACHES = [
-  {
-    id: "fallback-coach-kids",
-    name: "HLV Minh An",
-    teachingGroup: "Phụ trách lớp trẻ em",
-    approach:
-      "Đi từng bước, giữ buổi học vui nhưng vẫn sửa đúng nền tảng để học viên nhỏ tuổi theo được ngay từ buổi đầu.",
-    photoUrl: null,
-    photoAlt: "Huấn luyện viên V2 đồng hành cùng lớp trẻ em",
-    order: 90,
-  },
-  {
-    id: "fallback-coach-working",
-    name: "HLV Quốc Hưng",
-    teachingGroup: "Phụ trách lớp tối & người đi làm",
-    approach:
-      "Giữ buổi học gọn, rõ lỗi và dễ bám theo để người bận rộn vẫn thấy tiến bộ đều sau mỗi tuần.",
-    photoUrl: null,
-    photoAlt: "Huấn luyện viên V2 đồng hành cùng lớp người đi làm",
-    order: 91,
-  },
-  {
-    id: "fallback-coach-private",
-    name: "HLV Anh Tú",
-    teachingGroup: "Phụ trách 1 kèm 1",
-    approach:
-      "Tập trung vào lỗi hiện tại và mục tiêu cá nhân để rút ngắn thời gian chỉnh kỹ thuật và giữ nhịp luyện tập bền hơn.",
-    photoUrl: null,
-    photoAlt: "Huấn luyện viên V2 đồng hành cùng lớp 1 kèm 1",
-    order: 92,
-  },
-] satisfies HomepageCoachSectionProps["coaches"];
-
 export function CoachSection({ coaches }: HomepageCoachSectionProps) {
-  const resolvedCoaches = [...coaches];
+  const resolvedCoaches = coaches.filter((coach) => {
+    return Boolean(
+      coach.name?.trim() ||
+        coach.teachingGroup?.trim() ||
+        coach.approach?.trim() ||
+        coach.photoUrl,
+    );
+  });
 
-  while (resolvedCoaches.length < 3) {
-    resolvedCoaches.push(FALLBACK_COACHES[resolvedCoaches.length]);
+  if (resolvedCoaches.length === 0) {
+    return null;
   }
 
   return (
@@ -76,10 +38,16 @@ export function CoachSection({ coaches }: HomepageCoachSectionProps) {
           const fallbackImage =
             FALLBACK_COACH_IMAGES[index % FALLBACK_COACH_IMAGES.length];
           const photoSrc = coach.photoUrl ?? fallbackImage;
-          const photoAlt = coach.photoAlt ?? `${coach.name} tại V2 Badminton`;
-          const credentials =
-            COACH_CREDENTIALS[index % COACH_CREDENTIALS.length].slice(0, 2);
-          const summary = COACH_SUMMARY[index % COACH_SUMMARY.length];
+          const displayName = coach.name?.trim() || "HLV V2 Badminton";
+          const displayGroup =
+            coach.teachingGroup?.trim() || "Đồng hành theo từng nhóm học viên";
+          const photoAlt = coach.photoAlt ?? `${displayName} tại V2 Badminton`;
+          const credentials = coach.credentialTags.slice(0, 3);
+          const roleBadge = coach.roleBadge;
+          const quote = coach.quote?.trim() || coach.approach?.trim() || null;
+          const focusLine = coach.focusLine?.trim() || null;
+          const proofLabel = coach.proofLabel ?? null;
+          const showFooter = coach.showStars || proofLabel !== null || focusLine !== null;
 
           return (
             <article key={coach.id} className="coach-card coach-card--figma">
@@ -93,33 +61,48 @@ export function CoachSection({ coaches }: HomepageCoachSectionProps) {
                 />
                 <div className="coach-card__photo-overlay" />
                 <div className="coach-card__photo-copy">
-                  <p className="coach-card__badge">HLV phụ trách</p>
-                  <h3 className="coach-card__name">{coach.name}</h3>
-                  <span className="coach-card__group">{coach.teachingGroup}</span>
+                  {roleBadge ? <p className="coach-card__badge">{roleBadge}</p> : null}
+                  <h3 className="coach-card__name">{displayName}</h3>
+                  <span className="coach-card__group">{displayGroup}</span>
                 </div>
               </div>
 
               <div className="coach-card__body">
-                <div className="coach-card__meta">
-                  {credentials.map((credential) => (
-                    <span key={credential} className="coach-card__credential">
-                      <CheckBadgeIcon className="coach-card__credential-icon" />
-                      {credential}
-                    </span>
-                  ))}
-                </div>
-
-                <p className="coach-card__focus">{summary}</p>
-
-                <footer className="coach-card__footer">
-                  <div className="coach-card__stars" aria-label="Đánh giá 5 sao">
-                    <StarIcon className="coach-card__star" />
-                    <StarIcon className="coach-card__star" />
-                    <StarIcon className="coach-card__star" />
-                    <StarIcon className="coach-card__star" />
-                    <StarIcon className="coach-card__star" />
+                {credentials.length > 0 ? (
+                  <div className="coach-card__meta">
+                    {credentials.map((credential) => (
+                      <span key={credential} className="coach-card__credential">
+                        <CheckBadgeIcon className="coach-card__credential-icon" />
+                        {credential}
+                      </span>
+                    ))}
                   </div>
-                </footer>
+                ) : null}
+
+                {quote ? (
+                  <blockquote className="coach-card__quote">
+                    <span className="coach-card__quote-mark" aria-hidden="true">
+                      “
+                    </span>
+                    <span>{quote}</span>
+                  </blockquote>
+                ) : null}
+
+                {showFooter ? (
+                  <footer className="coach-card__footer">
+                    {coach.showStars ? (
+                      <div className="coach-card__stars" aria-label="Đánh giá 5 sao">
+                        <StarIcon className="coach-card__star" />
+                        <StarIcon className="coach-card__star" />
+                        <StarIcon className="coach-card__star" />
+                        <StarIcon className="coach-card__star" />
+                        <StarIcon className="coach-card__star" />
+                      </div>
+                    ) : null}
+                    {focusLine ? <span className="coach-card__focus">{focusLine}</span> : null}
+                    {proofLabel ? <span className="coach-card__proof">{proofLabel}</span> : null}
+                  </footer>
+                ) : null}
               </div>
             </article>
           );

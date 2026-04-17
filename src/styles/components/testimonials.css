@@ -70,6 +70,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
   width: 46px;
   height: 46px;
   border-radius: 999px;
@@ -77,6 +79,10 @@
   color: #d9f99d;
   font-weight: 800;
   border: 1px solid rgba(217, 249, 157, 0.18);
+}
+
+.testimonial-card__avatar-image {
+  object-fit: cover;
 }
 
 .testimonial-card__person {
