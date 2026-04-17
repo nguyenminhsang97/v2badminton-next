@@ -1,12 +1,10 @@
-import { ClockIcon, MapPinIcon } from "@/components/ui/BrandIcons";
+import { MapPinIcon } from "@/components/ui/BrandIcons";
 import type { SanityLocation } from "@/lib/sanity";
 
 export type LocationsGridProps = {
   locations: SanityLocation[];
   showSupportCard?: boolean;
 };
-
-const HOURS_LABEL = "T2-CN · 6:00 - 21:00";
 
 export function LocationsGrid({
   locations,
@@ -28,13 +26,6 @@ export function LocationsGrid({
                 <h3 className="location-card__name">{location.name}</h3>
                 <p className="location-card__district">{location.districtLabel}</p>
                 <p className="location-card__address">{location.addressText}</p>
-              </div>
-
-              <div className="location-card__meta">
-                <span className="location-card__meta-item">
-                  <ClockIcon className="location-card__meta-icon" />
-                  {HOURS_LABEL}
-                </span>
               </div>
             </div>
 

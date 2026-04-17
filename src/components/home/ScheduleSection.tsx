@@ -17,6 +17,7 @@ import {
 import type { HomepageScheduleSectionProps } from "./sectionProps";
 
 const ALL_TAB_ID = "__all__";
+const MAX_VISIBLE_ROWS = 8;
 
 type SelectedCourseIntent = NonNullable<
   ReturnType<typeof useHomepageConversion>["selectedCourseIntent"]
@@ -96,6 +97,7 @@ export function ScheduleSection({
   scheduleBlocks,
 }: HomepageScheduleSectionProps) {
   const [activeTab, setActiveTab] = useState<string>(ALL_TAB_ID);
+  const [expandedViewKey, setExpandedViewKey] = useState<string | null>(null);
   const { setPrefill, selectedCourseIntent } = useHomepageConversion();
   const isIntentFiltering = selectedCourseIntent !== null;
 
@@ -154,6 +156,10 @@ export function ScheduleSection({
           ? `Hiện chưa có lịch ${getScheduleFilterLabel(selectedCourseIntent)} trong dữ liệu hiện tại. Đang hiển thị toàn bộ lịch để bạn tham khảo.`
           : `Sân này chưa có lịch ${getScheduleFilterLabel(selectedCourseIntent)}. Đang hiển thị toàn bộ lịch của sân để bạn tham khảo.`
         : `Đang lọc theo trình độ ${getScheduleFilterLabel(selectedCourseIntent)}.`;
+  const currentViewKey = `${activeTab}:${selectedCourseIntent ?? "all"}`;
+  const isExpanded = expandedViewKey === currentViewKey;
+  const hasOverflowRows = itemsToRender.length > MAX_VISIBLE_ROWS;
+  const visibleItems = isExpanded ? itemsToRender : itemsToRender.slice(0, MAX_VISIBLE_ROWS);
 
   function handleCardClick(scheduleBlock: SanityScheduleBlock) {
     const prefill = buildSchedulePrefill(scheduleBlock);
@@ -171,8 +177,8 @@ export function ScheduleSection({
         <p className="section__eyebrow">Thời khóa biểu</p>
         <h2 className="section__title">LỊCH HỌC</h2>
         <p className="section__desc">
-          Lớp mở hàng tuần tại 4 sân. Buổi học có <strong>Cơ bản + Nâng cao</strong>{" "}
-          nghĩa là cùng giờ đó có lớp cho cả người mới lẫn người đã có nền tảng.
+          Lớp mở hằng tuần tại 4 sân. Dòng <strong>Cơ bản + Nâng cao</strong> nghĩa là cùng khung
+          giờ đó có lớp cho cả người mới lẫn người đã có nền tảng.
         </p>
         {filterMessage ? (
           <p className="section__filter-note" aria-live="polite">
@@ -224,11 +230,12 @@ export function ScheduleSection({
           </span>
         </div>
 
-        {itemsToRender.map((item) => (
+        {visibleItems.map((item) => (
           <button
             key={item.id}
             type="button"
             className="schedule-row"
+            aria-label={`${item.dayGroup}, ${item.timeLabel}, ${getScheduleProgramLabel(item.levels)}, ${item.locationName}. Nhấn để điền form theo lịch này.`}
             onClick={() => handleCardClick(item)}
           >
             <span className="schedule-table__cell schedule-row__days">
@@ -242,9 +249,10 @@ export function ScheduleSection({
             </span>
             <span className="schedule-table__cell schedule-row__location">
               <span className="schedule-row__court">{item.locationShortName}</span>
-              <span className="schedule-row__location-note">
-                Nhấn để điền form theo lịch này
+              <span className="schedule-row__location-note" aria-hidden="true">
+                Điền form nhanh
               </span>
+              <span className="u-sr-only">Nhấn để điền form theo lịch này</span>
             </span>
             <span className="schedule-table__cell schedule-row__levels">
               {item.levels.map((level) => {
@@ -264,9 +272,26 @@ export function ScheduleSection({
         ))}
       </div>
 
+      {hasOverflowRows ? (
+        <div className="schedule-actions">
+          <button
+            type="button"
+            className="schedule-actions__toggle"
+            onClick={() =>
+              setExpandedViewKey((current) =>
+                current === currentViewKey ? null : currentViewKey,
+              )
+            }
+          >
+            {isExpanded
+              ? "Thu gọn lịch học"
+              : `Xem thêm ${itemsToRender.length - MAX_VISIBLE_ROWS} lịch còn lại`}
+          </button>
+        </div>
+      ) : null}
+
       <p className="schedule-note">
-        Đăng ký thử hoặc hỏi lịch học trực tiếp qua form bên dưới, V2 sẽ xếp lịch
-        theo sân gần bạn nhất.
+        Chọn khung giờ trước, rồi dùng form bên dưới để V2 giữ mạch tư vấn theo sân gần bạn nhất.
       </p>
     </section>
   );

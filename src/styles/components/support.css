@@ -41,8 +41,7 @@
   color: var(--s5-primary-strong);
 }
 
-.location-card__icon-svg,
-.location-card__meta-icon {
+.location-card__icon-svg {
   width: 18px;
   height: 18px;
 }
@@ -73,20 +72,6 @@
   margin: 0;
   color: var(--s5-muted);
   line-height: 1.65;
-}
-
-.location-card__meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 16px;
-}
-
-.location-card__meta-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--s5-muted);
-  font-size: 0.9rem;
 }
 
 .location-card__cta {
