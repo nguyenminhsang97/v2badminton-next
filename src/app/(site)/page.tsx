@@ -1,5 +1,4 @@
 import { Suspense } from "react";
-import { BusinessSection } from "@/components/home/BusinessSection";
 import { HomepageBusinessModeInitializer } from "@/components/home/HomepageBusinessModeInitializer";
 import { CoachSection } from "@/components/home/CoachSection";
 import { ContactSection } from "@/components/home/ContactSection";
@@ -9,9 +8,8 @@ import { FaqSection } from "@/components/home/FaqSection";
 import { HeroSection } from "@/components/home/HeroSection";
 import { HomepageConversionProvider } from "@/components/home/HomepageConversionProvider";
 import { LocationsSection } from "@/components/home/LocationsSection";
-import { PricingSection } from "@/components/home/PricingSection";
 import { ScheduleSection } from "@/components/home/ScheduleSection";
-import { SeoLinksBlock } from "@/components/home/SeoLinksBlock";
+import { StatsBar } from "@/components/home/StatsBar";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { WhySection } from "@/components/home/WhySection";
 import { JsonLd } from "@/components/ui/JsonLd";
@@ -75,24 +73,24 @@ export default async function Home() {
         <Suspense fallback={null}>
           <HomepageBusinessModeInitializer />
         </Suspense>
-        <HeroSection campaign={campaign} />
-        <CourseSection />
-        <WhySection />
-        <CoachSection coaches={coaches} />
-        <PricingSection pricingTiers={pricingTiers} />
-        <ScheduleSection scheduleBlocks={scheduleBlocks} />
-        <TestimonialsSection testimonials={testimonials} />
-        <LocationsSection locations={locations} />
-        <FaqSection faqs={faqs} />
-        <ContactFormErrorBoundary>
-          <ContactSection
-            siteSettings={siteSettings}
-            locations={locations}
-            scheduleBlocks={scheduleBlocks}
-          />
-        </ContactFormErrorBoundary>
-        <BusinessSection />
-        <SeoLinksBlock />
+        <div className="home-page">
+          <HeroSection campaign={campaign} />
+          <StatsBar />
+          <CourseSection pricingTiers={pricingTiers} />
+          <WhySection />
+          <CoachSection coaches={coaches} />
+          <TestimonialsSection testimonials={testimonials} />
+          <ScheduleSection scheduleBlocks={scheduleBlocks} />
+          <LocationsSection locations={locations} />
+          <FaqSection faqs={faqs} />
+          <ContactFormErrorBoundary>
+            <ContactSection
+              siteSettings={siteSettings}
+              locations={locations}
+              scheduleBlocks={scheduleBlocks}
+            />
+          </ContactFormErrorBoundary>
+        </div>
       </HomepageConversionProvider>
     </>
   );

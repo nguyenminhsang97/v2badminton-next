@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
+import { getCategoryLabel } from "@/lib/blogUtils";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { canonicalUrl, coreRouteMap, type CoreRoutePath } from "@/lib/routes";
 import { siteConfig } from "@/lib/site";
@@ -143,19 +144,4 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       ) : null}
     </article>
   );
-}
-
-function getCategoryLabel(category: string): string {
-  switch (category) {
-    case "tips":
-      return "Tips";
-    case "how-to":
-      return "Hướng dẫn";
-    case "beginner":
-      return "Người mới";
-    case "campaign":
-      return "Chiến dịch";
-    default:
-      return "Blog";
-  }
 }

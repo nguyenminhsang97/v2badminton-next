@@ -56,7 +56,8 @@ export function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) {
       ? "/?mode=business#lien-he"
       : "/#lien-he";
   const facts = buildMoneyPageFacts(page);
-  const hasHeroImage = Boolean(page.heroImageUrl);
+  const heroImageUrl = page.heroImageUrl ?? null;
+  const hasHeroImage = heroImageUrl !== null;
 
   return (
     <article className="money-page">
@@ -82,10 +83,10 @@ export function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) {
           </div>
         </div>
 
-        {hasHeroImage ? (
+        {heroImageUrl ? (
           <div className="money-page__hero-media">
             <Image
-              src={page.heroImageUrl!}
+              src={heroImageUrl}
               alt={page.h1}
               className="money-page__hero-image"
               width={1120}

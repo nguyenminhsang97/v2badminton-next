@@ -1,0 +1,158 @@
+.coach-section {
+  background: #fff;
+}
+
+.coach-grid--figma {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.coach-card--figma {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+  border-radius: 32px;
+  background: #fff;
+  border: 1px solid rgba(15, 59, 32, 0.08);
+  box-shadow: var(--s5-shadow-soft);
+}
+
+.coach-card__photo-wrap {
+  position: relative;
+  min-height: 320px;
+}
+
+.coach-card__photo {
+  object-fit: cover;
+}
+
+.coach-card__photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(7, 31, 16, 0.06) 0%, rgba(7, 31, 16, 0.82) 100%);
+}
+
+.coach-card__photo-copy {
+  position: absolute;
+  inset-inline: 18px;
+  bottom: 18px;
+  z-index: 1;
+  display: grid;
+  gap: 8px;
+}
+
+.coach-card__photo-copy .coach-card__badge,
+.coach-card__photo-copy .coach-card__name,
+.coach-card__photo-copy .coach-card__group {
+  margin: 0;
+  color: #fff;
+}
+
+.coach-card__badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 30px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.coach-card__name {
+  font-size: 1.42rem;
+  line-height: 1.05;
+}
+
+.coach-card__group {
+  color: rgba(240, 253, 244, 0.86);
+  font-size: 0.94rem;
+}
+
+.coach-card__body {
+  display: grid;
+  gap: 18px;
+  padding: 22px;
+}
+
+.coach-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.coach-card__credential {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: #eef7e8;
+  color: var(--s5-primary);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.coach-card__credential-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.coach-card__quote {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 18px;
+  border-radius: 22px;
+  background: #f8fbf7;
+  color: var(--s5-primary-strong);
+  line-height: 1.75;
+}
+
+.coach-card__quote-mark {
+  color: var(--s5-accent);
+  font-size: 2rem;
+  line-height: 0.8;
+}
+
+.coach-card__footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.coach-card__stars {
+  display: flex;
+  gap: 4px;
+  color: #facc15;
+}
+
+.coach-card__star {
+  width: 16px;
+  height: 16px;
+}
+
+.coach-card__summary {
+  color: var(--s5-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 1279px) {
+  .coach-grid--figma {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .coach-grid--figma {
+    grid-template-columns: 1fr;
+  }
+}

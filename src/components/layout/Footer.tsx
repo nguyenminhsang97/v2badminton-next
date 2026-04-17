@@ -1,4 +1,13 @@
 import Link from "next/link";
+import {
+  CameraIcon,
+  FacebookIcon,
+  FeatherMarkIcon,
+  MapPinIcon,
+  MessageCircleIcon,
+  PhoneIcon,
+  PlayIcon,
+} from "@/components/ui/BrandIcons";
 import type { SiteChromeSettings } from "@/components/layout/siteSettings";
 import { coreRoutes } from "@/lib/routes";
 import { siteConfig } from "@/lib/site";
@@ -7,11 +16,18 @@ type FooterProps = {
   siteSettings: SiteChromeSettings;
 };
 
+const legalLinks = [
+  { href: siteConfig.privacyPolicyPath, label: "Chính sách bảo mật" },
+  { href: "/#lien-he", label: "Điều khoản hỗ trợ" },
+  { href: "/#hoc-phi", label: "Học phí & hoàn phí" },
+] as const;
+
 export function Footer({ siteSettings }: FooterProps) {
   const currentYear = new Date().getFullYear();
   const academyLinks = [
     { href: "/#khoa-hoc", label: "Khóa học" },
     { href: "/#lich-hoc", label: "Lịch học" },
+    { href: "/#dia-diem", label: "Địa điểm" },
     { href: "/#hoi-dap", label: "Hỏi đáp" },
     { href: "/blog/", label: "Blog" },
   ] as const;
@@ -21,6 +37,8 @@ export function Footer({ siteSettings }: FooterProps) {
       "/lop-cau-long-binh-thanh/",
       "/lop-cau-long-thu-duc/",
       "/lop-cau-long-tre-em/",
+      "/lop-cau-long-cho-nguoi-di-lam/",
+      "/cau-long-doanh-nghiep/",
     ].includes(route.path),
   );
 
@@ -28,11 +46,46 @@ export function Footer({ siteSettings }: FooterProps) {
     <footer className="site-footer">
       <div className="site-footer__inner">
         <div className="site-footer__brand">
-          <strong className="site-footer__brand-name">{siteSettings.siteName}</strong>
+          <div className="site-footer__logo">
+            <span className="site-footer__logo-mark">
+              <FeatherMarkIcon className="site-footer__logo-icon" />
+            </span>
+            <div className="site-footer__logo-copy">
+              <strong className="site-footer__brand-name">{siteSettings.siteName}</strong>
+              <span className="site-footer__brand-subtitle">Bình Thạnh · Thủ Đức</span>
+            </div>
+          </div>
           <p className="site-footer__brand-copy">
-            Lộ trình học cầu lông rõ ràng cho người mới, trẻ em, người đi làm và
-            doanh nghiệp tại Bình Thạnh và Thủ Đức.
+            Lộ trình học cầu lông rõ ràng cho người mới, trẻ em, người đi làm và doanh nghiệp tại
+            Bình Thạnh và Thủ Đức.
           </p>
+          <div className="site-footer__socials">
+            <a
+              href={siteSettings.facebookUrl}
+              className="site-footer__social-link"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook V2 Badminton"
+            >
+              <FacebookIcon className="site-footer__social-icon" />
+            </a>
+            <a
+              href={`https://zalo.me/${siteSettings.zaloNumber}`}
+              className="site-footer__social-link"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Zalo V2 Badminton"
+            >
+              <MessageCircleIcon className="site-footer__social-icon" />
+            </a>
+            <a
+              href={`tel:${siteSettings.phoneE164}`}
+              className="site-footer__social-link"
+              aria-label="Hotline V2 Badminton"
+            >
+              <PhoneIcon className="site-footer__social-icon" />
+            </a>
+          </div>
         </div>
 
         <div className="site-footer__columns">
@@ -48,7 +101,7 @@ export function Footer({ siteSettings }: FooterProps) {
           </section>
 
           <section className="site-footer__column">
-            <h3 className="site-footer__heading">V2 Badminton</h3>
+            <h3 className="site-footer__heading">Đi nhanh trong site</h3>
             <div className="site-footer__stack">
               {academyLinks.map((link) => (
                 <Link key={link.href} href={link.href} className="site-footer__link">
@@ -61,46 +114,62 @@ export function Footer({ siteSettings }: FooterProps) {
           <section className="site-footer__column">
             <h3 className="site-footer__heading">Liên hệ</h3>
             <div className="site-footer__stack">
-              <a href={`tel:${siteSettings.phoneE164}`} className="site-footer__link">
-                Hotline: {siteSettings.phoneDisplay}
+              <span className="site-footer__detail">
+                <MapPinIcon className="site-footer__detail-icon" />
+                Bình Thạnh &amp; Thủ Đức, TP.HCM
+              </span>
+              <a href={`tel:${siteSettings.phoneE164}`} className="site-footer__detail">
+                <PhoneIcon className="site-footer__detail-icon" />
+                {siteSettings.phoneDisplay}
               </a>
               <a
                 href={`https://zalo.me/${siteSettings.zaloNumber}`}
-                className="site-footer__link"
+                className="site-footer__detail"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Zalo: {siteSettings.zaloNumber}
+                <MessageCircleIcon className="site-footer__detail-icon" />
+                Zalo {siteSettings.zaloNumber}
               </a>
-              <span className="site-footer__meta-copy">Bình Thạnh &amp; Thủ Đức, TP.HCM</span>
+              <span className="site-footer__detail">
+                <PlayIcon className="site-footer__detail-icon" />
+                Phản hồi trong ngày
+              </span>
             </div>
           </section>
 
           <section className="site-footer__column">
-            <h3 className="site-footer__heading">Kết nối</h3>
+            <h3 className="site-footer__heading">Hỗ trợ nhanh</h3>
             <div className="site-footer__stack">
-              <a
-                href={siteSettings.facebookUrl}
-                className="site-footer__link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Facebook
-              </a>
-              <Link href={siteConfig.privacyPolicyPath} className="site-footer__link">
-                Chính sách bảo mật
+              <Link href="/#lien-he" className="site-footer__link">
+                Đăng ký học thử
               </Link>
+              <Link href="/?business=1#lien-he" className="site-footer__link">
+                Tư vấn doanh nghiệp
+              </Link>
+              <Link href="/blog/" className="site-footer__link">
+                Xem bài viết hướng dẫn
+              </Link>
+              <span className="site-footer__detail">
+                <CameraIcon className="site-footer__detail-icon" />
+                Cập nhật nội dung hằng tuần
+              </span>
             </div>
           </section>
         </div>
 
         <div className="site-footer__meta">
           <span className="site-footer__meta-copy">
-            Thông tin đăng ký được dùng để tư vấn lớp học phù hợp.
+            &copy; {currentYear} {siteSettings.siteName}. Mọi thông tin đăng ký được dùng để tư vấn
+            lớp học phù hợp.
           </span>
-          <span className="site-footer__meta-copy">
-            &copy; {currentYear} {siteSettings.siteName}.
-          </span>
+          <div className="site-footer__legal-links">
+            {legalLinks.map((link) => (
+              <Link key={link.href} href={link.href} className="site-footer__legal-link">
+                {link.label}
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </footer>

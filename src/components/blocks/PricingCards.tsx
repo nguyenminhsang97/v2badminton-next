@@ -63,11 +63,11 @@ function trackPricingCta(
 function getTierBadge(tier: SanityPricingTier): string {
   switch (tier.kind) {
     case "group":
-      return "Phổ biến";
+      return "Được chọn nhiều";
     case "private":
       return "Linh hoạt";
     case "enterprise":
-      return "Theo quy mô";
+      return "Theo nhu cầu";
   }
 }
 
@@ -93,6 +93,17 @@ function getTierTags(tier: SanityPricingTier): readonly string[] {
   }
 }
 
+function getTierAccentClass(tier: SanityPricingTier): string {
+  switch (tier.kind) {
+    case "group":
+      return "pricing-card--group";
+    case "private":
+      return "pricing-card--private";
+    case "enterprise":
+      return "pricing-card--enterprise";
+  }
+}
+
 function PricingFeatureList({ features }: { features: string[] }) {
   return (
     <ul className="pricing-card__features">
@@ -104,6 +115,7 @@ function PricingFeatureList({ features }: { features: string[] }) {
 }
 
 function PricingCardShell({
+  accentClassName,
   badge,
   children,
   cta,
@@ -113,6 +125,7 @@ function PricingCardShell({
   tags,
   tier,
 }: {
+  accentClassName: string;
   badge: string;
   children: React.ReactNode;
   cta: React.ReactNode;
@@ -124,7 +137,7 @@ function PricingCardShell({
 }) {
   return (
     <article
-      className={`pricing-card ${featured ? "pricing-card--featured" : ""}`}
+      className={`pricing-card ${accentClassName} ${featured ? "pricing-card--featured" : ""}`}
     >
       <div className="pricing-card__header">
         <div className="pricing-card__eyebrow">
@@ -149,19 +162,22 @@ function PricingCardShell({
 
 function GroupCard({
   ctaHref,
+  featuredTierId,
   pathname,
   tier,
   trackingLocation,
 }: {
   ctaHref: string;
+  featuredTierId: string | null;
   pathname: string;
   tier: SanityGroupPricingTier;
   trackingLocation: string;
 }) {
   return (
     <PricingCardShell
+      accentClassName={getTierAccentClass(tier)}
       badge={getTierBadge(tier)}
-      featured
+      featured={tier.id === featuredTierId}
       name={tier.name}
       price={tier.displayPrice}
       tags={getTierTags(tier)}
@@ -198,6 +214,7 @@ function PrivateCard({
 }) {
   return (
     <PricingCardShell
+      accentClassName={getTierAccentClass(tier)}
       badge={getTierBadge(tier)}
       name={tier.name}
       price={tier.displayPrice}
@@ -259,6 +276,7 @@ function EnterpriseCard({
 
   return (
     <PricingCardShell
+      accentClassName={getTierAccentClass(tier)}
       badge={getTierBadge(tier)}
       name={tier.name}
       price={tier.displayPrice}
@@ -275,6 +293,7 @@ function EnterpriseCard({
 function PricingCard({
   ctaHref,
   enterpriseCtaHref,
+  featuredTierId,
   onEnterBusinessMode,
   pathname,
   tier,
@@ -282,6 +301,7 @@ function PricingCard({
 }: {
   ctaHref: string;
   enterpriseCtaHref?: string;
+  featuredTierId: string | null;
   onEnterBusinessMode?: () => void;
   pathname: string;
   tier: SanityPricingTier;
@@ -292,6 +312,7 @@ function PricingCard({
       return (
         <GroupCard
           ctaHref={ctaHref}
+          featuredTierId={featuredTierId}
           pathname={pathname}
           tier={tier}
           trackingLocation={trackingLocation}
@@ -328,6 +349,7 @@ export function PricingCards({
   enterpriseCtaHref,
 }: PricingCardsProps) {
   const pathname = normalizePathname(usePathname() ?? "/");
+  const featuredTierId = tiers.find((tier) => tier.kind === "group")?.id ?? null;
 
   return (
     <div className="pricing-grid">
@@ -336,6 +358,7 @@ export function PricingCards({
           key={tier.id}
           ctaHref={ctaHref}
           enterpriseCtaHref={enterpriseCtaHref}
+          featuredTierId={featuredTierId}
           onEnterBusinessMode={onEnterBusinessMode}
           pathname={pathname}
           tier={tier}

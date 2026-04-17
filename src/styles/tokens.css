@@ -1,0 +1,32 @@
+:root {
+  --v2-black: #071f10;
+  --v2-dark: #0f2e18;
+  --v2-charcoal: #173a22;
+  --v2-muted: #5f725f;
+  --v2-light: #edf7eb;
+  --v2-white: #ffffff;
+  --v2-lime: #a3e635;
+  --v2-lime-dim: rgba(163, 230, 53, 0.14);
+  --v2-border: rgba(19, 64, 34, 0.12);
+
+  --s5-bg: #ffffff;
+  --s5-bg-alt: #f0fdf4;
+  --s5-surface: #ffffff;
+  --s5-surface-alt: #f6fbf5;
+  --s5-primary: #166534;
+  --s5-primary-strong: #0f3b20;
+  --s5-primary-soft: #e9f8ec;
+  --s5-text: #163122;
+  --s5-muted: #667765;
+  --s5-accent: #f97316;
+  --s5-accent-hover: #ea580c;
+  --s5-accent-soft: rgba(249, 115, 22, 0.14);
+  --s5-border: rgba(15, 59, 32, 0.1);
+  --s5-shadow: 0 24px 55px rgba(15, 59, 32, 0.12);
+  --s5-shadow-soft: 0 16px 36px rgba(15, 59, 32, 0.08);
+  --s5-shadow-glow: 0 20px 40px rgba(249, 115, 22, 0.22);
+  --s5-radius-xl: 32px;
+  --s5-radius-lg: 24px;
+  --s5-radius-md: 18px;
+  --s5-width: min(1240px, calc(100% - 32px));
+}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { getCategoryLabel } from "@/lib/blogUtils";
 import { canonicalUrl } from "@/lib/routes";
 import { getPublishedPosts, type SanityPostCategory } from "@/lib/sanity";
 
@@ -138,17 +139,4 @@ export default async function BlogListPage({
       )}
     </div>
   );
-}
-
-function getCategoryLabel(category: SanityPostCategory): string {
-  switch (category) {
-    case "tips":
-      return "Tips";
-    case "how-to":
-      return "Hướng dẫn";
-    case "beginner":
-      return "Người mới";
-    case "campaign":
-      return "Chiến dịch";
-  }
 }

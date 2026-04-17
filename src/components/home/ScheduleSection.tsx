@@ -76,11 +76,28 @@ function getScheduleLevelUi(level: SanityScheduleLevel): {
   }
 }
 
+function getScheduleProgramLabel(levels: SanityScheduleLevel[]): string {
+  if (levels.includes("doanh_nghiep")) {
+    return "Doanh nghiệp";
+  }
+
+  if (levels.includes("co_ban") && levels.includes("nang_cao")) {
+    return "Cơ bản + Nâng cao";
+  }
+
+  if (levels.includes("nang_cao")) {
+    return "Nâng cao";
+  }
+
+  return "Cơ bản";
+}
+
 export function ScheduleSection({
   scheduleBlocks,
 }: HomepageScheduleSectionProps) {
   const [activeTab, setActiveTab] = useState<string>(ALL_TAB_ID);
   const { setPrefill, selectedCourseIntent } = useHomepageConversion();
+  const isIntentFiltering = selectedCourseIntent !== null;
 
   const tabs = scheduleBlocks.reduce<
     Array<{
@@ -126,8 +143,17 @@ export function ScheduleSection({
     ? filteredByTab.filter((item) => item.levels.includes(selectedCourseIntent))
     : filteredByTab;
 
-  const itemsToRender = displayItems.length > 0 ? displayItems : filteredByTab;
-  const isFiltered = selectedCourseIntent !== null && displayItems.length > 0;
+  const isFallbackFromIntentFilter =
+    isIntentFiltering && displayItems.length === 0 && filteredByTab.length > 0;
+  const itemsToRender = isFallbackFromIntentFilter ? filteredByTab : displayItems;
+  const filterMessage =
+    selectedCourseIntent === null
+      ? null
+      : isFallbackFromIntentFilter
+        ? activeTab === ALL_TAB_ID
+          ? `Hiện chưa có lịch ${getScheduleFilterLabel(selectedCourseIntent)} trong dữ liệu hiện tại. Đang hiển thị toàn bộ lịch để bạn tham khảo.`
+          : `Sân này chưa có lịch ${getScheduleFilterLabel(selectedCourseIntent)}. Đang hiển thị toàn bộ lịch của sân để bạn tham khảo.`
+        : `Đang lọc theo trình độ ${getScheduleFilterLabel(selectedCourseIntent)}.`;
 
   function handleCardClick(scheduleBlock: SanityScheduleBlock) {
     const prefill = buildSchedulePrefill(scheduleBlock);
@@ -148,11 +174,11 @@ export function ScheduleSection({
           Lớp mở hàng tuần tại 4 sân. Buổi học có <strong>Cơ bản + Nâng cao</strong>{" "}
           nghĩa là cùng giờ đó có lớp cho cả người mới lẫn người đã có nền tảng.
         </p>
-        {isFiltered && selectedCourseIntent !== null && (
-          <p className="section__filter-note">
-            Đang lọc theo trình độ {getScheduleFilterLabel(selectedCourseIntent)}
+        {filterMessage ? (
+          <p className="section__filter-note" aria-live="polite">
+            {filterMessage}
           </p>
-        )}
+        ) : null}
       </div>
 
       <div className="schedule-tabs" role="tablist" aria-label="Lọc theo sân">
@@ -182,13 +208,16 @@ export function ScheduleSection({
       <div className="schedule-table" role="table" aria-label="Lịch học V2 Badminton">
         <div className="schedule-table__head" role="row">
           <span className="schedule-table__cell schedule-table__cell--label" role="columnheader">
-            Buổi học
+            Ngày
           </span>
           <span className="schedule-table__cell schedule-table__cell--label" role="columnheader">
-            Khung giờ
+            Giờ học
           </span>
           <span className="schedule-table__cell schedule-table__cell--label" role="columnheader">
-            Sân tập
+            Khóa học
+          </span>
+          <span className="schedule-table__cell schedule-table__cell--label" role="columnheader">
+            Cơ sở
           </span>
           <span className="schedule-table__cell schedule-table__cell--label" role="columnheader">
             Trình độ
@@ -201,7 +230,6 @@ export function ScheduleSection({
             type="button"
             className="schedule-row"
             onClick={() => handleCardClick(item)}
-            role="row"
           >
             <span className="schedule-table__cell schedule-row__days">
               {item.dayGroup}
@@ -209,6 +237,9 @@ export function ScheduleSection({
             <strong className="schedule-table__cell schedule-row__time">
               {item.timeLabel}
             </strong>
+            <span className="schedule-table__cell schedule-row__program">
+              {getScheduleProgramLabel(item.levels)}
+            </span>
             <span className="schedule-table__cell schedule-row__location">
               <span className="schedule-row__court">{item.locationShortName}</span>
               <span className="schedule-row__location-note">

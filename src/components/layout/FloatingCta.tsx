@@ -9,7 +9,7 @@ type FloatingCtaProps = {
 
 export function FloatingCta({ siteSettings }: FloatingCtaProps) {
   return (
-    <div className="floating-cta" aria-label="Liên hệ nhanh">
+    <nav className="floating-cta" aria-label="Liên hệ nhanh">
       <a
         href={`tel:${siteSettings.phoneE164}`}
         className="floating-cta__button floating-cta__button--phone"
@@ -41,6 +41,6 @@ export function FloatingCta({ siteSettings }: FloatingCtaProps) {
         <span className="floating-cta__label">Tư vấn Zalo</span>
         <strong className="floating-cta__value">Nhắn V2</strong>
       </a>
-    </div>
+    </nav>
   );
 }

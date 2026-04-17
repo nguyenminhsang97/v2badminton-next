@@ -1,0 +1,7 @@
+.site-main > section:first-child {
+  margin-top: 0;
+}
+
+.page-shell__grid > * {
+  min-width: 0;
+}

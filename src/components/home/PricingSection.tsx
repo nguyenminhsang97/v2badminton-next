@@ -43,13 +43,13 @@ export function PricingSection({
     <section className="section" id="hoc-phi">
       <div className="section__header">
         <p className="section__eyebrow">Chi phí theo nhu cầu</p>
-        <h2 className="section__title">HỌC PHÍ</h2>
+        <h2 className="section__title">Chọn gói học phù hợp</h2>
         {sitePriceRange ? (
           <p className="section__subtitle">Từ {sitePriceRange}</p>
         ) : null}
         <p className="section__desc">
           Có đủ lựa chọn từ nhóm nhỏ, kèm riêng đến gói doanh nghiệp. Bạn có thể
-          đi theo form chung để được tư vấn lịch phù hợp trước khi chốt.
+          đi tiếp vào form chung để được tư vấn lịch phù hợp trước khi chốt.
         </p>
       </div>
       <PricingCards
