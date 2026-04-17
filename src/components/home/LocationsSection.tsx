@@ -1,5 +1,5 @@
 import { LocationsGrid } from "@/components/blocks/LocationsGrid";
-import { resolveHomeContactSettings } from "./contactSettings";
+import { resolveSiteChromeSettings } from "@/components/layout/siteSettings";
 import { QuickContactCard } from "./QuickContactCard";
 import type { HomepageLocationsSectionProps } from "./sectionProps";
 
@@ -7,7 +7,7 @@ export function LocationsSection({
   locations,
   siteSettings,
 }: HomepageLocationsSectionProps) {
-  const contactSettings = resolveHomeContactSettings(siteSettings);
+  const contactSettings = resolveSiteChromeSettings(siteSettings);
 
   return (
     <section className="section locations-section" id="dia-diem">

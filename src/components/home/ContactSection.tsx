@@ -1,6 +1,6 @@
 import { ContactForm } from "./ContactForm";
 import { HomepageScrollCoordinator } from "./HomepageScrollCoordinator";
-import { resolveHomeContactSettings } from "./contactSettings";
+import { resolveSiteChromeSettings } from "@/components/layout/siteSettings";
 import type { HomepageContactSectionProps } from "./sectionProps";
 
 export function ContactSection({
@@ -8,7 +8,7 @@ export function ContactSection({
   locations,
   scheduleBlocks,
 }: HomepageContactSectionProps) {
-  const contactSettings = resolveHomeContactSettings(siteSettings);
+  const contactSettings = resolveSiteChromeSettings(siteSettings);
 
   return (
     <section className="section contact-section" id="lien-he">

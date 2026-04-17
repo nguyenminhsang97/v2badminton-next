@@ -30,8 +30,8 @@ import {
   type LeadFieldErrors,
   type LeadFormValues,
 } from "@/lib/validation/lead";
+import type { SiteChromeSettings } from "@/components/layout/siteSettings";
 import { useHomepageConversion } from "./HomepageConversionProvider";
-import type { HomeContactSettings } from "./contactSettings";
 import {
   buildLegacyCourtOptions,
   buildLegacyTimeSlotOptions,
@@ -44,7 +44,7 @@ type FormValues = LeadFormValues & {
 type FormErrors = LeadFieldErrors;
 type SubmitState = "idle" | "submitting" | "success" | "error";
 type ContactFormProps = {
-  contactSettings: HomeContactSettings;
+  contactSettings: SiteChromeSettings;
   locations: SanityLocation[];
   scheduleBlocks: SanityScheduleBlock[];
 };

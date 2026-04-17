@@ -1,11 +1,11 @@
 "use client";
 
 import { PlayIcon, PhoneIcon } from "@/components/ui/BrandIcons";
+import type { SiteChromeSettings } from "@/components/layout/siteSettings";
 import { trackEvent } from "@/lib/tracking";
-import type { HomeContactSettings } from "./contactSettings";
 
 type QuickContactCardProps = {
-  contactSettings: HomeContactSettings;
+  contactSettings: SiteChromeSettings;
 };
 
 export function QuickContactCard({ contactSettings }: QuickContactCardProps) {
