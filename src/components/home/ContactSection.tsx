@@ -17,7 +17,7 @@ const FALLBACK_CONTACT_SETTINGS: HomeContactSettings = {
 
 const CONTACT_PROOF_POINTS = [
   "Phản hồi trong ngày",
-  "Giữ mạch tư vấn theo lịch bạn chọn",
+  "Gợi ý sân & lịch phù hợp",
 ] as const;
 
 export function ContactSection({
@@ -44,8 +44,8 @@ export function ContactSection({
         <p className="section__eyebrow">Đăng ký & tư vấn</p>
         <h2 className="section__title">LIÊN HỆ</h2>
         <p className="section__subtitle">
-          Để lại thông tin một lần để V2 gọi lại đúng lịch, đúng sân và đúng nhu cầu học mà bạn đã
-          chọn ở các phần bên trên.
+          Để lại thông tin một lần để V2 gọi lại đúng lịch, đúng sân và đúng nhu cầu bạn đã chọn ở
+          các phần bên trên.
         </p>
       </div>
 
@@ -60,8 +60,8 @@ export function ContactSection({
           <div className="contact-direct__header">
             <h3 className="contact-direct__title">Nếu cần chốt nhanh hơn</h3>
             <p className="contact-direct__intro">
-              Muốn chốt nhanh sân, lịch học hoặc hỏi riêng về lộ trình phù hợp?
-              Gọi, nhắn Zalo hoặc Facebook đều được.
+              Muốn chốt nhanh sân, lịch học hoặc hỏi riêng về lộ trình? Gọi, nhắn Zalo hoặc
+              Facebook đều được.
             </p>
           </div>
 

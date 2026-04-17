@@ -120,14 +120,14 @@
 
 .faq-item {
   overflow: hidden;
-  border-radius: 22px;
+  border-radius: 20px;
   background: #fff;
   border: 1px solid rgba(15, 59, 32, 0.08);
   box-shadow: var(--s5-shadow-soft);
 }
 
 .faq-item summary {
-  padding: 22px 24px;
+  padding: 20px 22px;
   color: var(--s5-primary-strong);
   font-size: 1rem;
   font-weight: 700;
@@ -141,20 +141,20 @@
 
 .faq-item__answer {
   display: grid;
-  gap: 12px;
-  padding: 0 24px 22px;
+  gap: 10px;
+  padding: 0 22px 20px;
   color: var(--s5-muted);
-  line-height: 1.75;
+  line-height: 1.68;
 }
 
 .contact-section__body {
   display: grid;
-  gap: 24px;
+  gap: 20px;
 }
 
 .contact-form-shell,
 .contact-direct {
-  padding: 28px;
+  padding: 24px;
   border-radius: 28px;
   background: var(--s5-surface);
   border: 1px solid var(--s5-border);
@@ -163,7 +163,7 @@
 
 .contact-form-shell {
   display: grid;
-  gap: 22px;
+  gap: 20px;
 }
 
 .contact-form-shell__header,
@@ -195,7 +195,7 @@
 .contact-direct__intro {
   margin: 0;
   color: var(--s5-muted);
-  line-height: 1.75;
+  line-height: 1.68;
 }
 
 .contact-form__grid,
@@ -317,7 +317,7 @@
 .contact-direct__badges {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
 }
 
 .contact-direct__badge {
@@ -339,8 +339,8 @@
 
 .contact-direct__link {
   display: grid;
-  gap: 4px;
-  padding: 16px 18px;
+  gap: 2px;
+  padding: 14px 16px;
   border-radius: 18px;
   background: var(--s5-surface-alt);
   border: 1px solid rgba(15, 59, 32, 0.08);
@@ -348,7 +348,7 @@
 
 .contact-direct__label {
   color: var(--s5-primary);
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
