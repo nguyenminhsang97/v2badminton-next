@@ -68,8 +68,7 @@ export function TestimonialsSection({
           Điều học viên và phụ huynh thấy <span className="testimonials-section__accent">dễ theo nhất</span>
         </h2>
         <p className="section__desc">
-          Đây là những phản hồi về cảm giác học thực tế: có dễ bám lịch không, có theo kịp buổi
-          đầu không và có thấy tự tin hơn sau vài tuần đầu hay chưa.
+          Những phản hồi thực tế về việc bám lịch, theo kịp buổi đầu và tự tin hơn sau vài tuần.
         </p>
       </div>
       <div className="testimonials-grid">

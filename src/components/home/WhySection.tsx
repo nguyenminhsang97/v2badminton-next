@@ -5,7 +5,7 @@ const DIFFERENTIATORS = [
   {
     title: "Giáo trình rõ bước",
     description:
-      "Từng buổi đều có mục tiêu cụ thể, từ cầm vợt, di chuyển chân tới kiểm soát nhịp đánh.",
+      "Mỗi buổi đều có mục tiêu rõ, từ cầm vợt và di chuyển tới kiểm soát nhịp đánh.",
     icon: CalendarIcon,
   },
   {
@@ -23,7 +23,7 @@ const DIFFERENTIATORS = [
   {
     title: "Khung giờ linh hoạt",
     description:
-      "Sáng, tối, cuối tuần đều có lựa chọn phù hợp với trẻ em, người lớn và lớp cá nhân hóa.",
+      "Sáng, tối và cuối tuần đều có lựa chọn phù hợp với từng nhóm học viên.",
     icon: ArrowRightIcon,
   },
 ] as const;
@@ -56,12 +56,10 @@ export function WhySection() {
 
           <article className="why-section__stat">
             <span className="why-section__stat-value">2-6</span>
-            <strong className="why-section__stat-title">
-              học viên mỗi nhóm để HLV kèm sát và sửa đúng lỗi
-            </strong>
+            <strong className="why-section__stat-title">học viên mỗi nhóm để HLV kèm sát</strong>
             <p className="why-section__stat-copy">
-              Nhịp lớp được giữ vừa phải để người mới, trẻ em và người đi làm vẫn theo kịp,
-              đồng thời HLV còn đủ thời gian quan sát và chỉnh kỹ thuật ngay trên sân.
+              Nhịp lớp được giữ vừa phải để HLV còn đủ thời gian quan sát và chỉnh kỹ thuật ngay
+              trên sân.
             </p>
           </article>
         </div>
@@ -71,8 +69,8 @@ export function WhySection() {
             <p className="section__eyebrow">Vì sao nhiều người chọn V2</p>
             <h2 className="section__title">Nền tảng bài bản nhưng vẫn gần gũi và dễ theo</h2>
             <p className="section__desc">
-              Ở V2, trọng tâm không phải là làm buổi học thật khó. Điều quan trọng là ai cũng hiểu
-              mình đang sửa gì, tập gì và vì sao lại tiến bộ dần theo từng tuần.
+              Điều quan trọng không phải buổi học thật khó, mà là ai cũng hiểu mình đang sửa gì và
+              tiến bộ dần theo từng tuần.
             </p>
           </div>
 

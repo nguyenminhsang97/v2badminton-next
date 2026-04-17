@@ -66,9 +66,8 @@ export function CoachSection({ coaches }: HomepageCoachSectionProps) {
         <p className="section__eyebrow">Ai sẽ đồng hành cùng bạn</p>
         <h2 className="section__title">HLV theo sát từng nhóm trình độ, không dạy kiểu đại trà</h2>
         <p className="section__desc">
-          Mỗi HLV ở V2 giữ một vai trò rõ ràng: người kèm trẻ em, người giữ nhịp cho lớp tối,
-          hoặc người phụ trách lộ trình 1 kèm 1. Cách dạy được chia theo đối tượng chứ không gom
-          tất cả vào một khuôn.
+          Mỗi HLV ở V2 giữ một vai trò rõ ràng: người kèm trẻ em, người giữ nhịp cho lớp tối hoặc
+          người phụ trách lộ trình 1 kèm 1.
         </p>
       </div>
 

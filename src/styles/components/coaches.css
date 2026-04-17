@@ -4,7 +4,7 @@
 
 .coach-grid--figma {
   display: grid;
-  gap: 22px;
+  gap: 20px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
@@ -16,6 +16,12 @@
   background: #fff;
   border: 1px solid rgba(15, 59, 32, 0.08);
   box-shadow: var(--s5-shadow-soft);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.coach-card--figma:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--s5-shadow);
 }
 
 .coach-card__photo-wrap {
@@ -75,26 +81,26 @@
 
 .coach-card__body {
   display: grid;
-  gap: 18px;
-  padding: 22px;
+  gap: 16px;
+  padding: 20px;
 }
 
 .coach-card__meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
 }
 
 .coach-card__credential {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  min-height: 34px;
-  padding: 0 12px;
+  min-height: 32px;
+  padding: 0 11px;
   border-radius: 999px;
   background: #eef7e8;
   color: var(--s5-primary);
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 700;
 }
 
@@ -105,13 +111,14 @@
 
 .coach-card__quote {
   display: grid;
-  gap: 8px;
+  gap: 6px;
   margin: 0;
-  padding: 18px;
+  padding: 16px;
   border-radius: 22px;
   background: #f8fbf7;
   color: var(--s5-primary-strong);
-  line-height: 1.75;
+  line-height: 1.66;
+  border: 1px solid rgba(15, 59, 32, 0.06);
 }
 
 .coach-card__quote-mark {
@@ -123,9 +130,11 @@
 .coach-card__footer {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
   justify-content: space-between;
   align-items: center;
+  padding-top: 2px;
+  border-top: 1px solid rgba(15, 59, 32, 0.08);
 }
 
 .coach-card__stars {
@@ -141,8 +150,8 @@
 
 .coach-card__summary {
   color: var(--s5-muted);
-  font-size: 0.9rem;
-  line-height: 1.6;
+  font-size: 0.88rem;
+  line-height: 1.55;
 }
 
 @media (max-width: 1279px) {
