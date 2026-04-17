@@ -9,7 +9,6 @@ import { coreRoutes } from "@/lib/routes";
 import { trackEvent } from "@/lib/tracking";
 
 const primaryLinks = [
-  { href: "/", label: "Trang chủ" },
   { href: "/#khoa-hoc", label: "Khóa học" },
   { href: "/#hlv", label: "Huấn luyện viên" },
   { href: "/#lich-hoc", label: "Lịch tập" },

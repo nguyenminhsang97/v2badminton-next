@@ -36,7 +36,7 @@
   align-items: center;
   grid-template-columns: minmax(0, 1fr) auto;
   justify-content: stretch;
-  gap: 36px;
+  gap: 28px;
   flex: 1;
 }
 
@@ -88,11 +88,11 @@
 .site-nav__link {
   display: inline-flex;
   align-items: center;
-  min-height: 42px;
-  padding: 0 18px;
+  min-height: 40px;
+  padding: 0 14px;
   border-radius: 12px;
   color: rgba(255, 255, 255, 0.84);
-  font-size: 0.98rem;
+  font-size: 0.95rem;
   font-weight: 600;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
@@ -106,15 +106,15 @@
   display: flex;
   align-items: center;
   justify-self: end;
-  gap: 18px;
+  gap: 14px;
 }
 
 .site-nav__phone {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   color: rgba(255, 255, 255, 0.82);
-  font-size: 0.98rem;
+  font-size: 0.95rem;
   font-weight: 600;
 }
 
@@ -128,12 +128,12 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 48px;
-  padding: 0 24px;
+  min-height: 46px;
+  padding: 0 20px;
   border-radius: 16px;
   background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
   color: #fff;
-  font-size: 0.98rem;
+  font-size: 0.95rem;
   font-weight: 700;
   box-shadow: 0 8px 28px rgba(249, 115, 22, 0.32);
 }
@@ -211,7 +211,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 4px;
   }
 
   .site-nav--mobile {
