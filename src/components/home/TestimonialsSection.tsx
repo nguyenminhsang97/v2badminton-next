@@ -1,4 +1,8 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
+import { StarIcon } from "@/components/ui/BrandIcons";
 import type { HomepageTestimonialsSectionProps } from "./sectionProps";
 
 const FALLBACK_TESTIMONIALS = [
@@ -55,6 +59,8 @@ const FALLBACK_TESTIMONIALS = [
   },
 ] satisfies HomepageTestimonialsSectionProps["testimonials"];
 
+const DEFAULT_VISIBLE_COUNT = 3;
+
 function getGroupLabel(
   group: HomepageTestimonialsSectionProps["testimonials"][number]["studentGroup"],
 ): string {
@@ -82,8 +88,13 @@ function getInitials(name: string): string {
 export function TestimonialsSection({
   testimonials,
 }: HomepageTestimonialsSectionProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
   const visibleTestimonials =
     testimonials.length > 0 ? testimonials : FALLBACK_TESTIMONIALS;
+  const canExpand = visibleTestimonials.length > DEFAULT_VISIBLE_COUNT;
+  const displayedTestimonials = isExpanded
+    ? visibleTestimonials
+    : visibleTestimonials.slice(0, DEFAULT_VISIBLE_COUNT);
 
   return (
     <section className="section testimonials-section" id="hoc-vien-noi-gi">
@@ -94,58 +105,87 @@ export function TestimonialsSection({
           <span className="testimonials-section__accent">dễ theo nhất</span>
         </h2>
         <p className="section__desc">
-          Những phản hồi thực tế về việc bám lịch, theo kịp buổi đầu và tự tin hơn
-          sau vài tuần.
+          Những phản hồi thực tế về việc bám lịch, theo kịp buổi đầu và tự tin hơn sau
+          vài tuần.
         </p>
       </div>
+
       <div className="testimonials-grid">
-        {visibleTestimonials.map((testimonial) => (
-          <blockquote key={testimonial.id} className="testimonial-card">
-            {testimonial.rating > 0 ? (
-              <div className="testimonial-card__stars" aria-hidden="true">
-                {"★".repeat(Math.min(testimonial.rating, 5))}
-              </div>
-            ) : null}
-            {testimonial.kicker ? (
-              <span className="testimonial-card__kicker">{testimonial.kicker}</span>
-            ) : (
-              <span className="testimonial-card__kicker">
-                {getGroupLabel(testimonial.studentGroup)}
-              </span>
-            )}
-            <p className="testimonial-card__content">
-              {testimonial.shortQuote ?? testimonial.content}
-            </p>
-            <footer className="testimonial-card__footer">
-              {testimonial.avatarUrl ? (
-                <span className="testimonial-card__avatar testimonial-card__avatar--image">
-                  <Image
-                    src={testimonial.avatarUrl}
-                    alt={testimonial.avatarAlt ?? testimonial.studentName}
-                    fill
-                    className="testimonial-card__avatar-image"
-                    sizes="46px"
-                  />
-                </span>
-              ) : (
-                <span className="testimonial-card__avatar">
-                  {getInitials(testimonial.studentName)}
-                </span>
-              )}
-              <span className="testimonial-card__person">
-                <strong className="testimonial-card__name">
-                  {testimonial.studentName}
-                </strong>
-                {testimonial.contextLabel ? (
-                  <span className="testimonial-card__context">
-                    {testimonial.contextLabel}
-                  </span>
+        {displayedTestimonials.map((testimonial) => {
+          const kicker = testimonial.kicker || getGroupLabel(testimonial.studentGroup);
+          const quote = testimonial.shortQuote ?? testimonial.content;
+          const rating = Math.max(0, Math.min(testimonial.rating, 5));
+
+          return (
+            <blockquote key={testimonial.id} className="testimonial-card">
+              <div className="testimonial-card__topline">
+                {kicker ? (
+                  <span className="testimonial-card__kicker">{kicker}</span>
                 ) : null}
-              </span>
-            </footer>
-          </blockquote>
-        ))}
+                {rating > 0 ? (
+                  <div className="testimonial-card__stars" aria-label={`Đánh giá ${rating} sao`}>
+                    {Array.from({ length: rating }).map((_, index) => (
+                      <StarIcon
+                        key={`${testimonial.id}-star-${index}`}
+                        className="testimonial-card__star"
+                      />
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+
+              <div className="testimonial-card__quote-box">
+                <span className="testimonial-card__quote-mark" aria-hidden="true">
+                  “
+                </span>
+                <p className="testimonial-card__content">{quote}</p>
+              </div>
+
+              <footer className="testimonial-card__footer">
+                {testimonial.avatarUrl ? (
+                  <span className="testimonial-card__avatar testimonial-card__avatar--image">
+                    <Image
+                      src={testimonial.avatarUrl}
+                      alt={testimonial.avatarAlt ?? testimonial.studentName}
+                      fill
+                      className="testimonial-card__avatar-image"
+                      sizes="46px"
+                    />
+                  </span>
+                ) : (
+                  <span className="testimonial-card__avatar">
+                    {getInitials(testimonial.studentName)}
+                  </span>
+                )}
+                <span className="testimonial-card__person">
+                  <strong className="testimonial-card__name">
+                    {testimonial.studentName}
+                  </strong>
+                  {testimonial.contextLabel ? (
+                    <span className="testimonial-card__context">
+                      {testimonial.contextLabel}
+                    </span>
+                  ) : null}
+                </span>
+              </footer>
+            </blockquote>
+          );
+        })}
       </div>
+
+      {canExpand ? (
+        <div className="testimonials-section__footer">
+          <button
+            type="button"
+            className="testimonials-section__toggle"
+            onClick={() => setIsExpanded((value) => !value)}
+          >
+            {isExpanded
+              ? "Thu gọn phản hồi"
+              : `Xem thêm ${visibleTestimonials.length - DEFAULT_VISIBLE_COUNT} phản hồi`}
+          </button>
+        </div>
+      ) : null}
     </section>
   );
 }
