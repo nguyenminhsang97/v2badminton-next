@@ -26,8 +26,10 @@ export function Footer({ siteSettings }: FooterProps) {
     { href: "/#khoa-hoc", label: "Khóa học" },
     { href: "/#lich-hoc", label: "Lịch học" },
     { href: "/#hoi-dap", label: "Hỏi đáp" },
+    { href: "/huan-luyen-vien/", label: "Đội ngũ HLV" },
     { href: "/blog/", label: "Blog" },
   ] as const;
+
   const featuredRoutes = coreRoutes.filter((route) =>
     [
       "/hoc-cau-long-cho-nguoi-moi/",
@@ -53,8 +55,8 @@ export function Footer({ siteSettings }: FooterProps) {
             </div>
           </div>
           <p className="site-footer__brand-copy">
-            Lộ trình học cầu lông rõ ràng cho người mới, trẻ em, người đi làm và doanh nghiệp tại
-            Bình Thạnh và Thủ Đức.
+            Lộ trình học cầu lông rõ ràng cho người mới, trẻ em, người đi làm và
+            doanh nghiệp tại Bình Thạnh và Thủ Đức.
           </p>
           <div className="site-footer__socials">
             <a
@@ -98,7 +100,18 @@ export function Footer({ siteSettings }: FooterProps) {
           </section>
 
           <section className="site-footer__column">
-            <h3 className="site-footer__heading">Liên hệ</h3>
+            <h3 className="site-footer__heading">Khám phá</h3>
+            <div className="site-footer__stack">
+              {academyLinks.map((link) => (
+                <Link key={link.href} href={link.href} className="site-footer__link">
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </section>
+
+          <section className="site-footer__column">
+            <h3 className="site-footer__heading">Liên hệ nhanh</h3>
             <div className="site-footer__stack">
               <span className="site-footer__detail">
                 <MapPinIcon className="site-footer__detail-icon" />
@@ -119,26 +132,12 @@ export function Footer({ siteSettings }: FooterProps) {
               </a>
             </div>
           </section>
-
-          <section className="site-footer__column">
-            <h3 className="site-footer__heading">Khám phá</h3>
-            <div className="site-footer__stack">
-              {academyLinks.map((link) => (
-                <Link key={link.href} href={link.href} className="site-footer__link">
-                  {link.label}
-                </Link>
-              ))}
-              <Link href="/#hoc-phi" className="site-footer__link">
-                Học phí
-              </Link>
-            </div>
-          </section>
         </div>
 
         <div className="site-footer__meta">
           <span className="site-footer__meta-copy">
-            &copy; {currentYear} {siteSettings.siteName}. Mọi thông tin đăng ký được dùng để tư vấn
-            lớp học phù hợp.
+            &copy; {currentYear} {siteSettings.siteName}. Mọi thông tin đăng ký được dùng để
+            tư vấn lớp học phù hợp.
           </span>
           <div className="site-footer__legal-links">
             {legalLinks.map((link) => (

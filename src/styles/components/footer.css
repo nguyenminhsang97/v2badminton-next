@@ -1,5 +1,5 @@
 .site-footer {
-  margin-top: 44px;
+  margin-top: 36px;
   background: #071f10;
   color: #fff;
 }
@@ -8,13 +8,13 @@
   width: var(--s5-width);
   margin: 0 auto;
   display: grid;
-  gap: 28px;
-  padding: 48px 0 92px;
+  gap: 32px;
+  padding: 52px 0 92px;
 }
 
 .site-footer__brand {
   display: grid;
-  gap: 18px;
+  gap: 20px;
 }
 
 .site-footer__logo {
@@ -40,18 +40,20 @@
 
 .site-footer__logo-copy {
   display: grid;
-  gap: 4px;
+  gap: 5px;
 }
 
 .site-footer__brand-name {
   color: #fff;
-  font-size: 1rem;
+  font-size: 1.04rem;
+  font-weight: 800;
 }
 
 .site-footer__brand-subtitle {
   color: rgba(237, 247, 235, 0.72);
-  font-size: 0.74rem;
-  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
@@ -81,8 +83,12 @@
   justify-content: center;
   width: 44px;
   height: 44px;
-  border-radius: 999px;
+  border-radius: 16px;
   background: rgba(255, 255, 255, 0.08);
+  transition:
+    transform 0.18s ease,
+    background-color 0.18s ease,
+    color 0.18s ease;
 }
 
 .site-footer__social-icon,
@@ -93,12 +99,12 @@
 
 .site-footer__columns {
   display: grid;
-  gap: 22px;
+  gap: 26px;
 }
 
 .site-footer__column {
   display: grid;
-  gap: 14px;
+  gap: 16px;
 }
 
 .site-footer__heading {
@@ -112,30 +118,34 @@
 
 .site-footer__stack {
   display: grid;
-  gap: 8px;
+  gap: 10px;
 }
 
 .site-footer__link {
-  font-size: 0.98rem;
+  font-size: 0.96rem;
+  line-height: 1.5;
 }
 
 .site-footer__link:hover,
 .site-footer__legal-link:hover,
 .site-footer__social-link:hover {
   color: #fff;
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .site-footer__detail {
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  line-height: 1.5;
 }
 
 .site-footer__meta {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding-top: 22px;
+  gap: 12px;
+  padding-top: 24px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -147,7 +157,7 @@
 
 @media (min-width: 960px) {
   .site-footer__columns {
-    grid-template-columns: 1.15fr repeat(2, minmax(0, 0.9fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 

@@ -2,18 +2,19 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { FeatherMarkIcon, PhoneIcon } from "@/components/ui/BrandIcons";
 import type { SiteChromeSettings } from "@/components/layout/siteSettings";
 import { coreRoutes } from "@/lib/routes";
 import { trackEvent } from "@/lib/tracking";
 
 const primaryLinks = [
-  { href: "/#khoa-hoc", label: "Khóa học" },
-  { href: "/#hlv", label: "Huấn luyện viên" },
-  { href: "/#lich-hoc", label: "Lịch tập" },
-  { href: "/blog/", label: "Blog" },
-  { href: "/#lien-he", label: "Liên hệ" },
+  { href: "/", label: "Trang chủ", kind: "route" as const },
+  { href: "/#khoa-hoc", label: "Khóa học", kind: "anchor" as const },
+  { href: "/#hlv", label: "Huấn luyện viên", kind: "anchor" as const },
+  { href: "/#lich-hoc", label: "Lịch tập", kind: "anchor" as const },
+  { href: "/blog/", label: "Blog", kind: "route" as const },
+  { href: "/#lien-he", label: "Liên hệ", kind: "anchor" as const },
 ] as const;
 
 type NavProps = {
@@ -31,6 +32,15 @@ export function Nav({ siteSettings }: NavProps) {
   const pageType = coreRoutes.find(
     (route) => route.path === normalizedPath,
   )?.pageType;
+
+  const navLinks = useMemo(
+    () =>
+      primaryLinks.map((link) => ({
+        ...link,
+        active: isNavLinkActive(link, normalizedPath),
+      })),
+    [normalizedPath],
+  );
 
   useEffect(() => {
     mobileNavRef.current?.removeAttribute("open");
@@ -78,8 +88,12 @@ export function Nav({ siteSettings }: NavProps) {
 
         <div className="site-header__desktop-shell">
           <nav className="site-nav site-nav--desktop" aria-label="Điều hướng chính">
-            {primaryLinks.map((link) => (
-              <Link key={link.href} href={link.href} className="site-nav__link">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`site-nav__link ${link.active ? "site-nav__link--active" : ""}`}
+              >
                 {link.label}
               </Link>
             ))}
@@ -110,11 +124,13 @@ export function Nav({ siteSettings }: NavProps) {
           </summary>
           <div className="site-nav__panel">
             <p className="site-nav__group-title">Menu</p>
-            {primaryLinks.map((link) => (
+            {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="site-nav__mobile-link"
+                className={`site-nav__mobile-link ${
+                  link.active ? "site-nav__mobile-link--active" : ""
+                }`}
                 onClick={closeMobileMenu}
               >
                 {link.label}
@@ -150,4 +166,21 @@ function withTrailingSlash(pathname: string | null): string {
   }
 
   return pathname.endsWith("/") ? pathname : `${pathname}/`;
+}
+
+function isNavLinkActive(
+  link: (typeof primaryLinks)[number],
+  normalizedPath: string,
+): boolean {
+  if (link.kind !== "route") {
+    return false;
+  }
+
+  const resolvedHref = withTrailingSlash(link.href.split("#")[0] || "/");
+
+  if (resolvedHref === "/blog/") {
+    return normalizedPath.startsWith("/blog/");
+  }
+
+  return resolvedHref === normalizedPath;
 }
