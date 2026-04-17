@@ -7,6 +7,8 @@ export const testimonial = defineType({
   type: "document",
   initialValue: {
     isActive: true,
+    featured: false,
+    rating: 5,
   },
   fields: [
     defineField({
@@ -45,14 +47,14 @@ export const testimonial = defineType({
       title: "Kicker hiển thị",
       type: "string",
       description:
-        'Dòng nhỏ phía trên quote. VD: "Phụ huynh & trẻ em". Nếu để trống, frontend sẽ tự suy ra từ nhóm học viên.',
+        'Dòng nhỏ phía trên quote. VD: "Phụ huynh & trẻ em". Để trống nếu muốn frontend tự suy ra.',
     }),
     defineField({
       name: "rating",
       title: "Số sao",
       type: "number",
       initialValue: 5,
-      description: "Từ 1 đến 5 sao. Để trống hoặc 0 để ẩn dải sao.",
+      description: "Từ 0 đến 5. Để 0 nếu muốn ẩn dải sao.",
       validation: (Rule) => Rule.min(0).max(5),
     }),
     defineField({
@@ -60,7 +62,7 @@ export const testimonial = defineType({
       title: "Ghi chú hiển thị",
       type: "string",
       description:
-        "Dòng nhỏ hiển thị dưới tên học viên trên trang chủ. VD: Phụ huynh học viên lớp hè",
+        "Dòng nhỏ hiển thị dưới tên học viên trên homepage. VD: Phụ huynh học viên lớp hè.",
     }),
     defineField({
       name: "shortQuote",
@@ -68,21 +70,40 @@ export const testimonial = defineType({
       type: "text",
       rows: 3,
       description:
-        "Phiên bản ngắn gọn cho homepage. Nếu để trống, frontend sẽ dùng nội dung đánh giá chính.",
+        "Phiên bản ngắn gọn cho homepage. Để trống nếu muốn frontend dùng content.",
     }),
     defineField({
       name: "content",
       title: "Nội dung đánh giá",
       type: "text",
       rows: 5,
-      description: "Trích dẫn ngắn từ học viên hoặc phụ huynh. Hiển thị trên trang chủ.",
+      description:
+        "Trích dẫn đầy đủ từ học viên hoặc phụ huynh. Hiển thị trên website.",
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "featured",
+      title: "Hiển thị trên homepage?",
+      type: "boolean",
+      initialValue: false,
+      description:
+        "Bật để testimonial này được ưu tiên hiển thị trong block homepage.",
+    }),
+    defineField({
+      name: "homepageOrder",
+      title: "Thứ tự trên homepage",
+      type: "number",
+      description:
+        "Số nhỏ hơn hiển thị trước trong block testimonial homepage.",
+      hidden: ({ document }) => !document?.featured,
+      validation: (Rule) => Rule.integer().min(0),
     }),
     defineField({
       name: "order",
       title: "Thứ tự hiển thị",
       type: "number",
-      description: "Số nhỏ hơn hiển thị trước trên trang chủ.",
+      description:
+        "Số nhỏ hơn hiển thị trước trong danh sách đầy đủ và fallback homepage.",
       validation: (Rule) => Rule.integer().min(0),
     }),
     defineField({

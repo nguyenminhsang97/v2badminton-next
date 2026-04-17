@@ -15,6 +15,8 @@ const FALLBACK_TESTIMONIALS = [
       "Con đi học khá hào hứng vì được HLV chỉ rất sát và buổi nào cũng có mục tiêu rõ. Phụ huynh nhìn vào cũng thấy yên tâm hơn hẳn.",
     studentName: "Chị Linh",
     contextLabel: "Phụ huynh học viên thiếu nhi",
+    featured: false,
+    homepageOrder: 90,
     order: 90,
   },
   {
@@ -30,6 +32,8 @@ const FALLBACK_TESTIMONIALS = [
       "Mình bắt đầu từ con số 0 nhưng vẫn theo kịp vì lớp nhỏ, sửa lỗi nhanh và lịch học dễ bám theo. Sau vài tuần đã thấy tự tin vào sân hơn.",
     studentName: "Anh Huy",
     contextLabel: "Học viên người mới",
+    featured: false,
+    homepageOrder: 91,
     order: 91,
   },
   {
@@ -45,6 +49,8 @@ const FALLBACK_TESTIMONIALS = [
       "Mình cần lớp buổi tối gần công ty và V2 xếp đúng lịch mong muốn. Không khí học rất vừa phải, không áp lực mà vẫn lên trình đều.",
     studentName: "Chị Trâm",
     contextLabel: "Học viên lớp tối",
+    featured: false,
+    homepageOrder: 92,
     order: 92,
   },
 ] satisfies HomepageTestimonialsSectionProps["testimonials"];
@@ -84,10 +90,12 @@ export function TestimonialsSection({
       <div className="section__header">
         <p className="section__eyebrow">Cảm nhận sau khi bắt đầu</p>
         <h2 className="section__title">
-          Điều học viên và phụ huynh thấy <span className="testimonials-section__accent">dễ theo nhất</span>
+          Điều học viên và phụ huynh thấy{" "}
+          <span className="testimonials-section__accent">dễ theo nhất</span>
         </h2>
         <p className="section__desc">
-          Những phản hồi thực tế về việc bám lịch, theo kịp buổi đầu và tự tin hơn sau vài tuần.
+          Những phản hồi thực tế về việc bám lịch, theo kịp buổi đầu và tự tin hơn
+          sau vài tuần.
         </p>
       </div>
       <div className="testimonials-grid">

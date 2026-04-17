@@ -2,6 +2,35 @@
   background: #fff;
 }
 
+.coach-section__footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+.coach-section__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  padding: 0 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 59, 32, 0.14);
+  color: var(--s5-primary-strong);
+  font-weight: 800;
+  text-decoration: none;
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.coach-section__link:hover {
+  transform: translateY(-1px);
+  border-color: rgba(15, 59, 32, 0.24);
+  background: rgba(240, 253, 244, 0.84);
+}
+
 .coach-grid--figma {
   display: grid;
   gap: 20px;
@@ -161,6 +190,41 @@
   line-height: 1.5;
 }
 
+.coach-page {
+  background: #fff;
+}
+
+.coach-page__hero {
+  padding-top: clamp(112px, 15vw, 156px);
+}
+
+.coach-page__header {
+  max-width: 780px;
+}
+
+.coach-page__empty {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 28px;
+  border: 1px solid rgba(15, 59, 32, 0.08);
+  border-radius: 28px;
+  background: #f7fbf4;
+  text-align: center;
+  box-shadow: var(--s5-shadow-soft);
+}
+
+.coach-page__empty-title {
+  margin: 0 0 10px;
+  color: var(--s5-primary-strong);
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+}
+
+.coach-page__empty-copy {
+  margin: 0;
+  color: var(--s5-muted);
+  line-height: 1.7;
+}
+
 @media (max-width: 1279px) {
   .coach-grid--figma {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -170,5 +234,9 @@
 @media (max-width: 767px) {
   .coach-grid--figma {
     grid-template-columns: 1fr;
+  }
+
+  .coach-section__footer {
+    margin-top: 22px;
   }
 }

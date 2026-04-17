@@ -64,6 +64,8 @@ export type SanityCoach = {
   focusLine: string | null;
   proofLabel: string | null;
   showStars: boolean;
+  featured: boolean;
+  homepageOrder: number;
   order: number;
 };
 
@@ -78,6 +80,8 @@ export type SanityTestimonial = {
   contextLabel: string | null;
   shortQuote: string | null;
   content: string;
+  featured: boolean;
+  homepageOrder: number;
   order: number;
 };
 
@@ -168,6 +172,8 @@ export type SanityFaq = {
   answerPlainText: string;
   pages: SanityFaqPage[];
   includeInSchema: boolean;
+  featured: boolean;
+  homepageOrder: number;
   order: number;
 };
 
@@ -262,6 +268,8 @@ function mapFallbackFaq(item: FaqItem): SanityFaq {
     answerPlainText: item.answerText,
     pages: [item.page],
     includeInSchema: item.schemaEligible,
+    featured: false,
+    homepageOrder: item.order,
     order: item.order,
   };
 }
@@ -430,6 +438,8 @@ const FAQ_PROJECTION = `{
   "answerPlainText": pt::text(answer),
   "pages": coalesce(pages, []),
   includeInSchema,
+  "featured": coalesce(featured, false),
+  "homepageOrder": coalesce(homepageOrder, 9999),
   "order": coalesce(order, 9999)
 }`;
 
@@ -467,6 +477,8 @@ const COACHES_QUERY = defineQuery(`
     "focusLine": coalesce(focusLine, null),
     "proofLabel": coalesce(proofLabel, null),
     "showStars": coalesce(showStars, true),
+    "featured": coalesce(featured, false),
+    "homepageOrder": coalesce(homepageOrder, 9999),
     "order": coalesce(order, 9999)
   }
 `);
@@ -488,6 +500,8 @@ const TESTIMONIALS_QUERY = defineQuery(`
     "contextLabel": coalesce(contextLabel, null),
     "shortQuote": coalesce(shortQuote, null),
     content,
+    "featured": coalesce(featured, false),
+    "homepageOrder": coalesce(homepageOrder, 9999),
     "order": coalesce(order, 9999)
   }
 `);
@@ -676,6 +690,22 @@ export const getCoaches = cache(async (): Promise<SanityCoach[]> => {
   return coaches ?? [];
 });
 
+export const getHomepageCoaches = cache(async (): Promise<SanityCoach[]> => {
+  const coaches = await getCoaches();
+  const featuredCoaches = coaches
+    .filter((coach) => coach.featured)
+    .sort((left, right) => {
+      const homepageOrderDiff = left.homepageOrder - right.homepageOrder;
+      if (homepageOrderDiff !== 0) {
+        return homepageOrderDiff;
+      }
+
+      return left.order - right.order;
+    });
+
+  return (featuredCoaches.length > 0 ? featuredCoaches : coaches).slice(0, 3);
+});
+
 export const getTestimonials = cache(async (): Promise<SanityTestimonial[]> => {
   const testimonials = await sanityFetchOrFallback<SanityTestimonial[]>({
     query: TESTIMONIALS_QUERY,
@@ -685,6 +715,24 @@ export const getTestimonials = cache(async (): Promise<SanityTestimonial[]> => {
 
   return testimonials ?? [];
 });
+
+export const getHomepageTestimonials = cache(
+  async (): Promise<SanityTestimonial[]> => {
+    const testimonials = await getTestimonials();
+    const featuredTestimonials = testimonials
+      .filter((testimonial) => testimonial.featured)
+      .sort((left, right) => {
+        const homepageOrderDiff = left.homepageOrder - right.homepageOrder;
+        if (homepageOrderDiff !== 0) {
+          return homepageOrderDiff;
+        }
+
+        return left.order - right.order;
+      });
+
+    return (featuredTestimonials.length > 0 ? featuredTestimonials : testimonials).slice(0, 6);
+  },
+);
 
 export const getLocations = cache(async (): Promise<SanityLocation[]> => {
   const locations = await sanityFetchOrFallback<SanityLocation[]>({
@@ -744,6 +792,22 @@ export const getFaqs = cache(
     return getFallbackFaqs(page);
   },
 );
+
+export const getHomepageFaqs = cache(async (): Promise<SanityFaq[]> => {
+  const faqs = await getFaqs("homepage");
+  const featuredFaqs = faqs
+    .filter((faq) => faq.featured)
+    .sort((left, right) => {
+      const homepageOrderDiff = left.homepageOrder - right.homepageOrder;
+      if (homepageOrderDiff !== 0) {
+        return homepageOrderDiff;
+      }
+
+      return left.order - right.order;
+    });
+
+  return (featuredFaqs.length > 0 ? featuredFaqs : faqs).slice(0, 5);
+});
 
 export const getMoneyPage = cache(
   async (slug: string): Promise<SanityMoneyPageLoadResult> => {

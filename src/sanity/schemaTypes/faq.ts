@@ -7,6 +7,7 @@ export const faq = defineType({
   type: "document",
   initialValue: {
     includeInSchema: true,
+    featured: false,
   },
   fields: [
     defineField({
@@ -40,7 +41,9 @@ export const faq = defineType({
                     title: "URL",
                     type: "url",
                     validation: (Rule) =>
-                      Rule.required().uri({ scheme: ["http", "https", "mailto", "tel"] }),
+                      Rule.required().uri({
+                        scheme: ["http", "https", "mailto", "tel"],
+                      }),
                   }),
                 ],
               },
@@ -74,14 +77,32 @@ export const faq = defineType({
       title: "Hiển thị trong Google FAQ?",
       type: "boolean",
       description:
-        "Bật để câu hỏi này xuất hiện trong kết quả tìm kiếm Google dạng FAQ (rich result).",
+        "Bật để câu hỏi này xuất hiện trong kết quả tìm kiếm Google dạng FAQ.",
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "featured",
+      title: "Hiển thị trên homepage?",
+      type: "boolean",
+      initialValue: false,
+      description:
+        "Bật để FAQ này được ưu tiên hiển thị trong block hỏi đáp trang chủ.",
+    }),
+    defineField({
+      name: "homepageOrder",
+      title: "Thứ tự trên homepage",
+      type: "number",
+      description:
+        "Số nhỏ hơn hiển thị trước trong block FAQ trang chủ.",
+      hidden: ({ document }) => !document?.featured,
+      validation: (Rule) => Rule.integer().min(0),
     }),
     defineField({
       name: "order",
       title: "Thứ tự hiển thị",
       type: "number",
-      description: "Số nhỏ hơn hiển thị trước. VD: 1 hiển thị trước 2.",
+      description:
+        "Số nhỏ hơn hiển thị trước trong danh sách đầy đủ và fallback homepage.",
       validation: (Rule) => Rule.integer().min(0),
     }),
   ],

@@ -1,9 +1,9 @@
 import type { MetadataRoute } from "next";
 import { canonicalUrl, coreRoutes } from "@/lib/routes";
-import { getPublishedPosts } from "@/lib/sanity";
+import { getCoaches, getPublishedPosts } from "@/lib/sanity";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const posts = await getPublishedPosts();
+  const [posts, coaches] = await Promise.all([getPublishedPosts(), getCoaches()]);
   const staticRoutes = coreRoutes.map((route) => ({
     url: canonicalUrl(route.path),
     lastModified: "2026-04-10",
@@ -26,5 +26,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   ];
 
-  return [...staticRoutes, ...blogRoutes];
+  const coachRoutes =
+    coaches.length > 0
+      ? [
+          {
+            url: canonicalUrl("/huan-luyen-vien/"),
+            lastModified: "2026-04-17",
+            changeFrequency: "monthly" as const,
+            priority: 0.6,
+          },
+        ]
+      : [];
+
+  return [...staticRoutes, ...blogRoutes, ...coachRoutes];
 }

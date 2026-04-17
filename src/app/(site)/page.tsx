@@ -16,13 +16,13 @@ import { JsonLd } from "@/components/ui/JsonLd";
 import { buildMetadata } from "@/lib/routes";
 import {
   getActiveCampaign,
-  getCoaches,
-  getFaqs,
+  getHomepageCoaches,
+  getHomepageFaqs,
+  getHomepageTestimonials,
   getLocations,
   getPricingTiers,
   getScheduleBlocks,
   getSiteSettings,
-  getTestimonials,
 } from "@/lib/sanity";
 import {
   buildCourseSchemas,
@@ -50,10 +50,10 @@ export default async function Home() {
       getPricingTiers(),
       getScheduleBlocks(),
       getLocations(),
-      getFaqs("homepage"),
+      getHomepageFaqs(),
       getSiteSettings(),
-      getCoaches(),
-      getTestimonials(),
+      getHomepageCoaches(),
+      getHomepageTestimonials(),
     ]);
 
   const courseSchemas = buildCourseSchemas(pricingTiers);
