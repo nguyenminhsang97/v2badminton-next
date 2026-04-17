@@ -1,9 +1,7 @@
 .testimonials-section {
   padding-top: 68px;
   padding-bottom: 68px;
-  border-radius: 40px;
   background: linear-gradient(160deg, #0f2e18 0%, #163b21 52%, #204d2d 100%);
-  box-shadow: 0 26px 60px rgba(7, 31, 16, 0.18);
 }
 
 .testimonials-section .section__eyebrow,
