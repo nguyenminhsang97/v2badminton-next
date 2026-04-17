@@ -172,13 +172,13 @@ export function ScheduleSection({
   }
 
   return (
-    <section className="section" id="lich-hoc">
+    <section className="section schedule-section" id="lich-hoc">
       <div className="section__header">
         <p className="section__eyebrow">Thời khóa biểu</p>
-        <h2 className="section__title">LỊCH HỌC</h2>
+        <h2 className="section__title">Lịch học linh hoạt 7 ngày trong tuần</h2>
         <p className="section__desc">
-          Lớp mở hằng tuần tại 4 sân. Dòng <strong>Cơ bản + Nâng cao</strong> nghĩa là cùng khung
-          giờ đó có lớp cho cả người mới lẫn người đã có nền tảng.
+          Chọn sân trước, xem khung giờ phù hợp rồi nhấn vào từng dòng để V2 điền sẵn
+          form tư vấn cho bạn.
         </p>
         {filterMessage ? (
           <p className="section__filter-note" aria-live="polite">
@@ -290,9 +290,7 @@ export function ScheduleSection({
         </div>
       ) : null}
 
-      <p className="schedule-note">
-        Chọn khung giờ trước, rồi dùng form bên dưới để V2 giữ mạch tư vấn theo sân gần bạn nhất.
-      </p>
+      <p className="schedule-note">Lịch có thể thay đổi nhẹ theo sĩ số từng sân và từng giai đoạn.</p>
     </section>
   );
 }

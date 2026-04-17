@@ -4,26 +4,22 @@ import { ArrowRightIcon, CalendarIcon, MapPinIcon, UsersIcon } from "@/component
 const DIFFERENTIATORS = [
   {
     title: "Giáo trình rõ bước",
-    description:
-      "Mỗi buổi đều có mục tiêu rõ, từ cầm vợt và di chuyển tới kiểm soát nhịp đánh.",
+    description: "Biết rõ buổi này đang sửa gì, buổi sau cần tiến tiếp ở đâu.",
     icon: CalendarIcon,
   },
   {
     title: "Nhóm nhỏ dễ theo",
-    description:
-      "Lớp 2-6 người hoặc 1 kèm 1 để HLV chỉnh trực tiếp, không bị bỏ quên giữa buổi.",
+    description: "HLV có thời gian quan sát, chỉnh lỗi và giữ nhịp cho từng người.",
     icon: UsersIcon,
   },
   {
     title: "4 sân thuận tiện",
-    description:
-      "Phủ Bình Thạnh và Thủ Đức để phụ huynh hoặc người đi làm dễ giữ lịch đều hằng tuần.",
+    description: "Ưu tiên Bình Thạnh và Thủ Đức để giữ lịch đều dễ hơn mỗi tuần.",
     icon: MapPinIcon,
   },
   {
     title: "Khung giờ linh hoạt",
-    description:
-      "Sáng, tối và cuối tuần đều có lựa chọn phù hợp với từng nhóm học viên.",
+    description: "Sáng, tối và cuối tuần đều có lựa chọn phù hợp cho từng nhóm.",
     icon: ArrowRightIcon,
   },
 ] as const;
@@ -58,19 +54,18 @@ export function WhySection() {
             <span className="why-section__stat-value">2-6</span>
             <strong className="why-section__stat-title">học viên mỗi nhóm để HLV kèm sát</strong>
             <p className="why-section__stat-copy">
-              Nhịp lớp được giữ vừa phải để HLV còn đủ thời gian quan sát và chỉnh kỹ thuật ngay
-              trên sân.
+              Nhịp lớp vừa phải để ai cũng được chỉnh kỹ thuật ngay trên sân.
             </p>
           </article>
         </div>
 
         <div className="why-section__copy">
           <div className="section__header section__header--left">
-            <p className="section__eyebrow">Vì sao nhiều người chọn V2</p>
-            <h2 className="section__title">Nền tảng bài bản nhưng vẫn gần gũi và dễ theo</h2>
+            <p className="section__eyebrow">Tại sao chọn V2</p>
+            <h2 className="section__title">Nền tảng bài bản nhưng vẫn dễ theo</h2>
             <p className="section__desc">
-              Điều quan trọng không phải buổi học thật khó, mà là ai cũng hiểu mình đang sửa gì và
-              tiến bộ dần theo từng tuần.
+              Mục tiêu của V2 là để mỗi buổi học đều rõ ràng, gần gũi và đủ nhịp để
+              bạn tiến bộ đều.
             </p>
           </div>
 

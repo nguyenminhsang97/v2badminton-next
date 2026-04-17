@@ -14,9 +14,9 @@ const FALLBACK_TESTIMONIALS = [
     kicker: "Phụ huynh & trẻ em",
     rating: 5,
     shortQuote:
-      "Con đi học khá hào hứng, buổi nào cũng có mục tiêu rõ nên phụ huynh nhìn vào thấy yên tâm hơn.",
+      "Con đi học hào hứng hơn, buổi nào cũng có mục tiêu rõ nên phụ huynh nhìn vào thấy yên tâm hơn.",
     content:
-      "Con đi học khá hào hứng vì được HLV chỉ rất sát và buổi nào cũng có mục tiêu rõ. Phụ huynh nhìn vào cũng thấy yên tâm hơn hẳn.",
+      "Con đi học hào hứng hơn vì được HLV kèm sát và buổi nào cũng có mục tiêu rõ. Phụ huynh nhìn vào cũng thấy yên tâm hơn hẳn.",
     studentName: "Chị Linh",
     contextLabel: "Phụ huynh học viên thiếu nhi",
     featured: false,
@@ -99,47 +99,38 @@ export function TestimonialsSection({
   return (
     <section className="section testimonials-section" id="hoc-vien-noi-gi">
       <div className="section__header">
-        <p className="section__eyebrow">Cảm nhận sau khi bắt đầu</p>
+        <p className="section__eyebrow">Cảm nhận học viên</p>
         <h2 className="section__title">
-          Điều học viên và phụ huynh thấy{" "}
-          <span className="testimonials-section__accent">dễ theo nhất</span>
+          Học viên nói gì về{" "}
+          <span className="testimonials-section__accent">V2 Badminton?</span>
         </h2>
         <p className="section__desc">
-          Những phản hồi thực tế về việc bám lịch, theo kịp buổi đầu và tự tin hơn sau
-          vài tuần.
+          Phản hồi ngắn gọn từ phụ huynh, người mới và người đi làm sau vài tuần
+          đầu.
         </p>
       </div>
 
       <div className="testimonials-grid">
         {displayedTestimonials.map((testimonial) => {
-          const kicker = testimonial.kicker || getGroupLabel(testimonial.studentGroup);
           const quote = testimonial.shortQuote ?? testimonial.content;
           const rating = Math.max(0, Math.min(testimonial.rating, 5));
+          const context =
+            testimonial.contextLabel || getGroupLabel(testimonial.studentGroup);
 
           return (
             <blockquote key={testimonial.id} className="testimonial-card">
-              <div className="testimonial-card__topline">
-                {kicker ? (
-                  <span className="testimonial-card__kicker">{kicker}</span>
-                ) : null}
-                {rating > 0 ? (
-                  <div className="testimonial-card__stars" aria-label={`Đánh giá ${rating} sao`}>
-                    {Array.from({ length: rating }).map((_, index) => (
-                      <StarIcon
-                        key={`${testimonial.id}-star-${index}`}
-                        className="testimonial-card__star"
-                      />
-                    ))}
-                  </div>
-                ) : null}
-              </div>
+              {rating > 0 ? (
+                <div className="testimonial-card__stars" aria-label={`Đánh giá ${rating} sao`}>
+                  {Array.from({ length: rating }).map((_, index) => (
+                    <StarIcon
+                      key={`${testimonial.id}-star-${index}`}
+                      className="testimonial-card__star"
+                    />
+                  ))}
+                </div>
+              ) : null}
 
-              <div className="testimonial-card__quote-box">
-                <span className="testimonial-card__quote-mark" aria-hidden="true">
-                  “
-                </span>
-                <p className="testimonial-card__content">{quote}</p>
-              </div>
+              <p className="testimonial-card__content">“{quote}”</p>
 
               <footer className="testimonial-card__footer">
                 {testimonial.avatarUrl ? (
@@ -161,10 +152,8 @@ export function TestimonialsSection({
                   <strong className="testimonial-card__name">
                     {testimonial.studentName}
                   </strong>
-                  {testimonial.contextLabel ? (
-                    <span className="testimonial-card__context">
-                      {testimonial.contextLabel}
-                    </span>
+                  {context ? (
+                    <span className="testimonial-card__context">{context}</span>
                   ) : null}
                 </span>
               </footer>
