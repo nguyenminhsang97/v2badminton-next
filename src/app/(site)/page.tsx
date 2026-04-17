@@ -12,6 +12,7 @@ import { ScheduleSection } from "@/components/home/ScheduleSection";
 import { StatsBar } from "@/components/home/StatsBar";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { WhySection } from "@/components/home/WhySection";
+import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { buildMetadata } from "@/lib/routes";
 import {
@@ -22,7 +23,6 @@ import {
   getLocations,
   getPricingTiers,
   getScheduleBlocks,
-  getSiteSettings,
 } from "@/lib/sanity";
 import {
   buildCourseSchemas,
@@ -41,7 +41,7 @@ export default async function Home() {
     scheduleBlocks,
     locations,
     faqs,
-    siteSettings,
+    chromeSettings,
     coaches,
     testimonials,
   ] =
@@ -51,7 +51,7 @@ export default async function Home() {
       getScheduleBlocks(),
       getLocations(),
       getHomepageFaqs(),
-      getSiteSettings(),
+      loadSiteChromeSettings(),
       getHomepageCoaches(),
       getHomepageTestimonials(),
     ]);
@@ -81,11 +81,11 @@ export default async function Home() {
           <CoachSection coaches={coaches} />
           <TestimonialsSection testimonials={testimonials} />
           <ScheduleSection scheduleBlocks={scheduleBlocks} />
-          <LocationsSection locations={locations} siteSettings={siteSettings} />
+          <LocationsSection locations={locations} siteSettings={chromeSettings} />
           <FaqSection faqs={faqs} />
           <ContactFormErrorBoundary>
             <ContactSection
-              siteSettings={siteSettings}
+              siteSettings={chromeSettings}
               locations={locations}
               scheduleBlocks={scheduleBlocks}
             />

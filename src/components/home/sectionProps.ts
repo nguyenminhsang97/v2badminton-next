@@ -1,10 +1,10 @@
+import type { SiteChromeSettings } from "@/components/layout/siteSettings";
 import type {
   SanityActiveCampaign,
   SanityCoach,
   SanityFaq,
   SanityLocation,
   SanityScheduleBlock,
-  SanitySiteSettings,
   SanityTestimonial,
 } from "@/lib/sanity";
 
@@ -30,11 +30,11 @@ export type HomepageScheduleSectionProps = {
 
 export type HomepageLocationsSectionProps = {
   locations: SanityLocation[];
-  siteSettings: SanitySiteSettings | null;
+  siteSettings: SiteChromeSettings;
 };
 
 export type HomepageContactSectionProps = {
-  siteSettings: SanitySiteSettings | null;
+  siteSettings: SiteChromeSettings;
   locations: SanityLocation[];
   scheduleBlocks: SanityScheduleBlock[];
 };

@@ -1,5 +1,4 @@
 import { LocationsGrid } from "@/components/blocks/LocationsGrid";
-import { resolveSiteChromeSettings } from "@/components/layout/siteSettings";
 import { QuickContactCard } from "./QuickContactCard";
 import type { HomepageLocationsSectionProps } from "./sectionProps";
 
@@ -7,8 +6,6 @@ export function LocationsSection({
   locations,
   siteSettings,
 }: HomepageLocationsSectionProps) {
-  const contactSettings = resolveSiteChromeSettings(siteSettings);
-
   return (
     <section className="section locations-section" id="dia-diem">
       <div className="section__header">
@@ -21,7 +18,7 @@ export function LocationsSection({
 
       <div className="locations-cluster">
         <LocationsGrid locations={locations} showSupportCard={false} />
-        <QuickContactCard contactSettings={contactSettings} />
+        <QuickContactCard contactSettings={siteSettings} />
       </div>
     </section>
   );
