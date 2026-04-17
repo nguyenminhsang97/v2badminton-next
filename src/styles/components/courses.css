@@ -186,8 +186,8 @@
 
 .pricing-strip {
   display: grid;
-  gap: 16px;
-  padding: 24px 26px;
+  gap: 14px;
+  padding: 20px 22px;
   border-radius: 28px;
   border: 1px solid rgba(15, 59, 32, 0.08);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, #f8fbf6 100%);
@@ -227,17 +227,16 @@
 
 .pricing-strip__grid {
   display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .pricing-strip__item {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 14px;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px 16px;
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  min-height: 112px;
+  padding: 14px 15px;
   border-radius: 20px;
   background: #fff;
   border: 1px solid rgba(15, 59, 32, 0.08);
@@ -260,7 +259,7 @@
 
 .pricing-strip__price {
   color: var(--s5-primary-strong);
-  font-size: 1.05rem;
+  font-size: 1.08rem;
   font-weight: 800;
 }
 
@@ -271,10 +270,10 @@
 .enterprise-teaser {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px 20px;
+  gap: 14px 18px;
   align-items: center;
   justify-content: space-between;
-  padding: 22px 24px;
+  padding: 20px 22px;
   border-radius: 28px;
   background: linear-gradient(145deg, #12341f 0%, #18472a 100%);
   color: #fff;
@@ -282,7 +281,7 @@
 }
 
 .enterprise-teaser__copy {
-  max-width: 680px;
+  max-width: 620px;
 }
 
 .enterprise-teaser__badge {
@@ -308,6 +307,10 @@
 
 @media (max-width: 1279px) {
   .course-grid--figma {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pricing-strip__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

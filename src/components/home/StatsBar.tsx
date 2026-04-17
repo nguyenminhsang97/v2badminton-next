@@ -8,22 +8,22 @@ import {
 const STATS = [
   {
     value: "1.200+",
-    label: "lượt tư vấn & học thử",
+    label: "học thử & tư vấn",
     icon: UsersIcon,
   },
   {
     value: "8 HLV",
-    label: "chứng chỉ và giáo án rõ",
+    label: "theo sát từng nhóm",
     icon: TrophyIcon,
   },
   {
     value: "4 sân",
-    label: "Bình Thạnh & Thủ Đức",
+    label: "Bình Thạnh · Thủ Đức",
     icon: ShuttleIcon,
   },
   {
     value: "Tối & cuối tuần",
-    label: "khung giờ dễ theo lịch",
+    label: "khung giờ dễ theo",
     icon: CalendarIcon,
   },
 ] as const;

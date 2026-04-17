@@ -91,7 +91,7 @@ function PricingStrip({ tiers }: { tiers: readonly SanityPricingTier[] }) {
     <div className="pricing-strip" id="hoc-phi">
       <div className="pricing-strip__header">
         <p className="pricing-strip__eyebrow">Chi tiết học phí</p>
-        <h3 className="pricing-strip__title">So nhanh 4 mức học phí hiện tại</h3>
+        <h3 className="pricing-strip__title">4 mức học phí hiện tại</h3>
       </div>
       <div className="pricing-strip__grid">
         {groupTiers.map((tier) => (
@@ -123,10 +123,10 @@ function EnterpriseTeaser({ onRequestQuote }: { onRequestQuote: () => void }) {
       <div className="enterprise-teaser__copy">
         <span className="enterprise-teaser__badge">Doanh nghiệp</span>
         <div className="enterprise-teaser__headline">
-          <h3 className="enterprise-teaser__title">Giải pháp cầu lông cho doanh nghiệp</h3>
+          <h3 className="enterprise-teaser__title">Giải pháp cho doanh nghiệp</h3>
           <p className="enterprise-teaser__desc">
-            Team building, lớp nội bộ hoặc hoạt động sức khỏe định kỳ, tư vấn theo quy mô, lịch và
-            ngân sách của đội ngũ bạn.
+            Team building, lớp nội bộ hoặc hoạt động sức khỏe định kỳ, tư vấn theo quy mô và ngân
+            sách đội ngũ bạn.
           </p>
         </div>
       </div>
