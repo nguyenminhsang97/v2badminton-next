@@ -1,12 +1,10 @@
 import Link from "next/link";
 import {
-  CameraIcon,
   FacebookIcon,
   FeatherMarkIcon,
   MapPinIcon,
   MessageCircleIcon,
   PhoneIcon,
-  PlayIcon,
 } from "@/components/ui/BrandIcons";
 import type { SiteChromeSettings } from "@/components/layout/siteSettings";
 import { coreRoutes } from "@/lib/routes";
@@ -27,15 +25,12 @@ export function Footer({ siteSettings }: FooterProps) {
   const academyLinks = [
     { href: "/#khoa-hoc", label: "Khóa học" },
     { href: "/#lich-hoc", label: "Lịch học" },
-    { href: "/#dia-diem", label: "Địa điểm" },
     { href: "/#hoi-dap", label: "Hỏi đáp" },
     { href: "/blog/", label: "Blog" },
   ] as const;
   const featuredRoutes = coreRoutes.filter((route) =>
     [
       "/hoc-cau-long-cho-nguoi-moi/",
-      "/lop-cau-long-binh-thanh/",
-      "/lop-cau-long-thu-duc/",
       "/lop-cau-long-tre-em/",
       "/lop-cau-long-cho-nguoi-di-lam/",
       "/cau-long-doanh-nghiep/",
@@ -101,17 +96,6 @@ export function Footer({ siteSettings }: FooterProps) {
           </section>
 
           <section className="site-footer__column">
-            <h3 className="site-footer__heading">Đi nhanh trong site</h3>
-            <div className="site-footer__stack">
-              {academyLinks.map((link) => (
-                <Link key={link.href} href={link.href} className="site-footer__link">
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-          </section>
-
-          <section className="site-footer__column">
             <h3 className="site-footer__heading">Liên hệ</h3>
             <div className="site-footer__stack">
               <span className="site-footer__detail">
@@ -131,29 +115,20 @@ export function Footer({ siteSettings }: FooterProps) {
                 <MessageCircleIcon className="site-footer__detail-icon" />
                 Zalo {siteSettings.zaloNumber}
               </a>
-              <span className="site-footer__detail">
-                <PlayIcon className="site-footer__detail-icon" />
-                Phản hồi trong ngày
-              </span>
             </div>
           </section>
 
           <section className="site-footer__column">
-            <h3 className="site-footer__heading">Tài nguyên</h3>
+            <h3 className="site-footer__heading">Khám phá</h3>
             <div className="site-footer__stack">
-              <Link href="/blog/" className="site-footer__link">
-                Xem bài viết hướng dẫn
-              </Link>
-              <Link href="/#hoi-dap" className="site-footer__link">
-                Câu hỏi thường gặp
-              </Link>
+              {academyLinks.map((link) => (
+                <Link key={link.href} href={link.href} className="site-footer__link">
+                  {link.label}
+                </Link>
+              ))}
               <Link href="/#hoc-phi" className="site-footer__link">
-                Học phí và lịch học
+                Học phí
               </Link>
-              <span className="site-footer__detail">
-                <CameraIcon className="site-footer__detail-icon" />
-                Cập nhật nội dung hằng tuần
-              </span>
             </div>
           </section>
         </div>

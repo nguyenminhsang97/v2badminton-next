@@ -8,8 +8,8 @@
   width: var(--s5-width);
   margin: 0 auto;
   display: grid;
-  gap: 32px;
-  padding: 54px 0 110px;
+  gap: 28px;
+  padding: 48px 0 92px;
 }
 
 .site-footer__brand {
@@ -93,7 +93,7 @@
 
 .site-footer__columns {
   display: grid;
-  gap: 24px;
+  gap: 22px;
 }
 
 .site-footer__column {
@@ -112,7 +112,7 @@
 
 .site-footer__stack {
   display: grid;
-  gap: 10px;
+  gap: 8px;
 }
 
 .site-footer__link {
@@ -147,7 +147,7 @@
 
 @media (min-width: 960px) {
   .site-footer__columns {
-    grid-template-columns: 1.2fr repeat(3, minmax(0, 1fr));
+    grid-template-columns: 1.15fr repeat(2, minmax(0, 0.9fr));
   }
 }
 
