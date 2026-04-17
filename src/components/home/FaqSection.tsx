@@ -5,11 +5,11 @@ export function FaqSection({ faqs }: HomepageFaqSectionProps) {
   return (
     <section className="section faq-section" id="hoi-dap">
       <div className="section__header">
-        <p className="section__eyebrow">Hỏi trước khi đăng ký</p>
+        <p className="section__eyebrow">Gỡ vướng trước khi để lại số</p>
         <h2 className="section__title">CÂU HỎI THƯỜNG GẶP</h2>
         <p className="section__desc">
-          Những câu hỏi gặp nhiều nhất về lịch học, học phí, sân tập và cách V2
-          xếp lớp cho người mới hoặc doanh nghiệp.
+          Những câu hỏi thường làm người học chần chừ nhất: học phí, lịch học, chọn sân và cách
+          xếp lớp cho người mới.
         </p>
       </div>
       <FaqList faqs={faqs} />

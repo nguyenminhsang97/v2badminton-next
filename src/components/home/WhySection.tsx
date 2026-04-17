@@ -55,13 +55,13 @@ export function WhySection() {
           </div>
 
           <article className="why-section__stat">
-            <span className="why-section__stat-value">98%</span>
+            <span className="why-section__stat-value">2-6</span>
             <strong className="why-section__stat-title">
-              học viên và phụ huynh hài lòng sau buổi đầu
+              học viên mỗi nhóm để HLV kèm sát và sửa đúng lỗi
             </strong>
             <p className="why-section__stat-copy">
-              Cảm giác dễ theo, rõ lộ trình và được chỉnh đúng lỗi sớm là điều khiến phần lớn học
-              viên tiếp tục ở lại cùng V2.
+              Nhịp lớp được giữ vừa phải để người mới, trẻ em và người đi làm vẫn theo kịp,
+              đồng thời HLV còn đủ thời gian quan sát và chỉnh kỹ thuật ngay trên sân.
             </p>
           </article>
         </div>
@@ -71,8 +71,8 @@ export function WhySection() {
             <p className="section__eyebrow">Vì sao nhiều người chọn V2</p>
             <h2 className="section__title">Nền tảng bài bản nhưng vẫn gần gũi và dễ theo</h2>
             <p className="section__desc">
-              V2 không cố làm buổi học phức tạp. Mục tiêu là giúp người mới, trẻ em và người bận
-              rộn nhìn thấy tiến bộ rõ ràng ngay từ những tuần đầu tiên.
+              Ở V2, trọng tâm không phải là làm buổi học thật khó. Điều quan trọng là ai cũng hiểu
+              mình đang sửa gì, tập gì và vì sao lại tiến bộ dần theo từng tuần.
             </p>
           </div>
 

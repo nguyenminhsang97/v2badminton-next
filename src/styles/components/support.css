@@ -1,8 +1,6 @@
 .faq-section,
 .contact-section,
-.seo-links,
-.locations-section,
-.business-section {
+.locations-section {
   background: transparent;
 }
 
@@ -170,9 +168,7 @@
 }
 
 .contact-form-shell,
-.contact-direct,
-.business__panel,
-.seo-links__card {
+.contact-direct {
   padding: 28px;
   border-radius: 28px;
   background: var(--s5-surface);
@@ -187,8 +183,7 @@
 
 .contact-form-shell__header,
 .contact-form,
-.contact-direct,
-.business__content {
+.contact-direct {
   display: grid;
   gap: 16px;
 }
@@ -212,10 +207,7 @@
 
 .contact-form-shell__subtitle,
 .contact-form__hint,
-.contact-direct__intro,
-.business__content p,
-.business__points,
-.seo-links__card-desc {
+.contact-direct__intro {
   margin: 0;
   color: var(--s5-muted);
   line-height: 1.75;
@@ -382,82 +374,8 @@
   font-weight: 700;
 }
 
-.business-section {
-  background: var(--s5-bg-alt);
-}
-
-.business__panel {
-  display: grid;
-  gap: 24px;
-}
-
-.business__media {
-  overflow: hidden;
-  border-radius: 24px;
-}
-
-.business__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.business__kicker {
-  margin: 0;
-  color: var(--s5-primary);
-  font-size: 0.82rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.business__points {
-  display: grid;
-  gap: 12px;
-  padding-left: 0;
-  list-style: none;
-}
-
-.business__points li {
-  position: relative;
-  padding-left: 20px;
-}
-
-.business__points li::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  color: var(--s5-accent);
-  font-weight: 800;
-}
-
-.business__content .btn {
-  justify-self: flex-start;
-}
-
-.seo-links--support {
-  padding-top: 18px;
-}
-
-.seo-links__grid {
-  display: grid;
-  gap: 18px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.seo-links__card {
-  display: grid;
-  gap: 10px;
-}
-
-.seo-links__card-title {
-  color: var(--s5-primary-strong);
-  font-size: 1.06rem;
-}
-
 @media (min-width: 960px) {
-  .contact-section__body,
-  .business__panel {
+  .contact-section__body {
     grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
     align-items: start;
   }
@@ -467,17 +385,9 @@
   }
 }
 
-@media (max-width: 1279px) {
-  .seo-links__grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 @media (max-width: 959px) {
   .contact-form-shell,
-  .contact-direct,
-  .business__panel,
-  .seo-links__card {
+  .contact-direct {
     padding: 22px;
   }
 

@@ -40,7 +40,6 @@
 
 @media (min-width: 960px) {
   .floating-cta {
-    right: 24px;
-    bottom: 24px;
+    display: none;
   }
 }

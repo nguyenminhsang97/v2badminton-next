@@ -63,13 +63,13 @@ export function TestimonialsSection({
   return (
     <section className="section testimonials-section" id="hoc-vien-noi-gi">
       <div className="section__header">
-        <p className="section__eyebrow">Phản hồi học viên</p>
+        <p className="section__eyebrow">Cảm nhận sau khi bắt đầu</p>
         <h2 className="section__title">
-          Điều học viên và phụ huynh <span className="testimonials-section__accent">nhớ nhất</span>
+          Điều học viên và phụ huynh thấy <span className="testimonials-section__accent">dễ theo nhất</span>
         </h2>
         <p className="section__desc">
-          Những chia sẻ ngắn từ học viên và phụ huynh sau quá trình tập luyện
-          cùng V2 Badminton.
+          Đây là những phản hồi về cảm giác học thực tế: có dễ bám lịch không, có theo kịp buổi
+          đầu không và có thấy tự tin hơn sau vài tuần đầu hay chưa.
         </p>
       </div>
       <div className="testimonials-grid">

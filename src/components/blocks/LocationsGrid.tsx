@@ -1,6 +1,5 @@
-import { ClockIcon, MapPinIcon, PhoneIcon } from "@/components/ui/BrandIcons";
+import { ClockIcon, MapPinIcon } from "@/components/ui/BrandIcons";
 import type { SanityLocation } from "@/lib/sanity";
-import { siteConfig } from "@/lib/site";
 
 export type LocationsGridProps = {
   locations: SanityLocation[];
@@ -32,10 +31,6 @@ export function LocationsGrid({
               </div>
 
               <div className="location-card__meta">
-                <span className="location-card__meta-item">
-                  <PhoneIcon className="location-card__meta-icon" />
-                  {siteConfig.phoneDisplay}
-                </span>
                 <span className="location-card__meta-item">
                   <ClockIcon className="location-card__meta-icon" />
                   {HOURS_LABEL}

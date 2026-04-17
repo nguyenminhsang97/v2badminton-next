@@ -139,16 +139,16 @@ export function Footer({ siteSettings }: FooterProps) {
           </section>
 
           <section className="site-footer__column">
-            <h3 className="site-footer__heading">Hỗ trợ nhanh</h3>
+            <h3 className="site-footer__heading">Tài nguyên</h3>
             <div className="site-footer__stack">
-              <Link href="/#lien-he" className="site-footer__link">
-                Đăng ký học thử
-              </Link>
-              <Link href="/?business=1#lien-he" className="site-footer__link">
-                Tư vấn doanh nghiệp
-              </Link>
               <Link href="/blog/" className="site-footer__link">
                 Xem bài viết hướng dẫn
+              </Link>
+              <Link href="/#hoi-dap" className="site-footer__link">
+                Câu hỏi thường gặp
+              </Link>
+              <Link href="/#hoc-phi" className="site-footer__link">
+                Học phí và lịch học
               </Link>
               <span className="site-footer__detail">
                 <CameraIcon className="site-footer__detail-icon" />

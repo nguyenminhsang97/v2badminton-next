@@ -15,9 +15,9 @@ const COACH_CREDENTIALS = [
 ] as const;
 
 const COACH_SUMMARY = [
-  "Hơn 180 buổi hướng dẫn mỗi quý",
-  "4.9/5 từ học viên theo lớp",
-  "Lộ trình rõ cho từng nhóm trình độ",
+  "Kèm sát từ buổi đầu để sửa nền tảng",
+  "Giữ nhịp sửa lỗi rõ trong từng buổi",
+  "Phù hợp người bận rộn cần lịch đều",
 ] as const;
 
 const FALLBACK_COACHES = [
@@ -63,11 +63,12 @@ export function CoachSection({ coaches }: HomepageCoachSectionProps) {
   return (
     <section className="section coach-section" id="hlv">
       <div className="section__header">
-        <p className="section__eyebrow">Đội ngũ huấn luyện viên</p>
-        <h2 className="section__title">Người đồng hành cùng từng bước tiến bộ</h2>
+        <p className="section__eyebrow">Ai sẽ đồng hành cùng bạn</p>
+        <h2 className="section__title">HLV theo sát từng nhóm trình độ, không dạy kiểu đại trà</h2>
         <p className="section__desc">
-          Mỗi HLV ở V2 không chỉ đứng sân để thị phạm. Vai trò chính là nhìn đúng lỗi,
-          chia nhỏ kỹ thuật và giữ cho học viên thấy tự tin khi quay lại buổi sau.
+          Mỗi HLV ở V2 giữ một vai trò rõ ràng: người kèm trẻ em, người giữ nhịp cho lớp tối,
+          hoặc người phụ trách lộ trình 1 kèm 1. Cách dạy được chia theo đối tượng chứ không gom
+          tất cả vào một khuôn.
         </p>
       </div>
 

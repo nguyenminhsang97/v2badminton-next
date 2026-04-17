@@ -17,8 +17,7 @@ const FALLBACK_CONTACT_SETTINGS: HomeContactSettings = {
 
 const CONTACT_PROOF_POINTS = [
   "Phản hồi trong ngày",
-  "Hỗ trợ chọn sân gần bạn",
-  "Có thể tư vấn cả lớp doanh nghiệp",
+  "Giữ mạch tư vấn theo lịch bạn chọn",
 ] as const;
 
 export function ContactSection({
@@ -45,9 +44,8 @@ export function ContactSection({
         <p className="section__eyebrow">Đăng ký & tư vấn</p>
         <h2 className="section__title">LIÊN HỆ</h2>
         <p className="section__subtitle">
-          Đăng ký học thử hoặc liên hệ trực tiếp với V2 Badminton. Nếu bạn đã
-          chọn lịch, sân hoặc mục tiêu học, form bên dưới sẽ giúp giữ mạch tư
-          vấn nhanh hơn.
+          Để lại thông tin một lần để V2 gọi lại đúng lịch, đúng sân và đúng nhu cầu học mà bạn đã
+          chọn ở các phần bên trên.
         </p>
       </div>
 
@@ -60,10 +58,10 @@ export function ContactSection({
 
         <aside className="contact-direct">
           <div className="contact-direct__header">
-            <h3 className="contact-direct__title">Liên hệ trực tiếp</h3>
+            <h3 className="contact-direct__title">Nếu cần chốt nhanh hơn</h3>
             <p className="contact-direct__intro">
-              Muốn chốt nhanh sân, lịch học hoặc hỏi riêng về chương trình doanh
-              nghiệp? Gọi, nhắn Zalo hoặc Facebook đều được.
+              Muốn chốt nhanh sân, lịch học hoặc hỏi riêng về lộ trình phù hợp?
+              Gọi, nhắn Zalo hoặc Facebook đều được.
             </p>
           </div>
 

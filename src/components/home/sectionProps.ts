@@ -3,7 +3,6 @@ import type {
   SanityCoach,
   SanityFaq,
   SanityLocation,
-  SanityPricingTier,
   SanityScheduleBlock,
   SanitySiteSettings,
   SanityTestimonial,
@@ -23,10 +22,6 @@ export type HomepageFaqSectionProps = {
 
 export type HomepageTestimonialsSectionProps = {
   testimonials: SanityTestimonial[];
-};
-
-export type HomepagePricingSectionProps = {
-  pricingTiers: SanityPricingTier[];
 };
 
 export type HomepageScheduleSectionProps = {
