@@ -5,7 +5,10 @@ import Image from "next/image";
 import type { SanityPricingTier } from "@/lib/sanity";
 import { trackEvent } from "@/lib/tracking";
 import { ArrowRightIcon, ClockIcon } from "@/components/ui/BrandIcons";
-import { useHomepageConversion } from "./HomepageConversionProvider";
+import {
+  useHomepageBusinessMode,
+  useHomepageConversionIntent,
+} from "./HomepageConversionProvider";
 
 type CourseCardId =
   | "course-kids"
@@ -155,7 +158,8 @@ function EnterpriseTeaser({ onRequestQuote }: { onRequestQuote: () => void }) {
 }
 
 export function CourseSection({ pricingTiers }: CourseSectionProps) {
-  const { enterBusinessMode, setCourseIntent } = useHomepageConversion();
+  const { enterBusinessMode } = useHomepageBusinessMode();
+  const { setCourseIntent } = useHomepageConversionIntent();
   const groupPrice = findFromGroupPrice(pricingTiers);
   const privatePrice = findPrivatePrice(pricingTiers);
 

@@ -1,28 +1,30 @@
 import { Suspense } from "react";
 import { HomepageBusinessModeInitializer } from "@/components/home/HomepageBusinessModeInitializer";
 import { CoachSection } from "@/components/home/CoachSection";
-import { ContactSection } from "@/components/home/ContactSection";
 import { ContactFormErrorBoundary } from "@/components/home/ContactFormErrorBoundary";
+import { ContactForm } from "@/components/home/ContactForm";
 import { CourseSection } from "@/components/home/CourseSection";
 import { FaqSection } from "@/components/home/FaqSection";
 import { HeroSection } from "@/components/home/HeroSection";
 import { HomepageConversionProvider } from "@/components/home/HomepageConversionProvider";
+import { HomepageScrollCoordinator } from "@/components/home/HomepageScrollCoordinator";
 import { LocationsSection } from "@/components/home/LocationsSection";
 import { ScheduleSection } from "@/components/home/ScheduleSection";
 import { StatsBar } from "@/components/home/StatsBar";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { WhySection } from "@/components/home/WhySection";
 import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
+import { HOMEPAGE_TESTIMONIAL_FALLBACKS } from "@/content/homepage-testimonials.fallback";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { buildMetadata } from "@/lib/routes";
 import {
   getActiveCampaign,
-  getHomepageCoaches,
-  getHomepageFaqs,
-  getHomepageTestimonials,
+  getCoaches,
+  getFaqs,
   getLocations,
   getPricingTiers,
   getScheduleBlocks,
+  getTestimonials,
 } from "@/lib/sanity";
 import {
   buildCourseSchemas,
@@ -50,13 +52,15 @@ export default async function Home() {
       getPricingTiers(),
       getScheduleBlocks(),
       getLocations(),
-      getHomepageFaqs(),
+      getFaqs("homepage", true, 5),
       loadSiteChromeSettings(),
-      getHomepageCoaches(),
-      getHomepageTestimonials(),
+      getCoaches(true, 3),
+      getTestimonials(true, 6),
     ]);
 
   const courseSchemas = buildCourseSchemas(pricingTiers);
+  const homepageTestimonials =
+    testimonials.length > 0 ? testimonials : HOMEPAGE_TESTIMONIAL_FALLBACKS;
 
   return (
     <>
@@ -79,16 +83,19 @@ export default async function Home() {
           <CourseSection pricingTiers={pricingTiers} />
           <WhySection />
           <CoachSection coaches={coaches} />
-          <TestimonialsSection testimonials={testimonials} />
+          <TestimonialsSection testimonials={homepageTestimonials} />
           <ScheduleSection scheduleBlocks={scheduleBlocks} />
           <LocationsSection locations={locations} siteSettings={chromeSettings} />
           <FaqSection faqs={faqs} />
           <ContactFormErrorBoundary>
-            <ContactSection
-              siteSettings={chromeSettings}
-              locations={locations}
-              scheduleBlocks={scheduleBlocks}
-            />
+            <section className="section contact-section" id="lien-he">
+              <HomepageScrollCoordinator />
+              <ContactForm
+                contactSettings={chromeSettings}
+                locations={locations}
+                scheduleBlocks={scheduleBlocks}
+              />
+            </section>
           </ContactFormErrorBoundary>
         </div>
       </HomepageConversionProvider>

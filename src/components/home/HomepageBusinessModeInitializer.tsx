@@ -2,11 +2,11 @@
 
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
-import { useHomepageConversion } from "./HomepageConversionProvider";
+import { useHomepageBusinessMode } from "./HomepageConversionProvider";
 
 export function HomepageBusinessModeInitializer() {
   const searchParams = useSearchParams();
-  const { enterBusinessMode } = useHomepageConversion();
+  const { enterBusinessMode } = useHomepageBusinessMode();
   const hasInitializedRef = useRef(false);
 
   useEffect(() => {

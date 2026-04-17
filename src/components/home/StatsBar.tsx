@@ -4,36 +4,21 @@ import {
   TrophyIcon,
   UsersIcon,
 } from "@/components/ui/BrandIcons";
+import { HOMEPAGE_STATS } from "@/content/homepage-stats";
 
-const STATS = [
-  {
-    value: "1.200+",
-    label: "học thử & tư vấn",
-    icon: UsersIcon,
-  },
-  {
-    value: "8 HLV",
-    label: "theo sát từng nhóm",
-    icon: TrophyIcon,
-  },
-  {
-    value: "4 sân",
-    label: "Bình Thạnh · Thủ Đức",
-    icon: ShuttleIcon,
-  },
-  {
-    value: "Tối & cuối tuần",
-    label: "khung giờ dễ theo",
-    icon: CalendarIcon,
-  },
-] as const;
+const STAT_ICONS = {
+  users: UsersIcon,
+  trophy: TrophyIcon,
+  shuttle: ShuttleIcon,
+  calendar: CalendarIcon,
+} as const;
 
 export function StatsBar() {
   return (
     <section className="stats-bar" aria-label="Điểm nổi bật của V2 Badminton">
       <div className="stats-bar__inner">
-        {STATS.map((stat) => {
-          const Icon = stat.icon;
+        {HOMEPAGE_STATS.map((stat) => {
+          const Icon = STAT_ICONS[stat.icon];
 
           return (
             <article key={stat.label} className="stats-bar__item">

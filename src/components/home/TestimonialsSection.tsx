@@ -5,60 +5,6 @@ import Image from "next/image";
 import { StarIcon } from "@/components/ui/BrandIcons";
 import type { HomepageTestimonialsSectionProps } from "./sectionProps";
 
-const FALLBACK_TESTIMONIALS = [
-  {
-    id: "fallback-parent",
-    avatarUrl: null,
-    avatarAlt: null,
-    studentGroup: "tre_em" as const,
-    kicker: "Phụ huynh & trẻ em",
-    rating: 5,
-    shortQuote:
-      "Con đi học hào hứng hơn, buổi nào cũng có mục tiêu rõ nên phụ huynh nhìn vào thấy yên tâm hơn.",
-    content:
-      "Con đi học hào hứng hơn vì được HLV kèm sát và buổi nào cũng có mục tiêu rõ. Phụ huynh nhìn vào cũng thấy yên tâm hơn hẳn.",
-    studentName: "Chị Linh",
-    contextLabel: "Phụ huynh học viên thiếu nhi",
-    featured: false,
-    homepageOrder: 90,
-    order: 90,
-  },
-  {
-    id: "fallback-beginner",
-    avatarUrl: null,
-    avatarAlt: null,
-    studentGroup: "nguoi_moi" as const,
-    kicker: "Người mới bắt đầu",
-    rating: 5,
-    shortQuote:
-      "Mình bắt đầu từ con số 0 nhưng vẫn theo kịp lớp nhỏ, sửa lỗi nhanh và thấy tự tin hơn sau vài tuần.",
-    content:
-      "Mình bắt đầu từ con số 0 nhưng vẫn theo kịp vì lớp nhỏ, sửa lỗi nhanh và lịch học dễ bám theo. Sau vài tuần đã thấy tự tin vào sân hơn.",
-    studentName: "Anh Huy",
-    contextLabel: "Học viên người mới",
-    featured: false,
-    homepageOrder: 91,
-    order: 91,
-  },
-  {
-    id: "fallback-working",
-    avatarUrl: null,
-    avatarAlt: null,
-    studentGroup: "nguoi_di_lam" as const,
-    kicker: "Người đi làm",
-    rating: 5,
-    shortQuote:
-      "Lớp buổi tối đúng lịch mong muốn, không khí vừa phải nên mình vẫn theo được đều mà không áp lực.",
-    content:
-      "Mình cần lớp buổi tối gần công ty và V2 xếp đúng lịch mong muốn. Không khí học rất vừa phải, không áp lực mà vẫn lên trình đều.",
-    studentName: "Chị Trâm",
-    contextLabel: "Học viên lớp tối",
-    featured: false,
-    homepageOrder: 92,
-    order: 92,
-  },
-] satisfies HomepageTestimonialsSectionProps["testimonials"];
-
 const DEFAULT_VISIBLE_COUNT = 3;
 
 function getGroupLabel(
@@ -89,12 +35,10 @@ export function TestimonialsSection({
   testimonials,
 }: HomepageTestimonialsSectionProps) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const visibleTestimonials =
-    testimonials.length > 0 ? testimonials : FALLBACK_TESTIMONIALS;
-  const canExpand = visibleTestimonials.length > DEFAULT_VISIBLE_COUNT;
+  const canExpand = testimonials.length > DEFAULT_VISIBLE_COUNT;
   const displayedTestimonials = isExpanded
-    ? visibleTestimonials
-    : visibleTestimonials.slice(0, DEFAULT_VISIBLE_COUNT);
+    ? testimonials
+    : testimonials.slice(0, DEFAULT_VISIBLE_COUNT);
 
   return (
     <section className="section testimonials-section" id="hoc-vien-noi-gi">
@@ -105,8 +49,7 @@ export function TestimonialsSection({
           <span className="testimonials-section__accent">V2 Badminton?</span>
         </h2>
         <p className="section__desc">
-          Phản hồi ngắn gọn từ phụ huynh, người mới và người đi làm sau vài tuần
-          đầu.
+          Phản hồi ngắn gọn từ phụ huynh, người mới và người đi làm sau vài tuần đầu.
         </p>
       </div>
 
@@ -171,7 +114,7 @@ export function TestimonialsSection({
           >
             {isExpanded
               ? "Thu gọn phản hồi"
-              : `Xem thêm ${visibleTestimonials.length - DEFAULT_VISIBLE_COUNT} phản hồi`}
+              : `Xem thêm ${testimonials.length - DEFAULT_VISIBLE_COUNT} phản hồi`}
           </button>
         </div>
       ) : null}

@@ -1,12 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import type {
-  SanityScheduleBlock,
-  SanityScheduleLevel,
-} from "@/lib/sanity";
+import type { SanityScheduleBlock, SanityScheduleLevel } from "@/lib/sanity";
 import {
-  useHomepageConversion,
+  useHomepageConversionIntent,
   type SchedulePrefill,
 } from "./HomepageConversionProvider";
 import {
@@ -20,7 +17,7 @@ const ALL_TAB_ID = "__all__";
 const MAX_VISIBLE_ROWS = 8;
 
 type SelectedCourseIntent = NonNullable<
-  ReturnType<typeof useHomepageConversion>["selectedCourseIntent"]
+  ReturnType<typeof useHomepageConversionIntent>["selectedCourseIntent"]
 >;
 
 function buildSchedulePrefill(
@@ -98,7 +95,8 @@ export function ScheduleSection({
 }: HomepageScheduleSectionProps) {
   const [activeTab, setActiveTab] = useState<string>(ALL_TAB_ID);
   const [expandedViewKey, setExpandedViewKey] = useState<string | null>(null);
-  const { setPrefill, selectedCourseIntent } = useHomepageConversion();
+  const { clearCourseIntent, selectedCourseIntent, setPrefill } =
+    useHomepageConversionIntent();
   const isIntentFiltering = selectedCourseIntent !== null;
 
   const tabs = scheduleBlocks.reduce<
@@ -145,21 +143,23 @@ export function ScheduleSection({
     ? filteredByTab.filter((item) => item.levels.includes(selectedCourseIntent))
     : filteredByTab;
 
-  const isFallbackFromIntentFilter =
+  const hasEmptyIntentResult =
     isIntentFiltering && displayItems.length === 0 && filteredByTab.length > 0;
-  const itemsToRender = isFallbackFromIntentFilter ? filteredByTab : displayItems;
+  const itemsToRender = displayItems;
   const filterMessage =
     selectedCourseIntent === null
       ? null
-      : isFallbackFromIntentFilter
+      : hasEmptyIntentResult
         ? activeTab === ALL_TAB_ID
-          ? `Hiện chưa có lịch ${getScheduleFilterLabel(selectedCourseIntent)} trong dữ liệu hiện tại. Đang hiển thị toàn bộ lịch để bạn tham khảo.`
-          : `Sân này chưa có lịch ${getScheduleFilterLabel(selectedCourseIntent)}. Đang hiển thị toàn bộ lịch của sân để bạn tham khảo.`
+          ? `Hiện chưa có lịch ${getScheduleFilterLabel(selectedCourseIntent)} trong tuần này.`
+          : `Sân này chưa có lịch ${getScheduleFilterLabel(selectedCourseIntent)} trong tuần này.`
         : `Đang lọc theo trình độ ${getScheduleFilterLabel(selectedCourseIntent)}.`;
   const currentViewKey = `${activeTab}:${selectedCourseIntent ?? "all"}`;
   const isExpanded = expandedViewKey === currentViewKey;
   const hasOverflowRows = itemsToRender.length > MAX_VISIBLE_ROWS;
-  const visibleItems = isExpanded ? itemsToRender : itemsToRender.slice(0, MAX_VISIBLE_ROWS);
+  const visibleItems = isExpanded
+    ? itemsToRender
+    : itemsToRender.slice(0, MAX_VISIBLE_ROWS);
 
   function handleCardClick(scheduleBlock: SanityScheduleBlock) {
     const prefill = buildSchedulePrefill(scheduleBlock);
@@ -211,66 +211,105 @@ export function ScheduleSection({
         ))}
       </div>
 
-      <div className="schedule-table" role="table" aria-label="Lịch học V2 Badminton">
-        <div className="schedule-table__head" role="row">
-          <span className="schedule-table__cell schedule-table__cell--label" role="columnheader">
-            Ngày
-          </span>
-          <span className="schedule-table__cell schedule-table__cell--label" role="columnheader">
-            Giờ học
-          </span>
-          <span className="schedule-table__cell schedule-table__cell--label" role="columnheader">
-            Khóa học
-          </span>
-          <span className="schedule-table__cell schedule-table__cell--label" role="columnheader">
-            Cơ sở
-          </span>
-          <span className="schedule-table__cell schedule-table__cell--label" role="columnheader">
-            Trình độ
-          </span>
+      {hasEmptyIntentResult ? (
+        <div className="schedule-empty-state" role="status" aria-live="polite">
+          <p className="schedule-empty-state__title">
+            Chưa có lịch {getScheduleFilterLabel(selectedCourseIntent)} phù hợp.
+          </p>
+          <p className="schedule-empty-state__copy">
+            Bạn có thể xem toàn bộ lịch đang mở hoặc để lại thông tin để V2 gợi ý sân và
+            khung giờ gần nhất.
+          </p>
+          <div className="schedule-empty-state__actions">
+            <button
+              type="button"
+              className="btn btn--outline"
+              onClick={() => clearCourseIntent()}
+            >
+              Xem toàn bộ lịch
+            </button>
+            <a href="#lien-he" className="btn btn--primary">
+              Liên hệ tư vấn
+            </a>
+          </div>
         </div>
+      ) : (
+        <div className="schedule-table" role="table" aria-label="Lịch học V2 Badminton">
+          <div className="schedule-table__head" role="row">
+            <span
+              className="schedule-table__cell schedule-table__cell--label"
+              role="columnheader"
+            >
+              Ngày
+            </span>
+            <span
+              className="schedule-table__cell schedule-table__cell--label"
+              role="columnheader"
+            >
+              Giờ học
+            </span>
+            <span
+              className="schedule-table__cell schedule-table__cell--label"
+              role="columnheader"
+            >
+              Khóa học
+            </span>
+            <span
+              className="schedule-table__cell schedule-table__cell--label"
+              role="columnheader"
+            >
+              Cơ sở
+            </span>
+            <span
+              className="schedule-table__cell schedule-table__cell--label"
+              role="columnheader"
+            >
+              Trình độ
+            </span>
+          </div>
 
-        {visibleItems.map((item) => (
-          <button
-            key={item.id}
-            type="button"
-            className="schedule-row"
-            aria-label={`${item.dayGroup}, ${item.timeLabel}, ${getScheduleProgramLabel(item.levels)}, ${item.locationName}. Nhấn để điền form theo lịch này.`}
-            onClick={() => handleCardClick(item)}
-          >
-            <span className="schedule-table__cell schedule-row__days">
-              {item.dayGroup}
-            </span>
-            <strong className="schedule-table__cell schedule-row__time">
-              {item.timeLabel}
-            </strong>
-            <span className="schedule-table__cell schedule-row__program">
-              {getScheduleProgramLabel(item.levels)}
-            </span>
-            <span className="schedule-table__cell schedule-row__location">
-              <span className="schedule-row__court">{item.locationShortName}</span>
-              <span className="schedule-row__location-note" aria-hidden="true">
-                Điền form nhanh
+          {visibleItems.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              className="schedule-row"
+              aria-label={`${item.dayGroup}, ${item.timeLabel}, ${getScheduleProgramLabel(item.levels)}, ${item.locationName}. Nhấn để điền form theo lịch này.`}
+              onClick={() => handleCardClick(item)}
+            >
+              <span className="schedule-table__cell schedule-row__days">
+                {item.dayGroup}
               </span>
-              <span className="u-sr-only">Nhấn để điền form theo lịch này</span>
-            </span>
-            <span className="schedule-table__cell schedule-row__levels">
-              {item.levels.map((level) => {
-                const levelUi = getScheduleLevelUi(level);
+              <strong className="schedule-table__cell schedule-row__time">
+                {item.timeLabel}
+              </strong>
+              <span className="schedule-table__cell schedule-row__program">
+                {getScheduleProgramLabel(item.levels)}
+              </span>
+              <span className="schedule-table__cell schedule-row__location">
+                <span className="schedule-row__court">{item.locationShortName}</span>
+                <span className="schedule-row__location-note" aria-hidden="true">
+                  Điền form nhanh
+                </span>
+                <span className="u-sr-only">Nhấn để điền form theo lịch này</span>
+              </span>
+              <span className="schedule-table__cell schedule-row__levels">
+                {item.levels.map((level) => {
+                  const levelUi = getScheduleLevelUi(level);
 
-                return (
-                  <span
-                    key={`${item.id}-${level}`}
-                    className={`level-tag level-tag--${levelUi.modifier}`}
-                  >
-                    {levelUi.label}
-                  </span>
-                );
-              })}
-            </span>
-          </button>
-        ))}
-      </div>
+                  return (
+                    <span
+                      key={`${item.id}-${level}`}
+                      className={`level-tag level-tag--${levelUi.modifier}`}
+                    >
+                      {levelUi.label}
+                    </span>
+                  );
+                })}
+              </span>
+            </button>
+          ))}
+        </div>
+      )}
 
       {hasOverflowRows ? (
         <div className="schedule-actions">
@@ -290,7 +329,9 @@ export function ScheduleSection({
         </div>
       ) : null}
 
-      <p className="schedule-note">Lịch có thể thay đổi nhẹ theo sĩ số từng sân và từng giai đoạn.</p>
+      <p className="schedule-note">
+        Lịch có thể thay đổi nhẹ theo sĩ số từng sân và từng giai đoạn.
+      </p>
     </section>
   );
 }

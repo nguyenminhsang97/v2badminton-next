@@ -680,20 +680,15 @@ export const getSiteSettings = cache(async (): Promise<SanitySiteSettings | null
   });
 });
 
-export const getCoaches = cache(async (): Promise<SanityCoach[]> => {
-  const coaches = await sanityFetchOrFallback<SanityCoach[]>({
-    query: COACHES_QUERY,
-    fallback: [],
-    tags: ["sanity:coaches"],
-  });
+function selectHomepageItems<
+  TItem extends { featured: boolean; homepageOrder: number; order: number },
+>(items: readonly TItem[], featuredOnly: boolean, limit?: number): TItem[] {
+  if (!featuredOnly) {
+    return limit === undefined ? [...items] : items.slice(0, limit);
+  }
 
-  return coaches ?? [];
-});
-
-export const getHomepageCoaches = cache(async (): Promise<SanityCoach[]> => {
-  const coaches = await getCoaches();
-  const featuredCoaches = coaches
-    .filter((coach) => coach.featured)
+  const featuredItems = items
+    .filter((item) => item.featured)
     .sort((left, right) => {
       const homepageOrderDiff = left.homepageOrder - right.homepageOrder;
       if (homepageOrderDiff !== 0) {
@@ -703,34 +698,33 @@ export const getHomepageCoaches = cache(async (): Promise<SanityCoach[]> => {
       return left.order - right.order;
     });
 
-  return (featuredCoaches.length > 0 ? featuredCoaches : coaches).slice(0, 3);
-});
+  const selectedItems = featuredItems.length > 0 ? featuredItems : items;
+  return limit === undefined ? [...selectedItems] : selectedItems.slice(0, limit);
+}
 
-export const getTestimonials = cache(async (): Promise<SanityTestimonial[]> => {
-  const testimonials = await sanityFetchOrFallback<SanityTestimonial[]>({
-    query: TESTIMONIALS_QUERY,
-    fallback: [],
-    tags: ["sanity:testimonials"],
-  });
+export const getCoaches = cache(
+  async (featuredOnly = false, limit?: number): Promise<SanityCoach[]> => {
+    const coaches =
+      (await sanityFetchOrFallback<SanityCoach[]>({
+        query: COACHES_QUERY,
+        fallback: [],
+        tags: ["sanity:coaches"],
+      })) ?? [];
 
-  return testimonials ?? [];
-});
+    return selectHomepageItems(coaches, featuredOnly, limit);
+  },
+);
 
-export const getHomepageTestimonials = cache(
-  async (): Promise<SanityTestimonial[]> => {
-    const testimonials = await getTestimonials();
-    const featuredTestimonials = testimonials
-      .filter((testimonial) => testimonial.featured)
-      .sort((left, right) => {
-        const homepageOrderDiff = left.homepageOrder - right.homepageOrder;
-        if (homepageOrderDiff !== 0) {
-          return homepageOrderDiff;
-        }
+export const getTestimonials = cache(
+  async (featuredOnly = false, limit?: number): Promise<SanityTestimonial[]> => {
+    const testimonials =
+      (await sanityFetchOrFallback<SanityTestimonial[]>({
+        query: TESTIMONIALS_QUERY,
+        fallback: [],
+        tags: ["sanity:testimonials"],
+      })) ?? [];
 
-        return left.order - right.order;
-      });
-
-    return (featuredTestimonials.length > 0 ? featuredTestimonials : testimonials).slice(0, 6);
+    return selectHomepageItems(testimonials, featuredOnly, limit);
   },
 );
 
@@ -777,37 +771,22 @@ export const getScheduleBlocks = cache(async (): Promise<SanityScheduleBlock[]> 
 });
 
 export const getFaqs = cache(
-  async (page?: SanityFaqPage): Promise<SanityFaq[]> => {
-    const faqs = await sanityFetchOrFallback<SanityFaq[]>({
-      query: FAQS_QUERY,
-      params: page ? { page } : {},
-      fallback: [],
-      tags: page ? [`sanity:faqs:${page}`] : ["sanity:faqs"],
-    });
+  async (
+    page?: SanityFaqPage,
+    featuredOnly = false,
+    limit?: number,
+  ): Promise<SanityFaq[]> => {
+    const faqs =
+      (await sanityFetchOrFallback<SanityFaq[]>({
+        query: FAQS_QUERY,
+        params: page ? { page } : {},
+        fallback: [],
+        tags: page ? [`sanity:faqs:${page}`] : ["sanity:faqs"],
+      })) ?? getFallbackFaqs(page);
 
-    if (faqs && faqs.length > 0) {
-      return faqs;
-    }
-
-    return getFallbackFaqs(page);
+    return selectHomepageItems(faqs, featuredOnly, limit);
   },
 );
-
-export const getHomepageFaqs = cache(async (): Promise<SanityFaq[]> => {
-  const faqs = await getFaqs("homepage");
-  const featuredFaqs = faqs
-    .filter((faq) => faq.featured)
-    .sort((left, right) => {
-      const homepageOrderDiff = left.homepageOrder - right.homepageOrder;
-      if (homepageOrderDiff !== 0) {
-        return homepageOrderDiff;
-      }
-
-      return left.order - right.order;
-    });
-
-  return (featuredFaqs.length > 0 ? featuredFaqs : faqs).slice(0, 5);
-});
 
 export const getMoneyPage = cache(
   async (slug: string): Promise<SanityMoneyPageLoadResult> => {

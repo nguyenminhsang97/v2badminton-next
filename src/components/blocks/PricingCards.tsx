@@ -14,7 +14,6 @@ export type PricingCardsProps = {
   tiers: SanityPricingTier[];
   ctaHref: string;
   trackingLocation: string;
-  onEnterBusinessMode?: () => void;
   enterpriseCtaHref?: string;
 };
 
@@ -241,30 +240,17 @@ function PrivateCard({
 function EnterpriseCard({
   ctaHref,
   enterpriseCtaHref,
-  onEnterBusinessMode,
   pathname,
   tier,
   trackingLocation,
 }: {
   ctaHref: string;
   enterpriseCtaHref?: string;
-  onEnterBusinessMode?: () => void;
   pathname: string;
   tier: SanityEnterprisePricingTier;
   trackingLocation: string;
 }) {
-  const button = onEnterBusinessMode ? (
-    <button
-      type="button"
-      className="btn btn--outline pricing-card__cta"
-      onClick={() => {
-        onEnterBusinessMode();
-        trackPricingCta(pathname, trackingLocation, tier.ctaAction);
-      }}
-    >
-      {tier.ctaLabel}
-    </button>
-  ) : (
+  const button = (
     <a
       href={enterpriseCtaHref ?? ctaHref}
       className="btn btn--outline pricing-card__cta"
@@ -294,7 +280,6 @@ function PricingCard({
   ctaHref,
   enterpriseCtaHref,
   featuredTierId,
-  onEnterBusinessMode,
   pathname,
   tier,
   trackingLocation,
@@ -302,7 +287,6 @@ function PricingCard({
   ctaHref: string;
   enterpriseCtaHref?: string;
   featuredTierId: string | null;
-  onEnterBusinessMode?: () => void;
   pathname: string;
   tier: SanityPricingTier;
   trackingLocation: string;
@@ -332,7 +316,6 @@ function PricingCard({
         <EnterpriseCard
           ctaHref={ctaHref}
           enterpriseCtaHref={enterpriseCtaHref}
-          onEnterBusinessMode={onEnterBusinessMode}
           pathname={pathname}
           tier={tier}
           trackingLocation={trackingLocation}
@@ -345,7 +328,6 @@ export function PricingCards({
   tiers,
   ctaHref,
   trackingLocation,
-  onEnterBusinessMode,
   enterpriseCtaHref,
 }: PricingCardsProps) {
   const pathname = normalizePathname(usePathname() ?? "/");
@@ -359,7 +341,6 @@ export function PricingCards({
           ctaHref={ctaHref}
           enterpriseCtaHref={enterpriseCtaHref}
           featuredTierId={featuredTierId}
-          onEnterBusinessMode={onEnterBusinessMode}
           pathname={pathname}
           tier={tier}
           trackingLocation={trackingLocation}

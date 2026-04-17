@@ -31,7 +31,10 @@ import {
   type LeadFormValues,
 } from "@/lib/validation/lead";
 import type { SiteChromeSettings } from "@/components/layout/siteSettings";
-import { useHomepageConversion } from "./HomepageConversionProvider";
+import {
+  useHomepageBusinessMode,
+  useHomepageConversionIntent,
+} from "./HomepageConversionProvider";
 import {
   buildLegacyCourtOptions,
   buildLegacyTimeSlotOptions,
@@ -81,10 +84,10 @@ export function ContactForm({
   const {
     selectedSchedulePrefill,
     autoPrefilledMessage,
-    businessMode,
     markMessageUserEdited,
     setAutoPrefilledMessage,
-  } = useHomepageConversion();
+  } = useHomepageConversionIntent();
+  const { businessMode } = useHomepageBusinessMode();
   const [serverState, formAction, isPending] = useActionState(
     submitLead,
     INITIAL_SUBMIT_LEAD_RESULT,
