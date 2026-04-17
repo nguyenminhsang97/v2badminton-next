@@ -9,8 +9,8 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
-  padding: 20px 0;
+  gap: 14px;
+  padding: 16px 0;
 }
 
 .stats-bar__item {
@@ -24,9 +24,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 52px;
-  height: 52px;
-  border-radius: 18px;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
   background: rgba(255, 255, 255, 0.12);
   color: #fff;
   flex: 0 0 auto;
@@ -45,18 +45,14 @@
 
 .stats-bar__value {
   color: #fff;
-  font-size: 1.06rem;
+  font-size: 1rem;
   font-weight: 800;
 }
 
 .stats-bar__label {
   color: rgba(240, 253, 244, 0.8);
-  font-size: 0.88rem;
-  line-height: 1.45;
-}
-
-.stats-bar__signature {
-  display: none;
+  font-size: 0.84rem;
+  line-height: 1.4;
 }
 
 @media (max-width: 959px) {

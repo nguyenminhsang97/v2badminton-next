@@ -1,6 +1,5 @@
 import {
   CalendarIcon,
-  FeatherMarkIcon,
   ShuttleIcon,
   TrophyIcon,
   UsersIcon,
@@ -9,22 +8,22 @@ import {
 const STATS = [
   {
     value: "1.200+",
-    label: "lượt tư vấn và học thử",
+    label: "lượt tư vấn & học thử",
     icon: UsersIcon,
   },
   {
     value: "8 HLV",
-    label: "đồng hành theo từng nhóm",
+    label: "chứng chỉ và giáo án rõ",
     icon: TrophyIcon,
   },
   {
     value: "4 sân",
-    label: "Bình Thạnh và Thủ Đức",
+    label: "Bình Thạnh & Thủ Đức",
     icon: ShuttleIcon,
   },
   {
-    value: "7+ năm",
-    label: "xây nền tảng đúng kỹ thuật",
+    value: "Tối & cuối tuần",
+    label: "khung giờ dễ theo lịch",
     icon: CalendarIcon,
   },
 ] as const;
@@ -48,10 +47,6 @@ export function StatsBar() {
             </article>
           );
         })}
-
-        <div className="stats-bar__signature" aria-hidden="true">
-          <FeatherMarkIcon className="stats-bar__signature-icon" />
-        </div>
       </div>
     </section>
   );

@@ -10,7 +10,7 @@ import { trackEvent } from "@/lib/tracking";
 import type { HomepageHeroSectionProps } from "./sectionProps";
 
 const DEFAULT_HERO_SUBHEADING =
-  "Đào tạo chuyên nghiệp cho mọi lứa tuổi, từ thiếu nhi đến người đi làm. Học với HLV có chứng chỉ quốc gia, cơ sở vật chất đạt chuẩn.";
+  "Lộ trình cầu lông bài bản cho thiếu nhi, người mới và người đi làm, với HLV chứng chỉ quốc gia và sân tập thuận tiện tại TP.HCM.";
 
 const HERO_SOCIAL_PROOF = [
   { initials: "NH", accent: "hero__avatar--green" },
@@ -130,7 +130,7 @@ export function HeroSection({ campaign }: HomepageHeroSectionProps) {
                 </div>
                 <strong className="hero__proof-score">4.9</strong>
               </div>
-              <span className="hero__proof-meta">Học viên và phụ huynh đánh giá cao sự theo sát</span>
+              <span className="hero__proof-meta">Theo sát ngay từ buổi đầu, dễ bắt nhịp và duy trì đều</span>
             </div>
           </div>
         </div>
