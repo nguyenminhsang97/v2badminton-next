@@ -1,9 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
 import type { SanityPricingTier } from "@/lib/sanity";
 import { trackEvent } from "@/lib/tracking";
-import { ArrowRightIcon } from "@/components/ui/BrandIcons";
+import { ArrowRightIcon, ClockIcon } from "@/components/ui/BrandIcons";
 import { useHomepageConversion } from "./HomepageConversionProvider";
 
 type CourseCardId =
@@ -14,7 +15,8 @@ type CourseCardId =
 
 type CourseCardDef = {
   id: CourseCardId;
-  badge: string;
+  categoryBadge: string;
+  levelChip: string;
   title: string;
   subtitle: string;
   description: string;
@@ -125,8 +127,8 @@ function EnterpriseTeaser({ onRequestQuote }: { onRequestQuote: () => void }) {
         <div className="enterprise-teaser__headline">
           <h3 className="enterprise-teaser__title">Giải pháp cho doanh nghiệp</h3>
           <p className="enterprise-teaser__desc">
-            Team building, lớp nội bộ hoặc hoạt động sức khỏe định kỳ, tư vấn theo quy mô và ngân
-            sách đội ngũ bạn.
+            Team building, lớp nội bộ hoặc hoạt động sức khỏe định kỳ, tư vấn theo quy mô
+            và ngân sách đội ngũ bạn.
           </p>
         </div>
       </div>
@@ -160,13 +162,14 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
   const courseCards: CourseCardDef[] = [
     {
       id: "course-kids",
-      badge: "Trẻ em",
+      categoryBadge: "Thiếu nhi",
+      levelChip: "Mới học",
       title: "Thiếu nhi nền tảng",
-      subtitle: "7-12 tuổi · Nhóm nhỏ theo sát",
+      subtitle: "7 - 12 tuổi",
       description:
-        "Xây tư thế, di chuyển và phản xạ đầu tiên theo nhịp dễ theo, để phụ huynh nhìn thấy tiến bộ rõ sau từng buổi.",
+        "Phát triển kỹ năng nền tảng, phản xạ và vận động theo nhịp dễ theo ngay từ buổi đầu.",
       price: groupPrice,
-      meta: "Nhóm nhỏ · Bình Thạnh & Thủ Đức",
+      meta: "3 buổi/tuần · Nhóm nhỏ",
       href: "/lop-cau-long-tre-em/",
       imageSrc: "/images/course-basic.webp",
       imageAlt: "Hướng dẫn học viên nhỏ tuổi tập cầu lông với huấn luyện viên",
@@ -174,13 +177,14 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
     },
     {
       id: "course-beginner",
-      badge: "Người mới",
+      categoryBadge: "Người mới",
+      levelChip: "Cơ bản",
       title: "Người lớn bắt đầu từ đầu",
-      subtitle: "Lộ trình cầm vợt tới di chuyển",
+      subtitle: "Cầm vợt tới di chuyển",
       description:
-        "Dành cho người muốn học bài bản từ buổi đầu, sửa lỗi sớm và tự tin vào sân sau vài tuần.",
+        "Lộ trình rõ ràng cho người mới để theo kịp lớp nhỏ, sửa lỗi sớm và tự tin hơn sau vài tuần.",
       price: groupPrice,
-      meta: "4-6 người · Có lớp tối & cuối tuần",
+      meta: "2 - 3 buổi/tuần · 4 - 6 người",
       href: "/hoc-cau-long-cho-nguoi-moi/",
       imageSrc: "/images/course-advanced.webp",
       imageAlt: "Nhóm học viên người lớn đang tập cầu lông cùng huấn luyện viên",
@@ -188,13 +192,14 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
     },
     {
       id: "course-working",
-      badge: "Người đi làm",
+      categoryBadge: "Người đi làm",
+      levelChip: "Cơ bản - nâng cao",
       title: "Lớp tối và cuối tuần",
-      subtitle: "Giữ nhịp tập đều dù lịch bận",
+      subtitle: "Giữ nhịp tập đều",
       description:
-        "Ca tối và cuối tuần cho người bận, ưu tiên khung giờ dễ theo và sân gần để giữ nhịp tập đều.",
+        "Ưu tiên khung giờ dễ theo cho người bận, chọn sân gần và giữ nhịp tập ổn định dài hơn.",
       price: groupPrice,
-      meta: "Ca tối · Chọn sân gần",
+      meta: "Ca tối · Cuối tuần",
       href: "/lop-cau-long-cho-nguoi-di-lam/",
       imageSrc: "/images/green.webp",
       imageAlt: "Học viên tham gia lớp cầu lông buổi tối tại sân trong nhà",
@@ -202,13 +207,14 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
     },
     {
       id: "course-private",
-      badge: "1 kèm 1",
+      categoryBadge: "1 kèm 1",
+      levelChip: "Mọi trình độ",
       title: "Lộ trình cá nhân hóa",
-      subtitle: "Tăng tốc kỹ thuật theo mục tiêu riêng",
+      subtitle: "Theo mục tiêu riêng",
       description:
-        "HLV theo sát mục tiêu riêng, chỉnh kỹ thuật trực tiếp theo lịch cá nhân của bạn.",
+        "HLV theo sát từng lỗi và mục tiêu cá nhân để bạn tăng tốc kỹ thuật theo lịch riêng của mình.",
       price: privatePrice,
-      meta: "Lịch riêng · Theo mục tiêu cá nhân",
+      meta: "Linh hoạt theo lịch cá nhân",
       href: "/hoc-cau-long-1-kem-1/",
       imageSrc: "/images/course-enterprise.webp",
       imageAlt: "Hướng dẫn học viên trong buổi học 1 kèm 1",
@@ -222,44 +228,54 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
         <p className="section__eyebrow">Chương trình & học phí</p>
         <h2 className="section__title">Chọn lộ trình phù hợp ngay từ buổi đầu</h2>
         <p className="section__desc">
-          Chọn theo nhu cầu trước, rồi so nhanh học phí ngay bên dưới để biết lựa chọn nào hợp với
-          lịch và ngân sách của bạn.
+          4 lộ trình chính để bạn chọn nhanh theo nhu cầu, rồi so mức học phí ngay bên
+          dưới trước khi để lại thông tin.
         </p>
       </div>
 
       <div className="course-grid course-grid--figma">
         {courseCards.map((card) => (
           <article key={card.id} className={`course-card course-card--${card.tone}`}>
-            <div className="course-card__media course-card__media--overlay">
+            <div className="course-card__media">
               <Image
                 src={card.imageSrc}
                 alt={card.imageAlt}
                 className="course-card__image"
-                width={720}
-                height={640}
-                sizes="(max-width: 959px) 100vw, (max-width: 1279px) 50vw, 25vw"
+                fill
+                sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 25vw"
               />
               <div className="course-card__media-overlay" />
               <div className="course-card__media-topline">
-                <span className="course-card__badge">{card.badge}</span>
-                <span className="course-card__subtitle">{card.subtitle}</span>
+                <span
+                  className={`course-card__category-badge course-card__category-badge--${card.tone}`}
+                >
+                  {card.categoryBadge}
+                </span>
               </div>
-              <div className="course-card__price-chip">
-                <strong className="course-card__price-value">{card.price}</strong>
-                <span className="course-card__price-unit">{card.meta}</span>
+              <div className="course-card__media-bottomline">
+                <span className="course-card__level-chip">{card.levelChip}</span>
               </div>
             </div>
 
             <div className="course-card__body">
               <div className="course-card__headline-copy">
                 <h3 className="course-card__title">{card.title}</h3>
+                <p className="course-card__subtitle">{card.subtitle}</p>
                 <p className="course-card__desc">{card.description}</p>
               </div>
 
+              <div className="course-card__meta-row">
+                <span className="course-card__meta">
+                  <ClockIcon className="course-card__meta-icon" />
+                  {card.meta}
+                </span>
+                <strong className="course-card__price">{card.price}</strong>
+              </div>
+
               <div className="course-card__actions">
-                <a
+                <Link
                   href={card.href}
-                  className="course-card__action course-card__action--link"
+                  className="course-card__cta course-card__cta--primary"
                   onClick={() =>
                     trackEvent("cta_click", {
                       cta_name: "xem_khoa_hoc",
@@ -270,13 +286,13 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
                   }
                 >
                   Xem chi tiết
-                  <ArrowRightIcon className="course-card__action-icon" />
-                </a>
+                  <ArrowRightIcon className="course-card__cta-icon" />
+                </Link>
 
                 {CARD_LEVEL_MAP[card.id] ? (
                   <button
                     type="button"
-                    className="course-card__action course-card__action--schedule"
+                    className="course-card__cta course-card__cta--ghost"
                     onClick={() => {
                       setCourseIntent(CARD_LEVEL_MAP[card.id]!);
                       trackEvent("cta_click", {

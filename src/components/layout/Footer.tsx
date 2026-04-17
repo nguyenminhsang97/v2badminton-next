@@ -31,6 +31,8 @@ export function Footer({ siteSettings }: FooterProps) {
   const featuredRoutes = coreRoutes.filter((route) =>
     [
       "/hoc-cau-long-cho-nguoi-moi/",
+      "/lop-cau-long-binh-thanh/",
+      "/lop-cau-long-thu-duc/",
       "/lop-cau-long-tre-em/",
       "/lop-cau-long-cho-nguoi-di-lam/",
       "/cau-long-doanh-nghiep/",
