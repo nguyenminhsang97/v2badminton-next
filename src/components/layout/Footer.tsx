@@ -55,8 +55,8 @@ export function Footer({ siteSettings }: FooterProps) {
             </div>
           </div>
           <p className="site-footer__brand-copy">
-            Lộ trình học cầu lông rõ ràng cho người mới, trẻ em, người đi làm và
-            doanh nghiệp tại Bình Thạnh và Thủ Đức.
+            Lớp cầu lông cho trẻ em, người mới, người đi làm và doanh nghiệp tại Bình Thạnh
+            &amp; Thủ Đức.
           </p>
           <div className="site-footer__socials">
             <a
