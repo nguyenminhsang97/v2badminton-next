@@ -42,10 +42,10 @@ export function ContactSection({
 
       <div className="section__header">
         <p className="section__eyebrow">Đăng ký & tư vấn</p>
-        <h2 className="section__title">LIÊN HỆ</h2>
+        <h2 className="section__title">Để lại thông tin một lần</h2>
         <p className="section__subtitle">
-          Để lại thông tin một lần để V2 gọi lại đúng lịch, đúng sân và đúng nhu cầu bạn đã chọn ở
-          các phần bên trên.
+          V2 sẽ gọi lại đúng sân, đúng lịch và đúng nhu cầu bạn đã chọn ở các phần bên
+          trên.
         </p>
       </div>
 
@@ -58,10 +58,10 @@ export function ContactSection({
 
         <aside className="contact-direct">
           <div className="contact-direct__header">
-            <h3 className="contact-direct__title">Nếu cần chốt nhanh hơn</h3>
+            <h3 className="contact-direct__title">Muốn chốt nhanh hơn?</h3>
             <p className="contact-direct__intro">
-              Muốn chốt nhanh sân, lịch học hoặc hỏi riêng về lộ trình? Gọi, nhắn Zalo hoặc
-              Facebook đều được.
+              Gọi, nhắn Zalo hoặc Facebook nếu bạn muốn hỏi nhanh về sân, lịch hoặc lộ
+              trình phù hợp.
             </p>
           </div>
 

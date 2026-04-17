@@ -4,9 +4,30 @@
   background: transparent;
 }
 
+.locations-section {
+  padding-top: 64px;
+  padding-bottom: 72px;
+}
+
+.faq-section {
+  padding-top: 60px;
+  padding-bottom: 68px;
+}
+
+.contact-section {
+  padding-top: 68px;
+  padding-bottom: 84px;
+}
+
+.locations-section .section__header,
+.faq-section .section__header,
+.contact-section .section__header {
+  gap: 14px;
+}
+
 .locations-grid--figma {
   display: grid;
-  gap: 28px;
+  gap: 24px;
 }
 
 .locations-grid--compact {
@@ -127,7 +148,7 @@
 }
 
 .faq-item summary {
-  padding: 20px 22px;
+  padding: 18px 22px;
   color: var(--s5-primary-strong);
   font-size: 1rem;
   font-weight: 700;
@@ -149,12 +170,12 @@
 
 .contact-section__body {
   display: grid;
-  gap: 20px;
+  gap: 22px;
 }
 
 .contact-form-shell,
 .contact-direct {
-  padding: 24px;
+  padding: 26px;
   border-radius: 28px;
   background: var(--s5-surface);
   border: 1px solid var(--s5-border);
@@ -195,7 +216,7 @@
 .contact-direct__intro {
   margin: 0;
   color: var(--s5-muted);
-  line-height: 1.68;
+  line-height: 1.62;
 }
 
 .contact-form__grid,
@@ -371,6 +392,21 @@
 }
 
 @media (max-width: 959px) {
+  .locations-section {
+    padding-top: 52px;
+    padding-bottom: 58px;
+  }
+
+  .faq-section {
+    padding-top: 52px;
+    padding-bottom: 58px;
+  }
+
+  .contact-section {
+    padding-top: 56px;
+    padding-bottom: 72px;
+  }
+
   .contact-form-shell,
   .contact-direct {
     padding: 22px;

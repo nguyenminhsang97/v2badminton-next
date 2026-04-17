@@ -106,7 +106,7 @@ export const courtLocations: readonly CourtLocation[] = [
     addressLocality: "Hiệp Bình",
     addressRegion: "Hồ Chí Minh",
     addressCountry: "VN",
-    mapsUrl: "https://share.google/5w1gPPvDQbyTm3CxB",
+    mapsUrl: "https://maps.app.goo.gl/pU2Zr72N1s612v5b7",
     mapsLabel: "Xem đường đi trên Google Maps",
     geo: { lat: 10.84495, lng: 106.70385 },
     image: "/images/phuc-loc.webp",
