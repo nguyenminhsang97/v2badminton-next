@@ -8,7 +8,7 @@ import { ArrowRightIcon, ClockIcon } from "@/components/ui/BrandIcons";
 import {
   useHomepageBusinessMode,
   useHomepageConversionIntent,
-} from "./HomepageConversionProvider";
+} from "../conversion/HomepageConversionProvider";
 
 type CourseCardId =
   | "course-kids"

@@ -33,11 +33,11 @@ import type { SiteChromeSettings } from "@/components/layout/siteSettings";
 import {
   useHomepageBusinessMode,
   useHomepageConversionIntent,
-} from "./HomepageConversionProvider";
+} from "../conversion/HomepageConversionProvider";
 import {
   buildLegacyCourtOptions,
   buildLegacyTimeSlotOptions,
-} from "./legacyScheduleCompatibility";
+} from "../compat/legacyScheduleCompatibility";
 import type {
   HomepageLocation,
   HomepageScheduleBlock,

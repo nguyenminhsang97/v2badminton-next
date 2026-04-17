@@ -5,12 +5,12 @@ import type { SanityScheduleBlock, SanityScheduleLevel } from "@/lib/sanity";
 import {
   useHomepageConversionIntent,
   type SchedulePrefill,
-} from "./HomepageConversionProvider";
+} from "../conversion/HomepageConversionProvider";
 import {
   LEGACY_COURT_TAB_ORDER,
   isLegacyTimeSlotId,
   resolveLegacyCourtId,
-} from "./legacyScheduleCompatibility";
+} from "../compat/legacyScheduleCompatibility";
 import type { HomepageScheduleSectionProps } from "./sectionProps";
 
 const ALL_TAB_ID = "__all__";
