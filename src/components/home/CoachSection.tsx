@@ -63,11 +63,11 @@ export function CoachSection({ coaches }: HomepageCoachSectionProps) {
   return (
     <section className="section coach-section" id="hlv">
       <div className="section__header">
-        <p className="section__eyebrow">Ai sẽ đồng hành cùng bạn</p>
-        <h2 className="section__title">HLV theo sát từng nhóm trình độ, không dạy kiểu đại trà</h2>
+        <p className="section__eyebrow">HLV đồng hành</p>
+        <h2 className="section__title">Đội ngũ theo sát từng nhóm học viên</h2>
         <p className="section__desc">
-          Mỗi HLV ở V2 giữ một vai trò rõ ràng: người kèm trẻ em, người giữ nhịp cho lớp tối hoặc
-          người phụ trách lộ trình 1 kèm 1.
+          Mỗi HLV giữ một vai trò rõ ràng để buổi học bám đúng trình độ, mục tiêu và nhịp tiến bộ
+          của từng nhóm.
         </p>
       </div>
 
@@ -78,7 +78,7 @@ export function CoachSection({ coaches }: HomepageCoachSectionProps) {
           const photoSrc = coach.photoUrl ?? fallbackImage;
           const photoAlt = coach.photoAlt ?? `${coach.name} tại V2 Badminton`;
           const credentials =
-            COACH_CREDENTIALS[index % COACH_CREDENTIALS.length];
+            COACH_CREDENTIALS[index % COACH_CREDENTIALS.length].slice(0, 2);
           const summary = COACH_SUMMARY[index % COACH_SUMMARY.length];
 
           return (
@@ -109,12 +109,7 @@ export function CoachSection({ coaches }: HomepageCoachSectionProps) {
                   ))}
                 </div>
 
-                <blockquote className="coach-card__quote">
-                  <span className="coach-card__quote-mark" aria-hidden="true">
-                    “
-                  </span>
-                  <span>{coach.approach}</span>
-                </blockquote>
+                <p className="coach-card__focus">{summary}</p>
 
                 <footer className="coach-card__footer">
                   <div className="coach-card__stars" aria-label="Đánh giá 5 sao">
@@ -124,7 +119,6 @@ export function CoachSection({ coaches }: HomepageCoachSectionProps) {
                     <StarIcon className="coach-card__star" />
                     <StarIcon className="coach-card__star" />
                   </div>
-                  <span className="coach-card__summary">{summary}</span>
                 </footer>
               </div>
             </article>
