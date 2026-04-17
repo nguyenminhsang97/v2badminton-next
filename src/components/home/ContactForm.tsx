@@ -18,7 +18,6 @@ import {
   EMPTY_LEAD_FORM_VALUES,
   INITIAL_SUBMIT_LEAD_RESULT,
 } from "@/lib/leadSubmission";
-import type { SanityLocation, SanityScheduleBlock } from "@/lib/sanity";
 import type { ScheduleLevel } from "@/lib/schedule";
 import {
   trackEvent,
@@ -39,6 +38,10 @@ import {
   buildLegacyCourtOptions,
   buildLegacyTimeSlotOptions,
 } from "./legacyScheduleCompatibility";
+import type {
+  HomepageLocation,
+  HomepageScheduleBlock,
+} from "@/domain/homepage";
 
 type FormValues = LeadFormValues & {
   _gotcha: string;
@@ -48,8 +51,8 @@ type FormErrors = LeadFieldErrors;
 type SubmitState = "idle" | "submitting" | "success" | "error";
 type ContactFormProps = {
   contactSettings: SiteChromeSettings;
-  locations: SanityLocation[];
-  scheduleBlocks: SanityScheduleBlock[];
+  locations: HomepageLocation[];
+  scheduleBlocks: HomepageScheduleBlock[];
 };
 
 const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";

@@ -15,6 +15,14 @@ import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { WhySection } from "@/components/home/WhySection";
 import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
 import { HOMEPAGE_TESTIMONIAL_FALLBACKS } from "@/content/homepage-testimonials.fallback";
+import {
+  toHomepageCoaches,
+  toHomepageFaqs,
+  toHomepageHeroCampaign,
+  toHomepageLocations,
+  toHomepageScheduleBlocks,
+  toHomepageTestimonials,
+} from "@/domain/homepage";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { buildMetadata } from "@/lib/routes";
 import {
@@ -59,8 +67,14 @@ export default async function Home() {
     ]);
 
   const courseSchemas = buildCourseSchemas(pricingTiers);
-  const homepageTestimonials =
-    testimonials.length > 0 ? testimonials : HOMEPAGE_TESTIMONIAL_FALLBACKS;
+  const homepageCampaign = toHomepageHeroCampaign(campaign);
+  const homepageCoaches = toHomepageCoaches(coaches);
+  const homepageFaqs = toHomepageFaqs(faqs);
+  const homepageLocations = toHomepageLocations(locations);
+  const homepageScheduleBlocks = toHomepageScheduleBlocks(scheduleBlocks);
+  const homepageTestimonials = toHomepageTestimonials(
+    testimonials.length > 0 ? testimonials : HOMEPAGE_TESTIMONIAL_FALLBACKS,
+  );
 
   return (
     <>
@@ -78,22 +92,25 @@ export default async function Home() {
           <HomepageBusinessModeInitializer />
         </Suspense>
         <div className="home-page">
-          <HeroSection campaign={campaign} />
+          <HeroSection campaign={homepageCampaign} />
           <StatsBar />
           <CourseSection pricingTiers={pricingTiers} />
           <WhySection />
-          <CoachSection coaches={coaches} />
+          <CoachSection coaches={homepageCoaches} />
           <TestimonialsSection testimonials={homepageTestimonials} />
-          <ScheduleSection scheduleBlocks={scheduleBlocks} />
-          <LocationsSection locations={locations} siteSettings={chromeSettings} />
-          <FaqSection faqs={faqs} />
+          <ScheduleSection scheduleBlocks={homepageScheduleBlocks} />
+          <LocationsSection
+            locations={homepageLocations}
+            siteSettings={chromeSettings}
+          />
+          <FaqSection faqs={homepageFaqs} />
           <ContactFormErrorBoundary>
             <section className="section contact-section" id="lien-he">
               <HomepageScrollCoordinator />
               <ContactForm
                 contactSettings={chromeSettings}
-                locations={locations}
-                scheduleBlocks={scheduleBlocks}
+                locations={homepageLocations}
+                scheduleBlocks={homepageScheduleBlocks}
               />
             </section>
           </ContactFormErrorBoundary>

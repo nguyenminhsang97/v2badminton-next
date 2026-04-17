@@ -1,8 +1,8 @@
 import { MapPinIcon } from "@/components/ui/BrandIcons";
-import type { SanityLocation } from "@/lib/sanity";
+import type { HomepageLocation } from "@/domain/homepage";
 
 export type LocationsGridProps = {
-  locations: SanityLocation[];
+  locations: HomepageLocation[];
   showSupportCard?: boolean;
 };
 

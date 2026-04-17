@@ -1,15 +1,15 @@
 import { PortableText } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
-import type { SanityFaq } from "@/lib/sanity";
+import type { HomepageFaq } from "@/domain/homepage";
 
 export type FaqListProps = {
-  faqs: SanityFaq[];
+  faqs: HomepageFaq[];
 };
 
 function FaqAnswer({
   answer,
   answerPlainText,
-}: Pick<SanityFaq, "answer" | "answerPlainText">) {
+}: Pick<HomepageFaq, "answer" | "answerPlainText">) {
   if (answer.length === 0) {
     return <p>{answerPlainText}</p>;
   }

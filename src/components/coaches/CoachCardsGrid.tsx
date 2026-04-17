@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { CheckBadgeIcon, StarIcon } from "@/components/ui/BrandIcons";
-import type { SanityCoach } from "@/lib/sanity";
+import type { HomepageCoach } from "@/domain/homepage";
 
 const FALLBACK_COACH_IMAGES = [
   "/images/course-basic.webp",
@@ -8,7 +8,7 @@ const FALLBACK_COACH_IMAGES = [
   "/images/course-enterprise.webp",
 ] as const;
 
-export function getUsableCoaches(coaches: SanityCoach[]): SanityCoach[] {
+export function getUsableCoaches(coaches: HomepageCoach[]): HomepageCoach[] {
   return coaches.filter((coach) =>
     Boolean(
       coach.name?.trim() ||
@@ -20,7 +20,7 @@ export function getUsableCoaches(coaches: SanityCoach[]): SanityCoach[] {
 }
 
 type CoachCardsGridProps = {
-  coaches: SanityCoach[];
+  coaches: HomepageCoach[];
 };
 
 export function CoachCardsGrid({ coaches }: CoachCardsGridProps) {

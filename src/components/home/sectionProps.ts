@@ -1,40 +1,40 @@
-import type { SiteChromeSettings } from "@/components/layout/siteSettings";
 import type {
-  SanityActiveCampaign,
-  SanityCoach,
-  SanityFaq,
-  SanityLocation,
-  SanityScheduleBlock,
-  SanityTestimonial,
-} from "@/lib/sanity";
+  HomepageCoach,
+  HomepageFaq,
+  HomepageHeroCampaign,
+  HomepageLocation,
+  HomepageScheduleBlock,
+  HomepageTestimonial,
+} from "@/domain/homepage";
+import type { SiteChromeSettings } from "@/components/layout/siteSettings";
 
 export type HomepageHeroSectionProps = {
-  campaign: SanityActiveCampaign | null;
+  campaign: HomepageHeroCampaign | null;
 };
 
 export type HomepageCoachSectionProps = {
-  coaches: SanityCoach[];
+  coaches: HomepageCoach[];
 };
 
 export type HomepageFaqSectionProps = {
-  faqs: SanityFaq[];
+  faqs: HomepageFaq[];
 };
 
 export type HomepageTestimonialsSectionProps = {
-  testimonials: SanityTestimonial[];
+  testimonials: HomepageTestimonial[];
 };
 
 export type HomepageScheduleSectionProps = {
-  scheduleBlocks: SanityScheduleBlock[];
+  scheduleBlocks: HomepageScheduleBlock[];
 };
 
 export type HomepageLocationsSectionProps = {
-  locations: SanityLocation[];
+  locations: HomepageLocation[];
   siteSettings: SiteChromeSettings;
 };
 
 export type HomepageContactSectionProps = {
   siteSettings: SiteChromeSettings;
-  locations: SanityLocation[];
-  scheduleBlocks: SanityScheduleBlock[];
+  locations: HomepageLocation[];
+  scheduleBlocks: HomepageScheduleBlock[];
 };

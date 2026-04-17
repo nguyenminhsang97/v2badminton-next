@@ -1,6 +1,6 @@
 import type { CourtId } from "@/lib/locations";
 import type { TimeSlotId } from "@/lib/schedule";
-import type { SanityLocation, SanityScheduleBlock } from "@/lib/sanity";
+import type { HomepageLocation, HomepageScheduleBlock } from "@/domain/homepage";
 
 export const LEGACY_COURT_TAB_ORDER: Record<CourtId, number> = {
   hue_thien: 1,
@@ -49,8 +49,8 @@ function normalizeLocationKey(value: string): string {
 
 export function resolveLegacyCourtId(
   input:
-    | Pick<SanityLocation, "id" | "shortName" | "name">
-    | Pick<SanityScheduleBlock, "locationId" | "locationShortName" | "locationName">,
+    | Pick<HomepageLocation, "id" | "shortName" | "name">
+    | Pick<HomepageScheduleBlock, "locationId" | "locationShortName" | "locationName">,
 ): CourtId | null {
   const candidates =
     "locationId" in input
@@ -71,7 +71,7 @@ export function isLegacyTimeSlotId(value: string): value is TimeSlotId {
   return VALID_TIME_SLOT_IDS.has(value as TimeSlotId);
 }
 
-export function buildLegacyCourtOptions(locations: SanityLocation[]) {
+export function buildLegacyCourtOptions(locations: HomepageLocation[]) {
   const seen = new Set<CourtId>();
 
   return locations.flatMap((location) => {
@@ -92,7 +92,9 @@ export function buildLegacyCourtOptions(locations: SanityLocation[]) {
   });
 }
 
-export function buildLegacyTimeSlotOptions(scheduleBlocks: SanityScheduleBlock[]) {
+export function buildLegacyTimeSlotOptions(
+  scheduleBlocks: HomepageScheduleBlock[],
+) {
   const options = new Map<TimeSlotId, string>();
 
   for (const block of scheduleBlocks) {
