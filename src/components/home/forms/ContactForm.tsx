@@ -238,10 +238,6 @@ export function ContactForm({
           {businessMode ? "Chế độ doanh nghiệp" : "Đăng ký nhanh"}
         </p>
         <h2 className="contact-form-shell__title">{businessHeading}</h2>
-        <p className="contact-form-shell__subtitle">
-          Điền thông tin cần thiết. Lịch học, sân tập và lời nhắn sẽ được lưu
-          sẵn khi bạn chọn từ lịch.
-        </p>
       </div>
 
       {submitState === "success" ? (
