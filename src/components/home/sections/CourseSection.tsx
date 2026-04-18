@@ -7,7 +7,7 @@ import {
   useHomepageBusinessMode,
   useHomepageConversionIntent,
 } from "@/components/home/conversion/HomepageConversionProvider";
-import { HOME_SECTION_IDS } from "@/lib/anchors";
+import { HOME_SECTION_IDS, toHash } from "@/lib/anchors";
 import type { SanityPricingTier } from "@/lib/sanity";
 import { trackEvent } from "@/lib/tracking";
 import { EnterpriseTeaser } from "./EnterpriseTeaser";
@@ -19,6 +19,11 @@ type CourseCardId =
   | "course-working"
   | "course-private";
 
+type CoursePriceDisplay = {
+  amount: string;
+  suffix: string;
+};
+
 type CourseCardDef = {
   id: CourseCardId;
   categoryBadge: string;
@@ -26,7 +31,7 @@ type CourseCardDef = {
   title: string;
   subtitle: string;
   description: string;
-  price: string;
+  price: CoursePriceDisplay;
   meta: string;
   href: string;
   imageSrc: string;
@@ -48,7 +53,9 @@ function formatVnd(value: number): string {
   return new Intl.NumberFormat("vi-VN").format(value);
 }
 
-function findFromGroupPrice(tiers: readonly SanityPricingTier[]): string {
+function findFromGroupPrice(
+  tiers: readonly SanityPricingTier[],
+): CoursePriceDisplay {
   const groupPrices = tiers
     .filter(
       (tier): tier is Extract<SanityPricingTier, { kind: "group" }> =>
@@ -57,17 +64,37 @@ function findFromGroupPrice(tiers: readonly SanityPricingTier[]): string {
     .map((tier) => tier.pricePerMonth);
 
   if (groupPrices.length === 0) {
-    return "Tư vấn trực tiếp";
+    return {
+      amount: "Tư vấn",
+      suffix: "trực tiếp",
+    };
   }
 
-  return `Từ ${formatVnd(Math.min(...groupPrices))}/tháng`;
+  return {
+    amount: `${formatVnd(Math.min(...groupPrices))}đ`,
+    suffix: "/tháng",
+  };
 }
 
-function findPrivatePrice(tiers: readonly SanityPricingTier[]): string {
-  return (
-    tiers.find((tier) => tier.kind === "private")?.displayPrice ??
-    "Tư vấn trực tiếp"
+function findPrivatePrice(
+  tiers: readonly SanityPricingTier[],
+): CoursePriceDisplay {
+  const privateTier = tiers.find(
+    (tier): tier is Extract<SanityPricingTier, { kind: "private" }> =>
+      tier.kind === "private",
   );
+
+  if (!privateTier) {
+    return {
+      amount: "Tư vấn",
+      suffix: "trực tiếp",
+    };
+  }
+
+  return {
+    amount: `${formatVnd(privateTier.pricePerHour)}đ`,
+    suffix: "/giờ",
+  };
 }
 
 export function CourseSection({ pricingTiers }: CourseSectionProps) {
@@ -83,10 +110,9 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
       levelChip: "Thiếu nhi",
       title: "Thiếu nhi cơ bản",
       subtitle: "7 - 12 tuổi",
-      description:
-        "Xây nền kỹ thuật, phản xạ và thói quen vận động đều ngay từ những buổi đầu tiên.",
+      description: "Xây nền kỹ thuật và phản xạ cho những buổi đầu tiên.",
       price: groupPrice,
-      meta: "3 buổi/tuần · Nhóm nhỏ",
+      meta: "3 buổi/tuần",
       href: "/lop-cau-long-tre-em/",
       imageSrc: "/images/course-basic.webp",
       imageAlt: "Hướng dẫn học viên nhỏ tuổi tập cầu lông với huấn luyện viên",
@@ -97,11 +123,10 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
       categoryBadge: "Dễ bắt đầu",
       levelChip: "Mới bắt đầu",
       title: "Người lớn mới học",
-      subtitle: "Cầm vợt tới di chuyển",
-      description:
-        "Lộ trình rõ ràng để theo kịp lớp nhỏ, sửa lỗi sớm và tự tin hơn chỉ sau vài tuần.",
+      subtitle: "Mới bắt đầu",
+      description: "Lộ trình rõ ràng cho người mới cầm vợt và muốn theo đều.",
       price: groupPrice,
-      meta: "2 - 3 buổi/tuần · 4 - 6 người",
+      meta: "2 - 3 buổi/tuần",
       href: "/hoc-cau-long-cho-nguoi-moi/",
       imageSrc: "/images/course-advanced.webp",
       imageAlt: "Nhóm học viên người lớn đang tập cầu lông cùng huấn luyện viên",
@@ -111,12 +136,11 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
       id: "course-working",
       categoryBadge: "Linh hoạt giờ học",
       levelChip: "Đi làm",
-      title: "Lớp tối và cuối tuần",
-      subtitle: "Giữ nhịp tập đều",
-      description:
-        "Ưu tiên khung giờ dễ theo cho người bận, chọn sân gần và giữ nhịp tập dài hơi hơn.",
+      title: "Người đi làm",
+      subtitle: "Tối & cuối tuần",
+      description: "Giữ nhịp tập đều với khung giờ sau giờ làm và cuối tuần.",
       price: groupPrice,
-      meta: "Ca tối · Cuối tuần",
+      meta: "Tối & cuối tuần",
       href: "/lop-cau-long-cho-nguoi-di-lam/",
       imageSrc: "/images/green.webp",
       imageAlt: "Học viên tham gia lớp cầu lông buổi tối tại sân trong nhà",
@@ -126,12 +150,11 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
       id: "course-private",
       categoryBadge: "Theo lịch riêng",
       levelChip: "Mọi trình độ",
-      title: "1 kèm 1 cá nhân hóa",
+      title: "1 kèm 1",
       subtitle: "Theo mục tiêu riêng",
-      description:
-        "HLV theo sát từng lỗi và mục tiêu cá nhân để bạn tăng tốc đúng phần mình cần.",
+      description: "HLV theo sát mục tiêu riêng và tăng tốc đúng phần bạn cần.",
       price: privatePrice,
-      meta: "Linh hoạt theo lịch cá nhân",
+      meta: "Linh hoạt",
       href: "/hoc-cau-long-1-kem-1/",
       imageSrc: "/images/course-enterprise.webp",
       imageAlt: "Hướng dẫn học viên trong buổi học 1 kèm 1",
@@ -186,7 +209,14 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
                   <ClockIcon className="course-card__meta-icon" />
                   {card.meta}
                 </span>
-                <strong className="course-card__price">{card.price}</strong>
+                <span className="course-card__price">
+                  <strong className="course-card__price-amount">
+                    {card.price.amount}
+                  </strong>
+                  <span className="course-card__price-suffix">
+                    {card.price.suffix}
+                  </span>
+                </span>
               </div>
 
               <div className="course-card__actions">
@@ -222,7 +252,22 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
                   >
                     Xem lịch phù hợp
                   </button>
-                ) : null}
+                ) : (
+                  <Link
+                    href={toHash(HOME_SECTION_IDS.contact)}
+                    className="course-card__cta course-card__cta--ghost"
+                    onClick={() =>
+                      trackEvent("cta_click", {
+                        cta_name: "xem_khoa_hoc",
+                        cta_location: "course_private_contact",
+                        page_type: "homepage",
+                        page_path: "/",
+                      })
+                    }
+                  >
+                    Trao đổi lịch riêng
+                  </Link>
+                )}
               </div>
             </div>
           </article>
