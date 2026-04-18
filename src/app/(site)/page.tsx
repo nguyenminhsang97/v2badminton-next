@@ -25,6 +25,7 @@ import {
   toHomepageTestimonials,
 } from "@/domain/homepage";
 import { JsonLd } from "@/components/ui/JsonLd";
+import { HOME_SECTION_IDS } from "@/lib/anchors";
 import { buildMetadata } from "@/lib/routes";
 import {
   getActiveCampaign,
@@ -108,7 +109,10 @@ export default async function Home() {
           />
           <FaqSection faqs={homepageFaqs} />
           <ContactFormErrorBoundary>
-            <section className="section contact-section" id="lien-he">
+            <section
+              className="section contact-section"
+              id={HOME_SECTION_IDS.contact}
+            >
               <HomepageScrollCoordinator />
               <ContactForm
                 contactSettings={chromeSettings}

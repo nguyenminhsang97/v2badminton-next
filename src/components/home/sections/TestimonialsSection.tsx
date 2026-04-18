@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { StarIcon } from "@/components/ui/BrandIcons";
+import { HOME_SECTION_IDS } from "@/lib/anchors";
 import type { HomepageTestimonialsSectionProps } from "./sectionProps";
 
 const DEFAULT_VISIBLE_COUNT = 3;
@@ -41,7 +42,7 @@ export function TestimonialsSection({
     : testimonials.slice(0, DEFAULT_VISIBLE_COUNT);
 
   return (
-    <section className="section testimonials-section" id="hoc-vien-noi-gi">
+    <section className="section testimonials-section" id={HOME_SECTION_IDS.testimonials}>
       <div className="section__header">
         <p className="section__eyebrow">Cảm nhận học viên</p>
         <h2 className="section__title">

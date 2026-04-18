@@ -2,6 +2,7 @@
 
 import { PlayIcon, PhoneIcon } from "@/components/ui/BrandIcons";
 import type { SiteChromeSettings } from "@/components/layout/siteSettings";
+import { HOME_SECTION_IDS, toHash } from "@/lib/anchors";
 import { trackEvent } from "@/lib/tracking";
 
 type QuickContactCardProps = {
@@ -21,7 +22,7 @@ export function QuickContactCard({ contactSettings }: QuickContactCardProps) {
 
       <div className="quick-contact-card__actions">
         <a
-          href="#lien-he"
+          href={toHash(HOME_SECTION_IDS.contact)}
           className="btn btn--primary btn--lg"
           onClick={() =>
             trackEvent("cta_click", {

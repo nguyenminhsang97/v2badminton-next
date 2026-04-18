@@ -5,6 +5,7 @@ import type { PortableTextBlock } from "@portabletext/types";
 import { FaqList } from "@/components/blocks/FaqList";
 import { LocationsGrid } from "@/components/blocks/LocationsGrid";
 import { PricingCards } from "@/components/blocks/PricingCards";
+import { HOME_SECTION_IDS, toHash, toHomepageHash } from "@/lib/anchors";
 import type { CoreRoutePath } from "@/lib/routes";
 import type { SanityMoneyPage } from "@/lib/sanity";
 import { Breadcrumb } from "./Breadcrumb";
@@ -53,8 +54,8 @@ function buildMoneyPageFacts(page: SanityMoneyPage): string[] {
 export function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) {
   const ctaHref =
     page.audience === "doanh_nghiep"
-      ? "/?mode=business#lien-he"
-      : "/#lien-he";
+      ? `/?mode=business${toHash(HOME_SECTION_IDS.contact)}`
+      : toHomepageHash(HOME_SECTION_IDS.contact);
   const facts = buildMoneyPageFacts(page);
   const heroImageUrl = page.heroImageUrl ?? null;
   const hasHeroImage = heroImageUrl !== null;
@@ -106,8 +107,8 @@ export function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) {
           </div>
           <PricingCards
             tiers={page.relatedPricing}
-            ctaHref="/#lien-he"
-            enterpriseCtaHref="/?mode=business#lien-he"
+            ctaHref={toHomepageHash(HOME_SECTION_IDS.contact)}
+            enterpriseCtaHref={`/?mode=business${toHash(HOME_SECTION_IDS.contact)}`}
             trackingLocation={`money_page:${page.slug}:pricing`}
           />
         </section>

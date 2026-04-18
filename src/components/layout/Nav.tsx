@@ -3,18 +3,35 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { FeatherMarkIcon, PhoneIcon } from "@/components/ui/BrandIcons";
 import type { SiteChromeSettings } from "@/components/layout/siteSettings";
+import { FeatherMarkIcon, PhoneIcon } from "@/components/ui/BrandIcons";
+import { HOME_SECTION_IDS, toHomepageHash } from "@/lib/anchors";
 import { coreRoutes } from "@/lib/routes";
 import { trackEvent } from "@/lib/tracking";
 
 const primaryLinks = [
   { href: "/", label: "Trang chủ", kind: "route" as const },
-  { href: "/#khoa-hoc", label: "Khóa học", kind: "anchor" as const },
-  { href: "/#hlv", label: "Huấn luyện viên", kind: "anchor" as const },
-  { href: "/#lich-hoc", label: "Lịch tập", kind: "anchor" as const },
+  {
+    href: toHomepageHash(HOME_SECTION_IDS.courses),
+    label: "Khóa học",
+    kind: "anchor" as const,
+  },
+  {
+    href: toHomepageHash(HOME_SECTION_IDS.coaches),
+    label: "Huấn luyện viên",
+    kind: "anchor" as const,
+  },
+  {
+    href: toHomepageHash(HOME_SECTION_IDS.schedule),
+    label: "Lịch tập",
+    kind: "anchor" as const,
+  },
   { href: "/blog/", label: "Blog", kind: "route" as const },
-  { href: "/#lien-he", label: "Liên hệ", kind: "anchor" as const },
+  {
+    href: toHomepageHash(HOME_SECTION_IDS.contact),
+    label: "Liên hệ",
+    kind: "anchor" as const,
+  },
 ] as const;
 
 type NavProps = {
@@ -105,7 +122,7 @@ export function Nav({ siteSettings }: NavProps) {
               <strong>{siteSettings.phoneDisplay}</strong>
             </a>
             <Link
-              href="/#lien-he"
+              href={toHomepageHash(HOME_SECTION_IDS.contact)}
               className="site-nav__cta"
               data-cta-name="dang_ky_ngay"
               data-cta-location="nav"
@@ -142,7 +159,7 @@ export function Nav({ siteSettings }: NavProps) {
             </a>
 
             <Link
-              href="/#lien-he"
+              href={toHomepageHash(HOME_SECTION_IDS.contact)}
               className="site-nav__mobile-cta"
               data-cta-name="dang_ky_ngay"
               data-cta-location="nav"

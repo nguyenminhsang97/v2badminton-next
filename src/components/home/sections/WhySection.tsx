@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { HOME_SECTION_IDS } from "@/lib/anchors";
 import { ArrowRightIcon, CalendarIcon, MapPinIcon, UsersIcon } from "@/components/ui/BrandIcons";
 
 const DIFFERENTIATORS = [
@@ -26,7 +27,7 @@ const DIFFERENTIATORS = [
 
 export function WhySection() {
   return (
-    <section className="section why-section" id="gioi-thieu">
+    <section className="section why-section" id={HOME_SECTION_IDS.why}>
       <div className="why-section__layout">
         <div className="why-section__visual">
           <div className="why-section__images">

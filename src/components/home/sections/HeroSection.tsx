@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { StarIcon } from "@/components/ui/BrandIcons";
+import { HOME_SECTION_IDS, toHash } from "@/lib/anchors";
 import type { CtaName } from "@/lib/tracking";
 import type { HomepageHeroSectionProps } from "./sectionProps";
 import { HeroCtas } from "./HeroCtas";
@@ -14,7 +15,7 @@ export function HeroSection({ campaign }: HomepageHeroSectionProps) {
   const primaryCtaHref =
     campaign?.primaryCtaUrl ??
     (campaign?.linkedPageSlug ? `/${campaign.linkedPageSlug}/` : null) ??
-    "#lien-he";
+    toHash(HOME_SECTION_IDS.contact);
 
   const primaryCta: { href: string; label: string; trackingName: CtaName } = {
     href: primaryCtaHref,
@@ -23,13 +24,13 @@ export function HeroSection({ campaign }: HomepageHeroSectionProps) {
   };
 
   const secondaryCta: { href: string; label: string; trackingName: CtaName } = {
-    href: campaign?.secondaryCtaUrl ?? "#khoa-hoc",
+    href: campaign?.secondaryCtaUrl ?? toHash(HOME_SECTION_IDS.courses),
     label: campaign?.secondaryCtaLabel ?? "Xem các khóa học",
     trackingName: campaign ? "campaign_secondary" : "xem_khoa_hoc",
   };
 
   return (
-    <section className="hero" id="hero">
+    <section className="hero" id={HOME_SECTION_IDS.hero}>
       <div className="hero__shell">
         <div className="hero__backdrop">
           <Image
@@ -97,7 +98,7 @@ export function HeroSection({ campaign }: HomepageHeroSectionProps) {
           </div>
         </div>
 
-        <a href="#khoa-hoc" className="hero__scroll-indicator">
+        <a href={toHash(HOME_SECTION_IDS.courses)} className="hero__scroll-indicator">
           <span className="hero__scroll-mouse" aria-hidden="true">
             <span className="hero__scroll-wheel" />
           </span>

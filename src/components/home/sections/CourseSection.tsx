@@ -1,14 +1,17 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
-import type { SanityPricingTier } from "@/lib/sanity";
-import { trackEvent } from "@/lib/tracking";
+import Link from "next/link";
 import { ArrowRightIcon, ClockIcon } from "@/components/ui/BrandIcons";
 import {
   useHomepageBusinessMode,
   useHomepageConversionIntent,
-} from "../conversion/HomepageConversionProvider";
+} from "@/components/home/conversion/HomepageConversionProvider";
+import { HOME_SECTION_IDS } from "@/lib/anchors";
+import type { SanityPricingTier } from "@/lib/sanity";
+import { trackEvent } from "@/lib/tracking";
+import { EnterpriseTeaser } from "./EnterpriseTeaser";
+import { PricingStrip } from "./PricingStrip";
 
 type CourseCardId =
   | "course-kids"
@@ -47,7 +50,10 @@ function formatVnd(value: number): string {
 
 function findFromGroupPrice(tiers: readonly SanityPricingTier[]): string {
   const groupPrices = tiers
-    .filter((tier): tier is Extract<SanityPricingTier, { kind: "group" }> => tier.kind === "group")
+    .filter(
+      (tier): tier is Extract<SanityPricingTier, { kind: "group" }> =>
+        tier.kind === "group",
+    )
     .map((tier) => tier.pricePerMonth);
 
   if (groupPrices.length === 0) {
@@ -58,102 +64,9 @@ function findFromGroupPrice(tiers: readonly SanityPricingTier[]): string {
 }
 
 function findPrivatePrice(tiers: readonly SanityPricingTier[]): string {
-  return tiers.find((tier) => tier.kind === "private")?.displayPrice ?? "Tư vấn trực tiếp";
-}
-
-function getSortedPricingTiers(tiers: readonly SanityPricingTier[]) {
-  const groupTiers = tiers
-    .filter((tier): tier is Extract<SanityPricingTier, { kind: "group" }> => tier.kind === "group")
-    .sort((left, right) => {
-      if (left.sessionsPerWeek !== right.sessionsPerWeek) {
-        return left.sessionsPerWeek - right.sessionsPerWeek;
-      }
-
-      return left.pricePerMonth - right.pricePerMonth;
-    });
-
-  const privateTier =
-    tiers.find(
-      (tier): tier is Extract<SanityPricingTier, { kind: "private" }> =>
-        tier.kind === "private",
-    ) ?? null;
-
-  return {
-    groupTiers,
-    privateTier,
-  };
-}
-
-function buildPricingMeta(tier: Extract<SanityPricingTier, { kind: "group" }>): string {
-  const sessionsLabel = `${tier.sessionsPerWeek} buổi/tuần`;
-  return tier.groupSize ? `${sessionsLabel} · ${tier.groupSize}` : sessionsLabel;
-}
-
-function PricingStrip({ tiers }: { tiers: readonly SanityPricingTier[] }) {
-  const { groupTiers, privateTier } = getSortedPricingTiers(tiers);
-
   return (
-    <div className="pricing-strip" id="hoc-phi">
-      <div className="pricing-strip__header">
-        <p className="pricing-strip__eyebrow">Chi tiết học phí</p>
-        <h3 className="pricing-strip__title">4 mức học phí hiện tại</h3>
-      </div>
-      <div className="pricing-strip__grid">
-        {groupTiers.map((tier) => (
-          <article key={tier.id} className="pricing-strip__item">
-            <div className="pricing-strip__copy">
-              <strong className="pricing-strip__name">{tier.name}</strong>
-              <span className="pricing-strip__meta">{buildPricingMeta(tier)}</span>
-            </div>
-            <strong className="pricing-strip__price">{tier.displayPrice}</strong>
-          </article>
-        ))}
-        {privateTier ? (
-          <article className="pricing-strip__item pricing-strip__item--private">
-            <div className="pricing-strip__copy">
-              <strong className="pricing-strip__name">{privateTier.name}</strong>
-              <span className="pricing-strip__meta">Linh hoạt theo lịch riêng</span>
-            </div>
-            <strong className="pricing-strip__price">{privateTier.displayPrice}</strong>
-          </article>
-        ) : null}
-      </div>
-    </div>
-  );
-}
-
-function EnterpriseTeaser({ onRequestQuote }: { onRequestQuote: () => void }) {
-  return (
-    <div className="enterprise-teaser" id="doanh-nghiep">
-      <div className="enterprise-teaser__copy">
-        <span className="enterprise-teaser__badge">Doanh nghiệp</span>
-        <div className="enterprise-teaser__headline">
-          <h3 className="enterprise-teaser__title">Giải pháp cho doanh nghiệp</h3>
-          <p className="enterprise-teaser__desc">
-            Team building, lớp nội bộ hoặc hoạt động sức khỏe định kỳ, tư vấn theo quy mô
-            và ngân sách đội ngũ bạn.
-          </p>
-        </div>
-      </div>
-
-      <div className="enterprise-teaser__actions">
-        <button
-          type="button"
-          className="btn btn--primary"
-          onClick={() => {
-            onRequestQuote();
-            trackEvent("cta_click", {
-              cta_name: "nhan_bao_gia",
-              cta_location: "enterprise_teaser",
-              page_type: "homepage",
-              page_path: "/",
-            });
-          }}
-        >
-          Nhận báo giá
-        </button>
-      </div>
-    </div>
+    tiers.find((tier) => tier.kind === "private")?.displayPrice ??
+    "Tư vấn trực tiếp"
   );
 }
 
@@ -227,13 +140,13 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
   ];
 
   return (
-    <section className="section course-section" id="khoa-hoc">
+    <section className="section course-section" id={HOME_SECTION_IDS.courses}>
       <div className="section__header course-section__header">
         <p className="section__eyebrow">Chương trình & học phí</p>
         <h2 className="section__title">Chọn lộ trình phù hợp ngay từ buổi đầu</h2>
         <p className="section__desc">
-          4 lộ trình chính để bạn chọn nhanh theo nhu cầu, rồi so mức học phí ngay bên
-          dưới trước khi để lại thông tin.
+          4 lộ trình chính để bạn chọn nhanh theo nhu cầu, rồi so mức học phí ngay
+          bên dưới trước khi để lại thông tin.
         </p>
       </div>
 

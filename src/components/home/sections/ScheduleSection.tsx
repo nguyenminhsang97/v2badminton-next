@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { SanityScheduleBlock, SanityScheduleLevel } from "@/lib/sanity";
+import { HOME_SECTION_IDS, toHash } from "@/lib/anchors";
 import {
   useHomepageConversionIntent,
   type SchedulePrefill,
@@ -172,7 +173,7 @@ export function ScheduleSection({
   }
 
   return (
-    <section className="section schedule-section" id="lich-hoc">
+    <section className="section schedule-section" id={HOME_SECTION_IDS.schedule}>
       <div className="section__header">
         <p className="section__eyebrow">Thời khóa biểu</p>
         <h2 className="section__title">Lịch học linh hoạt 7 ngày trong tuần</h2>
@@ -228,7 +229,7 @@ export function ScheduleSection({
             >
               Xem toàn bộ lịch
             </button>
-            <a href="#lien-he" className="btn btn--primary">
+            <a href={toHash(HOME_SECTION_IDS.contact)} className="btn btn--primary">
               Liên hệ tư vấn
             </a>
           </div>

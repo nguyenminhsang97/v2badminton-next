@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { SiteChromeSettings } from "@/components/layout/siteSettings";
 import {
   FacebookIcon,
   FeatherMarkIcon,
@@ -6,7 +7,7 @@ import {
   MessageCircleIcon,
   PhoneIcon,
 } from "@/components/ui/BrandIcons";
-import type { SiteChromeSettings } from "@/components/layout/siteSettings";
+import { HOME_SECTION_IDS, toHomepageHash } from "@/lib/anchors";
 import { coreRoutes } from "@/lib/routes";
 import { siteConfig } from "@/lib/site";
 
@@ -16,16 +17,16 @@ type FooterProps = {
 
 const legalLinks = [
   { href: siteConfig.privacyPolicyPath, label: "Chính sách bảo mật" },
-  { href: "/#lien-he", label: "Điều khoản hỗ trợ" },
-  { href: "/#hoc-phi", label: "Học phí & hoàn phí" },
+  { href: toHomepageHash(HOME_SECTION_IDS.contact), label: "Điều khoản hỗ trợ" },
+  { href: toHomepageHash(HOME_SECTION_IDS.pricing), label: "Học phí & hoàn phí" },
 ] as const;
 
 export function Footer({ siteSettings }: FooterProps) {
   const currentYear = new Date().getFullYear();
   const academyLinks = [
-    { href: "/#khoa-hoc", label: "Khóa học" },
-    { href: "/#lich-hoc", label: "Lịch học" },
-    { href: "/#hoi-dap", label: "Hỏi đáp" },
+    { href: toHomepageHash(HOME_SECTION_IDS.courses), label: "Khóa học" },
+    { href: toHomepageHash(HOME_SECTION_IDS.schedule), label: "Lịch học" },
+    { href: toHomepageHash(HOME_SECTION_IDS.faq), label: "Hỏi đáp" },
     { href: "/huan-luyen-vien/", label: "Đội ngũ HLV" },
     { href: "/blog/", label: "Blog" },
   ] as const;
@@ -55,7 +56,8 @@ export function Footer({ siteSettings }: FooterProps) {
             </div>
           </div>
           <p className="site-footer__brand-copy">
-            Lớp cầu lông tại Bình Thạnh &amp; Thủ Đức cho trẻ em, người mới và người đi làm.
+            Lớp cầu lông tại Bình Thạnh &amp; Thủ Đức cho trẻ em, người mới và
+            người đi làm.
           </p>
           <div className="site-footer__socials">
             <a
@@ -135,8 +137,8 @@ export function Footer({ siteSettings }: FooterProps) {
 
         <div className="site-footer__meta">
           <span className="site-footer__meta-copy">
-            &copy; {currentYear} {siteSettings.siteName}. Mọi thông tin đăng ký được dùng để
-            tư vấn lớp học phù hợp.
+            &copy; {currentYear} {siteSettings.siteName}. Mọi thông tin đăng ký được
+            dùng để tư vấn lớp học phù hợp.
           </span>
           <div className="site-footer__legal-links">
             {legalLinks.map((link) => (
