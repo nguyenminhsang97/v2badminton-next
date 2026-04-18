@@ -79,12 +79,12 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
   const courseCards: CourseCardDef[] = [
     {
       id: "course-kids",
-      categoryBadge: "Thiếu nhi",
-      levelChip: "Mới học",
-      title: "Thiếu nhi nền tảng",
+      categoryBadge: "Phổ biến nhất",
+      levelChip: "Thiếu nhi",
+      title: "Thiếu nhi cơ bản",
       subtitle: "7 - 12 tuổi",
       description:
-        "Phát triển kỹ năng nền tảng, phản xạ và vận động theo nhịp dễ theo ngay từ buổi đầu.",
+        "Xây nền kỹ thuật, phản xạ và thói quen vận động đều ngay từ những buổi đầu tiên.",
       price: groupPrice,
       meta: "3 buổi/tuần · Nhóm nhỏ",
       href: "/lop-cau-long-tre-em/",
@@ -94,12 +94,12 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
     },
     {
       id: "course-beginner",
-      categoryBadge: "Người mới",
-      levelChip: "Cơ bản",
-      title: "Người lớn bắt đầu từ đầu",
+      categoryBadge: "Dễ bắt đầu",
+      levelChip: "Mới bắt đầu",
+      title: "Người lớn mới học",
       subtitle: "Cầm vợt tới di chuyển",
       description:
-        "Lộ trình rõ ràng cho người mới để theo kịp lớp nhỏ, sửa lỗi sớm và tự tin hơn sau vài tuần.",
+        "Lộ trình rõ ràng để theo kịp lớp nhỏ, sửa lỗi sớm và tự tin hơn chỉ sau vài tuần.",
       price: groupPrice,
       meta: "2 - 3 buổi/tuần · 4 - 6 người",
       href: "/hoc-cau-long-cho-nguoi-moi/",
@@ -109,12 +109,12 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
     },
     {
       id: "course-working",
-      categoryBadge: "Người đi làm",
-      levelChip: "Cơ bản - nâng cao",
+      categoryBadge: "Linh hoạt giờ học",
+      levelChip: "Đi làm",
       title: "Lớp tối và cuối tuần",
       subtitle: "Giữ nhịp tập đều",
       description:
-        "Ưu tiên khung giờ dễ theo cho người bận, chọn sân gần và giữ nhịp tập ổn định dài hơn.",
+        "Ưu tiên khung giờ dễ theo cho người bận, chọn sân gần và giữ nhịp tập dài hơi hơn.",
       price: groupPrice,
       meta: "Ca tối · Cuối tuần",
       href: "/lop-cau-long-cho-nguoi-di-lam/",
@@ -124,12 +124,12 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
     },
     {
       id: "course-private",
-      categoryBadge: "1 kèm 1",
+      categoryBadge: "Theo lịch riêng",
       levelChip: "Mọi trình độ",
-      title: "Lộ trình cá nhân hóa",
+      title: "1 kèm 1 cá nhân hóa",
       subtitle: "Theo mục tiêu riêng",
       description:
-        "HLV theo sát từng lỗi và mục tiêu cá nhân để bạn tăng tốc kỹ thuật theo lịch riêng của mình.",
+        "HLV theo sát từng lỗi và mục tiêu cá nhân để bạn tăng tốc đúng phần mình cần.",
       price: privatePrice,
       meta: "Linh hoạt theo lịch cá nhân",
       href: "/hoc-cau-long-1-kem-1/",
