@@ -1,15 +1,17 @@
 import { MapPinIcon } from "@/components/ui/BrandIcons";
 import type { HomepageLocation } from "@/domain/homepage";
-import { HOME_SECTION_IDS, toHash } from "@/lib/anchors";
+import { HOME_SECTION_IDS, toHomepageHash } from "@/lib/anchors";
 
 export type LocationsGridProps = {
   locations: HomepageLocation[];
   showSupportCard?: boolean;
+  supportCardHref?: string;
 };
 
 export function LocationsGrid({
   locations,
   showSupportCard = true,
+  supportCardHref = toHomepageHash(HOME_SECTION_IDS.contact),
 }: LocationsGridProps) {
   return (
     <div
@@ -52,7 +54,7 @@ export function LocationsGrid({
             Chỉ cần cho biết khu vực, khung giờ và mục tiêu học. V2 sẽ gọi lại để gợi ý sân phù
             hợp, lớp đang mở và cách bắt đầu dễ nhất cho bạn hoặc cho con.
           </p>
-          <a href={toHash(HOME_SECTION_IDS.contact)} className="btn btn--primary btn--lg">
+          <a href={supportCardHref} className="btn btn--primary btn--lg">
             Đăng ký học thử
           </a>
         </aside>
