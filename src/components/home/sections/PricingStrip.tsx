@@ -59,7 +59,7 @@ export function PricingStrip({ tiers }: PricingStripProps) {
           <article className="pricing-strip__item pricing-strip__item--private">
             <div className="pricing-strip__copy">
               <strong className="pricing-strip__name">{privateTier.name}</strong>
-              <span className="pricing-strip__meta">Linh hoạt theo lịch riêng</span>
+              <span className="pricing-strip__meta">Theo lịch riêng</span>
             </div>
             <strong className="pricing-strip__price">{privateTier.displayPrice}</strong>
           </article>

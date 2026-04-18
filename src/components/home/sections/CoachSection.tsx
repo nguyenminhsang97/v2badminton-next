@@ -14,7 +14,7 @@ export function CoachSection({ coaches }: HomepageCoachSectionProps) {
     <section className="section coach-section" id={HOME_SECTION_IDS.coaches}>
       <div className="section__header">
         <p className="section__eyebrow">HLV đồng hành</p>
-        <h2 className="section__title">Đội ngũ theo sát từng nhóm học viên</h2>
+        <h2 className="section__title">Đội ngũ đồng hành từng nhóm học viên</h2>
       </div>
 
       <CoachCardsGrid coaches={resolvedCoaches} />

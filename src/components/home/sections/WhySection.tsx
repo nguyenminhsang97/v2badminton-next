@@ -4,7 +4,7 @@ import { ArrowRightIcon, CalendarIcon, MapPinIcon, UsersIcon } from "@/component
 
 const DIFFERENTIATORS = [
   {
-    title: "Giáo trình rõ bước",
+    title: "Rõ từng bước",
     description: "Biết rõ buổi này đang sửa gì, buổi sau cần tiến tiếp ở đâu.",
     icon: CalendarIcon,
   },
@@ -15,7 +15,7 @@ const DIFFERENTIATORS = [
   },
   {
     title: "4 sân thuận tiện",
-    description: "Ưu tiên Bình Thạnh và Thủ Đức để giữ lịch đều dễ hơn mỗi tuần.",
+    description: "Ưu tiên sân gần nhà hoặc chỗ làm để đi học thuận hơn mỗi tuần.",
     icon: MapPinIcon,
   },
   {
