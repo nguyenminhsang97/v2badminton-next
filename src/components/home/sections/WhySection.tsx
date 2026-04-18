@@ -5,7 +5,7 @@ import { ArrowRightIcon, CalendarIcon, MapPinIcon, UsersIcon } from "@/component
 const DIFFERENTIATORS = [
   {
     title: "Giáo trình rõ bước",
-    description: "Biết rõ buổi này đang sửa gì, buổi sau cần tiến tiếp ở đâu.",
+    description: "Mỗi buổi đều biết đang sửa gì và buổi sau đi tiếp ở đâu.",
     icon: CalendarIcon,
   },
   {
@@ -14,13 +14,13 @@ const DIFFERENTIATORS = [
     icon: UsersIcon,
   },
   {
-    title: "4 sân thuận tiện",
-    description: "Ưu tiên Bình Thạnh và Thủ Đức để giữ lịch đều dễ hơn mỗi tuần.",
+    title: "Sân gần, lịch đều",
+    description: "Ưu tiên Bình Thạnh và Thủ Đức để bạn giữ nhịp tập đều mỗi tuần.",
     icon: MapPinIcon,
   },
   {
     title: "Khung giờ linh hoạt",
-    description: "Sáng, tối và cuối tuần đều có lựa chọn phù hợp cho từng nhóm.",
+    description: "Sáng, tối và cuối tuần đều có lựa chọn phù hợp.",
     icon: ArrowRightIcon,
   },
 ] as const;
@@ -55,7 +55,7 @@ export function WhySection() {
             <span className="why-section__stat-value">2-6</span>
             <strong className="why-section__stat-title">học viên mỗi nhóm để HLV kèm sát</strong>
             <p className="why-section__stat-copy">
-              Nhịp lớp vừa phải để ai cũng được chỉnh kỹ thuật ngay trên sân.
+              Nhịp lớp vừa phải để ai cũng được chỉnh ngay trên sân.
             </p>
           </article>
         </div>
@@ -65,8 +65,7 @@ export function WhySection() {
             <p className="section__eyebrow">Tại sao chọn V2</p>
             <h2 className="section__title">Nền tảng bài bản nhưng vẫn dễ theo</h2>
             <p className="section__desc">
-              Mục tiêu của V2 là để mỗi buổi học đều rõ ràng, gần gũi và đủ nhịp để
-              bạn tiến bộ đều.
+              Lộ trình rõ, lớp nhỏ và khung giờ đủ linh hoạt để bạn theo đều.
             </p>
           </div>
 

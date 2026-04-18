@@ -178,8 +178,7 @@ export function ScheduleSection({
         <p className="section__eyebrow">Thời khóa biểu</p>
         <h2 className="section__title">Lịch học linh hoạt 7 ngày trong tuần</h2>
         <p className="section__desc">
-          Chọn sân trước, xem khung giờ phù hợp rồi nhấn vào từng dòng để V2 điền sẵn
-          form tư vấn cho bạn.
+          Chọn sân, xem giờ phù hợp rồi nhấn vào từng dòng để điền nhanh form tư vấn.
         </p>
         {filterMessage ? (
           <p className="section__filter-note" aria-live="polite">
@@ -331,7 +330,7 @@ export function ScheduleSection({
       ) : null}
 
       <p className="schedule-note">
-        Lịch có thể thay đổi nhẹ theo sĩ số từng sân và từng giai đoạn.
+        Lịch có thể thay đổi nhẹ theo sĩ số từng sân.
       </p>
     </section>
   );

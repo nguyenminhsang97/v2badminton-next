@@ -16,8 +16,7 @@ export function CoachSection({ coaches }: HomepageCoachSectionProps) {
         <p className="section__eyebrow">HLV đồng hành</p>
         <h2 className="section__title">Đội ngũ theo sát từng nhóm học viên</h2>
         <p className="section__desc">
-          Mỗi HLV giữ một vai trò rõ ràng để buổi học bám đúng trình độ, mục tiêu và
-          nhịp tiến bộ của từng nhóm.
+          Mỗi HLV phụ trách rõ một nhóm để buổi học bám đúng trình độ và mục tiêu.
         </p>
       </div>
 
