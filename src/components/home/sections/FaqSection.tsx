@@ -9,7 +9,7 @@ export function FaqSection({ faqs }: HomepageFaqSectionProps) {
         <p className="section__eyebrow">Gỡ vướng trước khi đăng ký</p>
         <h2 className="section__title">Câu hỏi thường gặp</h2>
         <p className="section__desc">
-          Học phí, lịch và chọn sân cho người mới.
+          Học phí, lịch học, chọn sân và cách xếp lớp cho người mới.
         </p>
       </div>
       <FaqList faqs={faqs} />

@@ -32,16 +32,6 @@ function getInitials(name: string): string {
     .join("");
 }
 
-function shortenQuote(text: string, maxWords = 22): string {
-  const words = text.trim().split(/\s+/).filter(Boolean);
-
-  if (words.length <= maxWords) {
-    return text.trim();
-  }
-
-  return `${words.slice(0, maxWords).join(" ")}…`;
-}
-
 export function TestimonialsSection({
   testimonials,
 }: HomepageTestimonialsSectionProps) {
@@ -60,13 +50,13 @@ export function TestimonialsSection({
           <span className="testimonials-section__accent">V2 Badminton?</span>
         </h2>
         <p className="section__desc">
-          Phản hồi ngắn từ phụ huynh, người mới và người đi làm sau những buổi đầu.
+          Phản hồi ngắn gọn từ phụ huynh, người mới và người đi làm sau vài tuần đầu.
         </p>
       </div>
 
       <div className="testimonials-grid">
         {displayedTestimonials.map((testimonial) => {
-          const quote = shortenQuote(testimonial.shortQuote ?? testimonial.content);
+          const quote = testimonial.shortQuote ?? testimonial.content;
           const rating = Math.max(0, Math.min(testimonial.rating, 5));
           const context =
             testimonial.contextLabel || getGroupLabel(testimonial.studentGroup);
