@@ -50,7 +50,7 @@ export function TestimonialsSection({
           <span className="testimonials-section__accent">V2 Badminton?</span>
         </h2>
         <p className="section__desc">
-          Phản hồi ngắn gọn từ phụ huynh, người mới và người đi làm sau vài tuần đầu.
+          Phản hồi ngắn từ phụ huynh, người mới và người đi làm sau vài tuần đầu.
         </p>
       </div>
 

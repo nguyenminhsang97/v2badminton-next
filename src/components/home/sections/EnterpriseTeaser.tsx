@@ -18,7 +18,7 @@ export function EnterpriseTeaser({
           <h3 className="enterprise-teaser__title">Giải pháp cho doanh nghiệp</h3>
           <p className="enterprise-teaser__desc">
             Team building, lớp nội bộ hoặc hoạt động sức khỏe định kỳ, tư vấn theo
-            quy mô và ngân sách đội ngũ bạn.
+            quy mô và ngân sách.
           </p>
         </div>
       </div>

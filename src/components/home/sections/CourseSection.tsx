@@ -168,8 +168,8 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
         <p className="section__eyebrow">Chương trình & học phí</p>
         <h2 className="section__title">Chọn lộ trình phù hợp ngay từ buổi đầu</h2>
         <p className="section__desc">
-          4 lộ trình chính để bạn chọn nhanh theo nhu cầu, rồi so mức học phí ngay
-          bên dưới trước khi để lại thông tin.
+          4 lộ trình chính để bạn chọn nhanh theo nhu cầu, rồi so học phí trước khi để
+          lại thông tin.
         </p>
       </div>
 

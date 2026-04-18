@@ -51,8 +51,8 @@ export function LocationsGrid({
             Chọn sân gần bạn, để V2 xếp buổi phù hợp nhất
           </h3>
           <p className="location-cta-card__copy">
-            Chỉ cần cho biết khu vực, khung giờ và mục tiêu học. V2 sẽ gọi lại để gợi ý sân phù
-            hợp, lớp đang mở và cách bắt đầu dễ nhất cho bạn hoặc cho con.
+            Chỉ cần cho biết khu vực, khung giờ và mục tiêu học. V2 sẽ gọi lại để gợi ý sân
+            và lớp đang mở phù hợp nhất.
           </p>
           <a href={supportCardHref} className="btn btn--primary btn--lg">
             Đăng ký học thử

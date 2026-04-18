@@ -5,7 +5,7 @@ import { ArrowRightIcon, CalendarIcon, MapPinIcon, UsersIcon } from "@/component
 const DIFFERENTIATORS = [
   {
     title: "Rõ từng bước",
-    description: "Biết rõ buổi này đang sửa gì, buổi sau cần tiến tiếp ở đâu.",
+    description: "Biết rõ buổi này sửa gì, buổi sau tiến tiếp ở đâu.",
     icon: CalendarIcon,
   },
   {
@@ -20,7 +20,7 @@ const DIFFERENTIATORS = [
   },
   {
     title: "Khung giờ linh hoạt",
-    description: "Sáng, tối và cuối tuần đều có lựa chọn phù hợp cho từng nhóm.",
+    description: "Sáng, tối và cuối tuần đều có lựa chọn theo từng nhóm.",
     icon: ArrowRightIcon,
   },
 ] as const;
@@ -65,8 +65,7 @@ export function WhySection() {
             <p className="section__eyebrow">Tại sao chọn V2</p>
             <h2 className="section__title">Nền tảng bài bản nhưng vẫn dễ theo</h2>
             <p className="section__desc">
-              Mục tiêu của V2 là để mỗi buổi học đều rõ ràng, gần gũi và đủ nhịp để
-              bạn tiến bộ đều.
+              Mỗi buổi học đều rõ ràng, gần gũi và đủ nhịp để bạn tiến bộ đều.
             </p>
           </div>
 

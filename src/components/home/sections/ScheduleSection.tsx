@@ -178,8 +178,7 @@ export function ScheduleSection({
         <p className="section__eyebrow">Thời khóa biểu</p>
         <h2 className="section__title">Lịch học linh hoạt 7 ngày trong tuần</h2>
         <p className="section__desc">
-          Chọn sân trước, xem khung giờ phù hợp rồi nhấn vào từng dòng để V2 điền sẵn
-          form tư vấn cho bạn.
+          Chọn sân, xem giờ phù hợp rồi nhấn vào từng dòng để V2 điền sẵn form tư vấn.
         </p>
         {filterMessage ? (
           <p className="section__filter-note" aria-live="polite">
@@ -218,8 +217,8 @@ export function ScheduleSection({
             Chưa có lịch {getScheduleFilterLabel(selectedCourseIntent)} phù hợp.
           </p>
           <p className="schedule-empty-state__copy">
-            Bạn có thể xem toàn bộ lịch đang mở hoặc để lại thông tin để V2 gợi ý sân và
-            khung giờ gần nhất.
+            Bạn có thể xem toàn bộ lịch đang mở hoặc để lại thông tin để V2 gợi ý sân
+            và giờ phù hợp.
           </p>
           <div className="schedule-empty-state__actions">
             <button

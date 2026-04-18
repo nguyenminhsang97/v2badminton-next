@@ -17,7 +17,7 @@ export function QuickContactCard({ contactSettings }: QuickContactCardProps) {
       </span>
       <h3 className="quick-contact-card__title">Thử ngay - Miễn phí</h3>
       <p className="quick-contact-card__copy">
-        Đăng ký một buổi học thử để V2 gợi ý sân, khung giờ và lộ trình phù hợp nhất.
+        Đăng ký một buổi học thử để V2 gợi ý sân, giờ học và lộ trình phù hợp nhất.
       </p>
 
       <div className="quick-contact-card__actions">
@@ -52,7 +52,7 @@ export function QuickContactCard({ contactSettings }: QuickContactCardProps) {
         </a>
       </div>
 
-      <p className="quick-contact-card__note">Phản hồi trong ngày làm việc.</p>
+      <p className="quick-contact-card__note">Phản hồi trong giờ làm việc.</p>
     </aside>
   );
 }
