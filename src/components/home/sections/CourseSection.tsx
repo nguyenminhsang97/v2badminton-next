@@ -134,7 +134,7 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
     },
     {
       id: "course-working",
-      categoryBadge: "Tối & cuối tuần",
+      categoryBadge: "Sau giờ làm",
       levelChip: "Đi làm",
       title: "Người đi làm",
       subtitle: "Tối & cuối tuần",

@@ -12,6 +12,9 @@ export function LocationsSection({
       <div className="section__header">
         <p className="section__eyebrow">4 sân đang hoạt động</p>
         <h2 className="section__title">Chọn sân gần bạn trước</h2>
+        <p className="section__desc">
+          4 sân tại Bình Thạnh và Thủ Đức, chọn sân gần nhà hoặc chỗ làm.
+        </p>
       </div>
 
       <div className="locations-cluster">
