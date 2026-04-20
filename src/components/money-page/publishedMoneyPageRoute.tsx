@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { buildMoneyPageMetadata } from "@/lib/moneyPageMetadata";
 import {
   buildPublishedMoneyPageFallback,
@@ -50,11 +49,7 @@ export async function generatePublishedMoneyPageMetadata(
 export async function renderPublishedMoneyPage(
   config: PublishedMoneyPageRouteConfig,
 ) {
-  const { page: moneyPage, degraded } = await getMoneyPage(config.slug);
-
-  if (!moneyPage && config.degradedMetadataMode === "route" && degraded) {
-    notFound();
-  }
+  const { page: moneyPage } = await getMoneyPage(config.slug);
 
   const resolvedPage = moneyPage ?? buildPublishedMoneyPageFallback(config.path);
   const shouldRenderCourseSchema = SERVICE_MONEY_PAGE_PATHS.has(config.path);
