@@ -111,9 +111,6 @@ export function HomepageConversionProvider({
     setSelectedSchedulePrefill(prefill);
     setSelectedCourseIntent(null);
     setBusinessMode(false);
-    setAutoPrefilledMessageState((prev) =>
-      shouldAutoOverwriteMessage(prev) ? prefill.message : prev,
-    );
     setScrollRequest({ target: "form", shouldFocus: true });
   }, []);
 
