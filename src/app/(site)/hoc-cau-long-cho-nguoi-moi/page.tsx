@@ -2,9 +2,13 @@ import type { Metadata } from "next";
 import { MoneyPageTemplate } from "@/components/money-page/MoneyPageTemplate";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { buildMoneyPageMetadata } from "@/lib/moneyPageMetadata";
-import { buildMetadata, canonicalUrl } from "@/lib/routes";
+import { buildMetadata, canonicalUrl, getRouteMetadata } from "@/lib/routes";
 import { getFaqs, getMoneyPage, getPricingTiers } from "@/lib/sanity";
-import { buildBreadcrumbSchema, buildFaqPageSchema } from "@/lib/schema";
+import {
+  buildBreadcrumbSchema,
+  buildCoursePageSchema,
+  buildFaqPageSchema,
+} from "@/lib/schema";
 
 const PATH = "/hoc-cau-long-cho-nguoi-moi/" as const;
 const SLUG = "hoc-cau-long-cho-nguoi-moi";
@@ -21,6 +25,11 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function BeginnerPage() {
   const { page: moneyPage } = await getMoneyPage(SLUG);
+  const fallbackRoute = getRouteMetadata(PATH);
+  const courseName =
+    moneyPage?.h1 ?? "Học cầu lông cho người mới bắt đầu tại TP.HCM";
+  const courseDescription =
+    moneyPage?.metaDescription ?? fallbackRoute.description;
 
   if (moneyPage) {
     return (
@@ -35,6 +44,10 @@ export default async function BeginnerPage() {
         <JsonLd
           id="nguoi-moi-faq"
           data={buildFaqPageSchema(moneyPage.relatedFaqs)}
+        />
+        <JsonLd
+          id="nguoi-moi-course"
+          data={buildCoursePageSchema(PATH, courseName, courseDescription)}
         />
         <MoneyPageTemplate page={moneyPage} path={PATH} />
       </>
@@ -58,6 +71,10 @@ export default async function BeginnerPage() {
         ])}
       />
       <JsonLd id="nguoi-moi-faq" data={buildFaqPageSchema(beginnerFaqs)} />
+      <JsonLd
+        id="nguoi-moi-course"
+        data={buildCoursePageSchema(PATH, courseName, courseDescription)}
+      />
 
       <section className="page-shell__section">
         <p className="page-shell__eyebrow">SEO Route Skeleton</p>
