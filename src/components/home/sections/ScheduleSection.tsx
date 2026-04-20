@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { SanityScheduleBlock, SanityScheduleLevel } from "@/lib/sanity";
 import { HOME_SECTION_IDS, toHash } from "@/lib/anchors";
+import { MapPinIcon } from "@/components/ui/BrandIcons";
 import {
   useHomepageConversionIntent,
   type SchedulePrefill,
@@ -286,6 +287,7 @@ export function ScheduleSection({
                 {getScheduleProgramLabel(item.levels)}
               </span>
               <span className="schedule-table__cell schedule-row__location">
+                <MapPinIcon className="schedule-row__location-icon" />
                 <span className="schedule-row__court">{item.locationShortName}</span>
                 <span className="schedule-row__location-note" aria-hidden="true">
                   Điền form nhanh
