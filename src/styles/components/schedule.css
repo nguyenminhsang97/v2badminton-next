@@ -4,6 +4,10 @@
   background: #fff;
 }
 
+.schedule-section.deferred-section-skeleton {
+  min-height: 1140px;
+}
+
 .schedule-section .section__header {
   gap: 14px;
 }
@@ -247,6 +251,10 @@
   .schedule-section {
     padding-top: 56px;
     padding-bottom: 64px;
+  }
+
+  .schedule-section.deferred-section-skeleton {
+    min-height: 1300px;
   }
 
   .schedule-table {

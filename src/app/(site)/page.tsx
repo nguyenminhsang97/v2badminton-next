@@ -1,20 +1,19 @@
 import { Suspense } from "react";
 import { HomepageBusinessModeInitializer } from "@/components/home/conversion/HomepageBusinessModeInitializer";
 import { HomepageConversionProvider } from "@/components/home/conversion/HomepageConversionProvider";
-import { HomepageScrollCoordinator } from "@/components/home/conversion/HomepageScrollCoordinator";
 import { assertLegacyScheduleCompatibility } from "@/components/home/compat/legacyScheduleCompatibility";
-import { ContactForm } from "@/components/home/forms/ContactForm";
-import { ContactFormErrorBoundary } from "@/components/home/forms/ContactFormErrorBoundary";
 import { CoachSection } from "@/components/home/sections/CoachSection";
 import { CourseSection } from "@/components/home/sections/CourseSection";
+import { DeferredContactSection } from "@/components/home/sections/DeferredContactSection";
+import { DeferredScheduleSection } from "@/components/home/sections/DeferredScheduleSection";
+import { DeferredTestimonialsSection } from "@/components/home/sections/DeferredTestimonialsSection";
 import { FaqSection } from "@/components/home/sections/FaqSection";
 import { HeroSection } from "@/components/home/sections/HeroSection";
 import { LocationsSection } from "@/components/home/sections/LocationsSection";
-import { ScheduleSection } from "@/components/home/sections/ScheduleSection";
 import { StatsBar } from "@/components/home/sections/StatsBar";
-import { TestimonialsSection } from "@/components/home/sections/TestimonialsSection";
 import { WhySection } from "@/components/home/sections/WhySection";
 import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
+import { JsonLd } from "@/components/ui/JsonLd";
 import { HOMEPAGE_TESTIMONIAL_FALLBACKS } from "@/content/homepage-testimonials.fallback";
 import {
   toHomepageCoaches,
@@ -24,8 +23,6 @@ import {
   toHomepageScheduleBlocks,
   toHomepageTestimonials,
 } from "@/domain/homepage";
-import { JsonLd } from "@/components/ui/JsonLd";
-import { HOME_SECTION_IDS } from "@/lib/anchors";
 import { buildMetadata } from "@/lib/routes";
 import {
   getActiveCampaign,
@@ -101,26 +98,18 @@ export default async function Home() {
           <CourseSection pricingTiers={pricingTiers} />
           <WhySection />
           <CoachSection coaches={homepageCoaches} />
-          <TestimonialsSection testimonials={homepageTestimonials} />
-          <ScheduleSection scheduleBlocks={homepageScheduleBlocks} />
+          <DeferredTestimonialsSection testimonials={homepageTestimonials} />
+          <DeferredScheduleSection scheduleBlocks={homepageScheduleBlocks} />
           <LocationsSection
             locations={homepageLocations}
             siteSettings={chromeSettings}
           />
           <FaqSection faqs={homepageFaqs} />
-          <ContactFormErrorBoundary>
-            <section
-              className="section contact-section"
-              id={HOME_SECTION_IDS.contact}
-            >
-              <HomepageScrollCoordinator />
-              <ContactForm
-                contactSettings={chromeSettings}
-                locations={homepageLocations}
-                scheduleBlocks={homepageScheduleBlocks}
-              />
-            </section>
-          </ContactFormErrorBoundary>
+          <DeferredContactSection
+            siteSettings={chromeSettings}
+            locations={homepageLocations}
+            scheduleBlocks={homepageScheduleBlocks}
+          />
         </div>
       </HomepageConversionProvider>
     </>

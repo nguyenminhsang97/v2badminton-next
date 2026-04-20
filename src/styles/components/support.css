@@ -19,6 +19,10 @@
   padding-bottom: 84px;
 }
 
+.contact-section.deferred-section-skeleton {
+  min-height: 820px;
+}
+
 .locations-section .section__header,
 .faq-section .section__header,
 .contact-section .section__header {
@@ -432,6 +436,10 @@
   .contact-section {
     padding-top: 56px;
     padding-bottom: 72px;
+  }
+
+  .contact-section.deferred-section-skeleton {
+    min-height: 860px;
   }
 
   .contact-form-shell {

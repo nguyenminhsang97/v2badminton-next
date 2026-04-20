@@ -411,6 +411,219 @@ button {
   min-height: 220px;
 }
 
+.deferred-section-skeleton {
+  align-content: start;
+}
+
+.deferred-section-skeleton__heading {
+  height: clamp(56px, 7vw, 76px);
+}
+
+.deferred-section-skeleton__text {
+  height: 18px;
+}
+
+.deferred-section-skeleton__text--short {
+  justify-self: center;
+}
+
+.deferred-section-skeleton__cards {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.deferred-section-skeleton__card {
+  display: grid;
+  gap: 18px;
+  padding: 26px 24px 22px;
+  border-radius: 24px;
+}
+
+.deferred-section-skeleton__line {
+  height: 16px;
+  border-radius: 999px;
+}
+
+.deferred-section-skeleton__line--stars {
+  width: 96px;
+}
+
+.deferred-section-skeleton__line--quote {
+  height: 18px;
+  width: 92%;
+}
+
+.deferred-section-skeleton__line--quote-short {
+  height: 18px;
+  width: 68%;
+}
+
+.deferred-section-skeleton__person {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.deferred-section-skeleton__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+}
+
+.deferred-section-skeleton__person-copy {
+  display: grid;
+  gap: 8px;
+  flex: 1;
+}
+
+.deferred-section-skeleton__line--name {
+  width: 148px;
+}
+
+.deferred-section-skeleton__line--meta {
+  width: 112px;
+}
+
+.deferred-section-skeleton__footer {
+  display: flex;
+  justify-content: center;
+}
+
+.deferred-section-skeleton__pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.deferred-section-skeleton__pill {
+  display: inline-flex;
+  border-radius: 999px;
+}
+
+.deferred-section-skeleton__pill--cta {
+  width: 196px;
+  height: 48px;
+}
+
+.deferred-section-skeleton__table {
+  overflow: hidden;
+  border-radius: 26px;
+  border: 1px solid rgba(15, 59, 32, 0.08);
+  background: #fff;
+  box-shadow: 0 24px 52px rgba(15, 59, 32, 0.08);
+}
+
+.deferred-section-skeleton__table-head,
+.deferred-section-skeleton__table-row {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr 1.2fr 1.3fr 1.35fr;
+  gap: 16px;
+  align-items: center;
+  min-width: 860px;
+}
+
+.deferred-section-skeleton__table-head {
+  padding: 17px 22px;
+  background: linear-gradient(135deg, #14532d 0%, #0f3b20 100%);
+}
+
+.deferred-section-skeleton__table-row {
+  padding: 16px 22px;
+  border-top: 1px solid rgba(15, 59, 32, 0.08);
+}
+
+.deferred-section-skeleton__line--table-head {
+  height: 12px;
+  background: rgba(240, 253, 244, 0.2);
+}
+
+.deferred-section-skeleton__line--cell-long {
+  width: 82%;
+}
+
+.deferred-section-skeleton__line--cell-mid {
+  width: 74%;
+}
+
+.deferred-section-skeleton__pill--time {
+  width: 124px;
+  height: 36px;
+}
+
+.deferred-section-skeleton__level-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.deferred-section-skeleton__pill--level {
+  width: 84px;
+  height: 30px;
+}
+
+.deferred-section-skeleton__note {
+  height: 18px;
+}
+
+.deferred-section-skeleton__contact-shell {
+  gap: 20px;
+}
+
+.deferred-section-skeleton__field {
+  display: grid;
+  gap: 8px;
+}
+
+.deferred-section-skeleton__line--label {
+  width: 112px;
+  height: 14px;
+}
+
+.deferred-section-skeleton__input {
+  width: 100%;
+  height: 52px;
+  border-radius: 16px;
+}
+
+.deferred-section-skeleton__optional {
+  display: grid;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 20px;
+  background: #f8fbf6;
+  border: 1px solid rgba(15, 59, 32, 0.08);
+}
+
+.deferred-section-skeleton__textarea {
+  width: 100%;
+  height: 144px;
+  border-radius: 16px;
+}
+
+.deferred-section-skeleton__actions {
+  display: grid;
+  gap: 12px;
+}
+
+.deferred-section-skeleton__button {
+  width: 208px;
+  height: 56px;
+  border-radius: 18px;
+}
+
+.deferred-section-skeleton__line--contact-title {
+  width: min(360px, 100%);
+  height: 34px;
+}
+
+.deferred-section-skeleton__line--hint {
+  width: 72%;
+  height: 16px;
+}
+
 @keyframes skeletonPulse {
   0% {
     background-position: 100% 0;
@@ -469,5 +682,33 @@ button {
 
   .loading-shell {
     padding-top: 40px;
+  }
+
+  .deferred-section-skeleton__cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .deferred-section-skeleton__table-head,
+  .deferred-section-skeleton__table-row {
+    min-width: 760px;
+  }
+}
+
+@media (max-width: 767px) {
+  .deferred-section-skeleton__cards {
+    grid-template-columns: 1fr;
+  }
+
+  .deferred-section-skeleton__card {
+    padding: 22px 20px 20px;
+    border-radius: 22px;
+  }
+
+  .deferred-section-skeleton__button {
+    width: 100%;
+  }
+
+  .deferred-section-skeleton__line--hint {
+    width: 100%;
   }
 }
