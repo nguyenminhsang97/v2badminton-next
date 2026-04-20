@@ -6,7 +6,7 @@ import { FaqList } from "@/components/blocks/FaqList";
 import { LocationsGrid } from "@/components/blocks/LocationsGrid";
 import { PricingCards } from "@/components/blocks/PricingCards";
 import { HOME_SECTION_IDS, toHash, toHomepageHash } from "@/lib/anchors";
-import { coreRoutes, type CoreRoutePath } from "@/lib/routes";
+import { coreRoutes, getRouteMetadata, type CoreRoutePath } from "@/lib/routes";
 import type { SanityMoneyPage } from "@/lib/sanity";
 import { Breadcrumb } from "./Breadcrumb";
 
@@ -95,6 +95,8 @@ export function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) {
   const facts = buildMoneyPageFacts(page);
   const heroImageUrl = page.heroImageUrl ?? null;
   const hasHeroImage = heroImageUrl !== null;
+  const pagePath = path ?? "/";
+  const pageType = path ? getRouteMetadata(path).pageType : "seo_service";
   const relatedMoneyPages = getRelatedMoneyPages(path, page.audience);
 
   return (
@@ -146,6 +148,8 @@ export function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) {
             tiers={page.relatedPricing}
             ctaHref={toHomepageHash(HOME_SECTION_IDS.contact)}
             enterpriseCtaHref={`/?mode=business${toHash(HOME_SECTION_IDS.contact)}`}
+            pagePath={pagePath}
+            pageType={pageType}
             trackingLocation={`money_page:${page.slug}:pricing`}
           />
         </section>

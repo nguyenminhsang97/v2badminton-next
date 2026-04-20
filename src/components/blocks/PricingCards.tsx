@@ -1,6 +1,3 @@
-"use client";
-
-import { usePathname } from "next/navigation";
 import type {
   SanityEnterprisePricingTier,
   SanityGroupPricingTier,
@@ -8,55 +5,29 @@ import type {
   SanityPrivatePricingTier,
 } from "@/lib/sanity";
 import type { PageType } from "@/lib/routes";
-import { trackEvent } from "@/lib/tracking";
 
 export type PricingCardsProps = {
   tiers: SanityPricingTier[];
   ctaHref: string;
   trackingLocation: string;
+  pagePath: string;
+  pageType: PageType;
   enterpriseCtaHref?: string;
 };
 
-function normalizePathname(pathname: string): string {
-  if (pathname === "/") {
-    return "/";
-  }
-
-  return pathname.endsWith("/") ? pathname : `${pathname}/`;
-}
-
-function getTrackingPageType(pathname: string): PageType {
-  const normalizedPathname = normalizePathname(pathname);
-
-  if (normalizedPathname === "/") {
-    return "homepage";
-  }
-
-  if (
-    normalizedPathname === "/lop-cau-long-binh-thanh/" ||
-    normalizedPathname === "/lop-cau-long-thu-duc/"
-  ) {
-    return "seo_local";
-  }
-
-  if (normalizedPathname === "/cau-long-doanh-nghiep/") {
-    return "seo_support";
-  }
-
-  return "seo_service";
-}
-
-function trackPricingCta(
-  pathname: string,
+function getPricingTrackingAttributes(
+  pagePath: string,
+  pageType: PageType,
   trackingLocation: string,
   ctaName: SanityPricingTier["ctaAction"],
 ) {
-  trackEvent("cta_click", {
-    cta_name: ctaName,
-    cta_location: trackingLocation,
-    page_type: getTrackingPageType(pathname),
-    page_path: pathname,
-  });
+  return {
+    "data-track-event": "cta_click",
+    "data-cta-name": ctaName,
+    "data-cta-location": trackingLocation,
+    "data-page-path": pagePath,
+    "data-page-type": pageType,
+  } as const;
 }
 
 function getTierBadge(tier: SanityPricingTier): string {
@@ -162,13 +133,15 @@ function PricingCardShell({
 function GroupCard({
   ctaHref,
   featuredTierId,
-  pathname,
+  pagePath,
+  pageType,
   tier,
   trackingLocation,
 }: {
   ctaHref: string;
   featuredTierId: string | null;
-  pathname: string;
+  pagePath: string;
+  pageType: PageType;
   tier: SanityGroupPricingTier;
   trackingLocation: string;
 }) {
@@ -185,9 +158,12 @@ function GroupCard({
         <a
           href={ctaHref}
           className="btn btn--primary pricing-card__cta"
-          onClick={() =>
-            trackPricingCta(pathname, trackingLocation, tier.ctaAction)
-          }
+          {...getPricingTrackingAttributes(
+            pagePath,
+            pageType,
+            trackingLocation,
+            tier.ctaAction,
+          )}
         >
           {tier.ctaLabel}
         </a>
@@ -202,12 +178,14 @@ function GroupCard({
 
 function PrivateCard({
   ctaHref,
-  pathname,
+  pagePath,
+  pageType,
   tier,
   trackingLocation,
 }: {
   ctaHref: string;
-  pathname: string;
+  pagePath: string;
+  pageType: PageType;
   tier: SanityPrivatePricingTier;
   trackingLocation: string;
 }) {
@@ -223,9 +201,12 @@ function PrivateCard({
         <a
           href={ctaHref}
           className="btn btn--outline pricing-card__cta"
-          onClick={() =>
-            trackPricingCta(pathname, trackingLocation, tier.ctaAction)
-          }
+          {...getPricingTrackingAttributes(
+            pagePath,
+            pageType,
+            trackingLocation,
+            tier.ctaAction,
+          )}
         >
           {tier.ctaLabel}
         </a>
@@ -240,13 +221,15 @@ function PrivateCard({
 function EnterpriseCard({
   ctaHref,
   enterpriseCtaHref,
-  pathname,
+  pagePath,
+  pageType,
   tier,
   trackingLocation,
 }: {
   ctaHref: string;
   enterpriseCtaHref?: string;
-  pathname: string;
+  pagePath: string;
+  pageType: PageType;
   tier: SanityEnterprisePricingTier;
   trackingLocation: string;
 }) {
@@ -254,7 +237,12 @@ function EnterpriseCard({
     <a
       href={enterpriseCtaHref ?? ctaHref}
       className="btn btn--outline pricing-card__cta"
-      onClick={() => trackPricingCta(pathname, trackingLocation, tier.ctaAction)}
+      {...getPricingTrackingAttributes(
+        pagePath,
+        pageType,
+        trackingLocation,
+        tier.ctaAction,
+      )}
     >
       {tier.ctaLabel}
     </a>
@@ -280,14 +268,16 @@ function PricingCard({
   ctaHref,
   enterpriseCtaHref,
   featuredTierId,
-  pathname,
+  pagePath,
+  pageType,
   tier,
   trackingLocation,
 }: {
   ctaHref: string;
   enterpriseCtaHref?: string;
   featuredTierId: string | null;
-  pathname: string;
+  pagePath: string;
+  pageType: PageType;
   tier: SanityPricingTier;
   trackingLocation: string;
 }) {
@@ -297,7 +287,8 @@ function PricingCard({
         <GroupCard
           ctaHref={ctaHref}
           featuredTierId={featuredTierId}
-          pathname={pathname}
+          pagePath={pagePath}
+          pageType={pageType}
           tier={tier}
           trackingLocation={trackingLocation}
         />
@@ -306,7 +297,8 @@ function PricingCard({
       return (
         <PrivateCard
           ctaHref={ctaHref}
-          pathname={pathname}
+          pagePath={pagePath}
+          pageType={pageType}
           tier={tier}
           trackingLocation={trackingLocation}
         />
@@ -316,7 +308,8 @@ function PricingCard({
         <EnterpriseCard
           ctaHref={ctaHref}
           enterpriseCtaHref={enterpriseCtaHref}
-          pathname={pathname}
+          pagePath={pagePath}
+          pageType={pageType}
           tier={tier}
           trackingLocation={trackingLocation}
         />
@@ -327,10 +320,11 @@ function PricingCard({
 export function PricingCards({
   tiers,
   ctaHref,
+  pagePath,
+  pageType,
   trackingLocation,
   enterpriseCtaHref,
 }: PricingCardsProps) {
-  const pathname = normalizePathname(usePathname() ?? "/");
   const featuredTierId = tiers.find((tier) => tier.kind === "group")?.id ?? null;
 
   return (
@@ -341,7 +335,8 @@ export function PricingCards({
           ctaHref={ctaHref}
           enterpriseCtaHref={enterpriseCtaHref}
           featuredTierId={featuredTierId}
-          pathname={pathname}
+          pagePath={pagePath}
+          pageType={pageType}
           tier={tier}
           trackingLocation={trackingLocation}
         />

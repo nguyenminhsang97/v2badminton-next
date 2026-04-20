@@ -35,6 +35,23 @@ export type MapLocation = "hue_thien" | "green" | "khang_sport" | "phuc_loc";
 export type FormFieldName = "name" | "phone" | "level" | "court" | "time_slot" | "message";
 export type SubmissionMethod = "js" | "no_js";
 
+const CTA_NAMES: ReadonlySet<CtaName> = new Set([
+  "dang_ky_ngay",
+  "dang_ky_hoc_thu",
+  "xem_khoa_hoc",
+  "campaign_primary",
+  "campaign_secondary",
+  "nhan_bao_gia",
+  "nhan_zalo_tu_van",
+]);
+
+const PAGE_TYPES: ReadonlySet<PageType> = new Set([
+  "homepage",
+  "seo_local",
+  "seo_service",
+  "seo_support",
+]);
+
 type EventParams = {
   cta_click: {
     cta_name: CtaName;
@@ -119,4 +136,49 @@ export function registerGlobalTracker(): void {
   }
 
   window.v2TrackEvent = trackEvent;
+}
+
+export function registerDelegatedTracking(): () => void {
+  if (typeof document === "undefined") {
+    return () => undefined;
+  }
+
+  const handleClick = (event: MouseEvent) => {
+    if (!(event.target instanceof Element)) {
+      return;
+    }
+
+    const trackedElement = event.target.closest<HTMLElement>(
+      '[data-track-event="cta_click"][data-cta-name][data-cta-location]',
+    );
+
+    if (!trackedElement) {
+      return;
+    }
+
+    const ctaName = trackedElement.dataset.ctaName;
+    const ctaLocation = trackedElement.dataset.ctaLocation;
+    const pagePath = trackedElement.dataset.pagePath;
+    const pageType = trackedElement.dataset.pageType;
+
+    if (!ctaName || !CTA_NAMES.has(ctaName as CtaName) || !ctaLocation) {
+      return;
+    }
+
+    trackEvent("cta_click", {
+      cta_name: ctaName as CtaName,
+      cta_location: ctaLocation,
+      page_path: pagePath,
+      page_type:
+        pageType && PAGE_TYPES.has(pageType as PageType)
+          ? (pageType as PageType)
+          : undefined,
+    });
+  };
+
+  document.addEventListener("click", handleClick);
+
+  return () => {
+    document.removeEventListener("click", handleClick);
+  };
 }
