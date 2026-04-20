@@ -106,13 +106,32 @@
   max-width: 15ch;
 }
 
+.money-page__related-links {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding-left: 20px;
+  color: var(--s5-muted);
+}
+
+.money-page__related-link {
+  color: var(--s5-primary);
+  font-weight: 700;
+}
+
+.money-page__related-link:hover {
+  color: var(--s5-primary-strong);
+}
+
 .money-page__cta {
   grid-template-columns: minmax(0, 1fr);
   align-items: center;
 }
 
-.money-page__cta .btn {
-  justify-self: flex-start;
+.money-page__cta-actions {
+  display: grid;
+  gap: 12px;
+  justify-items: flex-start;
 }
 
 @media (min-width: 960px) {
@@ -130,6 +149,10 @@
 
   .money-page__cta {
     grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .money-page__cta-actions {
+    justify-items: stretch;
   }
 }
 

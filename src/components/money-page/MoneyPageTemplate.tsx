@@ -6,7 +6,7 @@ import { FaqList } from "@/components/blocks/FaqList";
 import { LocationsGrid } from "@/components/blocks/LocationsGrid";
 import { PricingCards } from "@/components/blocks/PricingCards";
 import { HOME_SECTION_IDS, toHash, toHomepageHash } from "@/lib/anchors";
-import type { CoreRoutePath } from "@/lib/routes";
+import { coreRoutes, type CoreRoutePath } from "@/lib/routes";
 import type { SanityMoneyPage } from "@/lib/sanity";
 import { Breadcrumb } from "./Breadcrumb";
 
@@ -51,14 +51,51 @@ function buildMoneyPageFacts(page: SanityMoneyPage): string[] {
   return facts;
 }
 
+function getRelatedMoneyPages(
+  path: CoreRoutePath | undefined,
+  audience: SanityMoneyPage["audience"],
+) {
+  if (!path) {
+    return [];
+  }
+
+  const serviceRoutes = coreRoutes.filter((route) => route.pageType === "seo_service");
+  const localRoutes = coreRoutes.filter((route) => route.pageType === "seo_local");
+  const supportRoutes = coreRoutes.filter((route) => route.pageType === "seo_support");
+
+  const orderedPaths =
+    audience === "doanh_nghiep"
+      ? [
+          ...supportRoutes.map((route) => route.path),
+          ...serviceRoutes.map((route) => route.path),
+          ...localRoutes.map((route) => route.path),
+        ]
+      : [
+          ...serviceRoutes.map((route) => route.path),
+          ...localRoutes.map((route) => route.path),
+          ...supportRoutes.map((route) => route.path),
+        ];
+
+  const uniquePaths = Array.from(new Set(orderedPaths)).filter(
+    (routePath) => routePath !== path,
+  );
+
+  return uniquePaths
+    .map((routePath) => coreRoutes.find((route) => route.path === routePath))
+    .filter((route): route is (typeof coreRoutes)[number] => Boolean(route))
+    .slice(0, 3);
+}
+
 export function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) {
   const ctaHref =
     page.audience === "doanh_nghiep"
       ? `/?mode=business${toHash(HOME_SECTION_IDS.contact)}`
       : toHomepageHash(HOME_SECTION_IDS.contact);
+  const scheduleHref = toHomepageHash(HOME_SECTION_IDS.schedule);
   const facts = buildMoneyPageFacts(page);
   const heroImageUrl = page.heroImageUrl ?? null;
   const hasHeroImage = heroImageUrl !== null;
+  const relatedMoneyPages = getRelatedMoneyPages(path, page.audience);
 
   return (
     <article className="money-page">
@@ -140,6 +177,24 @@ export function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) {
         </section>
       ) : null}
 
+      {relatedMoneyPages.length > 0 ? (
+        <section className="money-page__section">
+          <div className="money-page__section-header">
+            <p className="section__eyebrow">Lộ trình liên quan</p>
+            <h2 className="section__title">Lớp khác bạn có thể quan tâm</h2>
+          </div>
+          <ul className="money-page__related-links">
+            {relatedMoneyPages.map((route) => (
+              <li key={route.path}>
+                <Link href={route.path} className="money-page__related-link">
+                  {route.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
       <section className="money-page__cta">
         <div className="money-page__cta-copy">
           <p className="section__eyebrow">Tư vấn nhanh</p>
@@ -149,9 +204,14 @@ export function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) {
             gợi ý lớp phù hợp nhất.
           </p>
         </div>
-        <Link href={ctaHref} className="btn btn--primary btn--lg">
-          {page.ctaLabel}
-        </Link>
+        <div className="money-page__cta-actions">
+          <Link href={ctaHref} className="btn btn--primary btn--lg">
+            {page.ctaLabel}
+          </Link>
+          <Link href={scheduleHref} className="btn btn--outline btn--lg">
+            Xem lịch học
+          </Link>
+        </div>
       </section>
     </article>
   );
