@@ -257,3 +257,25 @@ export function buildCourseSchemas(
     description: tier.description,
   }));
 }
+
+export function buildCoursePageSchema(
+  path: CoreRoutePath,
+  name: string,
+  description: string,
+): JsonLdNode {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "@id": `${canonicalUrl(path)}#course`,
+    name,
+    description,
+    url: canonicalUrl(path),
+    provider: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: siteConfig.siteUrl,
+    },
+    courseMode: "Offline",
+    availableLanguage: "vi",
+  };
+}

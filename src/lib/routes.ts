@@ -116,6 +116,72 @@ export const coreRoutes: readonly RouteMetadataEntry[] = [
     summary:
       "Money page B2B cho nhu cầu lớp nội bộ, team building thể thao và chương trình cầu lông theo mục tiêu doanh nghiệp.",
   },
+  {
+    path: "/lop-he-cau-long-tphcm/",
+    pageType: "seo_service",
+    title: "Lớp Hè Cầu Lông Tại TP.HCM | V2 Badminton",
+    description:
+      "Lớp cầu lông hè cho trẻ em và người mới bắt đầu tại TP.HCM. Lịch linh hoạt, lớp nhỏ, sân tại Bình Thạnh và Thủ Đức.",
+    ogImage: siteConfig.defaultOgImagePath,
+    navLabel: "Lớp hè",
+    summary:
+      "V2 Badminton đang chuẩn bị nội dung chi tiết cho chương trình hè. Phụ huynh và học viên có thể để lại thông tin để nhận thông báo khi lớp hè mở đăng ký.",
+  },
+  {
+    path: "/hoc-cau-long-1-kem-1/",
+    pageType: "seo_service",
+    title: "Học Cầu Lông 1 Kèm 1 Tại TP.HCM | V2 Badminton",
+    description:
+      "Chương trình cầu lông 1 kèm 1 tại TP.HCM cho học viên cần HLV theo sát, lộ trình cá nhân hóa và lịch linh hoạt.",
+    ogImage: siteConfig.defaultOgImagePath,
+    navLabel: "1 kèm 1",
+    summary:
+      "Chương trình kèm riêng 1:1 giúp học viên tiến bộ nhanh với lộ trình cá nhân hóa và HLV theo sát từng buổi.",
+  },
+  {
+    path: "/lop-cau-long-cuoi-tuan/",
+    pageType: "seo_service",
+    title: "Lớp Cầu Lông Cuối Tuần Tại TP.HCM | V2 Badminton",
+    description:
+      "Lớp cầu lông cuối tuần cho người bận trong tuần, lịch linh hoạt tại Bình Thạnh và Thủ Đức.",
+    ogImage: siteConfig.defaultOgImagePath,
+    navLabel: "Cuối tuần",
+    summary:
+      "Khung lịch thứ 7 và chủ nhật phù hợp cho người đi làm, sinh viên hoặc bất kỳ ai muốn giữ nhịp tập mà không ảnh hưởng giờ hành chính.",
+  },
+  {
+    path: "/lop-cau-long-buoi-toi/",
+    pageType: "seo_service",
+    title: "Lớp Cầu Lông Buổi Tối Tại TP.HCM | V2 Badminton",
+    description:
+      "Lớp cầu lông buổi tối cho người đi làm, phù hợp với giờ sau giờ hành chính tại Bình Thạnh và Thủ Đức.",
+    ogImage: siteConfig.defaultOgImagePath,
+    navLabel: "Buổi tối",
+    summary:
+      "V2 Badminton có các khung giờ sau giờ làm để bạn duy trì tập luyện đều đặn mà không cần hy sinh lịch cá nhân ban ngày.",
+  },
+  {
+    path: "/gia-hoc-cau-long-tphcm/",
+    pageType: "seo_support",
+    title: "Giá Học Cầu Lông Tại TP.HCM 2026 | V2 Badminton",
+    description:
+      "Tổng hợp giá học cầu lông tại TP.HCM: lớp nhóm, kèm riêng và chương trình doanh nghiệp tại V2 Badminton.",
+    ogImage: siteConfig.defaultOgImagePath,
+    navLabel: "Giá học",
+    summary:
+      "Trang này giúp học viên so sánh nhanh các mô hình học phí để chọn phương án phù hợp với mục tiêu và ngân sách.",
+  },
+  {
+    path: "/team-building-cau-long/",
+    pageType: "seo_support",
+    title: "Team Building Cầu Lông Cho Doanh Nghiệp | V2 Badminton",
+    description:
+      "Giải pháp team building cầu lông cho doanh nghiệp tại TP.HCM với format linh hoạt, gắn kết và có thể tùy biến theo team.",
+    ogImage: siteConfig.defaultOgImagePath,
+    navLabel: "Team building",
+    summary:
+      "V2 Badminton thiết kế chương trình team building qua cầu lông để doanh nghiệp có một hoạt động thể thao dùng được vào đúng mục tiêu gắn kết.",
+  },
 ] as const;
 
 export const coreRouteMap = Object.fromEntries(

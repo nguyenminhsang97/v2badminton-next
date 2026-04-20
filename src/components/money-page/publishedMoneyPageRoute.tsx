@@ -12,6 +12,12 @@ import { MoneyPageTemplate } from "./MoneyPageTemplate";
 
 type DegradedMetadataMode = "route" | "fallback";
 
+const SERVICE_MONEY_PAGE_PATHS = new Set<PublishedMoneyPagePath>([
+  "/lop-cau-long-tre-em/",
+  "/lop-cau-long-cho-nguoi-di-lam/",
+  "/hoc-cau-long-1-kem-1/",
+]);
+
 export type PublishedMoneyPageRouteConfig = {
   path: PublishedMoneyPagePath;
   slug: string;
@@ -31,18 +37,14 @@ export async function generatePublishedMoneyPageMetadata(
     return buildMoneyPageMetadata(config.path, moneyPage);
   }
 
-  if (degraded) {
-    if (config.degradedMetadataMode === "route") {
-      return buildMetadata(config.path);
-    }
-
-    return buildMoneyPageMetadata(
-      config.path,
-      buildPublishedMoneyPageFallback(config.path),
-    );
+  if (config.degradedMetadataMode === "route" && degraded) {
+    return buildMetadata(config.path);
   }
 
-  return {};
+  return buildMoneyPageMetadata(
+    config.path,
+    buildPublishedMoneyPageFallback(config.path),
+  );
 }
 
 export async function renderPublishedMoneyPage(
@@ -50,11 +52,12 @@ export async function renderPublishedMoneyPage(
 ) {
   const { page: moneyPage, degraded } = await getMoneyPage(config.slug);
 
-  if (!moneyPage && !degraded) {
+  if (!moneyPage && config.degradedMetadataMode === "route" && degraded) {
     notFound();
   }
 
   const resolvedPage = moneyPage ?? buildPublishedMoneyPageFallback(config.path);
+  const shouldRenderCourseSchema = SERVICE_MONEY_PAGE_PATHS.has(config.path);
 
   return (
     <>
@@ -62,6 +65,11 @@ export async function renderPublishedMoneyPage(
         path={config.path}
         breadcrumbId={config.breadcrumbId}
         breadcrumbLabel={config.breadcrumbLabel}
+        courseId={shouldRenderCourseSchema ? `${config.slug}-course` : undefined}
+        courseName={shouldRenderCourseSchema ? resolvedPage.h1 : undefined}
+        courseDescription={
+          shouldRenderCourseSchema ? resolvedPage.metaDescription : undefined
+        }
         faqId={config.faqId}
         businessId={config.businessId}
         faqs={resolvedPage.relatedFaqs}
