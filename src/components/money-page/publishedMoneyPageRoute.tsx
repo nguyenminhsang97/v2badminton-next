@@ -31,18 +31,14 @@ export async function generatePublishedMoneyPageMetadata(
     return buildMoneyPageMetadata(config.path, moneyPage);
   }
 
-  if (degraded) {
-    if (config.degradedMetadataMode === "route") {
-      return buildMetadata(config.path);
-    }
-
-    return buildMoneyPageMetadata(
-      config.path,
-      buildPublishedMoneyPageFallback(config.path),
-    );
+  if (config.degradedMetadataMode === "route" && degraded) {
+    return buildMetadata(config.path);
   }
 
-  return {};
+  return buildMoneyPageMetadata(
+    config.path,
+    buildPublishedMoneyPageFallback(config.path),
+  );
 }
 
 export async function renderPublishedMoneyPage(
@@ -50,7 +46,7 @@ export async function renderPublishedMoneyPage(
 ) {
   const { page: moneyPage, degraded } = await getMoneyPage(config.slug);
 
-  if (!moneyPage && !degraded) {
+  if (!moneyPage && config.degradedMetadataMode === "route" && degraded) {
     notFound();
   }
 
