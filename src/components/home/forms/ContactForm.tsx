@@ -1,6 +1,15 @@
 "use client";
 
-import { useActionState, useMemo, type FocusEvent, type FormEvent, type HTMLInputTypeAttribute } from "react";
+import {
+  useActionState,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type FocusEvent,
+  type FormEvent,
+  type HTMLInputTypeAttribute,
+} from "react";
 import { usePathname } from "next/navigation";
 import { submitLead } from "@/app/actions/submitLead";
 import type { FormFieldName } from "@/lib/tracking";
@@ -85,6 +94,8 @@ export function ContactForm({
   locations,
   scheduleBlocks,
 }: ContactFormProps) {
+  const shellRef = useRef<HTMLDivElement>(null);
+  const [isCaptchaActive, setIsCaptchaActive] = useState(false);
   const pathname = usePathname();
   const {
     selectedSchedulePrefill,
@@ -120,6 +131,7 @@ export function ContactForm({
 
   const formToken = useFormToken();
   const shouldRenderCaptcha = Boolean(turnstileSiteKey);
+  const shouldMountCaptcha = shouldRenderCaptcha && isCaptchaActive;
   const businessHeading = businessMode
     ? "Nhận tư vấn cho doanh nghiệp"
     : "Đăng ký học thử";
@@ -164,9 +176,42 @@ export function ContactForm({
     setValues,
   });
 
+  useEffect(() => {
+    if (!shouldRenderCaptcha || isCaptchaActive) {
+      return;
+    }
+
+    const shell = shellRef.current;
+    if (!shell) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setIsCaptchaActive(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "200px 0px" },
+    );
+
+    observer.observe(shell);
+
+    return () => observer.disconnect();
+  }, [isCaptchaActive, shouldRenderCaptcha]);
+
+  function activateCaptcha() {
+    if (shouldRenderCaptcha) {
+      setIsCaptchaActive(true);
+    }
+  }
+
   function handleInputFocus(
     event: FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
   ) {
+    activateCaptcha();
+
     const fieldName = event.currentTarget.dataset.fieldName as
       | FormFieldName
       | undefined;
@@ -178,6 +223,19 @@ export function ContactForm({
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     if (isPending) {
       event.preventDefault();
+      return;
+    }
+
+    if (shouldRenderCaptcha && !isCaptchaActive) {
+      event.preventDefault();
+      activateCaptcha();
+      setDirtySinceServer(true);
+      setSubmitMessage("Vui lòng hoàn tất captcha trước khi gửi thông tin.");
+      trackEvent("form_error", {
+        error_code: "captcha_required",
+        page_type: "homepage",
+        page_path: pathname || "/",
+      });
       return;
     }
 
@@ -232,7 +290,7 @@ export function ContactForm({
   }
 
   return (
-    <div className="contact-form-shell">
+    <div ref={shellRef} className="contact-form-shell">
       <div className="contact-form-shell__header">
         <p className="contact-form-shell__eyebrow">
           {businessMode ? "Chế độ doanh nghiệp" : "Đăng ký nhanh"}
@@ -414,7 +472,7 @@ export function ContactForm({
           />
 
           <CaptchaField
-            shouldRenderCaptcha={shouldRenderCaptcha}
+            shouldRenderCaptcha={shouldMountCaptcha}
             formToken={formToken}
             turnstileSiteKey={turnstileSiteKey}
           />
