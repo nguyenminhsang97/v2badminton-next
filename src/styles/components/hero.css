@@ -336,6 +336,12 @@
 }
 
 @media (max-width: 959px) {
+  .hero,
+  .hero__shell {
+    max-width: 100dvw;
+    overflow-x: clip;
+  }
+
   .hero__heading-line {
     width: auto;
     white-space: normal;

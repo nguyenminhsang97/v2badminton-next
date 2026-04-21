@@ -57,6 +57,7 @@
   overflow-y: hidden;
   overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
+  contain: layout paint;
   border-radius: 26px;
   background: #fff;
   border: 1px solid rgba(15, 59, 32, 0.08);

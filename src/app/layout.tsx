@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
@@ -16,6 +16,12 @@ export const metadata: Metadata = {
     index: allowIndexing,
     follow: true,
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({

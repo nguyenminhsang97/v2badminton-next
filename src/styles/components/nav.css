@@ -239,6 +239,11 @@
 }
 
 @media (max-width: 767px) {
+  .site-header {
+    max-width: 100dvw;
+    overflow-x: clip;
+  }
+
   .site-header__inner {
     width: min(100%, calc(100% - 24px));
     min-height: 64px;

@@ -43,3 +43,21 @@
     display: none;
   }
 }
+
+@media (max-width: 959px) {
+  .floating-cta {
+    left: calc(100dvw - max(16px, env(safe-area-inset-right)) - 148px);
+    right: auto;
+    width: 148px;
+    max-width: calc(
+      100dvw - max(16px, env(safe-area-inset-left)) - max(16px, env(safe-area-inset-right))
+    );
+    justify-items: stretch;
+    overflow-x: clip;
+    pointer-events: auto;
+  }
+
+  .floating-cta__button {
+    width: 100%;
+  }
+}
