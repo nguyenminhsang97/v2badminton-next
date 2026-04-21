@@ -122,35 +122,30 @@ export function StaticScheduleSection({
         ))}
       </div>
 
-      <div className="schedule-table" role="table" aria-label="Lịch học V2 Badminton">
-        <div className="schedule-table__head" role="row">
+      <div className="schedule-table" aria-label="Lịch học V2 Badminton">
+        <div className="schedule-table__head">
           <span
             className="schedule-table__cell schedule-table__cell--label"
-            role="columnheader"
           >
             Ngày
           </span>
           <span
             className="schedule-table__cell schedule-table__cell--label"
-            role="columnheader"
           >
             Giờ học
           </span>
           <span
             className="schedule-table__cell schedule-table__cell--label"
-            role="columnheader"
           >
             Khóa học
           </span>
           <span
             className="schedule-table__cell schedule-table__cell--label"
-            role="columnheader"
           >
             Cơ sở
           </span>
           <span
             className="schedule-table__cell schedule-table__cell--label"
-            role="columnheader"
           >
             Trình độ
           </span>

@@ -60,6 +60,7 @@ export function StaticTestimonialsSection({
               {rating > 0 ? (
                 <div
                   className="testimonial-card__stars"
+                  role="img"
                   aria-label={`Đánh giá ${rating} sao`}
                 >
                   {Array.from({ length: rating }).map((_, index) => (

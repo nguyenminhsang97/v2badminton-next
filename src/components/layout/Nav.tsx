@@ -17,9 +17,9 @@ const primaryLinks = [
     kind: "anchor" as const,
   },
   {
-    href: toHomepageHash(HOME_SECTION_IDS.coaches),
+    href: "/huan-luyen-vien/",
     label: "Huấn luyện viên",
-    kind: "anchor" as const,
+    kind: "route" as const,
   },
   {
     href: toHomepageHash(HOME_SECTION_IDS.schedule),

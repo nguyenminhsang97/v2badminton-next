@@ -64,7 +64,11 @@ export function TestimonialsSection({
           return (
             <blockquote key={testimonial.id} className="testimonial-card">
               {rating > 0 ? (
-                <div className="testimonial-card__stars" aria-label={`Đánh giá ${rating} sao`}>
+                <div
+                  className="testimonial-card__stars"
+                  role="img"
+                  aria-label={`Đánh giá ${rating} sao`}
+                >
                   {Array.from({ length: rating }).map((_, index) => (
                     <StarIcon
                       key={`${testimonial.id}-star-${index}`}

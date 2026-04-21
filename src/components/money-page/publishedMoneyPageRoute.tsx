@@ -15,6 +15,7 @@ const SERVICE_MONEY_PAGE_PATHS = new Set<PublishedMoneyPagePath>([
   "/lop-cau-long-tre-em/",
   "/lop-cau-long-cho-nguoi-di-lam/",
   "/hoc-cau-long-1-kem-1/",
+  "/cau-long-doanh-nghiep/",
 ]);
 
 export type PublishedMoneyPageRouteConfig = {
