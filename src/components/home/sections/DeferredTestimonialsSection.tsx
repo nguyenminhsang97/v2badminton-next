@@ -1,24 +1,13 @@
-"use client";
-
-import dynamic from "next/dynamic";
-import { HomepageDeferredSectionSkeleton } from "./HomepageDeferredSectionSkeleton";
+import { DeferredTestimonialsHydrationBoundary } from "./DeferredTestimonialsHydrationBoundary";
 import type { HomepageTestimonialsSectionProps } from "./sectionProps";
-
-const LazyTestimonialsSection = dynamic<HomepageTestimonialsSectionProps>(
-  () =>
-    import("./TestimonialsSection").then(
-      (module) => module.TestimonialsSection,
-    ),
-  {
-    ssr: true,
-    loading: () => (
-      <HomepageDeferredSectionSkeleton variant="testimonials" />
-    ),
-  },
-);
+import { StaticTestimonialsSection } from "./StaticTestimonialsSection";
 
 export function DeferredTestimonialsSection(
   props: HomepageTestimonialsSectionProps,
 ) {
-  return <LazyTestimonialsSection {...props} />;
+  return (
+    <DeferredTestimonialsHydrationBoundary {...props}>
+      <StaticTestimonialsSection {...props} />
+    </DeferredTestimonialsHydrationBoundary>
+  );
 }

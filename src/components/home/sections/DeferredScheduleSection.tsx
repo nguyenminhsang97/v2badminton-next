@@ -1,17 +1,11 @@
-"use client";
-
-import dynamic from "next/dynamic";
-import { HomepageDeferredSectionSkeleton } from "./HomepageDeferredSectionSkeleton";
+import { DeferredScheduleHydrationBoundary } from "./DeferredScheduleHydrationBoundary";
 import type { HomepageScheduleSectionProps } from "./sectionProps";
-
-const LazyScheduleSection = dynamic<HomepageScheduleSectionProps>(
-  () => import("./ScheduleSection").then((module) => module.ScheduleSection),
-  {
-    ssr: true,
-    loading: () => <HomepageDeferredSectionSkeleton variant="schedule" />,
-  },
-);
+import { StaticScheduleSection } from "./StaticScheduleSection";
 
 export function DeferredScheduleSection(props: HomepageScheduleSectionProps) {
-  return <LazyScheduleSection {...props} />;
+  return (
+    <DeferredScheduleHydrationBoundary {...props}>
+      <StaticScheduleSection {...props} />
+    </DeferredScheduleHydrationBoundary>
+  );
 }
