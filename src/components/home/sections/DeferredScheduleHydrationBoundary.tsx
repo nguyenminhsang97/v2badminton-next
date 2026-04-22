@@ -1,53 +1,35 @@
 "use client";
 
-import { useEffect, useState, type ComponentType, type ReactNode } from "react";
+import type { ComponentType, ReactNode } from "react";
 import type { HomepageScheduleSectionProps } from "./sectionProps";
-import { useDeferredSectionHydration } from "./useDeferredSectionHydration";
+import { IdleHydrationBoundary } from "./IdleHydrationBoundary";
 
 type ScheduleComponent = ComponentType<HomepageScheduleSectionProps>;
+type ScheduleSectionModule = typeof import("./ScheduleSection");
 
 type DeferredScheduleHydrationBoundaryProps = HomepageScheduleSectionProps & {
   children: ReactNode;
 };
 
+let hydratedScheduleModulePromise: Promise<ScheduleSectionModule> | null = null;
+
+function loadScheduleSection(): Promise<ScheduleComponent> {
+  hydratedScheduleModulePromise ??= import("./ScheduleSection");
+
+  return hydratedScheduleModulePromise.then((module) => module.ScheduleSection);
+}
+
 export function DeferredScheduleHydrationBoundary({
   children,
   scheduleBlocks,
 }: DeferredScheduleHydrationBoundaryProps) {
-  const { boundaryRef, hydrateNow, shouldHydrate } =
-    useDeferredSectionHydration();
-  const [HydratedSchedule, setHydratedSchedule] =
-    useState<ScheduleComponent | null>(null);
-
-  useEffect(() => {
-    if (!shouldHydrate || HydratedSchedule) {
-      return;
-    }
-
-    let isCancelled = false;
-
-    void import("./ScheduleSection").then((module) => {
-      if (!isCancelled) {
-        setHydratedSchedule(() => module.ScheduleSection);
-      }
-    });
-
-    return () => {
-      isCancelled = true;
-    };
-  }, [HydratedSchedule, shouldHydrate]);
-
   return (
-    <div
-      ref={boundaryRef}
-      onFocusCapture={hydrateNow}
-      onPointerEnter={hydrateNow}
+    <IdleHydrationBoundary
+      componentProps={{ scheduleBlocks }}
+      loader={loadScheduleSection}
+      timeoutMs={1200}
     >
-      {HydratedSchedule ? (
-        <HydratedSchedule scheduleBlocks={scheduleBlocks} />
-      ) : (
-        children
-      )}
-    </div>
+      {children}
+    </IdleHydrationBoundary>
   );
 }
