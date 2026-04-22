@@ -244,7 +244,9 @@
   .mobile-carousel__track.testimonials-grid {
     -webkit-overflow-scrolling: touch;
     touch-action: pan-x pinch-zoom;
-    scroll-snap-type: none;
+    padding-top: 4px;
+    padding-bottom: 14px;
+    scroll-snap-type: x mandatory;
     cursor: grab;
   }
 
@@ -253,7 +255,8 @@
   }
 
   .mobile-carousel__track.testimonials-grid > * {
-    scroll-snap-align: none;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
 
   .testimonials-section.deferred-section-skeleton {
@@ -273,14 +276,22 @@
     gap: 14px;
     padding: 18px 18px 16px;
     border-radius: 22px;
+    overflow: hidden;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%),
+      rgba(10, 42, 37, 0.94);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
     -webkit-user-select: none;
     user-select: none;
     -webkit-touch-callout: none;
+    -webkit-user-drag: none;
   }
 
   .testimonial-card * {
     -webkit-user-select: none;
     user-select: none;
+    -webkit-user-drag: none;
   }
 
   .testimonial-card__stars {
