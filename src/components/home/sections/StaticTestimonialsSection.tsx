@@ -80,6 +80,7 @@ export function StaticTestimonialsSection({
                     <Image
                       src={testimonial.avatarUrl}
                       alt={testimonial.avatarAlt ?? testimonial.studentName}
+                      draggable={false}
                       fill
                       className="testimonial-card__avatar-image"
                       sizes="46px"
