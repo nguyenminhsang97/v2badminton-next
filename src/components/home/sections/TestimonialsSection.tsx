@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { StarIcon } from "@/components/ui/BrandIcons";
+import { MobileDotCarousel } from "@/components/ui/MobileDotCarousel";
 import { HOME_SECTION_IDS } from "@/lib/anchors";
 import type { HomepageTestimonialsSectionProps } from "./sectionProps";
 
@@ -54,7 +55,10 @@ export function TestimonialsSection({
         </p>
       </div>
 
-      <div className="testimonials-grid">
+      <MobileDotCarousel
+        ariaLabel="Xem phản hồi học viên"
+        trackClassName="testimonials-grid"
+      >
         {displayedTestimonials.map((testimonial) => {
           const quote = testimonial.shortQuote ?? testimonial.content;
           const rating = Math.max(0, Math.min(testimonial.rating, 5));
@@ -108,7 +112,7 @@ export function TestimonialsSection({
             </blockquote>
           );
         })}
-      </div>
+      </MobileDotCarousel>
 
       {canExpand ? (
         <div className="testimonials-section__footer">

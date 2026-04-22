@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { CheckBadgeIcon, StarIcon } from "@/components/ui/BrandIcons";
+import { MobileDotCarousel } from "@/components/ui/MobileDotCarousel";
 import type { HomepageCoach } from "@/domain/homepage";
 
 const FALLBACK_COACH_IMAGES = [
@@ -25,7 +26,10 @@ type CoachCardsGridProps = {
 
 export function CoachCardsGrid({ coaches }: CoachCardsGridProps) {
   return (
-    <div className="coach-grid coach-grid--figma">
+    <MobileDotCarousel
+      ariaLabel="Xem huấn luyện viên"
+      trackClassName="coach-grid coach-grid--figma"
+    >
       {coaches.map((coach, index) => {
         const fallbackImage =
           FALLBACK_COACH_IMAGES[index % FALLBACK_COACH_IMAGES.length];
@@ -100,6 +104,6 @@ export function CoachCardsGrid({ coaches }: CoachCardsGridProps) {
           </article>
         );
       })}
-    </div>
+    </MobileDotCarousel>
   );
 }

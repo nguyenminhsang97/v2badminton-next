@@ -21,6 +21,14 @@
   backdrop-filter: blur(12px);
 }
 
+@supports selector(:has(*)) {
+  .site-header:has(.site-nav--mobile[open]) {
+    background: #0d4a28;
+    box-shadow: 0 8px 26px rgba(0, 0, 0, 0.18);
+    backdrop-filter: blur(12px);
+  }
+}
+
 .site-header__inner {
   width: min(1280px, calc(100% - 56px));
   min-height: 76px;
@@ -244,6 +252,10 @@
     overflow-x: clip;
   }
 
+  .site-header--floating {
+    background: linear-gradient(180deg, rgba(7, 31, 16, 0.62) 0%, rgba(7, 31, 16, 0.16) 72%, transparent 100%);
+  }
+
   .site-header__inner {
     width: min(100%, calc(100% - 24px));
     min-height: 64px;
@@ -255,6 +267,7 @@
   }
 
   .site-nav__panel {
+    top: calc(100% + 10px);
     min-width: min(320px, calc(100vw - 32px));
   }
 }

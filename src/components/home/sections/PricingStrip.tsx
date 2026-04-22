@@ -1,5 +1,6 @@
 import type { SanityPricingTier } from "@/lib/sanity";
 import { HOME_SECTION_IDS } from "@/lib/anchors";
+import { MobileDotCarousel } from "@/components/ui/MobileDotCarousel";
 
 type PricingStripProps = {
   tiers: readonly SanityPricingTier[];
@@ -45,7 +46,10 @@ export function PricingStrip({ tiers }: PricingStripProps) {
         <p className="pricing-strip__eyebrow">Chi tiết học phí</p>
         <h3 className="pricing-strip__title">4 mức học phí hiện tại</h3>
       </div>
-      <div className="pricing-strip__grid">
+      <MobileDotCarousel
+        ariaLabel="Chọn mức học phí"
+        trackClassName="pricing-strip__grid"
+      >
         {groupTiers.map((tier) => (
           <article key={tier.id} className="pricing-strip__item">
             <div className="pricing-strip__copy">
@@ -64,7 +68,7 @@ export function PricingStrip({ tiers }: PricingStripProps) {
             <strong className="pricing-strip__price">{privateTier.displayPrice}</strong>
           </article>
         ) : null}
-      </div>
+      </MobileDotCarousel>
     </div>
   );
 }

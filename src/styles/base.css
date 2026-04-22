@@ -645,7 +645,7 @@ button {
 @media (max-width: 959px) {
   .site-main {
     padding-top: 64px;
-    padding-bottom: 138px;
+    padding-bottom: 108px;
   }
 
   .home-page {
@@ -653,8 +653,8 @@ button {
   }
 
   .home-page > .section {
-    gap: 20px;
-    padding: 40px 0;
+    gap: 16px;
+    padding: 34px 0;
   }
 
   .home-page > .section > * {
@@ -670,8 +670,8 @@ button {
   }
 
   .section {
-    padding: 48px 0;
-    gap: 24px;
+    padding: 40px 0;
+    gap: 20px;
   }
 
   .section__title {

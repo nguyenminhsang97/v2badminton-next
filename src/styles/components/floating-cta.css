@@ -1,24 +1,44 @@
 .floating-cta {
   position: fixed;
-  right: 16px;
-  bottom: 16px;
+  left: max(16px, env(safe-area-inset-left));
+  right: max(16px, env(safe-area-inset-right));
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
   z-index: 70;
   display: grid;
-  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  width: auto;
+  max-width: min(
+    420px,
+    calc(
+      100dvw - max(16px, env(safe-area-inset-left)) - max(16px, env(safe-area-inset-right))
+    )
+  );
+  margin-inline: auto;
+  padding: 8px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(15, 59, 32, 0.1);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 14px 34px rgba(15, 59, 32, 0.12);
+  justify-items: stretch;
+  overflow-x: clip;
+  pointer-events: auto;
 }
 
 .floating-cta__button {
-  display: grid;
-  gap: 2px;
-  min-width: 148px;
-  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  min-height: 58px;
+  padding: 10px 12px;
   border-radius: 18px;
-  box-shadow: 0 18px 36px rgba(17, 47, 28, 0.18);
   text-decoration: none;
 }
 
 .floating-cta__button--phone {
-  background: #fff;
+  background: rgba(15, 59, 32, 0.06);
   color: var(--s5-primary-strong);
 }
 
@@ -27,15 +47,28 @@
   color: #fff;
 }
 
+.floating-cta__icon {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+}
+
+.floating-cta__copy {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+
 .floating-cta__label {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .floating-cta__value {
-  font-size: 0.94rem;
+  font-size: 0.98rem;
+  line-height: 1.1;
 }
 
 @media (min-width: 960px) {
@@ -44,20 +77,14 @@
   }
 }
 
-@media (max-width: 959px) {
-  .floating-cta {
-    left: calc(100dvw - max(16px, env(safe-area-inset-right)) - 148px);
-    right: auto;
-    width: 148px;
-    max-width: calc(
-      100dvw - max(16px, env(safe-area-inset-left)) - max(16px, env(safe-area-inset-right))
-    );
-    justify-items: stretch;
-    overflow-x: clip;
-    pointer-events: auto;
+@media (max-width: 420px) {
+  .floating-cta__button {
+    min-height: 54px;
+    padding: 10px;
+    gap: 8px;
   }
 
-  .floating-cta__button {
-    width: 100%;
+  .floating-cta__value {
+    font-size: 0.92rem;
   }
 }

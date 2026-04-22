@@ -232,11 +232,21 @@
 }
 
 @media (max-width: 767px) {
-  .coach-grid--figma {
-    grid-template-columns: 1fr;
-  }
-
   .coach-section__footer {
     margin-top: 22px;
+  }
+
+  .coach-card__photo-wrap {
+    min-height: 286px;
+  }
+
+  .coach-card__body {
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .coach-card__quote {
+    padding: 14px;
+    border-radius: 18px;
   }
 }

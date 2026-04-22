@@ -65,14 +65,35 @@ export function Nav({ siteSettings }: NavProps) {
 
   useEffect(() => {
     const forceSolid = normalizedPath !== "/";
+    const viewport = window.visualViewport;
 
     function syncScrollState() {
-      setIsScrolled(forceSolid || window.scrollY > 20);
+      const scrollTop = Math.max(
+        window.scrollY,
+        document.documentElement.scrollTop,
+        document.body.scrollTop,
+      );
+
+      setIsScrolled(forceSolid || scrollTop > 8);
     }
 
     syncScrollState();
     window.addEventListener("scroll", syncScrollState, { passive: true });
-    return () => window.removeEventListener("scroll", syncScrollState);
+    document.addEventListener("scroll", syncScrollState, { passive: true });
+    window.addEventListener("resize", syncScrollState);
+    window.addEventListener("pageshow", syncScrollState);
+    viewport?.addEventListener("scroll", syncScrollState);
+    viewport?.addEventListener("resize", syncScrollState);
+    requestAnimationFrame(() => syncScrollState());
+
+    return () => {
+      window.removeEventListener("scroll", syncScrollState);
+      document.removeEventListener("scroll", syncScrollState);
+      window.removeEventListener("resize", syncScrollState);
+      window.removeEventListener("pageshow", syncScrollState);
+      viewport?.removeEventListener("scroll", syncScrollState);
+      viewport?.removeEventListener("resize", syncScrollState);
+    };
   }, [normalizedPath]);
 
   function trackNavCtaClick() {

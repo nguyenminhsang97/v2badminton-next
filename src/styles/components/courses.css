@@ -388,11 +388,21 @@
 }
 
 @media (max-width: 767px) {
-  .course-grid--figma {
-    grid-template-columns: 1fr;
+  .course-card__desc {
+    min-height: 0;
   }
 
-  .course-card__desc {
+  .course-card__body {
+    gap: 14px;
+    padding: 18px 18px 20px;
+  }
+
+  .course-card__title {
+    min-height: 0;
+    font-size: 1.18rem;
+  }
+
+  .course-card__subtitle {
     min-height: 0;
   }
 
@@ -409,14 +419,11 @@
 
   .pricing-strip,
   .enterprise-teaser {
-    padding: 22px;
-  }
-
-  .pricing-strip__grid {
-    grid-template-columns: 1fr;
+    padding: 18px;
   }
 
   .pricing-strip__item {
     align-items: start;
+    min-height: 0;
   }
 }

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRightIcon, ClockIcon } from "@/components/ui/BrandIcons";
+import { MobileDotCarousel } from "@/components/ui/MobileDotCarousel";
 import {
   useHomepageBusinessMode,
   useHomepageConversionIntent,
@@ -173,7 +174,10 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
         </p>
       </div>
 
-      <div className="course-grid course-grid--figma">
+      <MobileDotCarousel
+        ariaLabel="Chọn lộ trình phù hợp"
+        trackClassName="course-grid course-grid--figma"
+      >
         {courseCards.map((card) => (
           <article key={card.id} className={`course-card course-card--${card.tone}`}>
             <div className="course-card__media">
@@ -272,7 +276,7 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
             </div>
           </article>
         ))}
-      </div>
+      </MobileDotCarousel>
 
       <PricingStrip tiers={pricingTiers} />
       <EnterpriseTeaser onRequestQuote={enterBusinessMode} />

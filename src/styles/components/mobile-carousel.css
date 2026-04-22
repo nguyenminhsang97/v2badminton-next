@@ -1,0 +1,55 @@
+.mobile-carousel {
+  display: grid;
+  gap: 14px;
+}
+
+.mobile-carousel__dots {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.mobile-carousel__dot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border-radius: 999px;
+  background: rgba(15, 59, 32, 0.18);
+  transition:
+    transform 0.18s ease,
+    background-color 0.18s ease,
+    width 0.18s ease;
+}
+
+.mobile-carousel__dot--active {
+  width: 28px;
+  background: var(--s5-primary);
+}
+
+@media (max-width: 767px) {
+  .mobile-carousel__track {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    padding-inline: 2px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    overscroll-behavior-x: contain;
+    scroll-padding-inline: 2px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .mobile-carousel__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mobile-carousel__track > * {
+    flex: 0 0 calc(100% - 32px);
+    scroll-snap-align: start;
+  }
+
+  .mobile-carousel__dots {
+    display: flex;
+  }
+}

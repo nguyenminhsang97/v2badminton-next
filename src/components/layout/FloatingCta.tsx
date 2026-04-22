@@ -1,6 +1,7 @@
 "use client";
 
 import type { SiteChromeSettings } from "@/components/layout/siteSettings";
+import { MessageCircleIcon, PhoneIcon } from "@/components/ui/BrandIcons";
 import { trackEvent } from "@/lib/tracking";
 
 type FloatingCtaProps = {
@@ -13,6 +14,7 @@ export function FloatingCta({ siteSettings }: FloatingCtaProps) {
       <a
         href={`tel:${siteSettings.phoneE164}`}
         className="floating-cta__button floating-cta__button--phone"
+        aria-label={`Gọi ${siteSettings.phoneDisplay}`}
         onClick={() =>
           trackEvent("cta_click", {
             cta_name: "dang_ky_ngay",
@@ -21,8 +23,11 @@ export function FloatingCta({ siteSettings }: FloatingCtaProps) {
           })
         }
       >
-        <span className="floating-cta__label">Gọi ngay</span>
-        <strong className="floating-cta__value">{siteSettings.phoneDisplay}</strong>
+        <PhoneIcon className="floating-cta__icon" />
+        <span className="floating-cta__copy">
+          <span className="floating-cta__label">Gọi ngay</span>
+          <strong className="floating-cta__value">{siteSettings.phoneDisplay}</strong>
+        </span>
       </a>
 
       <a
@@ -30,6 +35,7 @@ export function FloatingCta({ siteSettings }: FloatingCtaProps) {
         target="_blank"
         rel="noopener noreferrer"
         className="floating-cta__button floating-cta__button--zalo"
+        aria-label="Nhắn Zalo cho V2 Badminton"
         onClick={() =>
           trackEvent("cta_click", {
             cta_name: "nhan_zalo_tu_van",
@@ -38,8 +44,11 @@ export function FloatingCta({ siteSettings }: FloatingCtaProps) {
           })
         }
       >
-        <span className="floating-cta__label">Tư vấn Zalo</span>
-        <strong className="floating-cta__value">Nhắn V2</strong>
+        <MessageCircleIcon className="floating-cta__icon" />
+        <span className="floating-cta__copy">
+          <span className="floating-cta__label">Tư vấn Zalo</span>
+          <strong className="floating-cta__value">Nhắn V2</strong>
+        </span>
       </a>
     </nav>
   );
