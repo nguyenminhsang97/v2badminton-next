@@ -56,7 +56,11 @@ export function StaticTestimonialsSection({
             testimonial.contextLabel || getGroupLabel(testimonial.studentGroup);
 
           return (
-            <blockquote key={testimonial.id} className="testimonial-card">
+            <blockquote
+              key={testimonial.id}
+              className="testimonial-card"
+              draggable={false}
+            >
               {rating > 0 ? (
                 <div
                   className="testimonial-card__stars"

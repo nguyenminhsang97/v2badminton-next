@@ -275,7 +275,8 @@
     gap: 14px;
     padding: 18px 18px 16px;
     border-radius: 22px;
-    overflow: hidden;
+    min-height: 0;
+    height: auto;
     background:
       linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%),
       rgba(10, 42, 37, 0.94);
@@ -293,6 +294,7 @@
     -webkit-user-select: none;
     user-select: none;
     -webkit-user-drag: none;
+    -webkit-touch-callout: none;
   }
 
   .testimonial-card__stars {
