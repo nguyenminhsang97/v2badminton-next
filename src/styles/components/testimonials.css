@@ -243,7 +243,6 @@
 
   .mobile-carousel__track.testimonials-grid {
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-x pinch-zoom;
     padding-top: 4px;
     padding-bottom: 14px;
     scroll-snap-type: x mandatory;
