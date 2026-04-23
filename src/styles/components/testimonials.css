@@ -245,15 +245,15 @@
 
   .mobile-carousel__track.testimonials-grid {
     -webkit-overflow-scrolling: touch;
-    padding-inline: 32px;
+    padding-inline: 16px;
     padding-top: 4px;
     padding-bottom: 36px;
-    scroll-padding-inline: 32px;
+    scroll-padding-inline: 16px;
     scroll-snap-type: x mandatory;
   }
 
   .mobile-carousel__track.testimonials-grid > * {
-    flex-basis: calc(100% - 64px);
+    flex-basis: 100%;
     scroll-snap-align: center;
     scroll-snap-stop: always;
   }
