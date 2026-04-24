@@ -92,7 +92,7 @@ export function HeroSection({ campaign }: HomepageHeroSectionProps) {
                 <strong className="hero__proof-score">4.9</strong>
               </div>
               <span className="hero__proof-meta">
-                Theo sát ngay từ buổi đầu, dễ bắt nhịp và duy trì đều
+                Từ 1,200+ học viên trên TP.HCM
               </span>
             </div>
           </div>

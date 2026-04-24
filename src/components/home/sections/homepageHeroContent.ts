@@ -8,4 +8,4 @@ export const HERO_SOCIAL_PROOF = [
   { initials: "TL", accent: "hero__avatar--sky" },
 ] as const;
 
-export const HERO_STATUS_LABEL = "HỌC VIÊN CẦU LÔNG HÀNG ĐẦU TP.HCM";
+export const HERO_STATUS_LABEL = "HỌC VIÊN CẦU LÔNG UY TÍN TP.HCM";
