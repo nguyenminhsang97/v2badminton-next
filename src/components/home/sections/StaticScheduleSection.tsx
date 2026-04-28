@@ -8,7 +8,7 @@ import {
 import type { HomepageScheduleSectionProps } from "./sectionProps";
 
 const ALL_TAB_ID = "__all__";
-const MAX_VISIBLE_ROWS = 8;
+const ALL_TAB_VISIBLE_ROWS = 3;
 
 function getScheduleLevelUi(level: SanityScheduleLevel): {
   label: string;
@@ -87,8 +87,8 @@ export function StaticScheduleSection({
     return left.discoveredAt - right.discoveredAt;
   });
 
-  const visibleItems = scheduleBlocks.slice(0, MAX_VISIBLE_ROWS);
-  const hasOverflowRows = scheduleBlocks.length > MAX_VISIBLE_ROWS;
+  const visibleItems = scheduleBlocks.slice(0, ALL_TAB_VISIBLE_ROWS);
+  const hasOverflowRows = scheduleBlocks.length > ALL_TAB_VISIBLE_ROWS;
 
   return (
     <section className="section schedule-section" id={HOME_SECTION_IDS.schedule}>
@@ -201,7 +201,7 @@ export function StaticScheduleSection({
       {hasOverflowRows ? (
         <div className="schedule-actions" aria-hidden="true">
           <span className="schedule-actions__toggle">
-            Xem thêm {scheduleBlocks.length - MAX_VISIBLE_ROWS} lịch còn lại
+            Xem thêm {scheduleBlocks.length - ALL_TAB_VISIBLE_ROWS} lịch còn lại
           </span>
         </div>
       ) : null}

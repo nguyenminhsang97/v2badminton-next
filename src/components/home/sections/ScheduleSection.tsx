@@ -16,7 +16,8 @@ import {
 import type { HomepageScheduleSectionProps } from "./sectionProps";
 
 const ALL_TAB_ID = "__all__";
-const MAX_VISIBLE_ROWS = 8;
+const ALL_TAB_VISIBLE_ROWS = 3;
+const FILTERED_TAB_VISIBLE_ROWS = 8;
 
 type SelectedCourseIntent = NonNullable<
   ReturnType<typeof useHomepageConversionIntent>["selectedCourseIntent"]
@@ -158,10 +159,13 @@ export function ScheduleSection({
         : `Đang lọc theo trình độ ${getScheduleFilterLabel(selectedCourseIntent)}.`;
   const currentViewKey = `${activeTab}:${selectedCourseIntent ?? "all"}`;
   const isExpanded = expandedViewKey === currentViewKey;
-  const hasOverflowRows = itemsToRender.length > MAX_VISIBLE_ROWS;
+  const isBroadAllView = activeTab === ALL_TAB_ID && selectedCourseIntent === null;
+  const maxVisibleRows =
+    isBroadAllView ? ALL_TAB_VISIBLE_ROWS : FILTERED_TAB_VISIBLE_ROWS;
+  const hasOverflowRows = itemsToRender.length > maxVisibleRows;
   const visibleItems = isExpanded
     ? itemsToRender
-    : itemsToRender.slice(0, MAX_VISIBLE_ROWS);
+    : itemsToRender.slice(0, maxVisibleRows);
 
   function handleCardClick(scheduleBlock: SanityScheduleBlock) {
     const prefill = buildSchedulePrefill(scheduleBlock);
@@ -171,6 +175,11 @@ export function ScheduleSection({
     }
 
     setPrefill(prefill);
+  }
+
+  function handleTabChange(tabId: string) {
+    setActiveTab(tabId);
+    setExpandedViewKey(null);
   }
 
   return (
@@ -194,7 +203,7 @@ export function ScheduleSection({
           role="tab"
           aria-selected={activeTab === ALL_TAB_ID}
           className={`schedule-tab ${activeTab === ALL_TAB_ID ? "schedule-tab--active" : ""}`}
-          onClick={() => setActiveTab(ALL_TAB_ID)}
+          onClick={() => handleTabChange(ALL_TAB_ID)}
         >
           Tất cả
         </button>
@@ -205,7 +214,7 @@ export function ScheduleSection({
             role="tab"
             aria-selected={activeTab === tab.id}
             className={`schedule-tab ${activeTab === tab.id ? "schedule-tab--active" : ""}`}
-            onClick={() => setActiveTab(tab.id)}
+            onClick={() => handleTabChange(tab.id)}
           >
             {tab.label}
           </button>
@@ -326,7 +335,7 @@ export function ScheduleSection({
           >
             {isExpanded
               ? "Thu gọn lịch học"
-              : `Xem thêm ${itemsToRender.length - MAX_VISIBLE_ROWS} lịch còn lại`}
+              : `Xem thêm ${itemsToRender.length - maxVisibleRows} lịch còn lại`}
           </button>
         </div>
       ) : null}
