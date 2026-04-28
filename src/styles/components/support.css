@@ -435,7 +435,7 @@
 
   .contact-section {
     padding-top: 56px;
-    padding-bottom: 72px;
+    padding-bottom: var(--floating-cta-clearance);
   }
 
   .contact-section.deferred-section-skeleton {

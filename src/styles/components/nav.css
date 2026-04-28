@@ -96,7 +96,7 @@
 .site-nav__link {
   display: inline-flex;
   align-items: center;
-  min-height: 42px;
+  min-height: var(--touch-target-min);
   padding: 0 12px;
   border-radius: 12px;
   color: rgba(255, 255, 255, 0.84);
@@ -157,8 +157,8 @@
   flex-direction: column;
   justify-content: center;
   gap: 4px;
-  width: 42px;
-  height: 42px;
+  width: var(--touch-target-min);
+  height: var(--touch-target-min);
   padding: 0 10px;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.08);

@@ -253,7 +253,7 @@
 @media (max-width: 959px) {
   .schedule-section {
     padding-top: 56px;
-    padding-bottom: 64px;
+    padding-bottom: var(--floating-cta-clearance);
   }
 
   .schedule-section.deferred-section-skeleton {

@@ -645,7 +645,7 @@ button {
 @media (max-width: 959px) {
   .site-main {
     padding-top: 64px;
-    padding-bottom: 108px;
+    padding-bottom: var(--floating-cta-clearance);
   }
 
   .home-page {

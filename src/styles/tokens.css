@@ -29,4 +29,12 @@
   --s5-radius-lg: 24px;
   --s5-radius-md: 18px;
   --s5-width: min(1240px, calc(100% - 32px));
+
+  /* Touch target minimum (WCAG 2.1 AAA) */
+  --touch-target-min: 44px;
+
+  /* Vertical space reserved at the bottom of the page so the floating
+     mobile CTA never covers the last interactive element. Equals
+     CTA height (~76px) + bottom gap (12px) + breathing room + iOS safe-area. */
+  --floating-cta-clearance: calc(108px + env(safe-area-inset-bottom, 0px));
 }

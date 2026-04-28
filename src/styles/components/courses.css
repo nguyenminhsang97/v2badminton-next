@@ -235,9 +235,9 @@
 
 .course-card__cta--ghost {
   justify-content: center;
-  min-height: 24px;
-  padding-inline: 0;
-  border-radius: 0;
+  min-height: var(--touch-target-min);
+  padding: 10px 12px;
+  border-radius: 14px;
   background: transparent;
   color: var(--s5-primary-strong);
   border-color: transparent;
