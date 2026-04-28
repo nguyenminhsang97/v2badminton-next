@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { SanityScheduleBlock, SanityScheduleLevel } from "@/lib/sanity";
 import { HOME_SECTION_IDS, toHash } from "@/lib/anchors";
 import { MapPinIcon } from "@/components/ui/BrandIcons";
@@ -16,7 +16,8 @@ import {
 import type { HomepageScheduleSectionProps } from "./sectionProps";
 
 const ALL_TAB_ID = "__all__";
-const MAX_VISIBLE_ROWS = 8;
+const ALL_TAB_VISIBLE_ROWS = 3;
+const FILTERED_TAB_VISIBLE_ROWS = 8;
 
 type SelectedCourseIntent = NonNullable<
   ReturnType<typeof useHomepageConversionIntent>["selectedCourseIntent"]
@@ -95,6 +96,7 @@ function getScheduleProgramLabel(levels: SanityScheduleLevel[]): string {
 export function ScheduleSection({
   scheduleBlocks,
 }: HomepageScheduleSectionProps) {
+  const sectionRef = useRef<HTMLElement>(null);
   const [activeTab, setActiveTab] = useState<string>(ALL_TAB_ID);
   const [expandedViewKey, setExpandedViewKey] = useState<string | null>(null);
   const { clearCourseIntent, selectedCourseIntent, setPrefill } =
@@ -158,10 +160,13 @@ export function ScheduleSection({
         : `Đang lọc theo trình độ ${getScheduleFilterLabel(selectedCourseIntent)}.`;
   const currentViewKey = `${activeTab}:${selectedCourseIntent ?? "all"}`;
   const isExpanded = expandedViewKey === currentViewKey;
-  const hasOverflowRows = itemsToRender.length > MAX_VISIBLE_ROWS;
+  const isBroadAllView = activeTab === ALL_TAB_ID && selectedCourseIntent === null;
+  const maxVisibleRows =
+    isBroadAllView ? ALL_TAB_VISIBLE_ROWS : FILTERED_TAB_VISIBLE_ROWS;
+  const hasOverflowRows = itemsToRender.length > maxVisibleRows;
   const visibleItems = isExpanded
     ? itemsToRender
-    : itemsToRender.slice(0, MAX_VISIBLE_ROWS);
+    : itemsToRender.slice(0, maxVisibleRows);
 
   function handleCardClick(scheduleBlock: SanityScheduleBlock) {
     const prefill = buildSchedulePrefill(scheduleBlock);
@@ -173,13 +178,51 @@ export function ScheduleSection({
     setPrefill(prefill);
   }
 
+  function handleTabChange(tabId: string) {
+    setActiveTab(tabId);
+    setExpandedViewKey(null);
+  }
+
+  function scrollScheduleIntoView() {
+    const scheduleSection = sectionRef.current;
+
+    if (!scheduleSection) {
+      return;
+    }
+
+    window.requestAnimationFrame(() => {
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      scheduleSection.scrollIntoView({
+        behavior: reduceMotion ? "auto" : "smooth",
+        block: "start",
+      });
+    });
+  }
+
+  function handleExpandedToggle() {
+    if (isExpanded) {
+      setExpandedViewKey(null);
+      scrollScheduleIntoView();
+      return;
+    }
+
+    setExpandedViewKey(currentViewKey);
+  }
+
   return (
-    <section className="section schedule-section" id={HOME_SECTION_IDS.schedule}>
+    <section
+      ref={sectionRef}
+      className="section schedule-section"
+      id={HOME_SECTION_IDS.schedule}
+    >
       <div className="section__header">
         <p className="section__eyebrow">Thời khóa biểu</p>
         <h2 className="section__title">Lịch học linh hoạt 7 ngày trong tuần</h2>
         <p className="section__desc">
-          Chọn sân, xem giờ phù hợp rồi nhấn vào từng dòng để V2 điền sẵn form tư vấn.
+          Chọn sân, xem giờ phù hợp rồi bấm “Chọn lịch này” để V2 tự điền sân và giờ vào form đăng ký.
         </p>
         {filterMessage ? (
           <p className="section__filter-note" aria-live="polite">
@@ -194,7 +237,7 @@ export function ScheduleSection({
           role="tab"
           aria-selected={activeTab === ALL_TAB_ID}
           className={`schedule-tab ${activeTab === ALL_TAB_ID ? "schedule-tab--active" : ""}`}
-          onClick={() => setActiveTab(ALL_TAB_ID)}
+          onClick={() => handleTabChange(ALL_TAB_ID)}
         >
           Tất cả
         </button>
@@ -205,7 +248,7 @@ export function ScheduleSection({
             role="tab"
             aria-selected={activeTab === tab.id}
             className={`schedule-tab ${activeTab === tab.id ? "schedule-tab--active" : ""}`}
-            onClick={() => setActiveTab(tab.id)}
+            onClick={() => handleTabChange(tab.id)}
           >
             {tab.label}
           </button>
@@ -269,7 +312,7 @@ export function ScheduleSection({
               key={item.id}
               type="button"
               className="schedule-row"
-              aria-label={`${item.dayGroup}, ${item.timeLabel}, ${getScheduleProgramLabel(item.levels)}, ${item.locationName}. Nhấn để điền form theo lịch này.`}
+              aria-label={`${item.dayGroup}, ${item.timeLabel}, ${getScheduleProgramLabel(item.levels)}, ${item.locationName}. Chọn lịch này để tự điền sân và giờ vào form đăng ký.`}
               onClick={() => handleCardClick(item)}
             >
               <span className="schedule-table__cell schedule-row__days">
@@ -284,24 +327,29 @@ export function ScheduleSection({
               <span className="schedule-table__cell schedule-row__location">
                 <MapPinIcon className="schedule-row__location-icon" />
                 <span className="schedule-row__court">{item.locationShortName}</span>
-                <span className="schedule-row__location-note" aria-hidden="true">
-                  Điền form nhanh
-                </span>
-                <span className="u-sr-only">Nhấn để điền form theo lịch này</span>
               </span>
               <span className="schedule-table__cell schedule-row__levels">
-                {item.levels.map((level) => {
-                  const levelUi = getScheduleLevelUi(level);
+                <span className="schedule-row__level-list">
+                  {item.levels.map((level) => {
+                    const levelUi = getScheduleLevelUi(level);
 
-                  return (
-                    <span
-                      key={`${item.id}-${level}`}
-                      className={`level-tag level-tag--${levelUi.modifier}`}
-                    >
-                      {levelUi.label}
-                    </span>
-                  );
-                })}
+                    return (
+                      <span
+                        key={`${item.id}-${level}`}
+                        className={`level-tag level-tag--${levelUi.modifier}`}
+                      >
+                        {levelUi.label}
+                      </span>
+                    );
+                  })}
+                </span>
+              </span>
+              <span className="schedule-row__quick-fill" aria-hidden="true">
+                <span className="schedule-row__quick-fill-copy">
+                  <strong>Chọn lịch này</strong>
+                  <span>Tự điền sân & giờ vào form</span>
+                </span>
+                <span className="schedule-row__quick-fill-arrow">→</span>
               </span>
             </button>
           ))}
@@ -313,15 +361,11 @@ export function ScheduleSection({
           <button
             type="button"
             className="schedule-actions__toggle"
-            onClick={() =>
-              setExpandedViewKey((current) =>
-                current === currentViewKey ? null : currentViewKey,
-              )
-            }
+            onClick={handleExpandedToggle}
           >
             {isExpanded
               ? "Thu gọn lịch học"
-              : `Xem thêm ${itemsToRender.length - MAX_VISIBLE_ROWS} lịch còn lại`}
+              : `Xem thêm ${itemsToRender.length - maxVisibleRows} lịch còn lại`}
           </button>
         </div>
       ) : null}

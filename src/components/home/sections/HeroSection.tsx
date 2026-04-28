@@ -1,6 +1,7 @@
-import Image from "next/image";
+import { getImageProps } from "next/image";
 import { StarIcon } from "@/components/ui/BrandIcons";
 import { HOME_SECTION_IDS, toHash } from "@/lib/anchors";
+import { generatedImages } from "@/lib/generatedImages";
 import type { CtaName } from "@/lib/tracking";
 import type { HomepageHeroSectionProps } from "./sectionProps";
 import { HeroCtas } from "./HeroCtas";
@@ -12,6 +13,29 @@ import {
 
 export function HeroSection({ campaign }: HomepageHeroSectionProps) {
   const heroSubheading = campaign?.heroDescription ?? DEFAULT_HERO_SUBHEADING;
+  const heroImageAlt = "HLV hướng dẫn học viên trong buổi tập cầu lông";
+  const commonHeroImageProps = {
+    alt: heroImageAlt,
+    className: "hero__backdrop-image",
+    fetchPriority: "high" as const,
+    sizes: "100vw",
+  };
+  const {
+    props: { srcSet: desktopHeroSrcSet },
+  } = getImageProps({
+    ...commonHeroImageProps,
+    src: generatedImages.heroTraining,
+    width: 1672,
+    height: 941,
+  });
+  const {
+    props: { srcSet: mobileHeroSrcSet, ...heroImageProps },
+  } = getImageProps({
+    ...commonHeroImageProps,
+    src: generatedImages.afterWorkClass,
+    width: 1122,
+    height: 1402,
+  });
   const primaryCtaHref =
     campaign?.primaryCtaUrl ??
     (campaign?.linkedPageSlug ? `/${campaign.linkedPageSlug}/` : null) ??
@@ -33,15 +57,11 @@ export function HeroSection({ campaign }: HomepageHeroSectionProps) {
     <section className="hero" id={HOME_SECTION_IDS.hero}>
       <div className="hero__shell">
         <div className="hero__backdrop">
-          <Image
-            src="/images/course-basic.webp"
-            alt="Huấn luyện học viên trên sân cầu lông"
-            className="hero__backdrop-image"
-            width={1600}
-            height={1100}
-            sizes="100vw"
-            priority
-          />
+          <picture className="hero__backdrop-picture">
+            <source media="(min-width: 768px)" srcSet={desktopHeroSrcSet} />
+            <source media="(max-width: 767px)" srcSet={mobileHeroSrcSet} />
+            <img {...heroImageProps} alt={heroImageAlt} />
+          </picture>
           <div className="hero__backdrop-overlay" />
         </div>
 

@@ -2,11 +2,12 @@ import Image from "next/image";
 import { CheckBadgeIcon, StarIcon } from "@/components/ui/BrandIcons";
 import { MobileDotCarousel } from "@/components/ui/MobileDotCarousel";
 import type { HomepageCoach } from "@/domain/homepage";
+import { generatedImages } from "@/lib/generatedImages";
 
 const FALLBACK_COACH_IMAGES = [
-  "/images/course-basic.webp",
-  "/images/course-advanced.webp",
-  "/images/course-enterprise.webp",
+  generatedImages.privateCoaching,
+  generatedImages.adultBeginner,
+  generatedImages.businessTeamBuilding,
 ] as const;
 
 export function getUsableCoaches(coaches: HomepageCoach[]): HomepageCoach[] {
@@ -34,10 +35,13 @@ export function CoachCardsGrid({ coaches }: CoachCardsGridProps) {
         const fallbackImage =
           FALLBACK_COACH_IMAGES[index % FALLBACK_COACH_IMAGES.length];
         const photoSrc = coach.photoUrl ?? fallbackImage;
+        const hasCoachPhoto = Boolean(coach.photoUrl);
         const displayName = coach.name?.trim() || "HLV V2 Badminton";
         const displayGroup =
           coach.teachingGroup?.trim() || "Đồng hành theo từng nhóm học viên";
-        const photoAlt = coach.photoAlt ?? `${displayName} tại V2 Badminton`;
+        const photoAlt = hasCoachPhoto
+          ? coach.photoAlt ?? `${displayName} tại V2 Badminton`
+          : "Ảnh minh họa buổi huấn luyện tại V2 Badminton";
         const credentials = coach.credentialTags.slice(0, 3);
         const roleBadge = coach.roleBadge?.trim() || null;
         const quote = coach.quote?.trim() || coach.approach?.trim() || null;

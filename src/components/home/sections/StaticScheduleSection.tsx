@@ -8,7 +8,7 @@ import {
 import type { HomepageScheduleSectionProps } from "./sectionProps";
 
 const ALL_TAB_ID = "__all__";
-const MAX_VISIBLE_ROWS = 8;
+const ALL_TAB_VISIBLE_ROWS = 3;
 
 function getScheduleLevelUi(level: SanityScheduleLevel): {
   label: string;
@@ -87,8 +87,8 @@ export function StaticScheduleSection({
     return left.discoveredAt - right.discoveredAt;
   });
 
-  const visibleItems = scheduleBlocks.slice(0, MAX_VISIBLE_ROWS);
-  const hasOverflowRows = scheduleBlocks.length > MAX_VISIBLE_ROWS;
+  const visibleItems = scheduleBlocks.slice(0, ALL_TAB_VISIBLE_ROWS);
+  const hasOverflowRows = scheduleBlocks.length > ALL_TAB_VISIBLE_ROWS;
 
   return (
     <section className="section schedule-section" id={HOME_SECTION_IDS.schedule}>
@@ -96,7 +96,7 @@ export function StaticScheduleSection({
         <p className="section__eyebrow">Thời khóa biểu</p>
         <h2 className="section__title">Lịch học linh hoạt 7 ngày trong tuần</h2>
         <p className="section__desc">
-          Chọn sân, xem giờ phù hợp rồi nhấn vào từng dòng để V2 điền sẵn form tư vấn.
+          Chọn sân, xem giờ phù hợp rồi bấm “Chọn lịch này” để V2 tự điền sân và giờ vào form đăng ký.
         </p>
       </div>
 
@@ -156,7 +156,7 @@ export function StaticScheduleSection({
             key={item.id}
             type="button"
             className="schedule-row"
-            aria-label={`${item.dayGroup}, ${item.timeLabel}, ${getScheduleProgramLabel(item.levels)}, ${item.locationName}. Nhấn để điền form theo lịch này.`}
+            aria-label={`${item.dayGroup}, ${item.timeLabel}, ${getScheduleProgramLabel(item.levels)}, ${item.locationName}. Chọn lịch này để tự điền sân và giờ vào form đăng ký.`}
           >
             <span className="schedule-table__cell schedule-row__days">
               {item.dayGroup}
@@ -170,24 +170,29 @@ export function StaticScheduleSection({
             <span className="schedule-table__cell schedule-row__location">
               <MapPinIcon className="schedule-row__location-icon" />
               <span className="schedule-row__court">{item.locationShortName}</span>
-              <span className="schedule-row__location-note" aria-hidden="true">
-                Điền form nhanh
-              </span>
-              <span className="u-sr-only">Nhấn để điền form theo lịch này</span>
             </span>
             <span className="schedule-table__cell schedule-row__levels">
-              {item.levels.map((level) => {
-                const levelUi = getScheduleLevelUi(level);
+              <span className="schedule-row__level-list">
+                {item.levels.map((level) => {
+                  const levelUi = getScheduleLevelUi(level);
 
-                return (
-                  <span
-                    key={`${item.id}-${level}`}
-                    className={`level-tag level-tag--${levelUi.modifier}`}
-                  >
-                    {levelUi.label}
-                  </span>
-                );
-              })}
+                  return (
+                    <span
+                      key={`${item.id}-${level}`}
+                      className={`level-tag level-tag--${levelUi.modifier}`}
+                    >
+                      {levelUi.label}
+                    </span>
+                  );
+                })}
+              </span>
+            </span>
+            <span className="schedule-row__quick-fill" aria-hidden="true">
+              <span className="schedule-row__quick-fill-copy">
+                <strong>Chọn lịch này</strong>
+                <span>Tự điền sân & giờ vào form</span>
+              </span>
+              <span className="schedule-row__quick-fill-arrow">→</span>
             </span>
           </button>
         ))}
@@ -196,7 +201,7 @@ export function StaticScheduleSection({
       {hasOverflowRows ? (
         <div className="schedule-actions" aria-hidden="true">
           <span className="schedule-actions__toggle">
-            Xem thêm {scheduleBlocks.length - MAX_VISIBLE_ROWS} lịch còn lại
+            Xem thêm {scheduleBlocks.length - ALL_TAB_VISIBLE_ROWS} lịch còn lại
           </span>
         </div>
       ) : null}

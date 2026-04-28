@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { HOME_SECTION_IDS } from "@/lib/anchors";
+import { generatedImages } from "@/lib/generatedImages";
 import { ArrowRightIcon, CalendarIcon, MapPinIcon, UsersIcon } from "@/components/ui/BrandIcons";
 
 const DIFFERENTIATORS = [
@@ -33,7 +34,7 @@ export function WhySection() {
           <div className="why-section__images">
             <div className="why-section__image-frame why-section__image-frame--large">
               <Image
-                src="/images/course-basic.webp"
+                src={generatedImages.kidsClass}
                 alt="Huấn luyện viên đang hướng dẫn học viên nhỏ tuổi tập nền tảng"
                 fill
                 className="why-section__image"
@@ -42,7 +43,7 @@ export function WhySection() {
             </div>
             <div className="why-section__image-frame why-section__image-frame--small">
               <Image
-                src="/images/course-advanced.webp"
+                src={generatedImages.adultBeginner}
                 alt="Nhóm học viên đang tập di chuyển và kiểm soát nhịp đánh"
                 fill
                 className="why-section__image"

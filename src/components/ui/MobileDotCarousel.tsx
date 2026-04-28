@@ -44,11 +44,17 @@ export function MobileDotCarousel({
       return;
     }
 
+    const trackRect = track.getBoundingClientRect();
+    const viewportCenter = trackRect.left + trackRect.width / 2;
     const nextIndex = children.reduce(
       (closestIndex, child, index) => {
-        const nextDistance = Math.abs(child.offsetLeft - track.scrollLeft);
+        const childRect = child.getBoundingClientRect();
+        const closestRect = children[closestIndex].getBoundingClientRect();
+        const nextDistance = Math.abs(
+          childRect.left + childRect.width / 2 - viewportCenter,
+        );
         const currentDistance = Math.abs(
-          children[closestIndex]?.offsetLeft - track.scrollLeft,
+          closestRect.left + closestRect.width / 2 - viewportCenter,
         );
 
         return nextDistance < currentDistance ? index : closestIndex;
@@ -87,15 +93,22 @@ export function MobileDotCarousel({
 
   function scrollToIndex(index: number) {
     const track = trackRef.current;
-    const slide = track?.children[index];
+
+    if (!track) {
+      return;
+    }
+
+    const slide = track.children[index];
 
     if (!(slide instanceof HTMLElement)) {
       return;
     }
 
-    track?.scrollTo({
-      left: slide.offsetLeft,
+    setRawActiveIndex(index);
+    slide.scrollIntoView({
       behavior: "smooth",
+      block: "nearest",
+      inline: "center",
     });
   }
 

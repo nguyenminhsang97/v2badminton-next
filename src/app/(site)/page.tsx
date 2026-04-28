@@ -99,11 +99,11 @@ export default async function Home() {
           <WhySection />
           <CoachSection coaches={homepageCoaches} />
           <DeferredTestimonialsSection testimonials={homepageTestimonials} />
-          <DeferredScheduleSection scheduleBlocks={homepageScheduleBlocks} />
           <LocationsSection
             locations={homepageLocations}
             siteSettings={chromeSettings}
           />
+          <DeferredScheduleSection scheduleBlocks={homepageScheduleBlocks} />
           <FaqSection faqs={homepageFaqs} />
           <DeferredContactSection
             siteSettings={chromeSettings}

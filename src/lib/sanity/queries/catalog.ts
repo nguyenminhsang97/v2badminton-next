@@ -99,14 +99,15 @@ export const getFaqs = cache(
     featuredOnly = false,
     limit?: number,
   ): Promise<SanityFaq[]> => {
-    const faqs =
-      (await sanityFetchOrFallback<SanityFaq[]>({
-        query: FAQS_QUERY,
-        params: page ? { page } : {},
-        fallback: [],
-        tags: page ? [`sanity:faqs:${page}`] : ["sanity:faqs"],
-      })) ?? getFallbackFaqs(page);
+    const faqs = await sanityFetchOrFallback<SanityFaq[]>({
+      query: FAQS_QUERY,
+      params: page ? { page } : {},
+      fallback: [],
+      tags: page ? [`sanity:faqs:${page}`] : ["sanity:faqs"],
+    });
 
-    return selectHomepageItems(faqs, featuredOnly, limit);
+    const faqItems = faqs && faqs.length > 0 ? faqs : getFallbackFaqs(page);
+
+    return selectHomepageItems(faqItems, featuredOnly, limit);
   },
 );

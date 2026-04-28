@@ -52,6 +52,7 @@
   display: inline-flex;
   align-items: center;
   gap: 12px;
+  min-height: var(--touch-target-min);
   color: #fff;
 }
 

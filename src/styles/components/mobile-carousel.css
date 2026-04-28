@@ -1,6 +1,17 @@
 .mobile-carousel {
+  --mobile-carousel-item-width: 100%;
+  --mobile-carousel-edge: 2px;
+
   display: grid;
   gap: 14px;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+.mobile-carousel__track {
+  min-width: 0;
+  max-width: 100%;
 }
 
 .mobile-carousel__dots {
@@ -42,12 +53,13 @@
   .mobile-carousel__track {
     display: flex;
     gap: 14px;
+    width: 100%;
     overflow-x: auto;
-    padding-inline: 2px;
+    padding-inline: var(--mobile-carousel-edge);
     scrollbar-width: none;
     -ms-overflow-style: none;
     overscroll-behavior-x: contain;
-    scroll-padding-inline: 2px;
+    scroll-padding-inline: var(--mobile-carousel-edge);
     scroll-snap-type: x mandatory;
   }
 
@@ -56,8 +68,10 @@
   }
 
   .mobile-carousel__track > * {
-    flex: 0 0 calc(100% - 32px);
-    scroll-snap-align: start;
+    flex: 0 0 var(--mobile-carousel-item-width);
+    min-width: 0;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
   }
 
   .mobile-carousel__dots {
