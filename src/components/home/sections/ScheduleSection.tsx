@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { SanityScheduleBlock, SanityScheduleLevel } from "@/lib/sanity";
 import { HOME_SECTION_IDS, toHash } from "@/lib/anchors";
 import { MapPinIcon } from "@/components/ui/BrandIcons";
@@ -96,6 +96,7 @@ function getScheduleProgramLabel(levels: SanityScheduleLevel[]): string {
 export function ScheduleSection({
   scheduleBlocks,
 }: HomepageScheduleSectionProps) {
+  const sectionRef = useRef<HTMLElement>(null);
   const [activeTab, setActiveTab] = useState<string>(ALL_TAB_ID);
   const [expandedViewKey, setExpandedViewKey] = useState<string | null>(null);
   const { clearCourseIntent, selectedCourseIntent, setPrefill } =
@@ -182,8 +183,41 @@ export function ScheduleSection({
     setExpandedViewKey(null);
   }
 
+  function scrollScheduleIntoView() {
+    const scheduleSection = sectionRef.current;
+
+    if (!scheduleSection) {
+      return;
+    }
+
+    window.requestAnimationFrame(() => {
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      scheduleSection.scrollIntoView({
+        behavior: reduceMotion ? "auto" : "smooth",
+        block: "start",
+      });
+    });
+  }
+
+  function handleExpandedToggle() {
+    if (isExpanded) {
+      setExpandedViewKey(null);
+      scrollScheduleIntoView();
+      return;
+    }
+
+    setExpandedViewKey(currentViewKey);
+  }
+
   return (
-    <section className="section schedule-section" id={HOME_SECTION_IDS.schedule}>
+    <section
+      ref={sectionRef}
+      className="section schedule-section"
+      id={HOME_SECTION_IDS.schedule}
+    >
       <div className="section__header">
         <p className="section__eyebrow">Thời khóa biểu</p>
         <h2 className="section__title">Lịch học linh hoạt 7 ngày trong tuần</h2>
@@ -327,11 +361,7 @@ export function ScheduleSection({
           <button
             type="button"
             className="schedule-actions__toggle"
-            onClick={() =>
-              setExpandedViewKey((current) =>
-                current === currentViewKey ? null : currentViewKey,
-              )
-            }
+            onClick={handleExpandedToggle}
           >
             {isExpanded
               ? "Thu gọn lịch học"
