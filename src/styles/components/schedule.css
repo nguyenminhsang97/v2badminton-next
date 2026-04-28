@@ -41,15 +41,26 @@
     transform 0.2s ease;
 }
 
-.schedule-tab:hover {
-  background: #f4faf4;
-  transform: translateY(-1px);
-}
-
-.schedule-tab--active {
+.schedule-tab--active,
+.schedule-tab[aria-selected="true"],
+.schedule-tab--active:hover,
+.schedule-tab[aria-selected="true"]:hover,
+.schedule-tab--active:active,
+.schedule-tab[aria-selected="true"]:active,
+.schedule-tab--active:focus-visible,
+.schedule-tab[aria-selected="true"]:focus-visible {
   background: linear-gradient(135deg, #1e6a35 0%, #144b29 100%);
   border-color: transparent;
   color: #fff;
+  transform: none;
+}
+
+@media (hover: hover) {
+  .schedule-tab:not(.schedule-tab--active):hover,
+  .schedule-tab[aria-selected="false"]:hover {
+    background: #f4faf4;
+    transform: translateY(-1px);
+  }
 }
 
 .schedule-table {
