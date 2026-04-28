@@ -84,6 +84,7 @@ button {
   margin: 0;
   gap: 26px;
   padding: 56px 0;
+  scroll-margin-top: 88px;
 }
 
 .home-page > .section > * {
@@ -97,6 +98,7 @@ button {
   display: grid;
   gap: 30px;
   padding: 64px 0;
+  scroll-margin-top: 88px;
 }
 
 .section__header {
@@ -655,6 +657,7 @@ button {
   .home-page > .section {
     gap: 16px;
     padding: 34px 0;
+    scroll-margin-top: 76px;
   }
 
   .home-page > .section > * {
@@ -672,6 +675,7 @@ button {
   .section {
     padding: 40px 0;
     gap: 20px;
+    scroll-margin-top: 76px;
   }
 
   .section__title {

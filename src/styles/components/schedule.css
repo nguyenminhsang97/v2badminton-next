@@ -278,6 +278,7 @@
 
 @media (max-width: 767px) {
   .schedule-tabs {
+    flex-wrap: nowrap;
     justify-content: flex-start;
     gap: 10px;
     overflow-x: auto;
