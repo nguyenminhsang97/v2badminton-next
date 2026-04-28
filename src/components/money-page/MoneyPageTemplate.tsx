@@ -6,6 +6,7 @@ import { FaqList } from "@/components/blocks/FaqList";
 import { LocationsGrid } from "@/components/blocks/LocationsGrid";
 import { PricingCards } from "@/components/blocks/PricingCards";
 import { HOME_SECTION_IDS, toHash, toHomepageHash } from "@/lib/anchors";
+import { getGeneratedRouteImage } from "@/lib/generatedImages";
 import { coreRoutes, getRouteMetadata, type CoreRoutePath } from "@/lib/routes";
 import type { SanityMoneyPage } from "@/lib/sanity";
 import { Breadcrumb } from "./Breadcrumb";
@@ -93,7 +94,7 @@ export function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) {
       : toHomepageHash(HOME_SECTION_IDS.contact);
   const scheduleHref = toHomepageHash(HOME_SECTION_IDS.schedule);
   const facts = buildMoneyPageFacts(page);
-  const heroImageUrl = page.heroImageUrl ?? null;
+  const heroImageUrl = page.heroImageUrl ?? getGeneratedRouteImage(path);
   const hasHeroImage = heroImageUrl !== null;
   const pagePath = path ?? "/";
   const pageType = path ? getRouteMetadata(path).pageType : "seo_service";

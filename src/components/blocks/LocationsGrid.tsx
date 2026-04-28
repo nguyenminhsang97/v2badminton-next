@@ -1,6 +1,7 @@
-import { MapPinIcon } from "@/components/ui/BrandIcons";
+import Image from "next/image";
 import type { HomepageLocation } from "@/domain/homepage";
 import { HOME_SECTION_IDS, toHomepageHash } from "@/lib/anchors";
+import { getGeneratedLocationImage } from "@/lib/generatedImages";
 
 export type LocationsGridProps = {
   locations: HomepageLocation[];
@@ -18,30 +19,44 @@ export function LocationsGrid({
       className={`locations-grid locations-grid--figma ${showSupportCard ? "" : "locations-grid--compact"}`.trim()}
     >
       <div className="locations-grid__list">
-        {locations.map((location) => (
-          <article key={location.id} className="location-card location-card--list">
-            <span className="location-card__icon">
-              <MapPinIcon className="location-card__icon-svg" />
-            </span>
+        {locations.map((location) => {
+          const imageUrl =
+            location.imageUrl ?? getGeneratedLocationImage(location.district);
+          const imageAlt = location.imageUrl
+            ? location.imageAlt ?? location.name
+            : `Ảnh minh họa sân cầu lông trong nhà tại khu vực ${location.districtLabel}`;
 
-            <div className="location-card__content">
-              <div className="location-card__info">
-                <h3 className="location-card__name">{location.name}</h3>
-                <p className="location-card__district">{location.districtLabel}</p>
-                <p className="location-card__address">{location.addressText}</p>
+          return (
+            <article key={location.id} className="location-card location-card--list">
+              <span className="location-card__thumb">
+                <Image
+                  src={imageUrl}
+                  alt={imageAlt}
+                  className="location-card__thumb-image"
+                  fill
+                  sizes="88px"
+                />
+              </span>
+
+              <div className="location-card__content">
+                <div className="location-card__info">
+                  <h3 className="location-card__name">{location.name}</h3>
+                  <p className="location-card__district">{location.districtLabel}</p>
+                  <p className="location-card__address">{location.addressText}</p>
+                </div>
               </div>
-            </div>
 
-            <a
-              href={location.mapsUrl}
-              className="location-card__cta"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Xem bản đồ
-            </a>
-          </article>
-        ))}
+              <a
+                href={location.mapsUrl}
+                className="location-card__cta"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Xem bản đồ
+              </a>
+            </article>
+          );
+        })}
       </div>
 
       {showSupportCard ? (

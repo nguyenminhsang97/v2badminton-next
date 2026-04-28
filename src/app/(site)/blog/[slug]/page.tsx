@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
 import { getCategoryLabel } from "@/lib/blogUtils";
+import { getGeneratedBlogCategoryImage } from "@/lib/generatedImages";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { canonicalUrl, coreRouteMap, type CoreRoutePath } from "@/lib/routes";
 import { siteConfig } from "@/lib/site";
@@ -47,7 +48,9 @@ export async function generateMetadata({
       description,
       type: "article",
       publishedTime: post.publishedAt ?? undefined,
-      images: post.coverImageUrl ? [post.coverImageUrl] : undefined,
+      images: [
+        post.coverImageUrl ?? canonicalUrl(getGeneratedBlogCategoryImage()),
+      ],
     },
   };
 }
@@ -67,6 +70,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     relatedPath && Object.prototype.hasOwnProperty.call(coreRouteMap, relatedPath)
       ? coreRouteMap[relatedPath]
       : null;
+  const coverImageUrl = post.coverImageUrl ?? getGeneratedBlogCategoryImage();
+  const coverAlt = post.coverImageUrl
+    ? post.title
+    : `Ảnh minh họa bài viết ${getCategoryLabel(post.category)}`;
 
   const articleSchema = {
     "@context": "https://schema.org" as const,
@@ -108,19 +115,17 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           ) : null}
         </div>
 
-        {post.coverImageUrl ? (
-          <div className="blog-post__hero-media">
-            <Image
-              src={post.coverImageUrl}
-              alt={post.title}
-              className="blog-post__cover"
-              width={1120}
-              height={630}
-              priority
-              sizes="(max-width: 959px) calc(100vw - 32px), 42vw"
-            />
-          </div>
-        ) : null}
+        <div className="blog-post__hero-media">
+          <Image
+            src={coverImageUrl}
+            alt={coverAlt}
+            className="blog-post__cover"
+            width={1120}
+            height={630}
+            priority
+            sizes="(max-width: 959px) calc(100vw - 32px), 42vw"
+          />
+        </div>
       </header>
 
       <section className="blog-post__content-shell">

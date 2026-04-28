@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { getCategoryLabel } from "@/lib/blogUtils";
+import { getGeneratedBlogCategoryImage } from "@/lib/generatedImages";
 import { canonicalUrl } from "@/lib/routes";
 import { getPublishedPosts, type SanityPostCategory } from "@/lib/sanity";
 
@@ -100,41 +101,42 @@ export default async function BlogListPage({
         </section>
       ) : (
         <section className="blog-list__grid" aria-label="Danh sách bài viết">
-          {filteredPosts.map((post) => (
-            <article key={post.id} className="blog-card">
-              <Link href={`/blog/${post.slug}/`} className="blog-card__media">
-                {post.coverImageUrl ? (
+          {filteredPosts.map((post) => {
+            const coverImageUrl =
+              post.coverImageUrl ?? getGeneratedBlogCategoryImage();
+            const coverAlt = post.coverImageUrl
+              ? post.title
+              : `Ảnh minh họa bài viết ${getCategoryLabel(post.category)}`;
+
+            return (
+              <article key={post.id} className="blog-card">
+                <Link href={`/blog/${post.slug}/`} className="blog-card__media">
                   <Image
-                    src={post.coverImageUrl}
-                    alt={post.title}
+                    src={coverImageUrl}
+                    alt={coverAlt}
                     className="blog-card__cover"
                     width={720}
                     height={405}
                     sizes="(max-width: 960px) calc(100vw - 32px), 360px"
                   />
-                ) : (
-                  <div
-                    className="blog-card__cover blog-card__cover--placeholder"
-                    aria-hidden="true"
-                  />
-                )}
-              </Link>
-              <div className="blog-card__body">
-                <span className="blog-card__category">
-                  {getCategoryLabel(post.category)}
-                </span>
-                <Link href={`/blog/${post.slug}/`} className="blog-card__title-link">
-                  <h2 className="blog-card__title">{post.title}</h2>
                 </Link>
-                {post.excerpt ? (
-                  <p className="blog-card__excerpt">{post.excerpt}</p>
-                ) : null}
-                <Link href={`/blog/${post.slug}/`} className="blog-card__cta">
-                  Đọc bài viết →
-                </Link>
-              </div>
-            </article>
-          ))}
+                <div className="blog-card__body">
+                  <span className="blog-card__category">
+                    {getCategoryLabel(post.category)}
+                  </span>
+                  <Link href={`/blog/${post.slug}/`} className="blog-card__title-link">
+                    <h2 className="blog-card__title">{post.title}</h2>
+                  </Link>
+                  {post.excerpt ? (
+                    <p className="blog-card__excerpt">{post.excerpt}</p>
+                  ) : null}
+                  <Link href={`/blog/${post.slug}/`} className="blog-card__cta">
+                    Đọc bài viết →
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
         </section>
       )}
     </div>

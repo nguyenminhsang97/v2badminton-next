@@ -50,7 +50,7 @@
 
 .location-card--list {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: 88px minmax(0, 1fr) auto;
   gap: 18px;
   align-items: center;
   padding: 22px;
@@ -74,6 +74,20 @@
 .location-card__icon-svg {
   width: 18px;
   height: 18px;
+}
+
+.location-card__thumb {
+  position: relative;
+  display: block;
+  width: 88px;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #eff8ef;
+}
+
+.location-card__thumb-image {
+  object-fit: cover;
 }
 
 .location-card__content,
@@ -447,7 +461,12 @@
   }
 
   .location-card--list {
-    grid-template-columns: 1fr;
+    grid-template-columns: 88px minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .location-card__cta {
+    grid-column: 1 / -1;
   }
 
   .quick-contact-card {

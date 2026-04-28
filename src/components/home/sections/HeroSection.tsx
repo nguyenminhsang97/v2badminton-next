@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { StarIcon } from "@/components/ui/BrandIcons";
 import { HOME_SECTION_IDS, toHash } from "@/lib/anchors";
+import { generatedImages } from "@/lib/generatedImages";
 import type { CtaName } from "@/lib/tracking";
 import type { HomepageHeroSectionProps } from "./sectionProps";
 import { HeroCtas } from "./HeroCtas";
@@ -34,7 +35,7 @@ export function HeroSection({ campaign }: HomepageHeroSectionProps) {
       <div className="hero__shell">
         <div className="hero__backdrop">
           <Image
-            src="/images/course-basic.webp"
+            src={generatedImages.heroTraining}
             alt="Huấn luyện học viên trên sân cầu lông"
             className="hero__backdrop-image"
             width={1600}

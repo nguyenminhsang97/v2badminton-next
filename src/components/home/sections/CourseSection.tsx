@@ -9,6 +9,7 @@ import {
   useHomepageConversionIntent,
 } from "@/components/home/conversion/HomepageConversionProvider";
 import { HOME_SECTION_IDS, toHash } from "@/lib/anchors";
+import { generatedImages } from "@/lib/generatedImages";
 import type { SanityPricingTier } from "@/lib/sanity";
 import { trackEvent } from "@/lib/tracking";
 import { EnterpriseTeaser } from "./EnterpriseTeaser";
@@ -115,7 +116,7 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
       price: groupPrice,
       meta: "3 buổi/tuần",
       href: "/lop-cau-long-tre-em/",
-      imageSrc: "/images/course-basic.webp",
+      imageSrc: generatedImages.kidsClass,
       imageAlt: "Hướng dẫn học viên nhỏ tuổi tập cầu lông với huấn luyện viên",
       tone: "lime",
     },
@@ -129,7 +130,7 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
       price: groupPrice,
       meta: "2 - 3 buổi/tuần",
       href: "/hoc-cau-long-cho-nguoi-moi/",
-      imageSrc: "/images/course-advanced.webp",
+      imageSrc: generatedImages.adultBeginner,
       imageAlt: "Nhóm học viên người lớn đang tập cầu lông cùng huấn luyện viên",
       tone: "orange",
     },
@@ -143,7 +144,7 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
       price: groupPrice,
       meta: "Tối & cuối tuần",
       href: "/lop-cau-long-cho-nguoi-di-lam/",
-      imageSrc: "/images/green.webp",
+      imageSrc: generatedImages.afterWorkClass,
       imageAlt: "Học viên tham gia lớp cầu lông buổi tối tại sân trong nhà",
       tone: "teal",
     },
@@ -157,7 +158,7 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
       price: privatePrice,
       meta: "Theo lịch riêng",
       href: "/hoc-cau-long-1-kem-1/",
-      imageSrc: "/images/course-enterprise.webp",
+      imageSrc: generatedImages.privateCoaching,
       imageAlt: "Hướng dẫn học viên trong buổi học 1 kèm 1",
       tone: "emerald",
     },

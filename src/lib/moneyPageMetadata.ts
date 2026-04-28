@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { SanityMoneyPage } from "@/lib/sanity";
+import { getGeneratedRouteImage } from "@/lib/generatedImages";
 import { canonicalUrl } from "@/lib/routes";
 import { siteConfig } from "@/lib/site";
 
@@ -13,7 +14,7 @@ export function buildMoneyPageMetadata(
   page: MoneyPageMetadataSource,
 ): Metadata {
   const url = canonicalUrl(path);
-  const ogImage = page.heroImageUrl ?? canonicalUrl(siteConfig.defaultOgImagePath);
+  const ogImage = page.heroImageUrl ?? canonicalUrl(getGeneratedRouteImage(path));
 
   return {
     title: {
