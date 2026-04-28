@@ -275,3 +275,153 @@
     z-index: 1;
   }
 }
+
+@media (max-width: 767px) {
+  .schedule-tabs {
+    justify-content: flex-start;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 0 2px 4px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-snap-type: x proximity;
+  }
+
+  .schedule-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .schedule-tab {
+    flex: 0 0 auto;
+    min-height: var(--touch-target-min);
+    padding-inline: 16px;
+    scroll-snap-align: start;
+  }
+
+  .schedule-table {
+    display: grid;
+    gap: 12px;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .schedule-table__head {
+    display: none;
+  }
+
+  .schedule-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    min-width: 0;
+    width: 100%;
+    padding: 16px;
+    border: 1px solid rgba(15, 59, 32, 0.08);
+    border-radius: 22px;
+    background: #fff;
+    box-shadow: 0 14px 28px rgba(15, 59, 32, 0.08);
+  }
+
+  .schedule-row:nth-child(odd) {
+    background: #fff;
+  }
+
+  .schedule-row__days,
+  .schedule-row__program,
+  .schedule-row__location,
+  .schedule-row__levels {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    color: var(--s5-primary-strong);
+    line-height: 1.45;
+  }
+
+  .schedule-row__days::before,
+  .schedule-row__program::before,
+  .schedule-row__location::before,
+  .schedule-row__levels::before,
+  .schedule-row__time::before {
+    flex: 0 0 auto;
+    color: var(--s5-muted);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .schedule-row__days::before {
+    content: "Ngày";
+  }
+
+  .schedule-row__time::before {
+    content: "Giờ";
+  }
+
+  .schedule-row__program::before {
+    content: "Khóa";
+  }
+
+  .schedule-row__location::before {
+    content: "Sân";
+  }
+
+  .schedule-row__levels::before {
+    content: "Trình độ";
+  }
+
+  .schedule-row__time {
+    display: flex;
+    width: 100%;
+    min-height: 48px;
+    padding: 0 14px;
+    justify-content: space-between;
+    gap: 14px;
+    border-radius: 16px;
+    font-size: 1.08rem;
+    line-height: 1.15;
+  }
+
+  .schedule-row__program {
+    font-weight: 800;
+  }
+
+  .schedule-row__location {
+    flex-wrap: wrap;
+  }
+
+  .schedule-row__location-icon {
+    display: none;
+  }
+
+  .schedule-row__location-note {
+    display: inline-flex;
+    min-height: 28px;
+    align-items: center;
+    margin-left: auto;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: var(--s5-accent-soft);
+    color: var(--s5-accent-hover);
+    font-size: 0.76rem;
+    font-weight: 800;
+  }
+
+  .schedule-row__levels {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .schedule-row__levels::before {
+    margin-right: auto;
+  }
+
+  .level-tag {
+    min-height: 28px;
+    padding-inline: 10px;
+  }
+}
