@@ -7,14 +7,25 @@
   display: none;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 2px;
 }
 
 .mobile-carousel__dot {
-  width: 10px;
-  height: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--touch-target-min);
+  min-height: var(--touch-target-min);
   padding: 0;
   border-radius: 999px;
+  background: transparent;
+}
+
+.mobile-carousel__dot::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: inherit;
   background: rgba(15, 59, 32, 0.18);
   transition:
     transform 0.18s ease,
@@ -22,7 +33,7 @@
     width 0.18s ease;
 }
 
-.mobile-carousel__dot--active {
+.mobile-carousel__dot--active::before {
   width: 28px;
   background: var(--s5-primary);
 }
