@@ -22,6 +22,11 @@ const primaryLinks = [
     kind: "route" as const,
   },
   {
+    href: toHomepageHash(HOME_SECTION_IDS.locations),
+    label: "Sân tập",
+    kind: "anchor" as const,
+  },
+  {
     href: toHomepageHash(HOME_SECTION_IDS.schedule),
     label: "Lịch tập",
     kind: "anchor" as const,
