@@ -41,6 +41,7 @@ export function DeferredTestimonialsHydrationBoundary({
   return (
     <div
       ref={boundaryRef}
+      className="testimonials-section-boundary"
       onFocusCapture={hydrateNow}
       onPointerEnter={hydrateNow}
     >
