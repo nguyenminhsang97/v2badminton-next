@@ -7,7 +7,8 @@
     "sanity:dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "next typegen && tsc --noEmit --pretty false"
   },
   "dependencies": {
     "@sentry/nextjs": "^10.47.0",
