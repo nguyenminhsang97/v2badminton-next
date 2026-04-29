@@ -292,7 +292,7 @@
 
   .schedule-table__head {
     position: sticky;
-    top: 0;
+    top: 64px;
     z-index: 1;
   }
 }

@@ -254,7 +254,7 @@
   }
 
   .site-header--floating {
-    background: linear-gradient(180deg, rgba(7, 31, 16, 0.62) 0%, rgba(7, 31, 16, 0.16) 72%, transparent 100%);
+    background: linear-gradient(180deg, rgba(7, 31, 16, 0.78) 0%, rgba(7, 31, 16, 0.32) 72%, transparent 100%);
   }
 
   .site-header__inner {

@@ -6,6 +6,8 @@
   position: relative;
   overflow: hidden;
   min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
   background: linear-gradient(180deg, #12341f 0%, #173f26 100%);
 }
 
@@ -42,6 +44,8 @@
   z-index: 1;
   width: min(880px, calc(100% - 32px));
   min-height: calc(100vh - 72px);
+  min-height: calc(100svh - 72px);
+  min-height: calc(100dvh - 72px);
   margin: 0 auto;
   display: grid;
   align-content: center;
@@ -356,6 +360,8 @@
   .hero__content {
     width: min(100%, calc(100% - 24px));
     min-height: calc(100vh - 64px);
+    min-height: calc(100svh - 64px);
+    min-height: calc(100dvh - 64px);
     padding: 108px 0 88px;
   }
 
