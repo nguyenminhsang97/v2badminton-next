@@ -232,6 +232,10 @@
 }
 
 @media (max-width: 767px) {
+  .coach-page__hero {
+    padding-top: 92px;
+  }
+
   .coach-section__footer {
     margin-top: 22px;
   }
