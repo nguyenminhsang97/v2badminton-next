@@ -1,0 +1,18 @@
+{
+  "ci": {
+    "collect": {
+      "url": [
+        "http://127.0.0.1:3000/",
+        "http://127.0.0.1:3000/gia-hoc-cau-long-tphcm/",
+        "http://127.0.0.1:3000/huan-luyen-vien/",
+        "http://127.0.0.1:3000/lop-cau-long-binh-thanh/",
+        "http://127.0.0.1:3000/blog/"
+      ],
+      "numberOfRuns": 1,
+      "settings": {
+        "preset": "desktop",
+        "throttlingMethod": "simulate"
+      }
+    }
+  }
+}
