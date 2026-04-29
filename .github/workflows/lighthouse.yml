@@ -66,3 +66,4 @@ jobs:
           name: lighthouse-reports
           path: .lighthouseci
           if-no-files-found: error
+          include-hidden-files: true
