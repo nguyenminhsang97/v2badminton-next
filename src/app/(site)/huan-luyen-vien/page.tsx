@@ -6,7 +6,7 @@ import { siteConfig } from "@/lib/site";
 
 const pagePath = "/huan-luyen-vien/";
 
-export const metadata: Metadata = {
+const coachMetadata: Metadata = {
   title: {
     absolute: "Đội ngũ huấn luyện viên | V2 Badminton",
   },
@@ -27,6 +27,22 @@ export const metadata: Metadata = {
   },
 };
 
+export async function generateMetadata(): Promise<Metadata> {
+  const coaches = getUsableCoaches(await getCoaches());
+
+  if (coaches.length > 0) {
+    return coachMetadata;
+  }
+
+  return {
+    ...coachMetadata,
+    robots: {
+      index: false,
+      follow: true,
+    },
+  };
+}
+
 export default async function CoachesPage() {
   const coaches = getUsableCoaches(await getCoaches());
 
@@ -35,10 +51,12 @@ export default async function CoachesPage() {
       <section className="section coach-page__hero">
         <div className="section__header coach-page__header">
           <p className="section__eyebrow">Đội ngũ huấn luyện viên</p>
-          <h1 className="section__title">Những người trực tiếp theo sát từng nhóm học viên</h1>
+          <h1 className="section__title">
+            Những người trực tiếp theo sát từng nhóm học viên
+          </h1>
           <p className="section__desc">
-            Danh sách đầy đủ các HLV đang đồng hành cùng lộ trình thiếu nhi, người mới,
-            người đi làm và các buổi học cá nhân hóa tại V2 Badminton.
+            Danh sách đầy đủ các HLV đang đồng hành cùng lộ trình thiếu nhi,
+            người mới, người đi làm và các buổi học cá nhân hóa tại V2 Badminton.
           </p>
         </div>
 
@@ -48,8 +66,8 @@ export default async function CoachesPage() {
           <div className="coach-page__empty">
             <h2 className="coach-page__empty-title">Đội ngũ đang được cập nhật</h2>
             <p className="coach-page__empty-copy">
-              Studio chưa có HLV nào sẵn sàng hiển thị. Khi coach data được thêm vào Sanity,
-              trang này sẽ tự mở đầy đủ mà không cần sửa code.
+              Đội ngũ HLV đang được cập nhật. Vui lòng liên hệ Zalo 0907 911 886
+              để được tư vấn trực tiếp về lớp phù hợp.
             </p>
           </div>
         )}

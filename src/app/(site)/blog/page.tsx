@@ -4,7 +4,11 @@ import Link from "next/link";
 import { getCategoryLabel } from "@/lib/blogUtils";
 import { getGeneratedBlogCategoryImage } from "@/lib/generatedImages";
 import { canonicalUrl } from "@/lib/routes";
-import { getPublishedPosts, type SanityPostCategory } from "@/lib/sanity";
+import {
+  getPublishedPosts,
+  type SanityPostCategory,
+  type SanityPostListItem,
+} from "@/lib/sanity";
 
 const BLOG_CATEGORY_OPTIONS: ReadonlyArray<{
   value: "all" | SanityPostCategory;
@@ -23,7 +27,7 @@ type BlogListPageProps = {
   }>;
 };
 
-export const metadata: Metadata = {
+const blogMetadata: Metadata = {
   title: {
     absolute: "Blog | V2 Badminton",
   },
@@ -34,21 +38,49 @@ export const metadata: Metadata = {
   },
 };
 
+function resolveSelectedCategory(category: string | undefined) {
+  return BLOG_CATEGORY_OPTIONS.some((option) => option.value === category)
+    ? (category as SanityPostCategory)
+    : "all";
+}
+
+function filterPostsByCategory(
+  posts: SanityPostListItem[],
+  selectedCategory: "all" | SanityPostCategory,
+) {
+  return selectedCategory === "all"
+    ? posts
+    : posts.filter((post) => post.category === selectedCategory);
+}
+
+export async function generateMetadata({
+  searchParams,
+}: BlogListPageProps): Promise<Metadata> {
+  const params = await searchParams;
+  const selectedCategory = resolveSelectedCategory(params.category);
+  const posts = await getPublishedPosts();
+  const filteredPosts = filterPostsByCategory(posts, selectedCategory);
+
+  if (filteredPosts.length > 0) {
+    return blogMetadata;
+  }
+
+  return {
+    ...blogMetadata,
+    robots: {
+      index: false,
+      follow: true,
+    },
+  };
+}
+
 export default async function BlogListPage({
   searchParams,
 }: BlogListPageProps) {
   const params = await searchParams;
-  const selectedCategory = BLOG_CATEGORY_OPTIONS.some(
-    (option) => option.value === params.category,
-  )
-    ? (params.category as SanityPostCategory)
-    : "all";
-
+  const selectedCategory = resolveSelectedCategory(params.category);
   const posts = await getPublishedPosts();
-  const filteredPosts =
-    selectedCategory === "all"
-      ? posts
-      : posts.filter((post) => post.category === selectedCategory);
+  const filteredPosts = filterPostsByCategory(posts, selectedCategory);
 
   return (
     <div className="blog-list">
@@ -65,7 +97,9 @@ export default async function BlogListPage({
           <span className="blog-list__hero-chip">
             {filteredPosts.length} bài viết hiển thị
           </span>
-          <span className="blog-list__hero-chip">Chuẩn bị cho người mới và phụ huynh</span>
+          <span className="blog-list__hero-chip">
+            Chuẩn bị cho người mới và phụ huynh
+          </span>
         </div>
       </section>
 
@@ -124,7 +158,10 @@ export default async function BlogListPage({
                   <span className="blog-card__category">
                     {getCategoryLabel(post.category)}
                   </span>
-                  <Link href={`/blog/${post.slug}/`} className="blog-card__title-link">
+                  <Link
+                    href={`/blog/${post.slug}/`}
+                    className="blog-card__title-link"
+                  >
                     <h2 className="blog-card__title">{post.title}</h2>
                   </Link>
                   {post.excerpt ? (
