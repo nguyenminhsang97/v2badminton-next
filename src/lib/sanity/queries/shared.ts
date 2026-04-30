@@ -266,6 +266,7 @@ export const COACHES_QUERY = defineQuery(`
   ]
   | order(coalesce(order, 9999) asc, _createdAt asc){
     "id": _id,
+    "updatedAt": coalesce(_updatedAt, null),
     name,
     "photoUrl": coalesce(photo.asset->url, null),
     "photoAlt": coalesce(photoAlt, null),
@@ -368,6 +369,7 @@ export const MONEY_PAGE_QUERY = defineQuery(`
     ${PUBLISHED_ONLY_FILTER}
   ][0]{
     "id": _id,
+    "updatedAt": coalesce(_updatedAt, null),
     "slug": slug.current,
     audience,
     h1,
@@ -402,6 +404,17 @@ export const MONEY_PAGE_QUERY = defineQuery(`
     | order(coalesce(order, 9999) asc, _createdAt asc)
     ${FAQ_PROJECTION},
     ctaLabel
+  }
+`);
+
+export const MONEY_PAGE_SITEMAP_QUERY = defineQuery(`
+  *[
+    _type == "money_page" &&
+    defined(slug.current) &&
+    ${PUBLISHED_ONLY_FILTER}
+  ]{
+    "slug": slug.current,
+    "updatedAt": coalesce(_updatedAt, null)
   }
 `);
 
@@ -441,6 +454,7 @@ export const PUBLISHED_POSTS_QUERY = defineQuery(`
   ]
   | order(coalesce(publishedAt, _createdAt) desc){
     "id": _id,
+    "updatedAt": coalesce(_updatedAt, null),
     "slug": slug.current,
     title,
     category,
@@ -458,6 +472,7 @@ export const POST_BY_SLUG_QUERY = defineQuery(`
     ${PUBLISHED_ONLY_FILTER}
   ][0]{
     "id": _id,
+    "updatedAt": coalesce(_updatedAt, null),
     "slug": slug.current,
     title,
     status,

@@ -9,6 +9,7 @@ import {
   type SanityPostCategory,
   type SanityPostListItem,
 } from "@/lib/sanity";
+import { siteConfig } from "@/lib/site";
 
 const BLOG_CATEGORY_OPTIONS: ReadonlyArray<{
   value: "all" | SanityPostCategory;
@@ -35,6 +36,23 @@ const blogMetadata: Metadata = {
     "Tips cầu lông, hướng dẫn kỹ thuật và cẩm nang cho người mới bắt đầu tại TP.HCM.",
   alternates: {
     canonical: canonicalUrl("/blog/"),
+  },
+  openGraph: {
+    title: "Blog | V2 Badminton",
+    description:
+      "Tips cầu lông, hướng dẫn kỹ thuật và cẩm nang cho người mới bắt đầu tại TP.HCM.",
+    url: canonicalUrl("/blog/"),
+    locale: siteConfig.locale,
+    siteName: siteConfig.name,
+    type: "website",
+    images: [canonicalUrl(siteConfig.defaultOgImagePath)],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Blog | V2 Badminton",
+    description:
+      "Tips cầu lông, hướng dẫn kỹ thuật và cẩm nang cho người mới bắt đầu tại TP.HCM.",
+    images: [canonicalUrl(siteConfig.defaultOgImagePath)],
   },
 };
 

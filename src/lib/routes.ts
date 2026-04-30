@@ -262,6 +262,12 @@ export function buildMetadata(
       type: "website",
       images: [canonicalUrl(route.ogImage)],
     },
+    twitter: {
+      card: "summary_large_image",
+      title: route.ogTitle ?? route.title,
+      description: route.ogDescription ?? route.description,
+      images: [canonicalUrl(route.ogImage)],
+    },
   };
 
   return {
@@ -274,6 +280,10 @@ export function buildMetadata(
     openGraph: {
       ...base.openGraph,
       ...overrides.openGraph,
+    },
+    twitter: {
+      ...base.twitter,
+      ...overrides.twitter,
     },
   };
 }

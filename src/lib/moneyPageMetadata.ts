@@ -33,5 +33,11 @@ export function buildMoneyPageMetadata(
       type: "website",
       images: [ogImage],
     },
+    twitter: {
+      card: "summary_large_image",
+      title: page.metaTitle,
+      description: page.metaDescription,
+      images: [ogImage],
+    },
   };
 }

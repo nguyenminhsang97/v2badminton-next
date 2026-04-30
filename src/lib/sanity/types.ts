@@ -47,6 +47,7 @@ export type SanitySiteSettings = {
 
 export type SanityCoach = {
   id: string;
+  updatedAt: string | null;
   name: string;
   photoUrl: string | null;
   photoAlt: string | null;
@@ -173,6 +174,7 @@ export type SanityFaq = {
 
 export type SanityMoneyPage = {
   id: string;
+  updatedAt: string | null;
   slug: string;
   audience: SanityAudience;
   h1: string;
@@ -190,6 +192,11 @@ export type SanityMoneyPage = {
 export type SanityMoneyPageLoadResult = {
   page: SanityMoneyPage | null;
   degraded: boolean;
+};
+
+export type SanityMoneyPageSitemapEntry = {
+  slug: string;
+  updatedAt: string | null;
 };
 
 export type SanityActiveCampaign = {
@@ -215,6 +222,7 @@ export type SanityPostCategory = "tips" | "how-to" | "beginner" | "campaign";
 
 export type SanityPost = {
   id: string;
+  updatedAt: string | null;
   slug: string;
   title: string;
   status: SanityPostStatus;
@@ -230,5 +238,12 @@ export type SanityPost = {
 
 export type SanityPostListItem = Pick<
   SanityPost,
-  "id" | "slug" | "title" | "category" | "publishedAt" | "excerpt" | "coverImageUrl"
+  | "id"
+  | "updatedAt"
+  | "slug"
+  | "title"
+  | "category"
+  | "publishedAt"
+  | "excerpt"
+  | "coverImageUrl"
 >;

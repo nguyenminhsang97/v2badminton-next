@@ -52,6 +52,14 @@ export async function generateMetadata({
         post.coverImageUrl ?? canonicalUrl(getGeneratedBlogCategoryImage()),
       ],
     },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [
+        post.coverImageUrl ?? canonicalUrl(getGeneratedBlogCategoryImage()),
+      ],
+    },
   };
 }
 
@@ -91,6 +99,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     },
     mainEntityOfPage: canonicalUrl(`/blog/${post.slug}/`),
     image: post.coverImageUrl ?? undefined,
+    dateModified: post.updatedAt ?? undefined,
   };
 
   return (

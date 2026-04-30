@@ -178,6 +178,7 @@ export function buildPublishedMoneyPageFallback(
 
   return {
     id: `fallback:${config.slug}`,
+    updatedAt: null,
     slug: config.slug,
     audience: config.audience,
     h1: config.h1,

@@ -1,9 +1,13 @@
 import "server-only";
 
 import { cache } from "react";
-import { sanityFetchWithStatus } from "../client";
-import type { SanityMoneyPage, SanityMoneyPageLoadResult } from "../types";
-import { MONEY_PAGE_QUERY } from "./shared";
+import { sanityFetchOrFallback, sanityFetchWithStatus } from "../client";
+import type {
+  SanityMoneyPage,
+  SanityMoneyPageLoadResult,
+  SanityMoneyPageSitemapEntry,
+} from "../types";
+import { MONEY_PAGE_QUERY, MONEY_PAGE_SITEMAP_QUERY } from "./shared";
 
 export const getMoneyPage = cache(
   async (slug: string): Promise<SanityMoneyPageLoadResult> => {
@@ -18,5 +22,17 @@ export const getMoneyPage = cache(
       page: result.data,
       degraded: result.state !== "success",
     };
+  },
+);
+
+export const getMoneyPageSitemapEntries = cache(
+  async (): Promise<SanityMoneyPageSitemapEntry[]> => {
+    const entries = await sanityFetchOrFallback<SanityMoneyPageSitemapEntry[]>({
+      query: MONEY_PAGE_SITEMAP_QUERY,
+      fallback: [],
+      tags: ["sanity:money-pages"],
+    });
+
+    return entries ?? [];
   },
 );
