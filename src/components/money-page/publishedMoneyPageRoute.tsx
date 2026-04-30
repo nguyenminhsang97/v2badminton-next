@@ -5,7 +5,7 @@ import {
   type PublishedMoneyPagePath,
 } from "@/lib/moneyPageFallback";
 import { buildMetadata } from "@/lib/routes";
-import { getMoneyPage } from "@/lib/sanity";
+import { getMoneyPage, getScheduleBlocks } from "@/lib/sanity";
 import { MoneyPageStructuredData } from "./MoneyPageStructuredData";
 import { MoneyPageTemplate } from "./MoneyPageTemplate";
 
@@ -50,7 +50,10 @@ export async function generatePublishedMoneyPageMetadata(
 export async function renderPublishedMoneyPage(
   config: PublishedMoneyPageRouteConfig,
 ) {
-  const { page: moneyPage } = await getMoneyPage(config.slug);
+  const [{ page: moneyPage }, scheduleBlocks] = await Promise.all([
+    getMoneyPage(config.slug),
+    getScheduleBlocks(),
+  ]);
 
   const resolvedPage = moneyPage ?? buildPublishedMoneyPageFallback(config.path);
   const shouldRenderCourseSchema = SERVICE_MONEY_PAGE_PATHS.has(config.path);
@@ -71,6 +74,7 @@ export async function renderPublishedMoneyPage(
         faqs={resolvedPage.relatedFaqs}
         locations={resolvedPage.relatedLocations}
         pricingTiers={resolvedPage.relatedPricing}
+        scheduleBlocks={scheduleBlocks}
       />
       <MoneyPageTemplate page={resolvedPage} path={config.path} />
     </>

@@ -65,7 +65,10 @@ export default async function Home() {
       getTestimonials(true, 6),
     ]);
 
-  const courseSchemas = buildCourseSchemas(pricingTiers);
+  const courseSchemas = buildCourseSchemas(pricingTiers, {
+    locations,
+    scheduleBlocks,
+  });
   const homepageCampaign = toHomepageHeroCampaign(campaign);
   const homepageCoaches = toHomepageCoaches(coaches);
   const homepageFaqs = toHomepageFaqs(faqs);
@@ -83,7 +86,11 @@ export default async function Home() {
       <JsonLd id="website-schema" data={buildWebsiteSchema()} />
       <JsonLd
         id="homepage-business-schema"
-        data={buildHomepageLocalBusinessSchema(locations, pricingTiers)}
+        data={buildHomepageLocalBusinessSchema(
+          locations,
+          pricingTiers,
+          scheduleBlocks,
+        )}
       />
       <JsonLd id="homepage-faq-schema" data={buildFaqPageSchema(faqs)} />
       <JsonLd id="homepage-course-schema" data={courseSchemas} />

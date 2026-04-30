@@ -4,9 +4,10 @@ import { JsonLd } from "@/components/ui/JsonLd";
 import { notFoundForMissingMoneyPage } from "@/lib/moneyPageFailSafe";
 import { buildMoneyPageMetadata } from "@/lib/moneyPageMetadata";
 import { buildMetadata, canonicalUrl } from "@/lib/routes";
-import { getMoneyPage } from "@/lib/sanity";
+import { getMoneyPage, getScheduleBlocks } from "@/lib/sanity";
 import {
   buildBreadcrumbSchema,
+  filterScheduleBlocksForLocations,
   buildFaqPageSchema,
   buildLocalPageBusinessSchema,
 } from "@/lib/schema";
@@ -25,7 +26,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ThuDucPage() {
-  const { page: moneyPage, degraded } = await getMoneyPage(SLUG);
+  const [{ page: moneyPage, degraded }, scheduleBlocks] = await Promise.all([
+    getMoneyPage(SLUG),
+    getScheduleBlocks(),
+  ]);
 
   if (!moneyPage) {
     notFoundForMissingMoneyPage({ slug: SLUG, path: PATH, degraded });
@@ -33,6 +37,10 @@ export default async function ThuDucPage() {
 
   const localLocations = moneyPage.relatedLocations.filter(
     (location) => location.district === "thu_duc",
+  );
+  const localScheduleBlocks = filterScheduleBlocksForLocations(
+    scheduleBlocks,
+    localLocations,
   );
 
   return (
@@ -50,6 +58,7 @@ export default async function ThuDucPage() {
           PATH,
           localLocations,
           moneyPage.relatedPricing,
+          localScheduleBlocks,
         )}
       />
       <JsonLd id="thu-duc-faq" data={buildFaqPageSchema(moneyPage.relatedFaqs)} />

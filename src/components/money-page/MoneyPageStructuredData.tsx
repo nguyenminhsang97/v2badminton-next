@@ -1,11 +1,17 @@
 import { JsonLd } from "@/components/ui/JsonLd";
 import { canonicalUrl, type CoreRoutePath } from "@/lib/routes";
-import type { SanityFaq, SanityLocation, SanityPricingTier } from "@/lib/sanity";
+import type {
+  SanityFaq,
+  SanityLocation,
+  SanityPricingTier,
+  SanityScheduleBlock,
+} from "@/lib/sanity";
 import {
   buildBreadcrumbSchema,
   buildCoursePageSchema,
   buildFaqPageSchema,
   buildHomepageLocalBusinessSchema,
+  filterScheduleBlocksForLocations,
 } from "@/lib/schema";
 
 type MoneyPageStructuredDataProps = {
@@ -20,6 +26,7 @@ type MoneyPageStructuredDataProps = {
   faqs: SanityFaq[];
   locations: SanityLocation[];
   pricingTiers: SanityPricingTier[];
+  scheduleBlocks?: SanityScheduleBlock[];
 };
 
 export function MoneyPageStructuredData({
@@ -34,9 +41,14 @@ export function MoneyPageStructuredData({
   faqs,
   locations,
   pricingTiers,
+  scheduleBlocks = [],
 }: MoneyPageStructuredDataProps) {
   const hasSchemaFaqs = faqs.some((faq) => faq.includeInSchema);
   const hasCourseSchema = Boolean(courseId && courseName && courseDescription);
+  const schemaScheduleBlocks =
+    locations.length > 0
+      ? filterScheduleBlocksForLocations(scheduleBlocks, locations)
+      : scheduleBlocks;
 
   return (
     <>
@@ -49,12 +61,20 @@ export function MoneyPageStructuredData({
       />
       <JsonLd
         id={businessId}
-        data={buildHomepageLocalBusinessSchema(locations, pricingTiers)}
+        data={buildHomepageLocalBusinessSchema(
+          locations,
+          pricingTiers,
+          schemaScheduleBlocks,
+        )}
       />
       {hasCourseSchema ? (
         <JsonLd
           id={courseId}
-          data={buildCoursePageSchema(path, courseName!, courseDescription!)}
+          data={buildCoursePageSchema(path, courseName!, courseDescription!, {
+            locations,
+            pricingTiers,
+            scheduleBlocks: schemaScheduleBlocks,
+          })}
         />
       ) : null}
       {hasSchemaFaqs ? (
