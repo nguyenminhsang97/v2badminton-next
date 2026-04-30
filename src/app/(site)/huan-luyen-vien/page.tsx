@@ -25,6 +25,13 @@ const coachMetadata: Metadata = {
     type: "website",
     images: [canonicalUrl(siteConfig.defaultOgImagePath)],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Đội ngũ huấn luyện viên | V2 Badminton",
+    description:
+      "Đội ngũ huấn luyện viên đồng hành cùng lớp thiếu nhi, người mới, người đi làm và lộ trình cá nhân hóa tại V2 Badminton.",
+    images: [canonicalUrl(siteConfig.defaultOgImagePath)],
+  },
 };
 
 export async function generateMetadata(): Promise<Metadata> {
