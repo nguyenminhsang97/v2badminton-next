@@ -5,6 +5,7 @@ const sentryDsn = process.env.NEXT_PUBLIC_SENTRY_DSN;
 Sentry.init({
   dsn: sentryDsn,
   enabled: Boolean(sentryDsn),
+  ignoreErrors: ["TurnstileError: [Cloudflare Turnstile] Error: 110200."],
   tracesSampleRate: process.env.NODE_ENV === "development" ? 1 : 0.1,
 });
 
