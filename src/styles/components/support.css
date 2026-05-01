@@ -43,6 +43,11 @@
   gap: 0;
 }
 
+.locations-grid--summary .locations-grid__list {
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .locations-grid__list {
   display: grid;
   gap: 16px;
@@ -58,6 +63,13 @@
   border: 1px solid rgba(15, 59, 32, 0.1);
   background: #fff;
   box-shadow: var(--s5-shadow-soft);
+}
+
+.location-card--summary {
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 20px;
 }
 
 .location-card__icon {
@@ -118,6 +130,19 @@
   line-height: 1.65;
 }
 
+.location-card--summary .location-card__content,
+.location-card--summary .location-card__info {
+  gap: 4px;
+}
+
+.location-card--summary .location-card__address {
+  display: -webkit-box;
+  overflow: hidden;
+  line-height: 1.42;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
 .location-card__cta {
   display: inline-flex;
   align-items: center;
@@ -128,6 +153,13 @@
   background: #f4f8f3;
   color: var(--s5-primary-strong);
   font-weight: 700;
+}
+
+.location-card--summary .location-card__cta {
+  align-self: center;
+  min-height: 44px;
+  padding-inline: 14px;
+  border-radius: 14px;
 }
 
 .location-cta-card {
@@ -171,12 +203,42 @@
 }
 
 .faq-item summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 32px;
+  align-items: center;
+  gap: 14px;
   padding: 18px 22px;
   color: var(--s5-primary-strong);
   font-size: 1rem;
   font-weight: 700;
   list-style: none;
   cursor: pointer;
+}
+
+.faq-item summary::after {
+  content: "+";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: var(--s5-primary-soft);
+  color: var(--s5-primary);
+  font-size: 1.2rem;
+  font-weight: 800;
+  line-height: 1;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.faq-item[open] summary::after {
+  content: "-";
+  background: var(--s5-primary);
+  color: #fff;
+  transform: rotate(180deg);
 }
 
 .faq-item summary::-webkit-details-marker {
@@ -355,6 +417,15 @@
   align-items: center;
 }
 
+.contact-form__privacy-note {
+  flex: 0 0 100%;
+  margin: 0;
+  color: var(--s5-primary);
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
 .quick-contact-card {
   display: grid;
   align-content: start;
@@ -465,8 +536,32 @@
     align-items: start;
   }
 
+  .locations-grid--summary .locations-grid__list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .location-card--summary {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .location-card--summary .location-card__name {
+    font-size: 0.98rem;
+  }
+
+  .location-card--summary .location-card__district,
+  .location-card--summary .location-card__address {
+    font-size: 0.86rem;
+  }
+
   .location-card__cta {
     grid-column: 1 / -1;
+  }
+
+  .location-card--summary .location-card__cta {
+    grid-column: auto;
   }
 
   .quick-contact-card {

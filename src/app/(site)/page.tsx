@@ -101,10 +101,14 @@ export default async function Home() {
           <HomepageBusinessModeInitializer />
         </Suspense>
         <div className="home-page">
-          {/* Conversion flow: hero → quick proof → audience pick → schedule slot → objection handling → form */}
+          {/* Conversion flow: hero → quick proof → audience pick → location filter → schedule slot → objection handling → form */}
           <HeroSection campaign={homepageCampaign} />
           <StatsBar />
           <CourseSection pricingTiers={pricingTiers} />
+          <LocationsSection
+            locations={homepageLocations}
+            siteSettings={chromeSettings}
+          />
           <DeferredScheduleSection scheduleBlocks={homepageScheduleBlocks} />
           <FaqSection faqs={homepageFaqs} />
           <DeferredContactSection
@@ -116,10 +120,6 @@ export default async function Home() {
           <WhySection />
           <CoachSection coaches={homepageCoaches} />
           <DeferredTestimonialsSection testimonials={homepageTestimonials} />
-          <LocationsSection
-            locations={homepageLocations}
-            siteSettings={chromeSettings}
-          />
           <HomepageEnterpriseTeaser />
         </div>
       </HomepageConversionProvider>

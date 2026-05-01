@@ -118,6 +118,76 @@
   font-weight: 800;
 }
 
+.pricing-grid--compact {
+  gap: 14px;
+}
+
+.pricing-grid--compact .pricing-card {
+  gap: 12px;
+  padding: 18px;
+  border-radius: 22px;
+}
+
+.pricing-grid--compact .pricing-card__header {
+  gap: 8px;
+}
+
+.pricing-grid--compact .pricing-card__eyebrow {
+  gap: 8px;
+}
+
+.pricing-grid--compact .pricing-card__name {
+  font-size: 1.08rem;
+  line-height: 1.18;
+}
+
+.pricing-grid--compact .pricing-card__price {
+  font-size: clamp(1.35rem, 5.8vw, 1.72rem);
+  line-height: 1.04;
+}
+
+.pricing-card__compact-meta {
+  margin: 0;
+  color: var(--s5-primary);
+  font-size: 0.9rem;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.pricing-card__compact-points {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pricing-card__compact-points li {
+  position: relative;
+  padding-left: 20px;
+  color: var(--s5-text);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.pricing-card__compact-points li::before {
+  content: "\2713";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--s5-primary);
+  font-weight: 800;
+}
+
+.pricing-card--featured .pricing-card__compact-meta,
+.pricing-card--featured .pricing-card__compact-points li {
+  color: #fff;
+}
+
+.pricing-card--featured .pricing-card__compact-points li::before {
+  color: #d9f99d;
+}
+
 .pricing-card__cta {
   margin-top: auto;
   width: 100%;
@@ -157,5 +227,23 @@
 @media (max-width: 767px) {
   .pricing-grid {
     grid-template-columns: 1fr;
+  }
+
+  .pricing-grid--compact {
+    gap: 12px;
+  }
+
+  .pricing-grid--compact .pricing-card {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .pricing-grid--compact .pricing-card__badge {
+    min-height: 28px;
+    padding-inline: 10px;
+  }
+
+  .pricing-grid--compact .pricing-card__cta {
+    min-height: 46px;
   }
 }

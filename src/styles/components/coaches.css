@@ -133,6 +133,12 @@
   font-weight: 700;
 }
 
+.coach-card__credential--more {
+  padding-inline: 12px;
+  background: #f7faf5;
+  color: var(--s5-muted);
+}
+
 .coach-card__credential-icon {
   width: 16px;
   height: 16px;
@@ -154,6 +160,13 @@
   color: var(--s5-accent);
   font-size: 2rem;
   line-height: 0.8;
+}
+
+.coach-card__compact-proof {
+  margin: 0;
+  color: var(--s5-primary-strong);
+  font-weight: 700;
+  line-height: 1.45;
 }
 
 .coach-card__footer {
@@ -241,16 +254,101 @@
   }
 
   .coach-card__photo-wrap {
-    min-height: 286px;
+    min-height: 212px;
+  }
+
+  .coach-card--compact .coach-card__photo-wrap {
+    min-height: 190px;
+  }
+
+  .coach-card__photo-copy {
+    inset-inline: 16px;
+    bottom: 16px;
+    gap: 6px;
+  }
+
+  .coach-card__badge {
+    min-height: 26px;
+    padding-inline: 10px;
+    font-size: 0.68rem;
+  }
+
+  .coach-card__name {
+    font-size: 1.24rem;
+  }
+
+  .coach-card__group {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: 0.88rem;
+    line-height: 1.35;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
 
   .coach-card__body {
-    gap: 12px;
-    padding: 16px;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .coach-card__meta {
+    gap: 6px;
+  }
+
+  .coach-card__credential {
+    min-height: 28px;
+    padding-inline: 9px;
+    font-size: 0.74rem;
+  }
+
+  .coach-card__credential-icon {
+    width: 14px;
+    height: 14px;
   }
 
   .coach-card__quote {
-    padding: 14px;
-    border-radius: 18px;
+    gap: 4px;
+    padding: 12px;
+    border-radius: 16px;
+    line-height: 1.5;
+  }
+
+  .coach-card__quote-mark {
+    font-size: 1.45rem;
+  }
+
+  .coach-card__quote span:last-child {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .coach-card__footer {
+    gap: 8px;
+    align-items: start;
+  }
+
+  .coach-card__star {
+    width: 14px;
+    height: 14px;
+  }
+
+  .coach-card__focus,
+  .coach-card__proof {
+    font-size: 0.82rem;
+    line-height: 1.35;
+  }
+
+  .coach-card__proof {
+    display: none;
+  }
+
+  .coach-card__compact-proof {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: 0.86rem;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
 }

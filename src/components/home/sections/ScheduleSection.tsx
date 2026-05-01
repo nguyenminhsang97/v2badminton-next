@@ -220,7 +220,7 @@ export function ScheduleSection({
     >
       <div className="section__header">
         <p className="section__eyebrow">Thời khóa biểu</p>
-        <h2 className="section__title">Lịch học linh hoạt 7 ngày trong tuần</h2>
+        <h2 className="section__title">Lịch học linh hoạt theo tuần</h2>
         <p className="section__desc">
           Chọn sân, xem giờ phù hợp rồi bấm “Chọn lịch này” để V2 tự điền sân và giờ vào form đăng ký.
         </p>

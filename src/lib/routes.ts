@@ -55,7 +55,7 @@ export const coreRoutes: readonly RouteMetadataEntry[] = [
     pageType: "seo_service",
     title: "Học Cầu Lông Cho Người Mới Bắt Đầu Tại TP.HCM | V2 Badminton",
     description:
-      "Chưa biết chơi cầu lông vẫn học được tại V2 Badminton. Khóa cơ bản dạy từ zero, lớp nhỏ 2-6 người hoặc kèm 1:1 tại TP.HCM.",
+      "Chưa biết chơi cầu lông vẫn học được tại V2 Badminton. Khóa cơ bản dạy từ con số 0, lớp nhỏ 2-6 người hoặc kèm 1:1 tại TP.HCM.",
     ogImage: generatedImages.adultBeginner,
     navLabel: "Người mới",
     summary:

@@ -1,7 +1,6 @@
 import type { SanityPricingTier } from "@/lib/sanity";
 import Link from "next/link";
 import { HOME_SECTION_IDS, toHash } from "@/lib/anchors";
-import { MobileDotCarousel } from "@/components/ui/MobileDotCarousel";
 
 type PricingStripProps = {
   tiers: readonly SanityPricingTier[];
@@ -33,55 +32,76 @@ function getSortedPricingTiers(tiers: readonly SanityPricingTier[]) {
   };
 }
 
-function buildPricingMeta(tier: Extract<SanityPricingTier, { kind: "group" }>) {
-  const sessionsLabel = `${tier.sessionsPerWeek} buổi/tuần`;
-  return tier.groupSize ? `${sessionsLabel} · ${tier.groupSize}` : sessionsLabel;
+function formatVnd(value: number): string {
+  return new Intl.NumberFormat("vi-VN").format(value);
+}
+
+function buildGroupSummary(
+  tiers: Array<Extract<SanityPricingTier, { kind: "group" }>>,
+) {
+  if (tiers.length === 0) {
+    return null;
+  }
+
+  const prices = tiers.map((tier) => tier.pricePerMonth);
+  const minPrice = Math.min(...prices);
+  const maxPrice = Math.max(...prices);
+  const priceLabel =
+    minPrice === maxPrice
+      ? `${formatVnd(minPrice)} VNĐ / tháng`
+      : `${formatVnd(minPrice)} - ${formatVnd(maxPrice)} VNĐ / tháng`;
+  const sessions = [...new Set(tiers.map((tier) => tier.sessionsPerWeek))].sort(
+    (left, right) => left - right,
+  );
+  const sessionLabel =
+    sessions.length === 1
+      ? `${sessions[0]} buổi/tuần`
+      : `${sessions[0]}-${sessions[sessions.length - 1]} buổi/tuần`;
+  const groupSize = tiers.find((tier) => tier.groupSize)?.groupSize;
+
+  return {
+    priceLabel,
+    metaLabel: groupSize ? `${sessionLabel} · ${groupSize}` : sessionLabel,
+  };
 }
 
 export function PricingStrip({ tiers }: PricingStripProps) {
   const { groupTiers, privateTier } = getSortedPricingTiers(tiers);
+  const groupSummary = buildGroupSummary(groupTiers);
 
   return (
     <div className="pricing-strip" id={HOME_SECTION_IDS.pricing}>
       <div className="pricing-strip__header">
         <p className="pricing-strip__eyebrow">Chi tiết học phí</p>
-        <h3 className="pricing-strip__title">4 mức học phí hiện tại</h3>
+        <h3 className="pricing-strip__title">Học phí chính hiện tại</h3>
         <p className="pricing-strip__desc">
           Lớp nhóm 2-6 người theo số buổi mỗi tuần, lớp 1 kèm 1 theo lịch riêng.
         </p>
       </div>
-      <MobileDotCarousel
-        ariaLabel="Chọn mức học phí"
-        className="pricing-strip__carousel"
-        trackClassName="pricing-strip__grid"
-      >
-        {groupTiers.map((tier, index) => (
-          <article
-            key={tier.id}
-            className={`pricing-strip__item ${
-              index === 0 ? "pricing-strip__item--featured" : ""
-            }`}
-          >
-            <div className="pricing-strip__copy">
-              {index === 0 ? (
-                <span className="pricing-strip__tag">Từ mức cơ bản</span>
-              ) : null}
-              <strong className="pricing-strip__name">{tier.name}</strong>
-              <span className="pricing-strip__meta">{buildPricingMeta(tier)}</span>
-            </div>
-            <strong className="pricing-strip__price">{tier.displayPrice}</strong>
-          </article>
-        ))}
-        {privateTier ? (
-          <article className="pricing-strip__item pricing-strip__item--private">
-            <div className="pricing-strip__copy">
-              <strong className="pricing-strip__name">{privateTier.name}</strong>
-              <span className="pricing-strip__meta">Theo lịch riêng</span>
-            </div>
-            <strong className="pricing-strip__price">{privateTier.displayPrice}</strong>
+      <div className="pricing-strip__summary" aria-label="Tóm tắt học phí">
+        {groupSummary ? (
+          <article className="pricing-strip__summary-item pricing-strip__summary-item--group">
+            <span className="pricing-strip__summary-label">Lớp nhóm</span>
+            <strong className="pricing-strip__summary-price">
+              {groupSummary.priceLabel}
+            </strong>
+            <span className="pricing-strip__summary-meta">
+              {groupSummary.metaLabel}
+            </span>
           </article>
         ) : null}
-      </MobileDotCarousel>
+        {privateTier ? (
+          <article className="pricing-strip__summary-item pricing-strip__summary-item--private">
+            <span className="pricing-strip__summary-label">1 kèm 1</span>
+            <strong className="pricing-strip__summary-price">
+              {privateTier.displayPrice}
+            </strong>
+            <span className="pricing-strip__summary-meta">
+              Theo lịch riêng · 1 học viên
+            </span>
+          </article>
+        ) : null}
+      </div>
       <Link className="pricing-strip__cta" href={toHash(HOME_SECTION_IDS.contact)}>
         Đăng ký tư vấn mức phù hợp
       </Link>

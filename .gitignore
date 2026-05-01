@@ -13,6 +13,10 @@
 # testing
 /coverage
 /.lighthouseci/
+/playwright-report/
+/test-results/
+/.playwright-mcp/
+/*-mobile-*.png
 
 # next.js
 /.next/

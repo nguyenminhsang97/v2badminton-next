@@ -7,16 +7,22 @@ export type LocationsGridProps = {
   locations: HomepageLocation[];
   showSupportCard?: boolean;
   supportCardHref?: string;
+  variant?: "full" | "summary";
 };
 
 export function LocationsGrid({
   locations,
   showSupportCard = true,
   supportCardHref = toHomepageHash(HOME_SECTION_IDS.contact),
+  variant = "full",
 }: LocationsGridProps) {
+  const isSummary = variant === "summary";
+
   return (
     <div
-      className={`locations-grid locations-grid--figma ${showSupportCard ? "" : "locations-grid--compact"}`.trim()}
+      className={`locations-grid locations-grid--figma ${
+        showSupportCard ? "" : "locations-grid--compact"
+      } ${isSummary ? "locations-grid--summary" : ""}`.trim()}
     >
       <div className="locations-grid__list">
         {locations.map((location) => {
@@ -27,16 +33,23 @@ export function LocationsGrid({
             : `Ảnh minh họa sân cầu lông trong nhà tại khu vực ${location.districtLabel}`;
 
           return (
-            <article key={location.id} className="location-card location-card--list">
-              <span className="location-card__thumb">
-                <Image
-                  src={imageUrl}
-                  alt={imageAlt}
-                  className="location-card__thumb-image"
-                  fill
-                  sizes="88px"
-                />
-              </span>
+            <article
+              key={location.id}
+              className={`location-card location-card--list ${
+                isSummary ? "location-card--summary" : ""
+              }`.trim()}
+            >
+              {isSummary ? null : (
+                <span className="location-card__thumb">
+                  <Image
+                    src={imageUrl}
+                    alt={imageAlt}
+                    className="location-card__thumb-image"
+                    fill
+                    sizes="88px"
+                  />
+                </span>
+              )}
 
               <div className="location-card__content">
                 <div className="location-card__info">
@@ -52,7 +65,7 @@ export function LocationsGrid({
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Xem bản đồ
+                {isSummary ? "Bản đồ" : "Xem bản đồ"}
               </a>
             </article>
           );

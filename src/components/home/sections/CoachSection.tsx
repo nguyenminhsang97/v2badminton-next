@@ -17,7 +17,7 @@ export function CoachSection({ coaches }: HomepageCoachSectionProps) {
         <h2 className="section__title">Đội ngũ đồng hành từng nhóm học viên</h2>
       </div>
 
-      <CoachCardsGrid coaches={resolvedCoaches} />
+      <CoachCardsGrid coaches={resolvedCoaches} variant="compact" />
 
       <div className="coach-section__footer">
         <Link href="/huan-luyen-vien/" className="coach-section__link">
