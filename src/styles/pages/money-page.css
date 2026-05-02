@@ -160,6 +160,11 @@
   .money-page {
     width: min(100%, calc(100% - 24px));
     padding-top: 24px;
+    gap: 22px;
+  }
+
+  .money-page__hero {
+    gap: 14px;
   }
 
   .money-page__hero-copy,
@@ -168,5 +173,45 @@
   .money-page__cta {
     padding: 22px;
     border-radius: 26px;
+  }
+
+  .money-page__hero-copy {
+    gap: 14px;
+  }
+
+  .money-page__title {
+    max-width: min(100%, 16ch);
+    font-size: clamp(2.08rem, 8.2vw, 2.75rem);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+  }
+
+  .money-page__intro,
+  .money-page__body {
+    line-height: 1.68;
+  }
+
+  .money-page__intro,
+  .money-page__body,
+  .money-page__body ul,
+  .money-page__body ol {
+    gap: 10px;
+  }
+
+  .money-page__hero-media {
+    height: clamp(184px, 52vw, 224px);
+    border-radius: 22px;
+  }
+
+  .money-page__section--compact-list {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .money-page__section--compact-list .money-page__section-header {
+    padding-inline: 2px;
   }
 }

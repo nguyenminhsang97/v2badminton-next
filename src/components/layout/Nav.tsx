@@ -50,6 +50,7 @@ export function Nav({ siteSettings }: NavProps) {
   const pathname = usePathname();
   const mobileNavRef = useRef<HTMLDetailsElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const normalizedPath = withTrailingSlash(pathname);
   const pageType = coreRoutes.find(
     (route) => route.path === normalizedPath,
@@ -66,6 +67,7 @@ export function Nav({ siteSettings }: NavProps) {
 
   useEffect(() => {
     mobileNavRef.current?.removeAttribute("open");
+    requestAnimationFrame(() => setIsMobileMenuOpen(false));
   }, [pathname]);
 
   useEffect(() => {
@@ -112,6 +114,7 @@ export function Nav({ siteSettings }: NavProps) {
 
   function closeMobileMenu() {
     mobileNavRef.current?.removeAttribute("open");
+    setIsMobileMenuOpen(false);
   }
 
   return (
@@ -159,7 +162,11 @@ export function Nav({ siteSettings }: NavProps) {
           </div>
         </div>
 
-        <details ref={mobileNavRef} className="site-nav site-nav--mobile">
+        <details
+          ref={mobileNavRef}
+          className="site-nav site-nav--mobile"
+          onToggle={(event) => setIsMobileMenuOpen(event.currentTarget.open)}
+        >
           <summary className="site-nav__summary" aria-label="Mở menu">
             <span />
             <span />
@@ -198,6 +205,14 @@ export function Nav({ siteSettings }: NavProps) {
             </Link>
           </div>
         </details>
+        {isMobileMenuOpen ? (
+          <button
+            type="button"
+            className="site-nav__scrim"
+            aria-label="Đóng menu"
+            onClick={closeMobileMenu}
+          />
+        ) : null}
       </div>
     </header>
   );

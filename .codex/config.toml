@@ -1,0 +1,35 @@
+# Project-scoped Codex configuration for v2badminton-next.
+# Loaded only because this project is trusted in ~/.codex/config.toml.
+
+[features]
+multi_agent = true
+memories = true
+apps = true
+skill_mcp_dependency_install = true
+prevent_idle_sleep = true
+
+[memories]
+generate_memories = true
+use_memories = true
+disable_on_external_context = false
+
+[mcp_servers.openaiDeveloperDocs]
+url = "https://developers.openai.com/mcp"
+enabled = true
+tool_timeout_sec = 60
+
+[mcp_servers.context7]
+command = "npx"
+args = ["-y", "@upstash/context7-mcp"]
+cwd = "D:\\V2\\v2badminton-next"
+enabled = true
+startup_timeout_sec = 30
+tool_timeout_sec = 60
+
+[mcp_servers.playwright]
+command = "npx"
+args = ["-y", "@playwright/mcp@latest"]
+cwd = "D:\\V2\\v2badminton-next"
+enabled = true
+startup_timeout_sec = 30
+tool_timeout_sec = 60

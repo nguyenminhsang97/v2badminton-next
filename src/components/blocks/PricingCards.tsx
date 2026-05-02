@@ -13,6 +13,7 @@ export type PricingCardsProps = {
   pagePath: string;
   pageType: PageType;
   enterpriseCtaHref?: string;
+  variant?: "full" | "compact";
 };
 
 function getPricingTrackingAttributes(
@@ -74,6 +75,17 @@ function getTierAccentClass(tier: SanityPricingTier): string {
   }
 }
 
+function getTierMeta(tier: SanityPricingTier): string {
+  switch (tier.kind) {
+    case "group":
+      return tier.groupSize;
+    case "private":
+      return "Theo lịch riêng";
+    case "enterprise":
+      return "Báo giá theo quy mô";
+  }
+}
+
 function PricingFeatureList({ features }: { features: string[] }) {
   return (
     <ul className="pricing-card__features">
@@ -81,6 +93,70 @@ function PricingFeatureList({ features }: { features: string[] }) {
         <li key={feature}>{feature}</li>
       ))}
     </ul>
+  );
+}
+
+function CompactPricingCard({
+  ctaHref,
+  enterpriseCtaHref,
+  featuredTierId,
+  pagePath,
+  pageType,
+  tier,
+  trackingLocation,
+}: {
+  ctaHref: string;
+  enterpriseCtaHref?: string;
+  featuredTierId: string | null;
+  pagePath: string;
+  pageType: PageType;
+  tier: SanityPricingTier;
+  trackingLocation: string;
+}) {
+  const isFeatured = tier.kind === "group" && tier.id === featuredTierId;
+  const buttonStyle = isFeatured ? "btn--primary" : "btn--outline";
+  const targetHref =
+    tier.kind === "enterprise" ? enterpriseCtaHref ?? ctaHref : ctaHref;
+  const summaryPoints = tier.features.slice(0, 2);
+
+  return (
+    <article
+      className={`pricing-card pricing-card--compact ${getTierAccentClass(tier)} ${
+        isFeatured ? "pricing-card--featured" : ""
+      }`}
+    >
+      <div className="pricing-card__header">
+        <div className="pricing-card__eyebrow">
+          <p className="pricing-card__tier">{getTierLabel(tier)}</p>
+          <span className="pricing-card__badge">{getTierBadge(tier)}</span>
+        </div>
+        <h3 className="pricing-card__name">{tier.name}</h3>
+        <p className="pricing-card__price">{tier.displayPrice}</p>
+      </div>
+
+      <p className="pricing-card__compact-meta">{getTierMeta(tier)}</p>
+
+      {summaryPoints.length > 0 ? (
+        <ul className="pricing-card__compact-points">
+          {summaryPoints.map((feature) => (
+            <li key={feature}>{feature}</li>
+          ))}
+        </ul>
+      ) : null}
+
+      <a
+        href={targetHref}
+        className={`btn ${buttonStyle} pricing-card__cta`}
+        {...getPricingTrackingAttributes(
+          pagePath,
+          pageType,
+          trackingLocation,
+          tier.ctaAction,
+        )}
+      >
+        {tier.ctaLabel}
+      </a>
+    </article>
   );
 }
 
@@ -324,22 +400,40 @@ export function PricingCards({
   pageType,
   trackingLocation,
   enterpriseCtaHref,
+  variant = "full",
 }: PricingCardsProps) {
   const featuredTierId = tiers.find((tier) => tier.kind === "group")?.id ?? null;
 
   return (
-    <div className="pricing-grid">
+    <div
+      className={`pricing-grid ${
+        variant === "compact" ? "pricing-grid--compact" : ""
+      }`.trim()}
+    >
       {tiers.map((tier) => (
-        <PricingCard
-          key={tier.id}
-          ctaHref={ctaHref}
-          enterpriseCtaHref={enterpriseCtaHref}
-          featuredTierId={featuredTierId}
-          pagePath={pagePath}
-          pageType={pageType}
-          tier={tier}
-          trackingLocation={trackingLocation}
-        />
+        variant === "compact" ? (
+          <CompactPricingCard
+            key={tier.id}
+            ctaHref={ctaHref}
+            enterpriseCtaHref={enterpriseCtaHref}
+            featuredTierId={featuredTierId}
+            pagePath={pagePath}
+            pageType={pageType}
+            tier={tier}
+            trackingLocation={trackingLocation}
+          />
+        ) : (
+          <PricingCard
+            key={tier.id}
+            ctaHref={ctaHref}
+            enterpriseCtaHref={enterpriseCtaHref}
+            featuredTierId={featuredTierId}
+            pagePath={pagePath}
+            pageType={pageType}
+            tier={tier}
+            trackingLocation={trackingLocation}
+          />
+        )
       ))}
     </div>
   );

@@ -1,5 +1,5 @@
 export const DEFAULT_HERO_SUBHEADING =
-  "Lộ trình cầu lông bài bản cho thiếu nhi, người mới và người đi làm, với HLV chứng chỉ quốc gia và sân tập thuận tiện tại TP.HCM.";
+  "Lộ trình bài bản cho thiếu nhi, người mới và người đi làm, cùng HLV chứng chỉ quốc gia tại Bình Thạnh, Thủ Đức.";
 
 export const HERO_SOCIAL_PROOF = [
   { initials: "NH", accent: "hero__avatar--green" },
@@ -8,4 +8,4 @@ export const HERO_SOCIAL_PROOF = [
   { initials: "TL", accent: "hero__avatar--sky" },
 ] as const;
 
-export const HERO_STATUS_LABEL = "HỌC VIÊN CẦU LÔNG UY TÍN TP.HCM";
+export const HERO_STATUS_LABEL = "HỌC VIỆN CẦU LÔNG UY TÍN TP.HCM";

@@ -1,6 +1,4 @@
-import Image from "next/image";
 import { HOME_SECTION_IDS } from "@/lib/anchors";
-import { generatedImages } from "@/lib/generatedImages";
 import { ArrowRightIcon, CalendarIcon, MapPinIcon, UsersIcon } from "@/components/ui/BrandIcons";
 
 const DIFFERENTIATORS = [
@@ -30,45 +28,22 @@ export function WhySection() {
   return (
     <section className="section why-section" id={HOME_SECTION_IDS.why}>
       <div className="why-section__layout">
-        <div className="why-section__visual">
-          <div className="why-section__images">
-            <div className="why-section__image-frame why-section__image-frame--large">
-              <Image
-                src={generatedImages.kidsClass}
-                alt="Huấn luyện viên đang hướng dẫn học viên nhỏ tuổi tập nền tảng"
-                fill
-                className="why-section__image"
-                sizes="(max-width: 959px) 100vw, 28vw"
-              />
-            </div>
-            <div className="why-section__image-frame why-section__image-frame--small">
-              <Image
-                src={generatedImages.adultBeginner}
-                alt="Nhóm học viên đang tập di chuyển và kiểm soát nhịp đánh"
-                fill
-                className="why-section__image"
-                sizes="(max-width: 959px) 100vw, 22vw"
-              />
-            </div>
-          </div>
-
-          <article className="why-section__stat">
-            <span className="why-section__stat-value">2-6</span>
-            <strong className="why-section__stat-title">học viên mỗi nhóm để HLV kèm sát</strong>
-            <p className="why-section__stat-copy">
-              Nhịp lớp vừa phải để ai cũng được chỉnh kỹ thuật ngay trên sân.
-            </p>
-          </article>
+        <div className="section__header section__header--left why-section__header">
+          <p className="section__eyebrow">Tại sao chọn V2</p>
+          <h2 className="section__title">Nền tảng bài bản nhưng vẫn dễ theo</h2>
+          <p className="section__desc">
+            Mỗi buổi học có mục tiêu rõ, nhóm nhỏ và khung giờ đủ linh hoạt để theo đều.
+          </p>
         </div>
 
-        <div className="why-section__copy">
-          <div className="section__header section__header--left">
-            <p className="section__eyebrow">Tại sao chọn V2</p>
-            <h2 className="section__title">Nền tảng bài bản nhưng vẫn dễ theo</h2>
-            <p className="section__desc">
-              Mỗi buổi học đều rõ ràng, gần gũi và đủ nhịp để bạn tiến bộ đều.
-            </p>
-          </div>
+        <div className="why-section__proof">
+          <article className="why-section__stat">
+            <span className="why-section__stat-value">2-6</span>
+            <div className="why-section__stat-copy">
+              <strong className="why-section__stat-title">học viên mỗi nhóm</strong>
+              <p>HLV có đủ thời gian quan sát và chỉnh kỹ thuật ngay trên sân.</p>
+            </div>
+          </article>
 
           <div className="why-grid">
             {DIFFERENTIATORS.map((item) => {

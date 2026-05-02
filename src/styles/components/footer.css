@@ -193,4 +193,14 @@
     padding-top: 28px;
     padding-bottom: 124px;
   }
+
+  .site-footer__column:not(:last-child) .site-footer__stack {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px 14px;
+  }
+
+  .site-footer__link {
+    align-items: flex-start;
+    padding-block: 6px;
+  }
 }

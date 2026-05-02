@@ -140,7 +140,7 @@ export function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) {
       </section>
 
       {page.relatedPricing.length > 0 ? (
-        <section className="money-page__section">
+        <section className="money-page__section money-page__section--compact-list">
           <div className="money-page__section-header">
             <p className="section__eyebrow">Chi phí rõ ràng</p>
             <h2 className="section__title">Chọn gói học phù hợp</h2>
@@ -152,6 +152,7 @@ export function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) {
             pagePath={pagePath}
             pageType={pageType}
             trackingLocation={`money_page:${page.slug}:pricing`}
+            variant="compact"
           />
         </section>
       ) : null}
@@ -163,12 +164,16 @@ export function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) {
       </section>
 
       {page.relatedLocations.length > 0 ? (
-        <section className="money-page__section">
+        <section className="money-page__section money-page__section--compact-list">
           <div className="money-page__section-header">
             <p className="section__eyebrow">Địa điểm tập</p>
             <h2 className="section__title">Chọn sân gần bạn nhất</h2>
           </div>
-          <LocationsGrid locations={page.relatedLocations} />
+          <LocationsGrid
+            locations={page.relatedLocations}
+            showSupportCard={false}
+            variant="summary"
+          />
         </section>
       ) : null}
 

@@ -5,8 +5,8 @@ export const HOMEPAGE_STATS = [
     icon: "users",
   },
   {
-    value: "8 HLV",
-    label: "theo sát từng nhóm",
+    value: "Nhóm 2-6",
+    label: "HLV theo sát từng buổi",
     icon: "trophy",
   },
   {

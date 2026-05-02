@@ -4,15 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRightIcon, ClockIcon } from "@/components/ui/BrandIcons";
 import { MobileDotCarousel } from "@/components/ui/MobileDotCarousel";
-import {
-  useHomepageBusinessMode,
-  useHomepageConversionIntent,
-} from "@/components/home/conversion/HomepageConversionProvider";
+import { useHomepageConversionIntent } from "@/components/home/conversion/HomepageConversionProvider";
 import { HOME_SECTION_IDS, toHash } from "@/lib/anchors";
 import { generatedImages } from "@/lib/generatedImages";
 import type { SanityPricingTier } from "@/lib/sanity";
 import { trackEvent } from "@/lib/tracking";
-import { EnterpriseTeaser } from "./EnterpriseTeaser";
 import { PricingStrip } from "./PricingStrip";
 
 type CourseCardId =
@@ -100,7 +96,6 @@ function findPrivatePrice(
 }
 
 export function CourseSection({ pricingTiers }: CourseSectionProps) {
-  const { enterBusinessMode } = useHomepageBusinessMode();
   const { setCourseIntent } = useHomepageConversionIntent();
   const groupPrice = findFromGroupPrice(pricingTiers);
   const privatePrice = findPrivatePrice(pricingTiers);
@@ -280,7 +275,6 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
       </MobileDotCarousel>
 
       <PricingStrip tiers={pricingTiers} />
-      <EnterpriseTeaser onRequestQuote={enterBusinessMode} />
     </section>
   );
 }

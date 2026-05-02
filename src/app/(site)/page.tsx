@@ -9,6 +9,7 @@ import { DeferredScheduleSection } from "@/components/home/sections/DeferredSche
 import { DeferredTestimonialsSection } from "@/components/home/sections/DeferredTestimonialsSection";
 import { FaqSection } from "@/components/home/sections/FaqSection";
 import { HeroSection } from "@/components/home/sections/HeroSection";
+import { HomepageEnterpriseTeaser } from "@/components/home/sections/HomepageEnterpriseTeaser";
 import { LocationsSection } from "@/components/home/sections/LocationsSection";
 import { StatsBar } from "@/components/home/sections/StatsBar";
 import { WhySection } from "@/components/home/sections/WhySection";
@@ -100,12 +101,10 @@ export default async function Home() {
           <HomepageBusinessModeInitializer />
         </Suspense>
         <div className="home-page">
+          {/* Conversion flow: hero → quick proof → audience pick → location filter → schedule slot → objection handling → form */}
           <HeroSection campaign={homepageCampaign} />
           <StatsBar />
           <CourseSection pricingTiers={pricingTiers} />
-          <WhySection />
-          <CoachSection coaches={homepageCoaches} />
-          <DeferredTestimonialsSection testimonials={homepageTestimonials} />
           <LocationsSection
             locations={homepageLocations}
             siteSettings={chromeSettings}
@@ -117,6 +116,11 @@ export default async function Home() {
             locations={homepageLocations}
             scheduleBlocks={homepageScheduleBlocks}
           />
+          {/* Trust details + B2B teaser below the form for users who scroll past without converting */}
+          <WhySection />
+          <CoachSection coaches={homepageCoaches} />
+          <DeferredTestimonialsSection testimonials={homepageTestimonials} />
+          <HomepageEnterpriseTeaser />
         </div>
       </HomepageConversionProvider>
     </>

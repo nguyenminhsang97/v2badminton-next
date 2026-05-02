@@ -342,7 +342,7 @@ export function ContactForm({
               fieldName="phone"
               type="tel"
               value={values.phone}
-              placeholder="0907 911 886"
+              placeholder="VD: 0901 234 567"
               disabled={isPending}
               error={errors.phone}
               onChange={(value) => updateField("phone", value)}
@@ -488,6 +488,9 @@ export function ContactForm({
           ) : null}
 
           <div className="contact-form__actions">
+            <p className="contact-form__privacy-note">
+              Thông tin chỉ dùng để tư vấn lịch học phù hợp, không spam.
+            </p>
             <button
               type="submit"
               className="btn btn--primary btn--lg"

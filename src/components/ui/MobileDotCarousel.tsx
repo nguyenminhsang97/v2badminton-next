@@ -27,6 +27,10 @@ export function MobileDotCarousel({
   const trackRef = useRef<HTMLDivElement>(null);
   const trackId = useId();
   const [rawActiveIndex, setRawActiveIndex] = useState(0);
+  const [scrollEdges, setScrollEdges] = useState({
+    canScrollNext: false,
+    canScrollPrev: false,
+  });
   const activeIndex =
     items.length === 0 ? 0 : Math.min(rawActiveIndex, items.length - 1);
 
@@ -41,6 +45,7 @@ export function MobileDotCarousel({
 
     if (children.length <= 1) {
       setRawActiveIndex(0);
+      setScrollEdges({ canScrollNext: false, canScrollPrev: false });
       return;
     }
 
@@ -63,6 +68,11 @@ export function MobileDotCarousel({
     );
 
     setRawActiveIndex(nextIndex);
+    const maxScrollLeft = Math.max(0, track.scrollWidth - track.clientWidth);
+    setScrollEdges({
+      canScrollNext: track.scrollLeft < maxScrollLeft - 2,
+      canScrollPrev: track.scrollLeft > 2,
+    });
   });
 
   useEffect(() => {
@@ -117,7 +127,16 @@ export function MobileDotCarousel({
   }
 
   return (
-    <div className={["mobile-carousel", className].filter(Boolean).join(" ")}>
+    <div
+      className={[
+        "mobile-carousel",
+        scrollEdges.canScrollPrev ? "mobile-carousel--can-prev" : "",
+        scrollEdges.canScrollNext ? "mobile-carousel--can-next" : "",
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
       <div
         ref={trackRef}
         id={trackId}

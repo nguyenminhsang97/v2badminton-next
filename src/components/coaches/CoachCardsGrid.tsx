@@ -23,9 +23,15 @@ export function getUsableCoaches(coaches: HomepageCoach[]): HomepageCoach[] {
 
 type CoachCardsGridProps = {
   coaches: HomepageCoach[];
+  variant?: "compact" | "full";
 };
 
-export function CoachCardsGrid({ coaches }: CoachCardsGridProps) {
+export function CoachCardsGrid({
+  coaches,
+  variant = "full",
+}: CoachCardsGridProps) {
+  const isCompact = variant === "compact";
+
   return (
     <MobileDotCarousel
       ariaLabel="Xem huấn luyện viên"
@@ -42,16 +48,28 @@ export function CoachCardsGrid({ coaches }: CoachCardsGridProps) {
         const photoAlt = hasCoachPhoto
           ? coach.photoAlt ?? `${displayName} tại V2 Badminton`
           : "Ảnh minh họa buổi huấn luyện tại V2 Badminton";
-        const credentials = coach.credentialTags.slice(0, 3);
+        const credentialLimit = isCompact ? 2 : 3;
+        const credentials = coach.credentialTags.slice(0, credentialLimit);
+        const remainingCredentialCount = Math.max(
+          coach.credentialTags.length - credentials.length,
+          0,
+        );
         const roleBadge = coach.roleBadge?.trim() || null;
         const quote = coach.quote?.trim() || coach.approach?.trim() || null;
         const focusLine = coach.focusLine?.trim() || null;
         const proofLabel = coach.proofLabel?.trim() || null;
+        const compactProof = focusLine ?? proofLabel ?? quote;
         const showFooter =
-          coach.showStars || proofLabel !== null || focusLine !== null;
+          !isCompact &&
+          (coach.showStars || proofLabel !== null || focusLine !== null);
 
         return (
-          <article key={coach.id} className="coach-card coach-card--figma">
+          <article
+            key={coach.id}
+            className={`coach-card coach-card--figma ${
+              isCompact ? "coach-card--compact" : ""
+            }`.trim()}
+          >
             <div className="coach-card__photo-wrap">
               <Image
                 src={photoSrc}
@@ -77,10 +95,19 @@ export function CoachCardsGrid({ coaches }: CoachCardsGridProps) {
                       {credential}
                     </span>
                   ))}
+                  {remainingCredentialCount > 0 ? (
+                    <span className="coach-card__credential coach-card__credential--more">
+                      +{remainingCredentialCount}
+                    </span>
+                  ) : null}
                 </div>
               ) : null}
 
-              {quote ? (
+              {isCompact && compactProof ? (
+                <p className="coach-card__compact-proof">{compactProof}</p>
+              ) : null}
+
+              {!isCompact && quote ? (
                 <blockquote className="coach-card__quote">
                   <span className="coach-card__quote-mark" aria-hidden="true">
                     “

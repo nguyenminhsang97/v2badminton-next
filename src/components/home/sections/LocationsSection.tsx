@@ -1,11 +1,9 @@
 import { LocationsGrid } from "@/components/blocks/LocationsGrid";
 import { HOME_SECTION_IDS } from "@/lib/anchors";
-import { QuickContactCard } from "./QuickContactCard";
 import type { HomepageLocationsSectionProps } from "./sectionProps";
 
 export function LocationsSection({
   locations,
-  siteSettings,
 }: HomepageLocationsSectionProps) {
   return (
     <section className="section locations-section" id={HOME_SECTION_IDS.locations}>
@@ -18,8 +16,11 @@ export function LocationsSection({
       </div>
 
       <div className="locations-cluster">
-        <LocationsGrid locations={locations} showSupportCard={false} />
-        <QuickContactCard contactSettings={siteSettings} />
+        <LocationsGrid
+          locations={locations}
+          showSupportCard={false}
+          variant="summary"
+        />
       </div>
     </section>
   );

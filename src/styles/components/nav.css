@@ -154,6 +154,8 @@
 }
 
 .site-nav__summary {
+  position: relative;
+  z-index: 3;
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
@@ -179,10 +181,29 @@
   background: #fff;
 }
 
+.site-nav--mobile {
+  position: relative;
+}
+
+.site-nav__scrim {
+  position: fixed;
+  top: 76px;
+  right: 0;
+  left: 0;
+  height: calc(100dvh - 76px);
+  z-index: 1;
+  min-height: 0;
+  padding: 0;
+  background: rgba(7, 31, 16, 0.42);
+  border-radius: 0;
+  backdrop-filter: blur(4px);
+}
+
 .site-nav__panel {
   position: absolute;
   right: 0;
   top: 100%;
+  z-index: 2;
   display: grid;
   gap: 12px;
   min-width: 280px;
@@ -270,5 +291,10 @@
   .site-nav__panel {
     top: calc(100% + 10px);
     min-width: min(320px, calc(100vw - 32px));
+  }
+
+  .site-nav__scrim {
+    top: 64px;
+    height: calc(100dvh - 64px);
   }
 }
