@@ -46,6 +46,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: route.path === "/" ? 1 : 0.8,
   }));
 
+  const legalRoutes = [
+    {
+      url: canonicalUrl("/chinh-sach-bao-mat/"),
+      lastModified: generatedAt.toISOString(),
+      changeFrequency: "yearly" as const,
+      priority: 0.3,
+    },
+  ];
+
   const blogRoutes =
     posts.length > 0
       ? [
@@ -85,5 +94,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ]
       : [];
 
-  return [...staticRoutes, ...blogRoutes, ...coachRoutes];
+  return [...staticRoutes, ...legalRoutes, ...blogRoutes, ...coachRoutes];
 }

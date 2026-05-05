@@ -1,4 +1,14 @@
-const REQUIRED_PRODUCTION_VARS = ["FORM_TOKEN_SECRET"] as const;
+const REQUIRED_PRODUCTION_VARS = [
+  "FORM_TOKEN_SECRET",
+  "NEXT_PUBLIC_ALLOW_INDEXING",
+  "NEXT_PUBLIC_SITE_URL",
+  "NEXT_PUBLIC_TURNSTILE_SITE_KEY",
+  "TURNSTILE_SECRET_KEY",
+  "UPSTASH_REDIS_REST_URL",
+  "UPSTASH_REDIS_REST_TOKEN",
+  "NEXT_PUBLIC_SENTRY_DSN",
+  "SENTRY_DSN",
+] as const;
 
 const OPTIONAL_WARNING_GROUPS = [
   {
@@ -72,6 +82,24 @@ export function validateRuntimeEnv() {
   if (isProductionDeployment() && missingProductionVars.length > 0) {
     throw new Error(
       `[env] Missing required production environment variables: ${missingProductionVars.join(", ")}`,
+    );
+  }
+
+  if (
+    isProductionDeployment() &&
+    process.env.NEXT_PUBLIC_ALLOW_INDEXING !== "true"
+  ) {
+    throw new Error(
+      '[env] NEXT_PUBLIC_ALLOW_INDEXING must be exactly "true" before production cutover.',
+    );
+  }
+
+  if (
+    isProductionDeployment() &&
+    process.env.NEXT_PUBLIC_SITE_URL !== "https://v2badminton.com"
+  ) {
+    throw new Error(
+      '[env] NEXT_PUBLIC_SITE_URL must be exactly "https://v2badminton.com" before production cutover.',
     );
   }
 

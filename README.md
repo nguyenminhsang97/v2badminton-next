@@ -61,7 +61,10 @@ For lead-pipeline and monitoring envs, use:
 
 ```bash
 npm run lint
+npm run typecheck
 npm run build
+npm run test:mobile
+npm run verify:production-env
 ```
 
 Then test:
@@ -73,6 +76,12 @@ Then test:
 - JSON-LD
 - mobile UX
 - performance budget
+
+`NEXT_PUBLIC_ALLOW_INDEXING` must be `true`, `NEXT_PUBLIC_SITE_URL` must be
+`https://v2badminton.com`, and the production lead pipeline, anti-spam, rate-limit,
+and Sentry variables must be configured before redeploying. `SENTRY_AUTH_TOKEN`
+may be write-only in Vercel, so verify it through `vercel env ls production` and
+the production build log.
 
 ## Reference docs
 
