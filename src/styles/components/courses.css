@@ -348,9 +348,10 @@
 }
 
 .enterprise-teaser {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 18px 32px;
+  display: grid;
+  grid-template-columns: minmax(0, 720px) auto;
+  justify-content: space-between;
+  gap: 18px clamp(24px, 4vw, 64px);
   align-items: center;
   padding: 20px 22px;
   border-radius: 28px;
@@ -360,9 +361,8 @@
 }
 
 .enterprise-teaser__copy {
-  flex: 0 1 820px;
   min-width: 0;
-  max-width: min(100%, 820px);
+  max-width: none;
 }
 
 .enterprise-teaser__badge {
@@ -385,10 +385,13 @@
   flex-wrap: wrap;
   gap: 12px;
   align-items: center;
+  justify-self: end;
 }
 
 @media (max-width: 1023px) {
   .enterprise-teaser {
+    grid-template-columns: minmax(0, 1fr);
+    justify-content: stretch;
     gap: 14px;
     align-items: start;
   }
@@ -400,6 +403,7 @@
 
   .enterprise-teaser__actions {
     align-items: flex-start;
+    justify-self: start;
   }
 }
 
