@@ -15,13 +15,11 @@ export function LocationsSection({
         </p>
       </div>
 
-      <div className="locations-cluster">
-        <LocationsGrid
-          locations={locations}
-          showSupportCard={false}
-          variant="summary"
-        />
-      </div>
+      <LocationsGrid
+        locations={locations}
+        showSupportCard={false}
+        variant="summary"
+      />
     </section>
   );
 }
