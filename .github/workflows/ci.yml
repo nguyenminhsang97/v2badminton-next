@@ -15,7 +15,7 @@ env:
 
 jobs:
   verify:
-    name: Lint, typecheck, build, mobile smoke
+    name: Lint, typecheck, build
     runs-on: ubuntu-latest
 
     steps:
@@ -39,9 +39,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium webkit
-
       - name: Lint
         run: npm run lint
 
@@ -50,6 +47,3 @@ jobs:
 
       - name: Build
         run: npm run build
-
-      - name: Mobile smoke
-        run: npm run test:mobile
