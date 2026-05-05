@@ -1,0 +1,8 @@
+.env
+.env.*
+
+.codex/
+.codex-artifacts/
+.playwright-mcp/
+playwright-report/
+test-results/

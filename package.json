@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit --pretty false",
+    "verify:production-env": "node scripts/verify-production-env.mjs",
     "test:e2e": "playwright test",
     "test:mobile": "playwright test --project=mobile-chrome --project=mobile-safari",
     "test:mobile:headed": "playwright test --project=mobile-chrome --project=mobile-safari --headed"
