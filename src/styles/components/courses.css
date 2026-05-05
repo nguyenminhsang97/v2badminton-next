@@ -350,9 +350,8 @@
 .enterprise-teaser {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px 18px;
+  gap: 18px 32px;
   align-items: center;
-  justify-content: space-between;
   padding: 20px 22px;
   border-radius: 28px;
   background: linear-gradient(145deg, #12341f 0%, #18472a 100%);
@@ -361,7 +360,9 @@
 }
 
 .enterprise-teaser__copy {
-  max-width: 620px;
+  flex: 0 1 820px;
+  min-width: 0;
+  max-width: min(100%, 820px);
 }
 
 .enterprise-teaser__badge {
@@ -375,6 +376,7 @@
 
 .enterprise-teaser__desc {
   margin: 0;
+  max-width: 72ch;
   color: rgba(236, 246, 232, 0.82);
 }
 
@@ -383,6 +385,22 @@
   flex-wrap: wrap;
   gap: 12px;
   align-items: center;
+}
+
+@media (max-width: 1023px) {
+  .enterprise-teaser {
+    gap: 14px;
+    align-items: start;
+  }
+
+  .enterprise-teaser__copy,
+  .enterprise-teaser__desc {
+    max-width: none;
+  }
+
+  .enterprise-teaser__actions {
+    align-items: flex-start;
+  }
 }
 
 @media (max-width: 1279px) {
