@@ -10,15 +10,19 @@ import { coreRoutes } from "@/lib/routes";
 import { trackEvent } from "@/lib/tracking";
 
 const primaryLinks = [
-  { href: "/", label: "Trang chủ", kind: "route" as const },
   {
     href: toHomepageHash(HOME_SECTION_IDS.courses),
     label: "Khóa học",
     kind: "anchor" as const,
   },
   {
+    href: toHomepageHash(HOME_SECTION_IDS.pricing),
+    label: "Học phí",
+    kind: "anchor" as const,
+  },
+  {
     href: "/huan-luyen-vien/",
-    label: "Huấn luyện viên",
+    label: "HLV",
     kind: "route" as const,
   },
   {
@@ -29,6 +33,11 @@ const primaryLinks = [
   {
     href: toHomepageHash(HOME_SECTION_IDS.schedule),
     label: "Lịch tập",
+    kind: "anchor" as const,
+  },
+  {
+    href: toHomepageHash(HOME_SECTION_IDS.enterprise),
+    label: "Doanh nghiệp",
     kind: "anchor" as const,
   },
   { href: "/blog/", label: "Blog", kind: "route" as const },

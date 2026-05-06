@@ -11,6 +11,7 @@ import { FaqSection } from "@/components/home/sections/FaqSection";
 import { HeroSection } from "@/components/home/sections/HeroSection";
 import { HomepageEnterpriseTeaser } from "@/components/home/sections/HomepageEnterpriseTeaser";
 import { LocationsSection } from "@/components/home/sections/LocationsSection";
+import { PricingStrip } from "@/components/home/sections/PricingStrip";
 import { StatsBar } from "@/components/home/sections/StatsBar";
 import { WhySection } from "@/components/home/sections/WhySection";
 import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
@@ -104,7 +105,9 @@ export default async function Home() {
           {/* Conversion flow: hero → quick proof → audience pick → location filter → schedule slot → objection handling → form */}
           <HeroSection campaign={homepageCampaign} />
           <StatsBar />
+          <PricingStrip tiers={pricingTiers} />
           <CourseSection pricingTiers={pricingTiers} />
+          <HomepageEnterpriseTeaser />
           <LocationsSection
             locations={homepageLocations}
             siteSettings={chromeSettings}
@@ -116,11 +119,9 @@ export default async function Home() {
             locations={homepageLocations}
             scheduleBlocks={homepageScheduleBlocks}
           />
-          {/* Trust details + B2B teaser below the form for users who scroll past without converting */}
           <WhySection />
           <CoachSection coaches={homepageCoaches} />
           <DeferredTestimonialsSection testimonials={homepageTestimonials} />
-          <HomepageEnterpriseTeaser />
         </div>
       </HomepageConversionProvider>
     </>
