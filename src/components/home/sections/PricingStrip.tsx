@@ -70,41 +70,43 @@ export function PricingStrip({ tiers }: PricingStripProps) {
   const groupSummary = buildGroupSummary(groupTiers);
 
   return (
-    <div className="pricing-strip" id={HOME_SECTION_IDS.pricing}>
-      <div className="pricing-strip__header">
-        <p className="pricing-strip__eyebrow">Chi tiết học phí</p>
-        <h3 className="pricing-strip__title">Học phí chính hiện tại</h3>
-        <p className="pricing-strip__desc">
-          Lớp nhóm 2-6 người theo số buổi mỗi tuần, lớp 1 kèm 1 theo lịch riêng.
-        </p>
+    <section className="section pricing-section" id={HOME_SECTION_IDS.pricing}>
+      <div className="pricing-strip">
+        <div className="pricing-strip__header">
+          <p className="pricing-strip__eyebrow">Chi tiết học phí</p>
+          <h3 className="pricing-strip__title">Học phí chính hiện tại</h3>
+          <p className="pricing-strip__desc">
+            Lớp nhóm 2-6 người theo số buổi mỗi tuần, lớp 1 kèm 1 theo lịch riêng.
+          </p>
+        </div>
+        <div className="pricing-strip__summary" aria-label="Tóm tắt học phí">
+          {groupSummary ? (
+            <article className="pricing-strip__summary-item pricing-strip__summary-item--group">
+              <span className="pricing-strip__summary-label">Lớp nhóm</span>
+              <strong className="pricing-strip__summary-price">
+                {groupSummary.priceLabel}
+              </strong>
+              <span className="pricing-strip__summary-meta">
+                {groupSummary.metaLabel}
+              </span>
+            </article>
+          ) : null}
+          {privateTier ? (
+            <article className="pricing-strip__summary-item pricing-strip__summary-item--private">
+              <span className="pricing-strip__summary-label">1 kèm 1</span>
+              <strong className="pricing-strip__summary-price">
+                {privateTier.displayPrice}
+              </strong>
+              <span className="pricing-strip__summary-meta">
+                Theo lịch riêng · 1 học viên
+              </span>
+            </article>
+          ) : null}
+        </div>
+        <Link className="pricing-strip__cta" href={toHash(HOME_SECTION_IDS.contact)}>
+          Đăng ký tư vấn mức phù hợp
+        </Link>
       </div>
-      <div className="pricing-strip__summary" aria-label="Tóm tắt học phí">
-        {groupSummary ? (
-          <article className="pricing-strip__summary-item pricing-strip__summary-item--group">
-            <span className="pricing-strip__summary-label">Lớp nhóm</span>
-            <strong className="pricing-strip__summary-price">
-              {groupSummary.priceLabel}
-            </strong>
-            <span className="pricing-strip__summary-meta">
-              {groupSummary.metaLabel}
-            </span>
-          </article>
-        ) : null}
-        {privateTier ? (
-          <article className="pricing-strip__summary-item pricing-strip__summary-item--private">
-            <span className="pricing-strip__summary-label">1 kèm 1</span>
-            <strong className="pricing-strip__summary-price">
-              {privateTier.displayPrice}
-            </strong>
-            <span className="pricing-strip__summary-meta">
-              Theo lịch riêng · 1 học viên
-            </span>
-          </article>
-        ) : null}
-      </div>
-      <Link className="pricing-strip__cta" href={toHash(HOME_SECTION_IDS.contact)}>
-        Đăng ký tư vấn mức phù hợp
-      </Link>
-    </div>
+    </section>
   );
 }

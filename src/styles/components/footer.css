@@ -1,7 +1,13 @@
 .site-footer {
-  margin-top: 24px;
+  margin-top: 0;
   background: #071f10;
   color: #fff;
+}
+
+@media (max-width: 959px) {
+  .site-footer {
+    padding-top: var(--floating-cta-clearance);
+  }
 }
 
 .site-footer__inner {

@@ -411,10 +411,6 @@
   .course-grid--figma {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
-  .pricing-strip__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
 @media (max-width: 767px) {

@@ -72,7 +72,7 @@ button {
 .site-main {
   flex: 1;
   padding-top: 72px;
-  padding-bottom: 110px;
+  padding-bottom: 0;
 }
 
 .home-page {
@@ -647,7 +647,7 @@ button {
 @media (max-width: 959px) {
   .site-main {
     padding-top: 64px;
-    padding-bottom: var(--floating-cta-clearance);
+    padding-bottom: 0;
   }
 
   .home-page {

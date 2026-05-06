@@ -9,7 +9,6 @@ import { HOME_SECTION_IDS, toHash } from "@/lib/anchors";
 import { generatedImages } from "@/lib/generatedImages";
 import type { SanityPricingTier } from "@/lib/sanity";
 import { trackEvent } from "@/lib/tracking";
-import { PricingStrip } from "./PricingStrip";
 
 type CourseCardId =
   | "course-kids"
@@ -162,11 +161,11 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
   return (
     <section className="section course-section" id={HOME_SECTION_IDS.courses}>
       <div className="section__header course-section__header">
-        <p className="section__eyebrow">Chương trình & học phí</p>
+        <p className="section__eyebrow">Chương trình học</p>
         <h2 className="section__title">Chọn lộ trình phù hợp ngay từ buổi đầu</h2>
         <p className="section__desc">
-          4 lộ trình chính để bạn chọn nhanh theo nhu cầu, rồi so học phí trước khi để
-          lại thông tin.
+          4 lộ trình chính để bạn chọn nhanh theo nhu cầu trước khi để lại
+          thông tin.
         </p>
       </div>
 
@@ -273,8 +272,6 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
           </article>
         ))}
       </MobileDotCarousel>
-
-      <PricingStrip tiers={pricingTiers} />
     </section>
   );
 }
