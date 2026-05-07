@@ -57,6 +57,14 @@
   --pad-card-md: 20px;
   --pad-card-lg: 24px;
 
+  /* ──── Form spacing ────────────────────────────────────────────────
+     Hierarchical scale: field (label↔control) < group (between fields)
+     < shell (between form sections). Actions row uses its own value. */
+  --space-form-field: 8px;
+  --space-form-group: 16px;
+  --space-form-shell: 20px;
+  --space-form-actions: 16px;
+
   /* Touch target minimum (WCAG 2.1 AAA) */
   --touch-target-min: 44px;
 

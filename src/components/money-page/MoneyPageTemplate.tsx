@@ -125,10 +125,10 @@ export function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) {
         </div>
 
         {heroImageUrl ? (
-          <div className="money-page__hero-media">
+          <div className="money-page__hero-media" aria-hidden="true">
             <Image
               src={heroImageUrl}
-              alt={page.h1}
+              alt=""
               className="money-page__hero-image"
               width={1120}
               height={720}
