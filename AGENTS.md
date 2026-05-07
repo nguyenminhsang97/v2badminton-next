@@ -13,3 +13,5 @@ This version has breaking changes - APIs, conventions, and file structure may al
 - Subagents are available for this project, but only spawn them when the user explicitly asks for multi-agent or parallel-agent work.
 - Memories are enabled for useful local recall, but durable project rules must stay in `AGENTS.md` or checked-in docs.
 - On this Windows workspace, prefer Browser Use, Playwright MCP, shell, and file inspection for GUI/browser work. Codex Computer Use is a macOS-only app capability in the current official docs.
+- Use the project-local `v2badminton-next` skill from `.codex/skills/v2badminton-next` for repo-specific UI, routing, data, styling, verification, and launch-readiness work.
+- Preferred plugin capabilities for this repo: Browser Use for local browser checks, Vercel for deployment/env questions, Sentry for monitoring, Cloudflare for Workers/OpenNext/Wrangler, GitHub for PR/CI work, and Figma only for design/design-system tasks.
