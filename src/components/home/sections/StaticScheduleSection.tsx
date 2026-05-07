@@ -100,11 +100,19 @@ export function StaticScheduleSection({
         </p>
       </div>
 
-      <div className="schedule-tabs" role="tablist" aria-label="Lọc theo sân">
+      <div
+        className="schedule-tabs"
+        role="tablist"
+        aria-busy="true"
+        aria-label="Lọc theo sân"
+      >
         <button
           type="button"
           role="tab"
           aria-selected="true"
+          aria-disabled="true"
+          disabled
+          tabIndex={-1}
           className="schedule-tab schedule-tab--active"
         >
           Tất cả
@@ -115,6 +123,9 @@ export function StaticScheduleSection({
             type="button"
             role="tab"
             aria-selected={tab.id === ALL_TAB_ID}
+            aria-disabled="true"
+            disabled
+            tabIndex={-1}
             className="schedule-tab"
           >
             {tab.label}
@@ -157,6 +168,9 @@ export function StaticScheduleSection({
             type="button"
             className="schedule-row"
             aria-label={`${item.dayGroup}, ${item.timeLabel}, ${getScheduleProgramLabel(item.levels)}, ${item.locationName}. Chọn lịch này để tự điền sân và giờ vào form đăng ký.`}
+            aria-disabled="true"
+            disabled
+            tabIndex={-1}
           >
             <span className="schedule-table__cell schedule-row__days">
               {item.dayGroup}
