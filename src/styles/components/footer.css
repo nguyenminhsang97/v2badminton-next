@@ -11,7 +11,7 @@
 }
 
 .site-footer__inner {
-  width: var(--s5-width);
+  width: var(--width-site);
   margin: 0 auto;
   display: grid;
   gap: 18px;

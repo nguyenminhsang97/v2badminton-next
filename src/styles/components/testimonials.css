@@ -8,8 +8,7 @@
   width: 100%;
   margin: 0;
   gap: 56px;
-  padding-top: 80px;
-  padding-bottom: 80px;
+  padding-block: var(--section-pad-y-spacious);
   background:
     radial-gradient(circle at 22% 52%, rgba(18, 117, 54, 0.34), transparent 32%),
     radial-gradient(circle at 86% 46%, rgba(37, 99, 235, 0.2), transparent 30%),
@@ -29,7 +28,7 @@
 .testimonials-section > * {
   position: relative;
   z-index: 1;
-  width: min(1216px, calc(100% - 32px));
+  width: var(--width-content);
   margin-inline: auto;
 }
 
@@ -233,11 +232,6 @@
 }
 
 @media (max-width: 1279px) {
-  .testimonials-section {
-    padding-top: 74px;
-    padding-bottom: 76px;
-  }
-
   .testimonials-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -245,9 +239,7 @@
 
 @media (max-width: 767px) {
   .testimonials-section {
-    gap: 56px;
-    padding-top: 80px;
-    padding-bottom: 72px;
+    gap: 32px;
   }
 
   .testimonials-grid {

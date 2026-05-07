@@ -1,6 +1,6 @@
 .blog-list,
 .blog-post {
-  width: min(1180px, calc(100% - 32px));
+  width: var(--width-content);
   margin: 0 auto;
   display: grid;
   gap: 28px;
@@ -58,7 +58,7 @@
 .blog-card {
   display: grid;
   grid-template-rows: auto 1fr;
-  border-radius: 28px;
+  border-radius: var(--radius-card-lg);
   background: var(--s5-surface);
   border: 1px solid var(--s5-border);
   box-shadow: var(--s5-shadow-soft);

@@ -1,5 +1,5 @@
 .legal-page {
-  width: min(920px, calc(100% - 32px));
+  width: var(--width-narrow);
   margin: 0 auto;
   display: grid;
   gap: 28px;

@@ -28,7 +28,34 @@
   --s5-radius-xl: 32px;
   --s5-radius-lg: 24px;
   --s5-radius-md: 18px;
-  --s5-width: min(1240px, calc(100% - 32px));
+
+  /* ──── Container widths ────────────────────────────────────────────
+     Use --width-site for outer chrome (nav), --width-content for body
+     sections, --width-narrow for long-form prose (legal). --s5-width is
+     an alias for backward-compat with existing references. */
+  --width-site: min(1280px, calc(100% - 56px));
+  --width-content: min(1240px, calc(100% - 32px));
+  --width-narrow: min(920px, calc(100% - 32px));
+  --s5-width: var(--width-content);
+
+  /* ──── Section vertical rhythm ─────────────────────────────────────
+     Default padding for homepage sections; override via the spacious /
+     compact variants when a section needs to feel airier or denser. */
+  --section-pad-y: 56px;
+  --section-pad-y-spacious: 80px;
+  --section-pad-y-compact: 40px;
+  --section-gap: 26px;
+
+  /* ──── Card scale ──────────────────────────────────────────────────
+     Additive scale alongside the existing --s5-radius-* tokens. Use
+     these for content cards (course, blog, pricing, etc.). */
+  --radius-card-sm: 16px;
+  --radius-card-md: 22px;
+  --radius-card-lg: 28px;
+  --radius-card-xl: 32px;
+  --pad-card-sm: 16px;
+  --pad-card-md: 20px;
+  --pad-card-lg: 24px;
 
   /* Touch target minimum (WCAG 2.1 AAA) */
   --touch-target-min: 44px;
@@ -37,4 +64,13 @@
      mobile CTA never covers the last interactive element. Equals
      CTA height (~76px) + bottom gap (12px) + breathing room + iOS safe-area. */
   --floating-cta-clearance: calc(108px + env(safe-area-inset-bottom, 0px));
+}
+
+@media (max-width: 959px) {
+  :root {
+    --section-pad-y: 34px;
+    --section-pad-y-spacious: 48px;
+    --section-pad-y-compact: 28px;
+    --section-gap: 16px;
+  }
 }
