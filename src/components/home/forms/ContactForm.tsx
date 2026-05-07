@@ -45,6 +45,7 @@ type InputFieldProps = {
   placeholder: string;
   disabled: boolean;
   error?: string;
+  required?: boolean;
   onChange: (value: string) => void;
   onFocus: (
     event: FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
@@ -60,6 +61,7 @@ function ContactInputField({
   placeholder,
   disabled,
   error,
+  required = false,
   onChange,
   onFocus,
 }: InputFieldProps) {
@@ -77,7 +79,9 @@ function ContactInputField({
         onFocus={onFocus}
         aria-invalid={Boolean(error)}
         aria-describedby={errorId}
+        aria-required={required || undefined}
         placeholder={placeholder}
+        required={required}
         disabled={disabled}
       />
       {error ? (
@@ -332,6 +336,7 @@ export function ContactForm({
               placeholder="Nhập họ tên"
               disabled={isPending}
               error={errors.name}
+              required
               onChange={(value) => updateField("name", value)}
               onFocus={handleInputFocus}
             />
@@ -345,6 +350,7 @@ export function ContactForm({
               placeholder="VD: 0901 234 567"
               disabled={isPending}
               error={errors.phone}
+              required
               onChange={(value) => updateField("phone", value)}
               onFocus={handleInputFocus}
             />
@@ -371,6 +377,8 @@ export function ContactForm({
                     updateField("level", event.currentTarget.value as FormValues["level"])
                   }
                   onFocus={handleInputFocus}
+                  aria-invalid={Boolean(errors.level)}
+                  aria-describedby={errors.level ? "contact-error-level" : undefined}
                   disabled={isPending}
                 >
                   <option value="">Chọn trình độ</option>
@@ -380,6 +388,11 @@ export function ContactForm({
                     </option>
                   ))}
                 </select>
+                {errors.level ? (
+                  <span id="contact-error-level" className="contact-form__error">
+                    {errors.level}
+                  </span>
+                ) : null}
               </label>
 
               {!businessMode ? (
@@ -394,6 +407,8 @@ export function ContactForm({
                         updateField("court", event.currentTarget.value as FormValues["court"])
                       }
                       onFocus={handleInputFocus}
+                      aria-invalid={Boolean(errors.court)}
+                      aria-describedby={errors.court ? "contact-error-court" : undefined}
                       disabled={isPending}
                     >
                       <option value="">Chọn sân tập</option>
@@ -403,6 +418,11 @@ export function ContactForm({
                         </option>
                       ))}
                     </select>
+                    {errors.court ? (
+                      <span id="contact-error-court" className="contact-form__error">
+                        {errors.court}
+                      </span>
+                    ) : null}
                   </label>
 
                   <label className="contact-form__field">
@@ -418,6 +438,10 @@ export function ContactForm({
                         )
                       }
                       onFocus={handleInputFocus}
+                      aria-invalid={Boolean(errors.time_slot)}
+                      aria-describedby={
+                        errors.time_slot ? "contact-error-time-slot" : undefined
+                      }
                       disabled={isPending}
                     >
                       <option value="">Chọn khung giờ</option>
@@ -427,6 +451,11 @@ export function ContactForm({
                         </option>
                       ))}
                     </select>
+                    {errors.time_slot ? (
+                      <span id="contact-error-time-slot" className="contact-form__error">
+                        {errors.time_slot}
+                      </span>
+                    ) : null}
                   </label>
                 </>
               ) : null}

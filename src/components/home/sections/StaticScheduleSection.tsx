@@ -102,14 +102,13 @@ export function StaticScheduleSection({
 
       <div
         className="schedule-tabs"
-        role="tablist"
+        role="group"
         aria-busy="true"
         aria-label="Lọc theo sân"
       >
         <button
           type="button"
-          role="tab"
-          aria-selected="true"
+          aria-pressed="true"
           aria-disabled="true"
           disabled
           tabIndex={-1}
@@ -121,8 +120,7 @@ export function StaticScheduleSection({
           <button
             key={tab.id}
             type="button"
-            role="tab"
-            aria-selected={tab.id === ALL_TAB_ID}
+            aria-pressed={tab.id === ALL_TAB_ID}
             aria-disabled="true"
             disabled
             tabIndex={-1}

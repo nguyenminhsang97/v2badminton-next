@@ -231,11 +231,10 @@ export function ScheduleSection({
         ) : null}
       </div>
 
-      <div className="schedule-tabs" role="tablist" aria-label="Lọc theo sân">
+      <div className="schedule-tabs" role="group" aria-label="Lọc theo sân">
         <button
           type="button"
-          role="tab"
-          aria-selected={activeTab === ALL_TAB_ID}
+          aria-pressed={activeTab === ALL_TAB_ID}
           className={`schedule-tab ${activeTab === ALL_TAB_ID ? "schedule-tab--active" : ""}`}
           onClick={() => handleTabChange(ALL_TAB_ID)}
         >
@@ -245,8 +244,7 @@ export function ScheduleSection({
           <button
             key={tab.id}
             type="button"
-            role="tab"
-            aria-selected={activeTab === tab.id}
+            aria-pressed={activeTab === tab.id}
             className={`schedule-tab ${activeTab === tab.id ? "schedule-tab--active" : ""}`}
             onClick={() => handleTabChange(tab.id)}
           >
