@@ -273,31 +273,15 @@
 
 @media (max-width: 959px) {
   .schedule-section {
-    padding-top: 56px;
-    padding-bottom: var(--floating-cta-clearance);
+    padding: 34px 0;
   }
 
   .schedule-section.deferred-section-skeleton {
     min-height: 1300px;
   }
-
-  .schedule-table {
-    border-radius: 22px;
-  }
-
-  .schedule-table__head,
-  .schedule-row {
-    min-width: 760px;
-  }
-
-  .schedule-table__head {
-    position: sticky;
-    top: 64px;
-    z-index: 1;
-  }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 959px) {
   .schedule-tabs {
     flex-wrap: nowrap;
     justify-content: flex-start;

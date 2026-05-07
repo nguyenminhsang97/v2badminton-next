@@ -185,6 +185,11 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  .site-footer__column,
+  .site-footer__stack {
+    align-content: start;
+  }
+
   .site-footer__meta {
     grid-column: 1 / -1;
     flex-direction: row;
@@ -197,7 +202,7 @@
   .site-footer__inner {
     width: min(100%, calc(100% - 24px));
     padding-top: 28px;
-    padding-bottom: 124px;
+    padding-bottom: 40px;
   }
 
   .site-footer__column:not(:last-child) .site-footer__stack {

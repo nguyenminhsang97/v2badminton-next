@@ -257,13 +257,13 @@
   display: grid;
 }
 
-.contact-form-shell {
+.contact-section .contact-form-shell {
   padding: 26px;
   border-radius: 28px;
   background: var(--s5-surface);
   border: 1px solid var(--s5-border);
   box-shadow: var(--s5-shadow);
-  width: min(100%, 760px);
+  width: min(760px, calc(100% - 32px));
   margin: 0 auto;
 }
 
@@ -527,7 +527,8 @@
     min-height: 860px;
   }
 
-  .contact-form-shell {
+  .contact-section .contact-form-shell {
+    width: min(760px, calc(100% - 24px));
     padding: 22px;
   }
 
