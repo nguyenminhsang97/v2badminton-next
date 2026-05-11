@@ -13,6 +13,18 @@ html {
   overscroll-behavior-x: none;
 }
 
+/*
+ * Audit toggle: temporarily disable global overflow clipping to surface
+ * real horizontal-overflow bugs during QA. Enable in DevTools with:
+ *   document.documentElement.dataset.audit = "1"
+ * Disable by removing the attribute. Production behavior is unaffected.
+ */
+:root[data-audit],
+:root[data-audit] body,
+:root[data-audit] .app-shell {
+  overflow-x: visible !important;
+}
+
 body {
   min-height: 100vh;
   margin: 0;

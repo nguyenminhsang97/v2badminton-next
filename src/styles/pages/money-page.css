@@ -204,14 +204,14 @@
   }
 
   .money-page__section--compact-list {
-    padding: 0;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
+    padding: 16px;
+    border: 1px solid var(--s5-border);
+    border-radius: var(--radius-card-sm);
+    background: var(--s5-surface);
     box-shadow: none;
   }
 
   .money-page__section--compact-list .money-page__section-header {
-    padding-inline: 2px;
+    padding-inline: 0;
   }
 }

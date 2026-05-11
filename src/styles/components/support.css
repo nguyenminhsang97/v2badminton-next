@@ -269,13 +269,13 @@
 
 .contact-form-shell {
   display: grid;
-  gap: 20px;
+  gap: var(--space-form-shell);
 }
 
 .contact-form-shell__header,
 .contact-form {
   display: grid;
-  gap: 16px;
+  gap: var(--space-form-group);
 }
 
 .contact-form-shell__eyebrow {
@@ -304,12 +304,12 @@
 .contact-form__grid,
 .contact-form__optional-grid {
   display: grid;
-  gap: 16px;
+  gap: var(--space-form-group);
 }
 
 .contact-form__field {
   display: grid;
-  gap: 8px;
+  gap: var(--space-form-field);
 }
 
 .contact-form__label {
@@ -413,7 +413,7 @@
 .contact-form__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: var(--space-form-actions);
   align-items: center;
 }
 
