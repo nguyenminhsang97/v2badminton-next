@@ -9,7 +9,7 @@
   gap: 18px;
   align-content: start;
   padding: 26px;
-  border-radius: 32px;
+  border-radius: var(--radius-card-xl);
   background: #fff;
   border: 1px solid rgba(15, 59, 32, 0.08);
   box-shadow: var(--s5-shadow-soft);
@@ -125,7 +125,7 @@
 .pricing-grid--compact .pricing-card {
   gap: 12px;
   padding: 18px;
-  border-radius: 22px;
+  border-radius: var(--radius-card-md);
 }
 
 .pricing-grid--compact .pricing-card__header {

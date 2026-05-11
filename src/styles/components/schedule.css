@@ -1,6 +1,5 @@
 .schedule-section {
-  padding-top: 74px;
-  padding-bottom: 82px;
+  padding-block: var(--section-pad-y);
   background: #fff;
 }
 
@@ -272,16 +271,10 @@
 }
 
 @media (max-width: 959px) {
-  .schedule-section {
-    padding: 34px 0;
-  }
-
   .schedule-section.deferred-section-skeleton {
     min-height: 1300px;
   }
-}
 
-@media (max-width: 959px) {
   .schedule-tabs {
     flex-wrap: nowrap;
     justify-content: flex-start;

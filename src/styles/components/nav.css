@@ -30,7 +30,7 @@
 }
 
 .site-header__inner {
-  width: min(1280px, calc(100% - 56px));
+  width: var(--width-site);
   min-height: 76px;
   margin: 0 auto;
   display: flex;

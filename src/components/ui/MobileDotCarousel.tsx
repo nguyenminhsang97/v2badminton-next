@@ -146,7 +146,7 @@ export function MobileDotCarousel({
       </div>
 
       {items.length > 1 ? (
-        <div className="mobile-carousel__dots" role="tablist" aria-label={ariaLabel}>
+        <div className="mobile-carousel__dots" role="group" aria-label={ariaLabel}>
           {items.map((_, index) => {
             const isActive = index === activeIndex;
 
@@ -154,10 +154,8 @@ export function MobileDotCarousel({
               <button
                 key={`${trackId}-${index}`}
                 type="button"
-                role="tab"
-                aria-controls={trackId}
-                aria-selected={isActive}
-                aria-label={`Xem mục ${index + 1}`}
+                aria-current={isActive ? "true" : undefined}
+                aria-label={`Xem mục ${index + 1} / ${items.length}`}
                 className={`mobile-carousel__dot ${
                   isActive ? "mobile-carousel__dot--active" : ""
                 }`}
