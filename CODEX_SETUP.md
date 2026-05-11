@@ -8,6 +8,7 @@ Configured on 2026-05-01 for `D:\V2\v2badminton-next`.
 - Multi agents: enabled globally and in `.codex/config.toml`.
 - Memories: enabled globally and in `.codex/config.toml`.
 - Project MCP servers: `openaiDeveloperDocs`, `context7`, and `playwright`.
+- Project-local skill: `.codex/skills/v2badminton-next`, enabled through `.codex/config.toml`.
 - Relevant enabled plugins in global config: GitHub, Vercel, Sentry, Browser Use, Figma, Cloudflare, Linear, Documents, Spreadsheets, and Presentations.
 - Browser/GUI workflow on Windows: use Browser Use plus Playwright MCP. Official Codex Computer Use is currently a macOS app capability, so it is documented but not installable for this Windows workspace.
 - Mobile test runner: `@playwright/test` is installed and configured in `playwright.config.ts`.
@@ -31,11 +32,25 @@ For OpenAI API applications that need Tool Search with MCP, use the API's `tool_
 ## Project defaults for agents
 
 - Read `AGENTS.md` before edits.
+- Load the project-local `v2badminton-next` skill for work on UI, routing, data fetching, styling, verification, launch readiness, or deployment decisions in this repo.
 - Read the relevant local Next.js guide under `node_modules/next/dist/docs/` before changing Next.js code.
 - Prefer current docs through MCP for Next/React/Sanity/Vercel/Sentry decisions.
 - After frontend changes, verify with Browser Use or Playwright MCP against local routes.
 - Use subagents only when explicitly requested.
 - Keep permanent project rules in checked-in docs, not only in Memories.
+
+## Recommended project capabilities
+
+| Need | Use |
+| --- | --- |
+| OpenAI, Codex, MCP, tools, models | `openaiDeveloperDocs` MCP |
+| Next.js, React, Sanity, Vercel, Sentry, Upstash docs | Context7 MCP |
+| Local route, responsive UI, and screenshot checks | Browser Use or Playwright MCP |
+| Vercel deployment/env/runtime work | Vercel plugin capabilities |
+| Production error and monitoring investigation | Sentry plugin capabilities |
+| Workers/OpenNext/Wrangler and Cloudflare API work | Cloudflare plugin capabilities |
+| PRs, issues, CI, and review threads | GitHub plugin capabilities |
+| Figma design implementation or design-system work | Figma plugin capabilities |
 
 ## References
 

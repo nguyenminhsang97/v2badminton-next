@@ -13,6 +13,10 @@ generate_memories = true
 use_memories = true
 disable_on_external_context = false
 
+[[skills.config]]
+path = "D:\\V2\\v2badminton-next\\.codex\\skills\\v2badminton-next"
+enabled = true
+
 [mcp_servers.openaiDeveloperDocs]
 url = "https://developers.openai.com/mcp"
 enabled = true
