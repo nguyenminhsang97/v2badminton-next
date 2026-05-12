@@ -98,7 +98,7 @@ export function Nav({ siteSettings }: NavProps) {
     document.addEventListener("scroll", syncScrollState, { passive: true });
     window.addEventListener("resize", syncScrollState, { passive: true });
     window.addEventListener("pageshow", syncScrollState);
-    viewport?.addEventListener("scroll", syncScrollState);
+    viewport?.addEventListener("scroll", syncScrollState, { passive: true });
     viewport?.addEventListener("resize", syncScrollState, { passive: true });
     requestAnimationFrame(() => syncScrollState());
 

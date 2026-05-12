@@ -132,7 +132,7 @@ export function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) {
               className="money-page__hero-image"
               width={1120}
               height={720}
-              priority
+              loading="eager"
               fetchPriority="high"
               sizes="(max-width: 959px) calc(100vw - 32px), 44vw"
             />
