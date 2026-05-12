@@ -1,3 +1,4 @@
+import ReactDOM from "react-dom";
 import { getImageProps } from "next/image";
 import { StarIcon } from "@/components/ui/BrandIcons";
 import { HOME_SECTION_IDS, toHash } from "@/lib/anchors";
@@ -28,6 +29,18 @@ export function HeroSection({ campaign }: HomepageHeroSectionProps) {
     width: 1672,
     height: 941,
   });
+
+  // Preload the desktop hero image in <head> so the browser discovers it
+  // immediately during HTML parsing, not after finding the <picture> in <body>.
+  // Only fires on viewports ≥ 768px to avoid fetching desktop image on mobile.
+  ReactDOM.preload(generatedImages.heroTraining, {
+    as: "image",
+    imageSrcSet: desktopHeroSrcSet,
+    imageSizes: "100vw",
+    fetchPriority: "high",
+    media: "(min-width: 768px)",
+  });
+
   const {
     props: { srcSet: mobileHeroSrcSet, ...heroImageProps },
   } = getImageProps({
