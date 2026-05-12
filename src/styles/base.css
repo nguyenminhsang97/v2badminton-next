@@ -358,6 +358,12 @@ button {
   display: grid;
   gap: 18px;
   padding: 80px 0 96px;
+  /* Keep the footer below the viewport fold while the page data is loading.
+     Without this, the Suspense fallback is ~600px which places the footer
+     inside the 940px Lighthouse desktop viewport — causing CLS when the
+     actual page content streams in and pushes the footer to Y≈6800.
+     max(960px, 100vh) > 940px Lighthouse viewport so footer stays off-screen. */
+  min-height: max(960px, 100vh);
 }
 
 .error-page,

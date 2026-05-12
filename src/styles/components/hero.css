@@ -5,10 +5,12 @@
 .hero__shell {
   position: relative;
   overflow: hidden;
-  /* svh is only applied inside the mobile media query below.
-     On desktop, svh can resolve to 0 in headless browsers (Lighthouse)
-     causing the hero to collapse and shift the footer into the viewport. */
-  min-height: 100vh;
+  /* max() guards against vh resolving to 0 in headless browsers (Lighthouse
+     desktop, 1350×940 viewport). When vh=0 the hero collapses and the footer
+     enters the viewport, causing CLS. 960px > 940px guarantees the footer
+     starts below the fold even when vh=0. Real browsers always resolve vh
+     correctly so max() picks 100vh and there is no visual difference. */
+  min-height: max(960px, 100vh);
   background: linear-gradient(180deg, #12341f 0%, #173f26 100%);
 }
 
@@ -44,8 +46,8 @@
   position: relative;
   z-index: 1;
   width: min(880px, calc(100% - 32px));
-  /* svh only in mobile media query — see note on hero__shell above */
-  min-height: calc(100vh - 72px);
+  /* max() mirrors the floor on hero__shell (960px − 72px nav = 888px) */
+  min-height: max(888px, calc(100vh - 72px));
   margin: 0 auto;
   display: grid;
   align-content: center;
@@ -354,9 +356,10 @@
 
   /* On real mobile browsers svh accounts for the visible area with toolbar shown,
      preventing the hero from being taller than the visible viewport. Safe here
-     because mobile browsers always resolve svh correctly before first paint. */
+     because mobile browsers always resolve svh correctly before first paint.
+     max() keeps the 600px floor consistent with the desktop rule. */
   .hero__shell {
-    min-height: 100svh;
+    min-height: max(600px, 100svh);
   }
 
   .hero__heading-line {
@@ -366,8 +369,7 @@
 
   .hero__content {
     width: min(100%, calc(100% - 24px));
-    min-height: calc(100vh - 64px);
-    min-height: calc(100svh - 64px);
+    min-height: max(536px, calc(100svh - 64px));
     gap: 20px;
     padding: 96px 0 74px;
   }
