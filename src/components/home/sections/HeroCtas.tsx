@@ -1,7 +1,5 @@
-"use client";
-
 import { ArrowRightIcon, ShuttleIcon } from "@/components/ui/BrandIcons";
-import { trackEvent, type CtaName } from "@/lib/tracking";
+import type { CtaName } from "@/lib/tracking";
 
 type HeroCtasProps = {
   primaryCta: {
@@ -16,20 +14,19 @@ type HeroCtasProps = {
   };
 };
 
+// Server component — tracking is handled by the global delegated listener in
+// TrackingBootstrap which matches [data-track-event="cta_click"][data-cta-name][data-cta-location].
 export function HeroCtas({ primaryCta, secondaryCta }: HeroCtasProps) {
   return (
     <div className="hero__cta-group">
       <a
         href={primaryCta.href}
         className="btn btn--lg hero__cta hero__cta--primary"
-        onClick={() =>
-          trackEvent("cta_click", {
-            cta_name: primaryCta.trackingName,
-            cta_location: "hero",
-            page_type: "homepage",
-            page_path: "/",
-          })
-        }
+        data-track-event="cta_click"
+        data-cta-name={primaryCta.trackingName}
+        data-cta-location="hero"
+        data-page-type="homepage"
+        data-page-path="/"
       >
         <ShuttleIcon className="hero__cta-icon hero__cta-icon--primary" />
         <span>{primaryCta.label}</span>
@@ -38,14 +35,11 @@ export function HeroCtas({ primaryCta, secondaryCta }: HeroCtasProps) {
       <a
         href={secondaryCta.href}
         className="btn btn--lg hero__cta hero__cta--secondary"
-        onClick={() =>
-          trackEvent("cta_click", {
-            cta_name: secondaryCta.trackingName,
-            cta_location: "hero",
-            page_type: "homepage",
-            page_path: "/",
-          })
-        }
+        data-track-event="cta_click"
+        data-cta-name={secondaryCta.trackingName}
+        data-cta-location="hero"
+        data-page-type="homepage"
+        data-page-path="/"
       >
         <span>{secondaryCta.label}</span>
       </a>

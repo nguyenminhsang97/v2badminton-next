@@ -133,6 +133,7 @@ export function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) {
               width={1120}
               height={720}
               priority
+              fetchPriority="high"
               sizes="(max-width: 959px) calc(100vw - 32px), 44vw"
             />
           </div>
