@@ -96,10 +96,10 @@ export function Nav({ siteSettings }: NavProps) {
     syncScrollState();
     window.addEventListener("scroll", syncScrollState, { passive: true });
     document.addEventListener("scroll", syncScrollState, { passive: true });
-    window.addEventListener("resize", syncScrollState);
+    window.addEventListener("resize", syncScrollState, { passive: true });
     window.addEventListener("pageshow", syncScrollState);
-    viewport?.addEventListener("scroll", syncScrollState);
-    viewport?.addEventListener("resize", syncScrollState);
+    viewport?.addEventListener("scroll", syncScrollState, { passive: true });
+    viewport?.addEventListener("resize", syncScrollState, { passive: true });
     requestAnimationFrame(() => syncScrollState());
 
     return () => {
