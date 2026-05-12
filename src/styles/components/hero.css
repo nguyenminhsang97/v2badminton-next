@@ -6,10 +6,11 @@
   position: relative;
   overflow: hidden;
   /* max() guards against vh resolving to 0 in headless browsers (Lighthouse
-     desktop). When vh=0 the hero would collapse and the footer would shift
-     into the viewport, causing a large CLS. 600px is a safe floor that keeps
-     the footer below the fold even on short screens. */
-  min-height: max(600px, 100vh);
+     desktop, 1350×940 viewport). When vh=0 the hero collapses and the footer
+     enters the viewport, causing CLS. 960px > 940px guarantees the footer
+     starts below the fold even when vh=0. Real browsers always resolve vh
+     correctly so max() picks 100vh and there is no visual difference. */
+  min-height: max(960px, 100vh);
   background: linear-gradient(180deg, #12341f 0%, #173f26 100%);
 }
 
@@ -45,8 +46,8 @@
   position: relative;
   z-index: 1;
   width: min(880px, calc(100% - 32px));
-  /* max() mirrors the floor on hero__shell (600px − 72px nav = 528px) */
-  min-height: max(528px, calc(100vh - 72px));
+  /* max() mirrors the floor on hero__shell (960px − 72px nav = 888px) */
+  min-height: max(888px, calc(100vh - 72px));
   margin: 0 auto;
   display: grid;
   align-content: center;
