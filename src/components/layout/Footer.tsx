@@ -13,6 +13,8 @@ import { siteConfig } from "@/lib/site";
 
 type FooterProps = {
   siteSettings: SiteChromeSettings;
+  showBlogLink: boolean;
+  showCoachesLink: boolean;
 };
 
 const legalLinks = [
@@ -21,15 +23,17 @@ const legalLinks = [
   { href: toHomepageHash(HOME_SECTION_IDS.pricing), label: "Học phí & hoàn phí" },
 ] as const;
 
-export function Footer({ siteSettings }: FooterProps) {
+export function Footer({ siteSettings, showBlogLink, showCoachesLink }: FooterProps) {
   const currentYear = new Date().getFullYear();
   const academyLinks = [
     { href: toHomepageHash(HOME_SECTION_IDS.courses), label: "Khóa học" },
     { href: toHomepageHash(HOME_SECTION_IDS.schedule), label: "Lịch học" },
     { href: toHomepageHash(HOME_SECTION_IDS.faq), label: "Hỏi đáp" },
-    { href: "/huan-luyen-vien/", label: "Đội ngũ HLV" },
-    { href: "/blog/", label: "Blog" },
-  ] as const;
+    ...(showCoachesLink
+      ? [{ href: "/huan-luyen-vien/", label: "Đội ngũ HLV" }]
+      : []),
+    ...(showBlogLink ? [{ href: "/blog/", label: "Blog" }] : []),
+  ];
 
   const featuredRoutes = coreRoutes.filter((route) =>
     [

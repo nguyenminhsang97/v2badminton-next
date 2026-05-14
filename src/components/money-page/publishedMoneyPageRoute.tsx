@@ -37,14 +37,23 @@ export async function generatePublishedMoneyPageMetadata(
     return buildMoneyPageMetadata(config.path, moneyPage);
   }
 
+  // Both fallback branches return noindex: a page with placeholder body content
+  // must never be indexed regardless of which metadata path produced the title.
+  // Trade-off: a transient Sanity outage on a real page temporarily makes it
+  // noindex. Outages are rare and short; indexing placeholder copy is materially
+  // worse for SEO. A last-known-good content cache would remove this trade-off —
+  // flagged for the CMS migration handoff brief (W4.1).
   if (config.degradedMetadataMode === "route" && degraded) {
-    return buildMetadata(config.path);
+    return { ...buildMetadata(config.path), robots: { index: false, follow: true } };
   }
 
-  return buildMoneyPageMetadata(
-    config.path,
-    buildPublishedMoneyPageFallback(config.path),
-  );
+  return {
+    ...buildMoneyPageMetadata(
+      config.path,
+      buildPublishedMoneyPageFallback(config.path),
+    ),
+    robots: { index: false, follow: true },
+  };
 }
 
 export async function renderPublishedMoneyPage(

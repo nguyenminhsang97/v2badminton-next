@@ -411,6 +411,9 @@ export const MONEY_PAGE_SITEMAP_QUERY = defineQuery(`
   *[
     _type == "money_page" &&
     defined(slug.current) &&
+    count(body) > 0 &&
+    defined(metaTitle) &&
+    defined(metaDescription) &&
     ${PUBLISHED_ONLY_FILTER}
   ]{
     "slug": slug.current,

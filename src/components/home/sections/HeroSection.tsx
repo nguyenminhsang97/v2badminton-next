@@ -97,8 +97,8 @@ export function HeroSection({ campaign }: HomepageHeroSectionProps) {
                   Hành trình chinh phục
                 </span>
                 <span className="hero__heading-line hero__heading-line--two">
-                  <span className="hero__heading-accent">cầu lông</span> bắt đầu
-                  từ đây
+                  <span className="hero__heading-accent">cầu lông tại TP.HCM</span>{" "}
+                  bắt đầu từ đây
                 </span>
               </h1>
             )}
@@ -106,6 +106,11 @@ export function HeroSection({ campaign }: HomepageHeroSectionProps) {
           </div>
 
           <HeroCtas primaryCta={primaryCta} secondaryCta={secondaryCta} />
+
+          <p className="hero__service-area">
+            V2 Badminton dạy cầu lông tại Bình Thạnh (sân Green) và Thủ Đức
+            (Huệ Thiên, Khang Sport, Phúc Lộc), TP.HCM.
+          </p>
 
           <div className="hero__proof">
             <div className="hero__avatars" aria-hidden="true">
