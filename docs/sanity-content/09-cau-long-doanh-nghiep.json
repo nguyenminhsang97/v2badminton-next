@@ -1,0 +1,163 @@
+{
+  "_meta": {
+    "page": "/cau-long-doanh-nghiep/",
+    "draftStatus": "needs_review",
+    "writingRulesApplied": ["W2.3.1 answer-first intro", "W2.3.2 question H2s", "W2.3.3 concrete entities", "W2.3.5 ≥5 FAQs"],
+    "seoTargets": {
+      "primaryKeyword": "cầu lông doanh nghiệp TP.HCM",
+      "secondaryKeywords": ["lớp cầu lông doanh nghiệp", "cầu lông cho công ty", "lớp cầu lông nội bộ", "sự kiện thể thao công ty"]
+    }
+  },
+
+  "moneyPage": {
+    "_type": "money_page",
+    "slug": { "_type": "slug", "current": "cau-long-doanh-nghiep" },
+    "audience": "doanh_nghiep",
+    "h1": "Cầu lông doanh nghiệp tại TP.HCM",
+    "metaTitle": "Cầu Lông Doanh Nghiệp TP.HCM | Lớp Nội Bộ & Sự Kiện | V2",
+    "metaDescription": "V2 Badminton tổ chức chương trình cầu lông doanh nghiệp tại TP.HCM: lớp nội bộ, team building, sự kiện thể thao. Tùy biến theo quy mô và ngân sách.",
+    "ctaLabel": "Nhận báo giá doanh nghiệp",
+
+    "intro": [
+      {
+        "_type": "block", "_key": "i1", "style": "normal", "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "a", "text": "V2 Badminton tổ chức ba dạng chương trình cầu lông doanh nghiệp tại TP.HCM: ", "marks": [] },
+          { "_type": "span", "_key": "b", "text": "lớp nội bộ định kỳ, team building một buổi, và sự kiện thể thao công ty", "marks": ["strong"] },
+          { "_type": "span", "_key": "c", "text": ". Báo giá riêng theo quy mô đội ngũ, thời lượng và mục tiêu — trả báo giá trong 1-2 ngày làm việc.", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block", "_key": "i2", "style": "normal", "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "x", "text": "Tổ chức tại Sân Green (Bình Thạnh), cụm Huệ Thiên, Khang Sport, Phúc Lộc (Thủ Đức), hoặc sân do doanh nghiệp đề xuất.", "marks": [] }
+        ]
+      }
+    ],
+
+    "body": [
+      { "_type": "block", "_key": "h2intern", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Lớp cầu lông nội bộ định kỳ — phù hợp khi nào?", "marks": [] }] },
+      { "_type": "block", "_key": "pintern", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "x", "text": "Lớp nội bộ là chương trình HLV V2 huấn luyện nhân viên một công ty theo lịch cố định (ví dụ tối T3-T5 hoặc T7 sáng), kéo dài nhiều tuần hoặc nhiều tháng. Phù hợp khi:", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liin1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Công ty muốn xây dựng văn hóa thể thao đều", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — không chỉ một buổi sự kiện, mà nhịp tập 1-2 lần/tuần kéo dài.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liin2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Có 8-25 nhân viên cam kết tham gia đều", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — đủ lớp 2-3 sân, có thể chia bảng theo trình độ.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liin3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Có ngân sách phúc lợi thể thao hàng tháng", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — V2 báo giá gói tháng/quý để công ty dễ tính chi phí.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2tb", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Team building cầu lông khác sự kiện thể thao thế nào?", "marks": [] }] },
+      { "_type": "block", "_key": "litb1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Team building cầu lông", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — 2-3 giờ một buổi, mục tiêu gắn kết nội bộ. Chia đội chéo phòng ban, mini-game, vòng đấu giao hữu, trao giải. Phù hợp 10-60 người. Chi tiết tại trang ", "marks": [] },
+        { "_type": "span", "_key": "c", "text": "/team-building-cau-long/", "marks": ["em"] },
+        { "_type": "span", "_key": "d", "text": ".", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "litb2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Sự kiện thể thao công ty", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — quy mô lớn (60+ người), thời lượng nửa ngày đến cả ngày. Có giải đấu chính thức với cơ cấu giải thưởng. Phù hợp ngày kỷ niệm thành lập, year-end, kick-off.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2what", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Một chương trình doanh nghiệp gồm những gì?", "marks": [] }] },
+      { "_type": "block", "_key": "pwhat", "style": "normal", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Báo giá V2 cho doanh nghiệp mặc định gồm:", "marks": [] }] },
+      { "_type": "block", "_key": "liwh1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "HLV V2 (1 HLV cho mỗi 10-15 người tham gia).", "marks": [] }]},
+      { "_type": "block", "_key": "liwh2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Phí thuê sân tại các sân V2 đang vận hành.", "marks": [] }]},
+      { "_type": "block", "_key": "liwh3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Dụng cụ cầu cho buổi tập.", "marks": [] }]},
+      { "_type": "block", "_key": "liwh4", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Điều phối chương trình (chia đội, mini-game, vòng đấu, trao giải nếu có).", "marks": [] }]},
+      { "_type": "block", "_key": "pwhat2", "style": "normal", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Các khoản tuỳ chọn (option add-on) liệt kê riêng:", "marks": [] }] },
+      { "_type": "block", "_key": "liopt1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Giải thưởng (cúp, huy chương, voucher) — V2 hỗ trợ chuẩn bị.", "marks": [] }]},
+      { "_type": "block", "_key": "liopt2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Áo đồng phục đội, banner sự kiện, in logo công ty.", "marks": [] }]},
+      { "_type": "block", "_key": "liopt3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Ăn nhẹ và nước uống giữa buổi.", "marks": [] }]},
+      { "_type": "block", "_key": "liopt4", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Vợt cho người không có (mượn dùng tại sân).", "marks": [] }]},
+
+      { "_type": "block", "_key": "h2quote", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Báo giá doanh nghiệp tính trên những yếu tố nào?", "marks": [] }] },
+      { "_type": "block", "_key": "liq1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Số lượng người tham gia.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Ảnh hưởng số sân và số HLV cần thiết.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liq2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Loại chương trình.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Lớp nội bộ định kỳ tính theo tháng; team building và sự kiện tính theo buổi.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liq3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Thời lượng.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " 2-3 giờ một buổi, nửa ngày, cả ngày hoặc dài hạn nhiều tháng.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liq4", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Sân tập.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Tại sân V2 (Green, Huệ Thiên, Khang Sport, Phúc Lộc) hoặc sân do doanh nghiệp đề xuất.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liq5", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Các option đi kèm.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Giải thưởng, áo team, banner, ăn nhẹ.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "pqend", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "x", "text": "Thông tin doanh nghiệp gửi qua điện thoại, Zalo hoặc Facebook V2 Badminton. Sau 1-2 ngày làm việc, V2 trả 2-3 phương án theo ngân sách để công ty so sánh, kèm khuyến nghị cho từng quy mô và mục tiêu.", "marks": [] }
+      ]}
+    ]
+  },
+
+  "newFaqs": [
+    {
+      "_type": "faq",
+      "question": "Doanh nghiệp nhỏ dưới 20 người có triển khai được không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Có. V2 nhận chương trình từ 8-10 người trở lên. Quy mô nhỏ có lợi thế chi phí thấp hơn và lịch dễ sắp xếp. Lựa chọn phổ biến cho công ty 10-20 người là team building 2-3 giờ một buổi hoặc lớp nội bộ định kỳ 1-2 lần/tuần.", "marks": [] }
+      ]}],
+      "pages": ["doanh_nghiep"], "includeInSchema": true, "featured": false, "order": 90
+    },
+    {
+      "_type": "faq",
+      "question": "Có thể tổ chức ngoài giờ hành chính không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Được. V2 mở các khung tối (18:00-22:00) và cuối tuần (sáng-trưa-chiều T7-CN) phù hợp ngoài giờ hành chính. Đa số chương trình doanh nghiệp tổ chức vào T7 sáng hoặc tối trong tuần để không ảnh hưởng giờ làm.", "marks": [] }
+      ]}],
+      "pages": ["doanh_nghiep"], "includeInSchema": true, "featured": false, "order": 91
+    },
+    {
+      "_type": "faq",
+      "question": "HLV V2 có đến công ty không hay chỉ tại sân V2?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Cả hai. V2 có thể tổ chức tại 4 sân V2 đang vận hành (Green Bình Thạnh; Huệ Thiên, Khang Sport, Phúc Lộc Thủ Đức) hoặc đến sân do doanh nghiệp đề xuất. Nếu công ty có sân thuận tiện cho nhân viên, V2 đến tổ chức tại sân đó.", "marks": [] }
+      ]}],
+      "pages": ["doanh_nghiep"], "includeInSchema": true, "featured": false, "order": 92
+    },
+    {
+      "_type": "faq",
+      "question": "Cần đặt trước bao lâu cho chương trình doanh nghiệp?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Lớp nội bộ định kỳ: đặt trước 1-2 tuần để V2 sắp HLV cố định. Team building 10-25 người: 7-10 ngày. Team building 25-60 người: 2 tuần. Sự kiện 60+ người: 2-3 tuần. Đặt sớm càng giúp V2 chọn sân và khung giờ tốt nhất.", "marks": [] }
+      ]}],
+      "pages": ["doanh_nghiep"], "includeInSchema": true, "featured": false, "order": 93
+    },
+    {
+      "_type": "faq",
+      "question": "V2 có xuất hóa đơn VAT cho doanh nghiệp không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Có. V2 xuất hóa đơn VAT theo yêu cầu doanh nghiệp. Bạn cung cấp thông tin xuất hóa đơn (tên công ty, MST, địa chỉ) khi xác nhận chương trình. Hóa đơn được gửi sau khi chương trình hoàn tất và doanh nghiệp thanh toán.", "marks": [] }
+      ]}],
+      "pages": ["doanh_nghiep"], "includeInSchema": true, "featured": false, "order": 94
+    }
+  ],
+
+  "referenceWiring": {
+    "_note": "Slug values are best-guess. Verify in Sanity Studio.",
+    "relatedLocations": [
+      { "slug": "green", "name": "Sân Green (Bình Thạnh)" },
+      { "slug": "hue-thien", "name": "Sân Huệ Thiên (Thủ Đức) — đề xuất cho nhóm 25+" },
+      { "slug": "khang-sport", "name": "Sân Khang Sport (Thủ Đức)" },
+      { "slug": "phuc-loc", "name": "Sân Phúc Lộc (Thủ Đức)" }
+    ],
+    "relatedPricing": [
+      { "slug": "enterprise", "name": "Gói doanh nghiệp — báo giá riêng" }
+    ],
+    "relatedFaqs": "Wire to the 5 newFaqs above after creation."
+  }
+}

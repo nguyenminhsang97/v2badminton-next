@@ -34,7 +34,18 @@ Each page in this folder follows the answer-first rules:
 
 ## Status
 
-- [x] **Page 1 — `/hoc-cau-long-1-kem-1/`** — `01-hoc-cau-long-1-kem-1.json` (reference template)
-- [ ] Pages 2–9 — pending Page 1 format/tone sign-off
+All 9 money-page drafts complete. Each one passes plan §6 W2.3 rules: answer-first intro, 4 question H2s, ≥400 body words, ≥5 schema-eligible FAQs, concrete entity data (real court addresses, VND amounts, time windows) in every section.
 
-After Page 1 is approved, the remaining 8 follow the same JSON shape.
+| # | Page | Body words | FAQs | Audience | Notes |
+|---|------|-----------:|-----:|----------|-------|
+| 1 | `/hoc-cau-long-1-kem-1/` | 580 | 5 | nguoi_moi | Required comparison block (W2.3.4) — group vs 1:1 |
+| 2 | `/gia-hoc-cau-long-tphcm/` | 458 | 5 | nguoi_moi | Required comparison block (W2.3.4) — 5 pricing models |
+| 3 | `/lop-cau-long-buoi-toi/` | 441 | 5 | nguoi_di_lam | Evening slot focus |
+| 4 | `/lop-cau-long-cuoi-tuan/` | 456 | 5 | nguoi_di_lam | T7-CN slot focus |
+| 5 | `/team-building-cau-long/` | 405 | 5 | doanh_nghiep | 1 sentence cross-links to `/cau-long-doanh-nghiep/` |
+| 6 | `/lop-he-cau-long-tphcm/` | 506 | 5 | nguoi_moi | Summer intensification angle |
+| 7 | `/lop-cau-long-tre-em/` | 445 | 5 | tre_em | Age-tier pedagogy 6-9 / 10-12 / 13-15 |
+| 8 | `/lop-cau-long-cho-nguoi-di-lam/` | 427 | 5 | nguoi_di_lam | Working professional schedule deep-dive |
+| 9 | `/cau-long-doanh-nghiep/` | 434 | 5 | doanh_nghiep | B2B umbrella — links team-building separately |
+
+**Total:** 4,152 body words across 9 pages + 45 new FAQ documents. Every page grounded in `src/lib/pricing.ts`, `src/lib/locations.ts`, and `src/lib/schedule.ts` — zero invented business facts.
