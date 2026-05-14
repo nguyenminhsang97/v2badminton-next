@@ -1,0 +1,453 @@
+{
+  "_meta": {
+    "page": "/hoc-cau-long-1-kem-1/",
+    "draftStatus": "needs_review",
+    "writingRulesApplied": ["W2.3.1 answer-first intro", "W2.3.2 question H2s", "W2.3.3 concrete entities", "W2.3.4 comparison block (required for this page)", "W2.3.5 ≥5 FAQs"],
+    "stats": {
+      "metaTitleChars": 56,
+      "metaDescriptionChars": 156,
+      "introWords": 51,
+      "bodyWords": 478,
+      "faqCount": 5
+    },
+    "groundedInCodebase": [
+      "src/lib/pricing.ts → private-1-1 (400.000 VNĐ/giờ)",
+      "src/lib/pricing.ts → group-basic-2x, group-basic-3x, group-advanced-3x (comparison)",
+      "src/lib/locations.ts → 4 courts with full addresses",
+      "src/lib/schedule.ts → time slot windows"
+    ]
+  },
+
+  "moneyPage": {
+    "_type": "money_page",
+    "slug": { "_type": "slug", "current": "hoc-cau-long-1-kem-1" },
+    "audience": "nguoi_moi",
+    "h1": "Học cầu lông 1 kèm 1 tại TP.HCM",
+    "metaTitle": "Học Cầu Lông 1 Kèm 1 TP.HCM | HLV Theo Sát | V2 Badminton",
+    "metaDescription": "Chương trình cầu lông 1 kèm 1 tại TP.HCM của V2 Badminton: 400.000đ/giờ, lịch riêng theo nhu cầu, HLV theo sát từng buổi. Sân Bình Thạnh và Thủ Đức.",
+    "ctaLabel": "Đặt buổi 1 kèm 1",
+
+    "intro": [
+      {
+        "_type": "block",
+        "_key": "intro1",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "i1s1", "text": "Học cầu lông 1 kèm 1 tại V2 Badminton là chương trình kèm riêng theo từng học viên, học phí ", "marks": [] },
+          { "_type": "span", "_key": "i1s2", "text": "400.000 VNĐ/giờ/học viên", "marks": ["strong"] },
+          { "_type": "span", "_key": "i1s3", "text": " với HLV theo sát toàn bộ buổi tập. Mỗi buổi bám một mục tiêu kỹ thuật cụ thể — cầm vợt, di chuyển chân, phát cầu hoặc nâng trình.", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "intro2",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "i2s1", "text": "Lịch học sắp xếp riêng theo thời gian học viên có thể đến sân Green (Bình Thạnh) hoặc Huệ Thiên, Khang Sport, Phúc Lộc (Thủ Đức), TP.HCM.", "marks": [] }
+        ]
+      }
+    ],
+
+    "body": [
+      {
+        "_type": "block",
+        "_key": "h2who",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "h2who-s", "text": "Học 1 kèm 1 phù hợp với ai?", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "pwho",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "pwho-s", "text": "Lớp 1 kèm 1 phù hợp khi học viên cần một trong những điều dưới đây.", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "liwho1",
+        "style": "normal",
+        "listItem": "bullet",
+        "level": 1,
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "liwho1-a", "text": "HLV theo sát từng động tác", "marks": ["strong"] },
+          { "_type": "span", "_key": "liwho1-b", "text": " — phù hợp với người mới muốn học chậm và chắc, hoặc người đã tập lâu nhưng đang sai kỹ thuật cốt lõi (cầm vợt, di chuyển chân, dứt cầu).", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "liwho2",
+        "style": "normal",
+        "listItem": "bullet",
+        "level": 1,
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "liwho2-a", "text": "Lịch riêng không trùng khung lớp nhóm", "marks": ["strong"] },
+          { "_type": "span", "_key": "liwho2-b", "text": " — V2 mở các khung lớp nhóm sáng cuối tuần (07:00-11:00) và tối trong tuần (18:00-22:00); ai có lịch ngoài các khung này thường chọn 1 kèm 1.", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "liwho3",
+        "style": "normal",
+        "listItem": "bullet",
+        "level": 1,
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "liwho3-a", "text": "Tốc độ tiến bộ nhanh hơn trong thời gian giới hạn", "marks": ["strong"] },
+          { "_type": "span", "_key": "liwho3-b", "text": " — ví dụ chuẩn bị giải nội bộ, sự kiện công ty, hoặc muốn lên một mục tiêu cụ thể trong 4-6 tuần.", "marks": [] }
+        ]
+      },
+
+      {
+        "_type": "block",
+        "_key": "h2how",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "h2how-s", "text": "Một buổi 1 kèm 1 ở V2 diễn ra như thế nào?", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "phow",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "phow-s", "text": "Mỗi buổi kéo dài 60 phút, được chia thành các phần:", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "lihow1",
+        "style": "normal",
+        "listItem": "bullet",
+        "level": 1,
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "lihow1-a", "text": "5-10 phút khởi động", "marks": ["strong"] },
+          { "_type": "span", "_key": "lihow1-b", "text": " và rà nhanh nội dung buổi trước.", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "lihow2",
+        "style": "normal",
+        "listItem": "bullet",
+        "level": 1,
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "lihow2-a", "text": "30-40 phút bám một mục tiêu kỹ thuật", "marks": ["strong"] },
+          { "_type": "span", "_key": "lihow2-b", "text": " đã thống nhất từ buổi tư vấn ban đầu — ví dụ buổi 1 chỉ luyện cầm vợt và di chuyển chân, buổi 2 phát cầu, buổi 3 đập cầu, v.v.", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "lihow3",
+        "style": "normal",
+        "listItem": "bullet",
+        "level": 1,
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "lihow3-a", "text": "10-15 phút đánh tự do có HLV", "marks": ["strong"] },
+          { "_type": "span", "_key": "lihow3-b", "text": " để đưa kỹ thuật vừa học vào tình huống thực tế.", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "lihow4",
+        "style": "normal",
+        "listItem": "bullet",
+        "level": 1,
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "lihow4-a", "text": "5 phút tổng kết", "marks": ["strong"] },
+          { "_type": "span", "_key": "lihow4-b", "text": " ghi chú điểm cần cải thiện và bài tập tự luyện đến buổi sau.", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "phowend",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "phowend-s", "text": "HLV tránh dạy chồng quá nhiều kỹ thuật trong một buổi — giữ một mục tiêu/buổi là cách thực tế nhất để học viên tiến bộ rõ rệt.", "marks": [] }
+        ]
+      },
+
+      {
+        "_type": "block",
+        "_key": "h2vs",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "h2vs-s", "text": "1 kèm 1 vs lớp nhóm — chọn cái nào?", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "pvs",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "pvs-s", "text": "So sánh ngắn giữa hai mô hình của V2 Badminton trên 5 tiêu chí.", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "livs1",
+        "style": "normal",
+        "listItem": "bullet",
+        "level": 1,
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "livs1-a", "text": "Học phí.", "marks": ["strong"] },
+          { "_type": "span", "_key": "livs1-b", "text": " Lớp nhóm: từ 1.000.000 VNĐ/tháng (2 buổi/tuần) đến 1.500.000 VNĐ/tháng (3 buổi nâng cao), đã gồm phí sân. 1 kèm 1: 400.000 VNĐ/giờ/học viên, chưa gồm phí thuê sân — V2 hỗ trợ đặt sân.", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "livs2",
+        "style": "normal",
+        "listItem": "bullet",
+        "level": 1,
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "livs2-a", "text": "Quy mô.", "marks": ["strong"] },
+          { "_type": "span", "_key": "livs2-b", "text": " Lớp nhóm: 2-6 học viên. 1 kèm 1: một thầy – một trò.", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "livs3",
+        "style": "normal",
+        "listItem": "bullet",
+        "level": 1,
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "livs3-a", "text": "Lịch.", "marks": ["strong"] },
+          { "_type": "span", "_key": "livs3-b", "text": " Lớp nhóm: cố định theo khung lớp đang mở. 1 kèm 1: sắp xếp riêng theo thời gian học viên.", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "livs4",
+        "style": "normal",
+        "listItem": "bullet",
+        "level": 1,
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "livs4-a", "text": "Phù hợp.", "marks": ["strong"] },
+          { "_type": "span", "_key": "livs4-b", "text": " Lớp nhóm: người mới đi đường dài, muốn duy trì học phí ổn định. 1 kèm 1: người cần tiến bộ nhanh, có yêu cầu kỹ thuật cụ thể, hoặc lịch không khớp lớp nhóm.", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "livs5",
+        "style": "normal",
+        "listItem": "bullet",
+        "level": 1,
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "livs5-a", "text": "Tốc độ tiến bộ.", "marks": ["strong"] },
+          { "_type": "span", "_key": "livs5-b", "text": " Lớp nhóm: tốt cho nền tảng và duy trì. 1 kèm 1: nhanh hơn vì 100% thời gian dành cho học viên.", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "pvsend",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "pvsend-s", "text": "Một cách phổ biến: học viên bắt đầu bằng 2-4 buổi 1 kèm 1 để chỉnh kỹ thuật cốt lõi, sau đó chuyển sang lớp nhóm để duy trì học phí thấp hơn.", "marks": [] }
+        ]
+      },
+
+      {
+        "_type": "block",
+        "_key": "h2where",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "h2where-s", "text": "Lịch và sân tập 1 kèm 1 ở đâu?", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "pwhere",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "pwhere-s", "text": "Lịch 1 kèm 1 được sắp xếp riêng dựa trên ba yếu tố:", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "liwhere1",
+        "style": "normal",
+        "listItem": "bullet",
+        "level": 1,
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "liwhere1-a", "text": "Thời gian học viên có thể đến sân.", "marks": ["strong"] }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "liwhere2",
+        "style": "normal",
+        "listItem": "bullet",
+        "level": 1,
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "liwhere2-a", "text": "Khung giờ HLV trống", "marks": ["strong"] },
+          { "_type": "span", "_key": "liwhere2-b", "text": " — V2 hỗ trợ các khung sáng (07:00-11:00), trưa (11:30-14:00), chiều (14:00-15:30) và tối (18:00-22:00) trong tuần và cuối tuần.", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "liwhere3",
+        "style": "normal",
+        "listItem": "bullet",
+        "level": 1,
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "liwhere3-a", "text": "Sân tập học viên chọn", "marks": ["strong"] },
+          { "_type": "span", "_key": "liwhere3-b", "text": " — Sân Green (154/9 Nguyễn Xí, P.26, Bình Thạnh) hoặc cụm sân Huệ Thiên (520 Quốc Lộ 13), Khang Sport (8 Đường số 20) và Phúc Lộc (103/11B Đường số 20), cùng ở phường Hiệp Bình, Thủ Đức.", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "pwhereend",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "pwhereend-s", "text": "Trước buổi đầu tiên, V2 sẽ gọi tư vấn ngắn (5-10 phút) để xác định mục tiêu, lịch học và sân tập phù hợp.", "marks": [] }
+        ]
+      }
+    ]
+  },
+
+  "newFaqs": [
+    {
+      "_type": "faq",
+      "question": "1 kèm 1 ở V2 giá bao nhiêu?",
+      "answer": [
+        {
+          "_type": "block",
+          "_key": "faq1-a",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            { "_type": "span", "_key": "faq1-a-s1", "text": "400.000 VNĐ/giờ/học viên", "marks": ["strong"] },
+            { "_type": "span", "_key": "faq1-a-s2", "text": ". Học phí chưa gồm phí thuê sân — V2 sẽ hỗ trợ học viên đặt sân thuận tiện tại Bình Thạnh (Green) hoặc Thủ Đức (Huệ Thiên, Khang Sport, Phúc Lộc).", "marks": [] }
+          ]
+        }
+      ],
+      "pages": ["nguoi_moi"],
+      "includeInSchema": true,
+      "featured": false,
+      "order": 10
+    },
+    {
+      "_type": "faq",
+      "question": "Một buổi 1 kèm 1 kéo dài bao lâu và học gì?",
+      "answer": [
+        {
+          "_type": "block",
+          "_key": "faq2-a",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            { "_type": "span", "_key": "faq2-a-s1", "text": "Mỗi buổi 60 phút, gồm 5-10 phút khởi động, 30-40 phút bám một mục tiêu kỹ thuật (cầm vợt, di chuyển chân, phát cầu hoặc đập cầu — tuỳ buổi), 10-15 phút đánh tự do có HLV và 5 phút tổng kết.", "marks": [] }
+          ]
+        }
+      ],
+      "pages": ["nguoi_moi"],
+      "includeInSchema": true,
+      "featured": false,
+      "order": 11
+    },
+    {
+      "_type": "faq",
+      "question": "Có thể chọn sân tập 1 kèm 1 nào ở V2?",
+      "answer": [
+        {
+          "_type": "block",
+          "_key": "faq3-a",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            { "_type": "span", "_key": "faq3-a-s1", "text": "Sân Green (Bình Thạnh, 154/9 Nguyễn Xí, P.26) hoặc một trong ba sân ở Thủ Đức: Huệ Thiên (520 Quốc Lộ 13), Khang Sport (8 Đường số 20) và Phúc Lộc (103/11B Đường số 20) — cùng ở phường Hiệp Bình. V2 đề xuất sân gần nơi ở hoặc nơi làm việc của học viên.", "marks": [] }
+          ]
+        }
+      ],
+      "pages": ["nguoi_moi"],
+      "includeInSchema": true,
+      "featured": false,
+      "order": 12
+    },
+    {
+      "_type": "faq",
+      "question": "Tôi đang học lớp nhóm, có thể thêm buổi 1 kèm 1 không?",
+      "answer": [
+        {
+          "_type": "block",
+          "_key": "faq4-a",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            { "_type": "span", "_key": "faq4-a-s1", "text": "Có. Nhiều học viên đặt 2-4 buổi 1 kèm 1 để chỉnh kỹ thuật cốt lõi (cầm vợt, di chuyển chân) rồi quay lại lịch lớp nhóm để duy trì học phí thấp hơn. Bạn nhắn V2 để được tư vấn thời điểm chuyển đổi phù hợp.", "marks": [] }
+          ]
+        }
+      ],
+      "pages": ["nguoi_moi"],
+      "includeInSchema": true,
+      "featured": false,
+      "order": 13
+    },
+    {
+      "_type": "faq",
+      "question": "Cần đăng ký trước bao lâu để bắt đầu 1 kèm 1?",
+      "answer": [
+        {
+          "_type": "block",
+          "_key": "faq5-a",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            { "_type": "span", "_key": "faq5-a-s1", "text": "Thông thường 2-3 ngày để V2 xác nhận HLV, khung giờ và sân tập phù hợp. Nếu lịch học viên gấp, V2 ưu tiên sắp xếp trong 24 giờ tới.", "marks": [] }
+          ]
+        }
+      ],
+      "pages": ["nguoi_moi"],
+      "includeInSchema": true,
+      "featured": false,
+      "order": 14
+    }
+  ],
+
+  "referenceWiring": {
+    "_note": "Slug values below are derived from src/lib/locations.ts and src/lib/pricing.ts static IDs. Production Sanity slugs may differ — verify in Sanity Studio when wiring references. The `name` hint identifies which document to pick if the slug differs.",
+    "relatedLocations": [
+      { "slug": "green", "name": "Sân Green (Bình Thạnh)" },
+      { "slug": "hue-thien", "name": "Sân Huệ Thiên (Thủ Đức)" },
+      { "slug": "khang-sport", "name": "Sân Khang Sport (Thủ Đức)" },
+      { "slug": "phuc-loc", "name": "Sân Phúc Lộc (Thủ Đức)" }
+    ],
+    "relatedPricing": [
+      { "slug": "private-1-1", "name": "1 kèm 1 (primary — 400.000đ/giờ)" },
+      { "slug": "group-basic-2x", "name": "Lớp nhóm 2 buổi/tuần (comparison context)" },
+      { "slug": "group-basic-3x", "name": "Lớp nhóm 3 buổi/tuần cơ bản (comparison context)" },
+      { "slug": "group-advanced-3x", "name": "Lớp nhóm 3 buổi/tuần nâng cao (comparison context)" }
+    ],
+    "relatedFaqs": "Wire to the 5 newFaqs above after they are created in Sanity Studio (match by question text)."
+  }
+}
