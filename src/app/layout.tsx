@@ -11,7 +11,8 @@ export const metadata: Metadata = {
     default: siteConfig.name,
     template: `%s | ${siteConfig.name}`,
   },
-  description: "Next.js migration workspace for the V2 Badminton website.",
+  description:
+    "V2 Badminton — Lớp dạy cầu lông tại Bình Thạnh và Thủ Đức, TP.HCM. Nhóm nhỏ, HLV theo sát, lịch tối và cuối tuần.",
   robots: {
     index: allowIndexing,
     follow: true,
