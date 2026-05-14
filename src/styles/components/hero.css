@@ -198,6 +198,12 @@
   flex: 0 0 auto;
 }
 
+.hero__service-area {
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0;
+}
+
 .hero__proof {
   display: flex;
   align-items: center;
