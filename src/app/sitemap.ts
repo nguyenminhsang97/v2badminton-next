@@ -36,15 +36,44 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const moneyPageUpdatedAtByPath = new Map<string, string | null>(
     moneyPages.map((page) => [`/${page.slug}/`, page.updatedAt] as const),
   );
-  const staticRoutes = coreRoutes.map((route) => ({
-    url: canonicalUrl(route.path),
-    lastModified: resolveLastModified(
-      moneyPageUpdatedAtByPath.get(route.path),
-      generatedAt,
-    ),
-    changeFrequency: "weekly" as const,
-    priority: route.path === "/" ? 1 : 0.8,
-  }));
+  const ALWAYS_INDEX_PATHS = new Set<string>([
+    "/",
+    "/hoc-cau-long-cho-nguoi-moi/",
+    "/lop-cau-long-binh-thanh/",
+    "/lop-cau-long-thu-duc/",
+  ]);
+  // PRECONDITION: the three money-page entries above route through
+  // `notFoundForMissingMoneyPage()` when their Sanity money_page is missing —
+  // they return HTTP 404, not a fallback render. Listing them here
+  // unconditionally is only safe AFTER confirming that all three required
+  // money_page documents (slugs: hoc-cau-long-cho-nguoi-moi,
+  // lop-cau-long-binh-thanh, lop-cau-long-thu-duc) exist in production Sanity
+  // with non-empty body. If any is missing, either (a) populate it in Sanity
+  // before deploying, or (b) temporarily remove it from this set and gate it
+  // via publishedMoneyPagePaths like the other money pages.
+  //
+  // DO NOT add "/gioi-thieu/" here — it is added in W3.4 inside the same PR
+  // that creates the page and verifies it returns 200.
+
+  const publishedMoneyPagePaths = new Set(
+    moneyPages.map((page) => `/${page.slug}/`),
+  );
+
+  const staticRoutes = coreRoutes
+    .filter(
+      (route) =>
+        ALWAYS_INDEX_PATHS.has(route.path) ||
+        publishedMoneyPagePaths.has(route.path),
+    )
+    .map((route) => ({
+      url: canonicalUrl(route.path),
+      lastModified: resolveLastModified(
+        moneyPageUpdatedAtByPath.get(route.path),
+        generatedAt,
+      ),
+      changeFrequency: "weekly" as const,
+      priority: route.path === "/" ? 1 : 0.8,
+    }));
 
   const legalRoutes = [
     {
