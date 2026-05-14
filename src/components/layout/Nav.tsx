@@ -53,9 +53,11 @@ type NavProps = {
     SiteChromeSettings,
     "siteName" | "phoneDisplay" | "phoneE164"
   >;
+  showBlogLink: boolean;
+  showCoachesLink: boolean;
 };
 
-export function Nav({ siteSettings }: NavProps) {
+export function Nav({ siteSettings, showBlogLink, showCoachesLink }: NavProps) {
   const pathname = usePathname();
   const mobileNavRef = useRef<HTMLDetailsElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -67,11 +69,17 @@ export function Nav({ siteSettings }: NavProps) {
 
   const navLinks = useMemo(
     () =>
-      primaryLinks.map((link) => ({
-        ...link,
-        active: isNavLinkActive(link, normalizedPath),
-      })),
-    [normalizedPath],
+      primaryLinks
+        .filter(
+          (link) =>
+            (link.href !== "/huan-luyen-vien/" || showCoachesLink) &&
+            (link.href !== "/blog/" || showBlogLink),
+        )
+        .map((link) => ({
+          ...link,
+          active: isNavLinkActive(link, normalizedPath),
+        })),
+    [normalizedPath, showBlogLink, showCoachesLink],
   );
 
   useEffect(() => {

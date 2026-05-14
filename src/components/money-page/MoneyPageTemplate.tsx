@@ -10,6 +10,7 @@ import { getGeneratedRouteImage } from "@/lib/generatedImages";
 import { coreRoutes, getRouteMetadata, type CoreRoutePath } from "@/lib/routes";
 import type { SanityMoneyPage } from "@/lib/sanity";
 import { Breadcrumb } from "./Breadcrumb";
+import { QuickAnswer } from "./QuickAnswer";
 
 export type MoneyPageTemplateProps = {
   page: SanityMoneyPage;
@@ -115,6 +116,7 @@ export function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) {
               <PortableText value={page.intro as PortableTextBlock[]} />
             </div>
           ) : null}
+          <QuickAnswer page={page} />
           <div className="money-page__facts" aria-label="Điểm nổi bật">
             {facts.map((fact) => (
               <span key={fact} className="money-page__fact">
