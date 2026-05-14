@@ -60,6 +60,29 @@
   line-height: 1.85;
 }
 
+.quick-answer {
+  border-left: 3px solid var(--s5-accent, #4f8ef7);
+  padding-left: 12px;
+  display: grid;
+  gap: 4px;
+}
+
+.quick-answer__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--s5-accent, #4f8ef7);
+  margin: 0;
+}
+
+.quick-answer__body {
+  font-size: 0.875rem;
+  color: var(--s5-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
 .money-page__intro,
 .money-page__body,
 .money-page__body ul,
