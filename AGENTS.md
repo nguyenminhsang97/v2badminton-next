@@ -14,4 +14,5 @@ This version has breaking changes - APIs, conventions, and file structure may al
 - Memories are enabled for useful local recall, but durable project rules must stay in `AGENTS.md` or checked-in docs.
 - On this Windows workspace, prefer Browser Use, Playwright MCP, shell, and file inspection for GUI/browser work. Codex Computer Use is a macOS-only app capability in the current official docs.
 - Use the project-local `v2badminton-next` skill from `.codex/skills/v2badminton-next` for repo-specific UI, routing, data, styling, verification, and launch-readiness work.
+- Use the project-local `seo` skill from `.codex/skills/seo` for any SEO task: metadata, structured data (JSON-LD), sitemap, robots, canonical URLs, Open Graph, Twitter cards, indexing control, or Core Web Vitals that affect crawling and ranking.
 - Preferred plugin capabilities for this repo: Browser Use for local browser checks, Vercel for deployment/env questions, Sentry for monitoring, Cloudflare for Workers/OpenNext/Wrangler, GitHub for PR/CI work, and Figma only for design/design-system tasks.
