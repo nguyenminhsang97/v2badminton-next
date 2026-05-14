@@ -313,16 +313,19 @@ The plan therefore makes both fallback metadata branches return `noindex`. The t
 2. Keep this file minimal — no other proxy logic.
 3. **Verify the matcher does not exclude `.xml` / `.txt`** — paste the regex into a tester and confirm `/robots.txt` and `/sitemap.xml` match (so they redirect), while `/_next/static/foo.js` and `/og-image.jpg` do not (so the proxy doesn't churn through static assets).
 
-**Verify (reviewer, on deployed Vercel preview):**
+**Verify (post-merge, once `v2badminton-next.vercel.app` alias picks up the merged code):**
+
+> **Why post-merge only:** the proxy checks `host === "v2badminton-next.vercel.app"`. PR preview deployments use a different host (e.g. `v2badminton-next-<hash>-….vercel.app`), so the redirect never fires on the preview URL. `200 OK` responses on the production alias before merge are expected — they mean the alias still serves old code, not that the proxy is broken. Do NOT block the PR on this check.
+
 - `curl -I https://v2badminton-next.vercel.app/` → 308 to `https://v2badminton.com/`
 - `curl -I https://v2badminton-next.vercel.app/robots.txt` → 308 to `https://v2badminton.com/robots.txt` *(this is the bug Codex caught — the older matcher excluded any dotted path)*
 - `curl -I https://v2badminton-next.vercel.app/sitemap.xml` → 308 to `https://v2badminton.com/sitemap.xml`
-- `curl -I https://v2badminton-next.vercel.app/_next/static/<some-real-asset>.js` → 200 (no redirect, asset still served from preview if reachable)
+- `curl -I https://v2badminton-next.vercel.app/_next/static/<some-real-asset>.js` → 200 (no redirect, asset still served)
 
 **DoD:**
 - [ ] Build clean.
-- [ ] All four `curl` checks above pass on deployed preview.
-- [ ] PR comment captures the curl output.
+- [ ] All four `curl` checks above pass **after merge** when the alias deploys the new code.
+- [ ] PR comment captures the curl output (add post-merge).
 
 **Risk:** Preview deployment URLs (e.g. `v2badminton-next-git-feat-x-…vercel.app`) must remain reachable for QA — the matcher above only catches the exact production alias.
 
