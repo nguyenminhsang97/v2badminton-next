@@ -258,23 +258,6 @@
   max-width: 310px;
 }
 
-.hero__proof-rating {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-
-.hero__proof-stars {
-  display: flex;
-  gap: 3px;
-  color: #facc15;
-}
-
-.hero__proof-star {
-  width: 19px;
-  height: 19px;
-}
-
 .hero__proof-score {
   color: #facc15;
   font-size: 1.08rem;
