@@ -2,6 +2,7 @@ import ReactDOM from "react-dom";
 import { getImageProps } from "next/image";
 import { HOME_SECTION_IDS, toHash } from "@/lib/anchors";
 import { generatedImages } from "@/lib/generatedImages";
+import { siteConfig } from "@/lib/site";
 import type { CtaName } from "@/lib/tracking";
 import type { HomepageHeroSectionProps } from "./sectionProps";
 import { HeroCtas } from "./HeroCtas";
@@ -122,7 +123,15 @@ export function HeroSection({ campaign }: HomepageHeroSectionProps) {
             <div className="hero__proof-copy">
               <strong className="hero__proof-score">5 năm kinh nghiệm</strong>
               <span className="hero__proof-meta">
-                Dạy cầu lông tại Bình Thạnh và Thủ Đức, TP.HCM
+                9.000+ theo dõi trên{" "}
+                <a
+                  href={siteConfig.facebookUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hero__proof-link"
+                >
+                  Facebook
+                </a>
               </span>
             </div>
           </div>

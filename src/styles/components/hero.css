@@ -271,6 +271,17 @@
   line-height: 1.38;
 }
 
+.hero__proof-link {
+  color: #fff;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.hero__proof-link:hover {
+  color: #facc15;
+}
+
 .hero__scroll-indicator {
   position: absolute;
   left: 50%;
