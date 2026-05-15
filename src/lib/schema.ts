@@ -104,6 +104,17 @@ function buildGeoCoordinates(location: SanityLocation) {
   };
 }
 
+function buildLocationMapUrl(location: SanityLocation): string | null {
+  const mapsUrl = location.mapsUrl?.trim();
+  if (mapsUrl) {
+    return mapsUrl;
+  }
+  if (location.geoLat !== null && location.geoLng !== null) {
+    return `https://www.google.com/maps/search/?api=1&query=${location.geoLat},${location.geoLng}`;
+  }
+  return null;
+}
+
 function buildEmbeddedSportsLocation(location: SanityLocation) {
   return {
     "@type": "SportsActivityLocation",
@@ -489,6 +500,9 @@ export function buildLocalPageBusinessSchema(
     buildOpeningHoursSpecification(scheduleBlocks);
   const areaServed =
     path === "/lop-cau-long-binh-thanh/" ? "Bình Thạnh" : "Thủ Đức";
+  const mapUrl = primaryLocation
+    ? buildLocationMapUrl(primaryLocation)
+    : null;
 
   return {
     "@context": "https://schema.org",
@@ -516,6 +530,7 @@ export function buildLocalPageBusinessSchema(
           geo: buildGeoCoordinates(primaryLocation),
         }
       : {}),
+    ...(mapUrl ? { hasMap: mapUrl } : {}),
     areaServed: {
       "@type": "AdministrativeArea",
       name: areaServed,
