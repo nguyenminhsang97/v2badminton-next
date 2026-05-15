@@ -34,8 +34,14 @@ function getMoneyPageKicker(audience: SanityMoneyPage["audience"]): string {
 function buildMoneyPageFacts(page: SanityMoneyPage): string[] {
   const facts: string[] = [];
 
-  for (const loc of page.relatedLocations) {
-    facts.push(`${loc.shortName} (${loc.districtLabel})`);
+  if (page.relatedLocations.length === 1) {
+    const loc = page.relatedLocations[0];
+    facts.push(`Sân ${loc.shortName} (${loc.districtLabel})`);
+  } else if (page.relatedLocations.length > 1) {
+    const districts = Array.from(
+      new Set(page.relatedLocations.map((loc) => loc.districtLabel)),
+    );
+    facts.push(`Sân tại ${districts.join(" & ")}`);
   }
 
   if (page.relatedPricing.length > 0) {
