@@ -365,6 +365,15 @@ export function buildOrganizationSchema(): JsonLdNode {
     name: siteConfig.name,
     url: siteConfig.siteUrl,
     telephone: siteConfig.phoneE164,
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        telephone: siteConfig.phoneE164,
+        contactType: "customer service",
+        areaServed: "VN",
+        availableLanguage: ["Vietnamese"],
+      },
+    ],
     sameAs: siteFacebook,
   };
 }
@@ -455,6 +464,11 @@ export function buildHomepageLocalBusinessSchema(
           geo: buildGeoCoordinates(primaryLocation),
         }
       : {}),
+    areaServed: [
+      { "@type": "AdministrativeArea", name: "Bình Thạnh" },
+      { "@type": "AdministrativeArea", name: "Thủ Đức" },
+      { "@type": "AdministrativeArea", name: "Thành phố Hồ Chí Minh" },
+    ],
     sameAs: siteFacebook,
     location: locations.map(buildEmbeddedSportsLocation),
   };
