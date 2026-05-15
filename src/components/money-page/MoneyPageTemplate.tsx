@@ -8,7 +8,7 @@ import { PricingCards } from "@/components/blocks/PricingCards";
 import { HOME_SECTION_IDS, toHash, toHomepageHash } from "@/lib/anchors";
 import { getGeneratedRouteImage } from "@/lib/generatedImages";
 import { coreRoutes, getRouteMetadata, type CoreRoutePath } from "@/lib/routes";
-import type { SanityMoneyPage } from "@/lib/sanity";
+import type { SanityGroupPricingTier, SanityMoneyPage } from "@/lib/sanity";
 import { Breadcrumb } from "./Breadcrumb";
 import { QuickAnswer } from "./QuickAnswer";
 
@@ -34,12 +34,25 @@ function getMoneyPageKicker(audience: SanityMoneyPage["audience"]): string {
 function buildMoneyPageFacts(page: SanityMoneyPage): string[] {
   const facts: string[] = [];
 
-  if (page.relatedLocations.length > 0) {
-    facts.push(`${page.relatedLocations.length} sân có thể chọn`);
+  for (const loc of page.relatedLocations) {
+    facts.push(`${loc.shortName} (${loc.districtLabel})`);
   }
 
   if (page.relatedPricing.length > 0) {
-    facts.push("Học phí rõ ràng");
+    const groupTiers = page.relatedPricing.filter(
+      (t): t is SanityGroupPricingTier => t.kind === "group",
+    );
+    if (groupTiers.length > 0) {
+      const cheapest = groupTiers.reduce((a, b) =>
+        a.pricePerMonth <= b.pricePerMonth ? a : b,
+      );
+      const formatted = cheapest.pricePerMonth
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      facts.push(`Học phí từ ${formatted}đ/tháng`);
+    } else {
+      facts.push(`Học phí: ${page.relatedPricing[0].displayPrice}`);
+    }
   }
 
   if (page.relatedFaqs.length > 0) {
