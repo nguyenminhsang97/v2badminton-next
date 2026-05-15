@@ -6,6 +6,7 @@ import type {
 } from "@/lib/sanity";
 import { canonicalUrl, type CoreRoutePath } from "@/lib/routes";
 import { siteConfig } from "@/lib/site";
+import type { HomepageCoach } from "@/domain/homepage";
 
 type Thing = {
   "@type": string | readonly string[];
@@ -386,6 +387,27 @@ export function buildOrganizationSchema(): JsonLdNode {
       },
     ],
     sameAs: siteFacebook,
+  };
+}
+
+export function hasRealCoachName(coach: HomepageCoach): boolean {
+  return coach.name.trim().length > 0;
+}
+
+export function buildPersonSchema(coach: HomepageCoach): JsonLdNode {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: coach.name.trim(),
+    ...(coach.photoUrl ? { image: canonicalUrl(coach.photoUrl) } : {}),
+    ...(coach.roleBadge ? { jobTitle: coach.roleBadge } : {}),
+    worksFor: {
+      "@type": "Organization",
+      "@id": `${siteConfig.siteUrl}/#organization`,
+    },
+    ...(coach.credentialTags.length > 0
+      ? { hasCredential: coach.credentialTags }
+      : {}),
   };
 }
 
