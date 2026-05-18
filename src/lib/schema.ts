@@ -376,6 +376,7 @@ export function buildOrganizationSchema(): JsonLdNode {
     "@id": `${siteConfig.siteUrl}/#organization`,
     name: siteConfig.name,
     url: siteConfig.siteUrl,
+    logo: canonicalUrl(siteConfig.logoPath),
     telephone: siteConfig.phoneE164,
     contactPoint: [
       {
