@@ -121,7 +121,7 @@ export function HeroSection({ campaign }: HomepageHeroSectionProps) {
               ))}
             </div>
             <div className="hero__proof-copy">
-              <strong className="hero__proof-score">5 năm kinh nghiệm</strong>
+              <strong className="hero__proof-score">Kinh nghiệm từ 2012</strong>
               <span className="hero__proof-meta">
                 9.000+ theo dõi trên{" "}
                 <a
