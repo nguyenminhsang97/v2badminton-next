@@ -19,6 +19,7 @@ type CourseCardId =
 type CoursePriceDisplay = {
   amount: string;
   suffix: string;
+  isRange?: boolean;
 };
 
 type CourseCardDef = {
@@ -50,7 +51,7 @@ function formatVnd(value: number): string {
   return new Intl.NumberFormat("vi-VN").format(value);
 }
 
-function findFromGroupPrice(
+function findStartingGroupPrice(
   tiers: readonly SanityPricingTier[],
 ): CoursePriceDisplay {
   const groupPrices = tiers
@@ -68,8 +69,55 @@ function findFromGroupPrice(
   }
 
   return {
-    amount: `${formatVnd(Math.min(...groupPrices))}đ`,
+    amount: `Từ ${formatVnd(Math.min(...groupPrices))}đ`,
     suffix: "/tháng",
+  };
+}
+
+function findGroupPriceBySlug(
+  tiers: readonly SanityPricingTier[],
+  slug: string,
+): CoursePriceDisplay {
+  const tier = tiers.find(
+    (item): item is Extract<SanityPricingTier, { kind: "group" }> =>
+      item.kind === "group" && item.slug === slug,
+  );
+
+  if (!tier) {
+    return findStartingGroupPrice(tiers);
+  }
+
+  return {
+    amount: `${formatVnd(tier.pricePerMonth)}đ`,
+    suffix: "/tháng",
+  };
+}
+
+function findGroupPriceRangeBySlugs(
+  tiers: readonly SanityPricingTier[],
+  slugs: readonly string[],
+): CoursePriceDisplay {
+  const prices = tiers
+    .filter(
+      (item): item is Extract<SanityPricingTier, { kind: "group" }> =>
+        item.kind === "group" && slugs.includes(item.slug),
+    )
+    .map((tier) => tier.pricePerMonth);
+
+  if (prices.length === 0) {
+    return findStartingGroupPrice(tiers);
+  }
+
+  const minPrice = Math.min(...prices);
+  const maxPrice = Math.max(...prices);
+
+  return {
+    amount:
+      minPrice === maxPrice
+        ? `${formatVnd(minPrice)}đ`
+        : `Từ ${formatVnd(minPrice)} - ${formatVnd(maxPrice)}đ`,
+    suffix: "/tháng",
+    isRange: minPrice !== maxPrice,
   };
 }
 
@@ -96,7 +144,15 @@ function findPrivatePrice(
 
 export function CourseSection({ pricingTiers }: CourseSectionProps) {
   const { setCourseIntent } = useHomepageConversionIntent();
-  const groupPrice = findFromGroupPrice(pricingTiers);
+  const startingGroupPrice = findStartingGroupPrice(pricingTiers);
+  const basicTwoSessionPrice = findGroupPriceBySlug(
+    pricingTiers,
+    "group-basic-2x",
+  );
+  const beginnerGroupPriceRange = findGroupPriceRangeBySlugs(
+    pricingTiers,
+    ["group-basic-2x", "group-basic-3x"],
+  );
   const privatePrice = findPrivatePrice(pricingTiers);
 
   const courseCards: CourseCardDef[] = [
@@ -107,8 +163,8 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
       title: "Thiếu nhi cơ bản",
       subtitle: "7 - 12 tuổi",
       description: "Xây nền kỹ thuật và phản xạ cho những buổi đầu tiên.",
-      price: groupPrice,
-      meta: "3 buổi/tuần",
+      price: basicTwoSessionPrice,
+      meta: "Sáng cuối tuần · 2 buổi",
       href: "/lop-cau-long-tre-em/",
       imageSrc: generatedImages.kidsClass,
       imageAlt: "Hướng dẫn học viên nhỏ tuổi tập cầu lông với huấn luyện viên",
@@ -121,7 +177,7 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
       title: "Người lớn mới học",
       subtitle: "Mới bắt đầu",
       description: "Lộ trình rõ ràng cho người mới cầm vợt và muốn theo đều.",
-      price: groupPrice,
+      price: beginnerGroupPriceRange,
       meta: "2 - 3 buổi/tuần",
       href: "/hoc-cau-long-cho-nguoi-moi/",
       imageSrc: generatedImages.adultBeginner,
@@ -135,7 +191,7 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
       title: "Người đi làm",
       subtitle: "Tối & cuối tuần",
       description: "Giữ nhịp tập đều với khung giờ sau giờ làm và cuối tuần.",
-      price: groupPrice,
+      price: startingGroupPrice,
       meta: "Tối & cuối tuần",
       href: "/lop-cau-long-cho-nguoi-di-lam/",
       imageSrc: generatedImages.afterWorkClass,
@@ -203,12 +259,20 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
                 <p className="course-card__desc">{card.description}</p>
               </div>
 
-              <div className="course-card__meta-row">
+              <div
+                className={`course-card__meta-row ${
+                  card.price.isRange ? "course-card__meta-row--stacked" : ""
+                }`}
+              >
                 <span className="course-card__meta">
                   <ClockIcon className="course-card__meta-icon" />
                   {card.meta}
                 </span>
-                <span className="course-card__price">
+                <span
+                  className={`course-card__price ${
+                    card.price.isRange ? "course-card__price--range" : ""
+                  }`}
+                >
                   <strong className="course-card__price-amount">
                     {card.price.amount}
                   </strong>

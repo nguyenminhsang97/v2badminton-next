@@ -1,0 +1,156 @@
+{
+  "_meta": {
+    "page": "/lop-cau-long-cho-nguoi-di-lam/",
+    "draftStatus": "needs_review",
+    "writingRulesApplied": ["W2.3.1 answer-first intro", "W2.3.2 question H2s", "W2.3.3 concrete entities", "W2.3.5 ≥5 FAQs"],
+    "seoTargets": {
+      "primaryKeyword": "lớp cầu lông cho người đi làm TP.HCM",
+      "secondaryKeywords": ["lớp cầu lông sau giờ làm", "học cầu lông cho nhân viên văn phòng", "cầu lông tối Bình Thạnh", "cầu lông tối Thủ Đức"]
+    }
+  },
+
+  "moneyPage": {
+    "_type": "money_page",
+    "slug": { "_type": "slug", "current": "lop-cau-long-cho-nguoi-di-lam" },
+    "audience": "nguoi_di_lam",
+    "h1": "Lớp cầu lông cho người đi làm tại TP.HCM",
+    "metaTitle": "Lớp Cầu Lông Cho Người Đi Làm TP.HCM | Tối & Cuối Tuần",
+    "metaDescription": "Lớp cầu lông V2 Badminton cho người đi làm tại TP.HCM: tối 18:00-22:00 và T7-CN. Duy trì tập đều mà không ảnh hưởng giờ làm. Bình Thạnh & Thủ Đức.",
+    "ctaLabel": "Đăng ký lớp sau giờ làm",
+
+    "intro": [
+      {
+        "_type": "block", "_key": "i1", "style": "normal", "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "a", "text": "Lớp cầu lông cho người đi làm tại V2 Badminton mở các khung ", "marks": [] },
+          { "_type": "span", "_key": "b", "text": "tối 18:00-22:00 trong tuần và sáng-trưa-chiều T7-CN", "marks": ["strong"] },
+          { "_type": "span", "_key": "c", "text": ", phù hợp duy trì tập đều mà không hy sinh giờ hành chính.", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block", "_key": "i2", "style": "normal", "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "x", "text": "Học phí lớp nhóm 2 buổi/tuần là 1.000.000đ/tháng, 3 buổi/tuần là 1.300.000đ (cơ bản) hoặc 1.500.000đ (nâng cao). Sân: Green (Bình Thạnh), Huệ Thiên, Khang Sport, Phúc Lộc (Thủ Đức), TP.HCM.", "marks": [] }
+        ]
+      }
+    ],
+
+    "body": [
+      { "_type": "block", "_key": "h2sched", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Lịch nào phù hợp người đi làm nhất?", "marks": [] }] },
+      { "_type": "block", "_key": "lisch1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Tối 18:00-20:00 các ngày T2-T7.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Phổ biến nhất với người tan làm 17:00-18:00 và có 15-30 phút di chuyển đến sân. Mở tại Sân Green (T3-T5), Huệ Thiên (T2-T4-T6, T3-T5-T7), Phúc Lộc (T2-T4-T6).", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lisch2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Tối 20:00-22:00 các ngày T2-T6.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Phù hợp người làm tan trễ, ăn tối xong rồi đến sân. Mở tại Sân Green (T3-T5), Huệ Thiên (T2-T4-T6), Phúc Lộc (T2-T4-T6).", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lisch3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Cuối tuần T7-CN sáng (07:00-11:00) và chiều (17:00-18:00).", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Phù hợp người làm xa, không thể tập trong tuần. Sân Huệ Thiên có 3 khung T7-CN, Sân Green có khung sáng 08:00-10:00.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2how", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "2 hay 3 buổi/tuần — chọn gì sau giờ làm?", "marks": [] }] },
+      { "_type": "block", "_key": "lihow1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "2 buổi/tuần (1.000.000đ/tháng) — phù hợp đa số.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Tan làm vẫn còn năng lượng tập 2 lần/tuần, không gây quá tải. Kết hợp tốt với chạy bộ hoặc gym xen kẽ.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lihow2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "3 buổi/tuần cơ bản (1.300.000đ/tháng) — tiến bộ rõ rệt hơn.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Phù hợp người đã quen tập thể thao, muốn nâng nhịp đều. Thường kết hợp 2 buổi tối tuần + 1 buổi cuối tuần.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lihow3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "3 buổi/tuần nâng cao (1.500.000đ/tháng) — cho người đã có nền tảng.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Tốc độ và độ khó kỹ thuật cao hơn. Khuyên có ít nhất 2-3 tháng kinh nghiệm trước khi vào.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2where", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Sân V2 có ở gần khu văn phòng không?", "marks": [] }] },
+      { "_type": "block", "_key": "liwh1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Bình Thạnh — Sân Green (154/9 Nguyễn Xí, P.26).", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Gần khu văn phòng Bình Thạnh, Phú Nhuận và trung tâm Q.1.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liwh2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Thủ Đức — cụm Huệ Thiên (520 Quốc Lộ 13), Khang Sport (8 Đường số 20), Phúc Lộc (103/11B Đường số 20), cùng ở phường Hiệp Bình.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Gần khu công nghệ cao, văn phòng Bình Triệu và các khu dân cư Thủ Đức cũ.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2flex", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Bận công tác đột xuất, làm sao không bỏ lớp?", "marks": [] }] },
+      { "_type": "block", "_key": "pflex", "style": "normal", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Người đi làm thường có lịch thay đổi đột xuất. V2 có 3 cách giải quyết:", "marks": [] }] },
+      { "_type": "block", "_key": "lifl1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Nhắn V2 trước 2-3 ngày", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — đổi sang khung khác cùng sân hoặc sang sân khác cùng khung trong tuần.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lifl2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Học bù vào tuần sau", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — nếu công tác cả tuần, V2 xếp các buổi nghỉ vào tuần kế tiếp.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lifl3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Bổ sung 1 kèm 1 (400.000đ/giờ)", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — khi lịch thường xuyên gấp gáp, học viên có thể chuyển hẳn sang 1 kèm 1 để lịch linh hoạt hoàn toàn.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "pflend", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "x", "text": "Đa số học viên người đi làm chọn cố định một sân trong 2-3 tháng đầu để hình thành thói quen, sau đó mới đa dạng hóa sân tập. Cố định giúp HLV theo sát tiến độ và bạn không tốn năng lượng tìm đường tới sân mới mỗi tuần.", "marks": [] }
+      ]}
+    ]
+  },
+
+  "newFaqs": [
+    {
+      "_type": "faq",
+      "question": "Có cần kinh nghiệm cầu lông trước khi đăng ký lớp người đi làm không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Không. Lớp cơ bản V2 dành cho người mới hoàn toàn. HLV dạy từ cầm vợt, di chuyển chân đến phát cầu và đánh cơ bản. Sau 4-6 tuần (lịch 2 buổi/tuần), học viên mới đã có thể tự đánh rally cơ bản.", "marks": [] }
+      ]}],
+      "pages": ["nguoi_di_lam"], "includeInSchema": true, "featured": false, "order": 80
+    },
+    {
+      "_type": "faq",
+      "question": "Tan làm 18:00 đến sân 18:30 có muộn không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Đến trễ 15-20 phút vẫn vào lớp được — HLV sẽ điều chỉnh phần khởi động cho bạn. Nếu thường xuyên tan trễ sau 18:30, cân nhắc khung 20:00-22:00 thay vì 18:00-20:00 để không vào lớp quá vội.", "marks": [] }
+      ]}],
+      "pages": ["nguoi_di_lam"], "includeInSchema": true, "featured": false, "order": 81
+    },
+    {
+      "_type": "faq",
+      "question": "Đồng nghiệp đăng ký cùng có ưu đãi không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "V2 có chính sách tư vấn theo nhóm khi 4 người trở lên đăng ký cùng — nhắn V2 qua Zalo hoặc gọi điện để được tư vấn báo giá theo nhóm. Đăng ký nhóm cũng giúp các bạn được xếp cùng buổi để dễ rủ nhau tập đều.", "marks": [] }
+      ]}],
+      "pages": ["nguoi_di_lam"], "includeInSchema": true, "featured": false, "order": 82
+    },
+    {
+      "_type": "faq",
+      "question": "Có thể nghỉ 1-2 tuần khi đi công tác không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Được. Nhắn V2 trước 2-3 ngày để xếp các buổi nghỉ vào tuần sau hoặc cuối tháng. V2 ưu tiên giữ tiến độ học cho học viên — không tính các buổi nghỉ thông báo trước là buổi đã sử dụng.", "marks": [] }
+      ]}],
+      "pages": ["nguoi_di_lam"], "includeInSchema": true, "featured": false, "order": 83
+    },
+    {
+      "_type": "faq",
+      "question": "Công ty muốn đăng ký lớp riêng cho nhân viên thì sao?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "V2 có chương trình cầu lông doanh nghiệp riêng — lớp nội bộ định kỳ hoặc team building. Liên hệ qua điện thoại, Zalo hoặc Facebook để nhận báo giá theo quy mô và mục tiêu cụ thể của công ty.", "marks": [] }
+      ]}],
+      "pages": ["nguoi_di_lam", "doanh_nghiep"], "includeInSchema": true, "featured": false, "order": 84
+    }
+  ],
+
+  "referenceWiring": {
+    "_note": "Slug values are best-guess. Verify in Sanity Studio.",
+    "relatedLocations": [
+      { "slug": "green", "name": "Sân Green (Bình Thạnh) — tối T3-T5, sáng T7-CN" },
+      { "slug": "hue-thien", "name": "Sân Huệ Thiên (Thủ Đức) — nhiều khung tối + cuối tuần" },
+      { "slug": "khang-sport", "name": "Sân Khang Sport (Thủ Đức) — trưa cuối tuần" },
+      { "slug": "phuc-loc", "name": "Sân Phúc Lộc (Thủ Đức) — tối T2-T4-T6" }
+    ],
+    "relatedPricing": [
+      { "slug": "group-basic-2x", "name": "Lớp nhóm 2 buổi/tuần (phổ biến nhất cho người đi làm)" },
+      { "slug": "group-basic-3x", "name": "Lớp nhóm 3 buổi/tuần cơ bản" },
+      { "slug": "group-advanced-3x", "name": "Lớp nhóm 3 buổi/tuần nâng cao" },
+      { "slug": "private-1-1", "name": "1 kèm 1 (cho lịch không ổn định)" }
+    ],
+    "relatedFaqs": "Wire to the 5 newFaqs above after creation."
+  }
+}

@@ -1,0 +1,148 @@
+{
+  "_meta": {
+    "page": "/team-building-cau-long/",
+    "draftStatus": "needs_review",
+    "writingRulesApplied": ["W2.3.1 answer-first intro", "W2.3.2 question H2s", "W2.3.3 concrete entities", "W2.3.5 ≥5 FAQs"],
+    "seoTargets": {
+      "primaryKeyword": "team building cầu lông",
+      "secondaryKeywords": ["team building cầu lông TP.HCM", "team building thể thao doanh nghiệp", "tổ chức team building cầu lông", "team building cho công ty"]
+    }
+  },
+
+  "moneyPage": {
+    "_type": "money_page",
+    "slug": { "_type": "slug", "current": "team-building-cau-long" },
+    "audience": "doanh_nghiep",
+    "h1": "Team building cầu lông cho doanh nghiệp tại TP.HCM",
+    "metaTitle": "Team Building Cầu Lông Doanh Nghiệp | TP.HCM | V2 Badminton",
+    "metaDescription": "Chương trình team building cầu lông V2 Badminton cho doanh nghiệp tại TP.HCM. Format gắn kết, tùy biến quy mô và ngân sách. Báo giá theo yêu cầu.",
+    "ctaLabel": "Nhận báo giá team building",
+
+    "intro": [
+      {
+        "_type": "block", "_key": "i1", "style": "normal", "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "a", "text": "Team building cầu lông tại V2 Badminton là chương trình thể thao một buổi được thiết kế riêng theo ", "marks": [] },
+          { "_type": "span", "_key": "b", "text": "quy mô đội ngũ, mục tiêu gắn kết và ngân sách", "marks": ["strong"] },
+          { "_type": "span", "_key": "c", "text": " của từng doanh nghiệp. Báo giá riêng theo từng chương trình — V2 trả báo giá trong 1-2 ngày làm việc.", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block", "_key": "i2", "style": "normal", "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "x", "text": "Tổ chức tại Sân Green (Bình Thạnh), cụm Huệ Thiên, Khang Sport, Phúc Lộc (Thủ Đức), TP.HCM, hoặc sân do doanh nghiệp đề xuất.", "marks": [] }
+        ]
+      }
+    ],
+
+    "body": [
+      { "_type": "block", "_key": "h2what", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Team building cầu lông V2 gồm những hoạt động gì?", "marks": [] }] },
+      { "_type": "block", "_key": "pwhat", "style": "normal", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Một buổi team building chuẩn của V2 gồm 4 hoạt động kết hợp, có thể tuỳ biến theo yêu cầu:", "marks": [] }] },
+      { "_type": "block", "_key": "liwhat1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Khởi động nhóm có dẫn dắt", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — 15-20 phút, giúp người chưa biết chơi làm quen với vợt và cầu trước khi vào hoạt động chính.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liwhat2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Mini-game phối hợp đội", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — 30-40 phút, các trò chia đội chéo phòng ban để mọi người tương tác với người ngoài team thường ngày.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liwhat3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Vòng đấu giao hữu", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — 40-60 phút, chia bảng theo trình độ để mọi người đều tham gia, không chỉ người đã biết chơi.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liwhat4", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Trao giải và chụp hình tập thể", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — 15 phút khép buổi. V2 hỗ trợ chuẩn bị giải thưởng theo yêu cầu của doanh nghiệp.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2scale", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Team building cầu lông phù hợp quy mô bao nhiêu người?", "marks": [] }] },
+      { "_type": "block", "_key": "lisc1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Nhóm nhỏ 10-25 người.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " 1-2 sân, 1-2 HLV V2. Format gọn nhẹ, phù hợp team nội bộ một phòng ban.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lisc2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Nhóm vừa 25-60 người.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " 3-4 sân, 2-3 HLV. Có chia bảng đấu giao hữu nhỏ, ưu tiên Sân Huệ Thiên hoặc tổ hợp 2 sân gần nhau.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lisc3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Sự kiện lớn 60+ người.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Cần đặt trước 2-3 tuần để V2 sắp xếp đủ sân và HLV. Phù hợp sự kiện thể thao công ty hoặc giải nội bộ.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2dur", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Một buổi team building kéo dài bao lâu?", "marks": [] }] },
+      { "_type": "block", "_key": "pdur", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Thời lượng chuẩn là ", "marks": [] },
+        { "_type": "span", "_key": "b", "text": "2-3 giờ", "marks": ["strong"] },
+        { "_type": "span", "_key": "c", "text": " (gồm khởi động, mini-game, giao hữu, trao giải). Doanh nghiệp có thể yêu cầu buổi nửa ngày (3-4 giờ, có giải lao) hoặc buổi cả ngày (5-6 giờ, có tea-break giữa các phần). V2 tư vấn thời lượng phù hợp dựa trên số lượng người và mục tiêu của buổi.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2quote", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Báo giá team building dựa trên những yếu tố nào?", "marks": [] }] },
+      { "_type": "block", "_key": "pquote", "style": "normal", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "V2 báo giá riêng cho từng chương trình dựa trên các thông số bạn cung cấp:", "marks": [] }] },
+      { "_type": "block", "_key": "liq1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Số lượng người tham gia (chia trình độ cơ bản và đã biết chơi).", "marks": [] }]},
+      { "_type": "block", "_key": "liq2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Thời lượng buổi (2-3 giờ, nửa ngày, hay cả ngày).", "marks": [] }]},
+      { "_type": "block", "_key": "liq3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Sân tập (V2 đề xuất Bình Thạnh hoặc Thủ Đức, hoặc sân do doanh nghiệp chọn).", "marks": [] }]},
+      { "_type": "block", "_key": "liq4", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Giải thưởng, áo team, in banner — V2 hỗ trợ chuẩn bị nếu doanh nghiệp yêu cầu.", "marks": [] }]},
+      { "_type": "block", "_key": "liq5", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Hỗ trợ ăn nhẹ/nước uống giữa buổi (option add-on).", "marks": [] }]},
+      { "_type": "block", "_key": "pquote2", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "x", "text": "Gửi thông tin qua điện thoại, Zalo hoặc Facebook V2 Badminton — đội ngũ trả báo giá trong 1-2 ngày làm việc và đề xuất 2-3 phương án theo ngân sách.", "marks": [] }
+      ]}
+    ]
+  },
+
+  "newFaqs": [
+    {
+      "_type": "faq",
+      "question": "Người chưa biết chơi cầu lông có tham gia team building được không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Hoàn toàn được. V2 thiết kế phần khởi động và mini-game để người chưa cầm vợt bao giờ vẫn tham gia đầy đủ. Vòng đấu giao hữu chia bảng theo trình độ nên người mới không bị ép thi đấu với người đã quen.", "marks": [] }
+      ]}],
+      "pages": ["doanh_nghiep"], "includeInSchema": true, "featured": false, "order": 50
+    },
+    {
+      "_type": "faq",
+      "question": "V2 có hỗ trợ chuẩn bị giải thưởng và áo team không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Có, theo yêu cầu. V2 hỗ trợ giải thưởng (cúp, huy chương, voucher), áo đồng phục đội và banner sự kiện. Phần này tính riêng trong báo giá, doanh nghiệp có thể chọn dùng hoặc tự chuẩn bị.", "marks": [] }
+      ]}],
+      "pages": ["doanh_nghiep"], "includeInSchema": true, "featured": false, "order": 51
+    },
+    {
+      "_type": "faq",
+      "question": "Có thể tổ chức team building ở sân không thuộc V2 không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Có. Nếu doanh nghiệp đã có sân thuận tiện cho nhân viên (sân gần văn phòng, sân nội bộ), V2 đến tổ chức tại sân đó. Báo giá điều chỉnh do không gồm phí thuê sân V2.", "marks": [] }
+      ]}],
+      "pages": ["doanh_nghiep"], "includeInSchema": true, "featured": false, "order": 52
+    },
+    {
+      "_type": "faq",
+      "question": "Báo giá team building có gồm phí thuê sân không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Có, mặc định báo giá V2 gồm phí thuê sân (tại các sân V2 đang vận hành), HLV, dụng cụ cầu, và điều phối chương trình. Các khoản option (giải thưởng, áo, ăn nhẹ) liệt kê riêng để doanh nghiệp dễ chọn.", "marks": [] }
+      ]}],
+      "pages": ["doanh_nghiep"], "includeInSchema": true, "featured": false, "order": 53
+    },
+    {
+      "_type": "faq",
+      "question": "Cần đặt trước bao lâu cho buổi team building?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Nhóm 10-25 người: đặt trước 7-10 ngày. Nhóm 25-60 người: đặt trước 2 tuần. Sự kiện 60+ người: đặt trước 2-3 tuần để V2 sắp xếp đủ sân và HLV. Đặt trước càng sớm, V2 càng linh hoạt chọn sân và khung giờ phù hợp.", "marks": [] }
+      ]}],
+      "pages": ["doanh_nghiep"], "includeInSchema": true, "featured": false, "order": 54
+    }
+  ],
+
+  "referenceWiring": {
+    "_note": "Slug values are best-guess. Verify in Sanity Studio.",
+    "relatedLocations": [
+      { "slug": "green", "name": "Sân Green (Bình Thạnh)" },
+      { "slug": "hue-thien", "name": "Sân Huệ Thiên (Thủ Đức) — đề xuất cho nhóm 25+" },
+      { "slug": "khang-sport", "name": "Sân Khang Sport (Thủ Đức)" },
+      { "slug": "phuc-loc", "name": "Sân Phúc Lộc (Thủ Đức)" }
+    ],
+    "relatedPricing": [
+      { "slug": "enterprise", "name": "Gói doanh nghiệp — báo giá riêng" }
+    ],
+    "relatedFaqs": "Wire to the 5 newFaqs above after creation."
+  }
+}
