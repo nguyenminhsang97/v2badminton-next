@@ -26,8 +26,12 @@ function latestLastModified(
   return latest ? new Date(latest).toISOString() : fallback;
 }
 
+// Stable fallback date — prevents Google from seeing lastmod change on every request.
+// Update only when the site goes through a meaningful redesign or content restructure.
+const SITE_RELAUNCH_DATE = new Date("2026-04-01T00:00:00Z");
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const generatedAt = new Date();
+  const generatedAt = SITE_RELAUNCH_DATE;
   const [posts, coaches, moneyPages] = await Promise.all([
     getPublishedPosts(),
     getCoaches(),
