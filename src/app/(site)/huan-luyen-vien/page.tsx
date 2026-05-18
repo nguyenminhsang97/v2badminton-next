@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { CoachCardsGrid, getUsableCoaches } from "@/components/coaches/CoachCardsGrid";
+import { JsonLd } from "@/components/ui/JsonLd";
 import { canonicalUrl } from "@/lib/routes";
 import { getCoaches } from "@/lib/sanity";
+import { buildPersonSchema, hasRealCoachName } from "@/lib/schema";
 import { siteConfig } from "@/lib/site";
 
 const pagePath = "/huan-luyen-vien/";
@@ -52,9 +54,15 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function CoachesPage() {
   const coaches = getUsableCoaches(await getCoaches());
+  const personSchemas = coaches
+    .filter(hasRealCoachName)
+    .map(buildPersonSchema);
 
   return (
     <div className="coach-page">
+      {personSchemas.length > 0 ? (
+        <JsonLd id="coach-person" data={personSchemas} />
+      ) : null}
       <section className="section coach-page__hero">
         <div className="section__header coach-page__header">
           <p className="section__eyebrow">Đội ngũ huấn luyện viên</p>

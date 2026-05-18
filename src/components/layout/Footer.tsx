@@ -26,6 +26,7 @@ const legalLinks = [
 export function Footer({ siteSettings, showBlogLink, showCoachesLink }: FooterProps) {
   const currentYear = new Date().getFullYear();
   const academyLinks = [
+    { href: "/gioi-thieu/", label: "Giới thiệu" },
     { href: toHomepageHash(HOME_SECTION_IDS.courses), label: "Khóa học" },
     { href: toHomepageHash(HOME_SECTION_IDS.schedule), label: "Lịch học" },
     { href: toHomepageHash(HOME_SECTION_IDS.faq), label: "Hỏi đáp" },
