@@ -124,6 +124,11 @@ export default function AboutPage() {
             </li>
           </ul>
           <p>
+            HLV trưởng Bùi Trần Quốc Việt cùng các HLV Nguyễn Minh Sang và
+            Đinh Nguyễn Nhật Nam có chứng chỉ BWF Coach Level 1 của Liên đoàn
+            Cầu lông Thế giới (BWF).
+          </p>
+          <p>
             Xem chi tiết tại{" "}
             <Link href="/huan-luyen-vien/">trang đội ngũ huấn luyện viên</Link>.
           </p>
