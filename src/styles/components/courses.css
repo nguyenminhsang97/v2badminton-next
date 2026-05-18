@@ -151,6 +151,12 @@
   min-height: 64px;
 }
 
+.course-card__meta-row--stacked {
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: 8px;
+}
+
 .course-card__meta {
   display: inline-flex;
   align-items: center;
@@ -173,6 +179,14 @@
   color: var(--s5-primary-strong);
   text-align: right;
   line-height: 1;
+}
+
+.course-card__meta-row--stacked .course-card__price {
+  justify-self: end;
+}
+
+.course-card__price--range .course-card__price-amount {
+  font-size: 1rem;
 }
 
 .course-card__price-amount {

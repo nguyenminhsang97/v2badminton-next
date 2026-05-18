@@ -1,0 +1,163 @@
+{
+  "_meta": {
+    "page": "/gia-hoc-cau-long-tphcm/",
+    "draftStatus": "needs_review",
+    "writingRulesApplied": ["W2.3.1 answer-first intro", "W2.3.2 question H2s", "W2.3.3 concrete entities", "W2.3.4 comparison block (required for this page)", "W2.3.5 ≥5 FAQs"],
+    "seoTargets": {
+      "primaryKeyword": "giá học cầu lông TP.HCM",
+      "secondaryKeywords": ["học phí cầu lông", "học phí cầu lông Bình Thạnh", "học phí cầu lông Thủ Đức", "bảng giá học cầu lông"]
+    }
+  },
+
+  "moneyPage": {
+    "_type": "money_page",
+    "slug": { "_type": "slug", "current": "gia-hoc-cau-long-tphcm" },
+    "audience": "nguoi_moi",
+    "h1": "Giá học cầu lông tại TP.HCM 2026",
+    "metaTitle": "Giá Học Cầu Lông Tại TP.HCM 2026 | Bảng Giá V2 Badminton",
+    "metaDescription": "Bảng giá học cầu lông tại TP.HCM 2026 của V2 Badminton: lớp nhóm từ 1.000.000đ/tháng, 1 kèm 1 400.000đ/giờ. Sân Bình Thạnh và Thủ Đức.",
+    "ctaLabel": "Nhận tư vấn gói học",
+
+    "intro": [
+      {
+        "_type": "block", "_key": "i1", "style": "normal", "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "i1s1", "text": "Giá học cầu lông tại V2 Badminton chia làm ba mô hình: ", "marks": [] },
+          { "_type": "span", "_key": "i1s2", "text": "lớp nhóm 2-6 người từ 1.000.000 đến 1.500.000 VNĐ/tháng", "marks": ["strong"] },
+          { "_type": "span", "_key": "i1s3", "text": ", ", "marks": [] },
+          { "_type": "span", "_key": "i1s4", "text": "1 kèm 1 là 400.000 VNĐ/giờ/học viên", "marks": ["strong"] },
+          { "_type": "span", "_key": "i1s5", "text": ", và chương trình doanh nghiệp tư vấn báo giá riêng theo quy mô.", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block", "_key": "i2", "style": "normal", "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "i2s1", "text": "Tất cả lớp diễn ra tại Sân Green (Bình Thạnh) và cụm Huệ Thiên, Khang Sport, Phúc Lộc (Thủ Đức), TP.HCM.", "marks": [] }
+        ]
+      }
+    ],
+
+    "body": [
+      { "_type": "block", "_key": "h2group", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Học phí lớp nhóm cầu lông V2 bao nhiêu?", "marks": [] }] },
+      { "_type": "block", "_key": "pgroup", "style": "normal", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "V2 Badminton có ba gói lớp nhóm cho lớp 2-6 học viên, học phí đã gồm phí thuê sân.", "marks": [] }] },
+      { "_type": "block", "_key": "ligrp1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "2 buổi/tuần — 1.000.000 VNĐ/tháng.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Phù hợp người bận lịch làm việc nhưng vẫn muốn duy trì đều. 8 buổi/tháng.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "ligrp2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "3 buổi/tuần cơ bản — 1.300.000 VNĐ/tháng.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Dành cho người mới muốn nền tảng chắc. 12 buổi/tháng.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "ligrp3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "3 buổi/tuần nâng cao — 1.500.000 VNĐ/tháng.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Dành cho học viên đã có nền tảng và muốn nâng kỹ thuật nhanh hơn. 12 buổi/tháng.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2private", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Học 1 kèm 1 ở V2 giá bao nhiêu?", "marks": [] }] },
+      { "_type": "block", "_key": "pprivate", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "1 kèm 1 có giá ", "marks": [] },
+        { "_type": "span", "_key": "b", "text": "400.000 VNĐ/giờ/học viên", "marks": ["strong"] },
+        { "_type": "span", "_key": "c", "text": " — chưa gồm phí thuê sân, V2 sẽ hỗ trợ đặt sân thuận tiện. Mô hình này phù hợp khi học viên cần HLV theo sát, có yêu cầu kỹ thuật cụ thể, hoặc lịch không khớp với khung lớp nhóm. Buổi học 60 phút theo lịch riêng do học viên và HLV thống nhất.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2biz", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Cầu lông doanh nghiệp tính giá thế nào?", "marks": [] }] },
+      { "_type": "block", "_key": "pbiz", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Chương trình doanh nghiệp (team building, lớp nội bộ, sự kiện thể thao) báo giá riêng theo: số lượng người tham gia, thời lượng chương trình, sân tập đề xuất và mục tiêu của doanh nghiệp. V2 trả báo giá trong 1-2 ngày làm việc sau khi nhận yêu cầu qua điện thoại, Zalo hoặc Facebook.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2compare", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Bảng so sánh các gói học V2 Badminton", "marks": [] }] },
+      { "_type": "block", "_key": "pcompare", "style": "normal", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Tóm tắt 5 mô hình học phí trên 4 tiêu chí: giá, quy mô lớp, lịch và đối tượng phù hợp.", "marks": [] }] },
+      { "_type": "block", "_key": "licmp1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Lớp nhóm 2 buổi/tuần.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " 1.000.000đ/tháng · 2-6 học viên · khung lớp đang mở · người bận lịch nhưng muốn duy trì đều.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "licmp2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Lớp nhóm 3 buổi/tuần cơ bản.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " 1.300.000đ/tháng · 2-6 học viên · khung lớp đang mở · người mới cần nền tảng chắc.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "licmp3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Lớp nhóm 3 buổi/tuần nâng cao.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " 1.500.000đ/tháng · 2-6 học viên · khung lớp đang mở · người đã có nền tảng muốn nâng trình.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "licmp4", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "1 kèm 1.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " 400.000đ/giờ/học viên (chưa gồm sân) · 1 thầy 1 trò · lịch riêng · người cần tiến bộ nhanh hoặc kỹ thuật cụ thể.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "licmp5", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Doanh nghiệp.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Báo giá riêng · quy mô tuỳ chương trình · lịch thoả thuận · team building, lớp nội bộ, sự kiện thể thao.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2includes", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Học phí V2 đã bao gồm những gì?", "marks": [] }] },
+      { "_type": "block", "_key": "pincl", "style": "normal", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Học phí lớp nhóm đã gồm phí thuê sân, HLV và cầu cho buổi tập. Học viên tự chuẩn bị:", "marks": [] }] },
+      { "_type": "block", "_key": "lincl1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Giày thể thao đế không trơn, quần áo thoải mái, nước uống.", "marks": [] }]},
+      { "_type": "block", "_key": "lincl2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Vợt cá nhân (nếu chưa có, V2 sẽ tư vấn vợt trước buổi đầu).", "marks": [] }]},
+      { "_type": "block", "_key": "pincl2", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Gói 1 kèm 1 ", "marks": [] },
+        { "_type": "span", "_key": "b", "text": "không bao gồm", "marks": ["strong"] },
+        { "_type": "span", "_key": "c", "text": " phí thuê sân — V2 hỗ trợ đặt sân nhưng học viên trả riêng theo giá sân đang áp dụng.", "marks": [] }
+      ]}
+    ]
+  },
+
+  "newFaqs": [
+    {
+      "_type": "faq",
+      "question": "Gói học cầu lông rẻ nhất tại V2 là gói nào?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Lớp nhóm 2 buổi/tuần với mức 1.000.000 VNĐ/tháng là gói có học phí thấp nhất, đã gồm phí thuê sân và 8 buổi tập 60-90 phút/tháng.", "marks": [] }
+      ]}],
+      "pages": ["nguoi_moi"], "includeInSchema": true, "featured": false, "order": 20
+    },
+    {
+      "_type": "faq",
+      "question": "V2 Badminton có học thử không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Có. V2 mở buổi học thử để bạn làm quen với HLV, sân và nhịp lớp trước khi quyết định đăng ký gói tháng. Bạn nhắn V2 qua Zalo, Facebook hoặc gọi điện để được sắp xếp buổi thử gần nhất.", "marks": [] }
+      ]}],
+      "pages": ["nguoi_moi"], "includeInSchema": true, "featured": false, "order": 21
+    },
+    {
+      "_type": "faq",
+      "question": "Học phí có giảm khi đóng nhiều tháng không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Học phí công bố theo tháng. Trường hợp doanh nghiệp hoặc nhóm đăng ký cùng lúc nhiều người, V2 sẽ tư vấn báo giá theo nhóm — bạn gọi điện hoặc nhắn Zalo để được tư vấn.", "marks": [] }
+      ]}],
+      "pages": ["nguoi_moi"], "includeInSchema": true, "featured": false, "order": 22
+    },
+    {
+      "_type": "faq",
+      "question": "Học phí có khác nhau giữa Bình Thạnh và Thủ Đức không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Không. Học phí lớp nhóm V2 Badminton áp dụng chung cho tất cả sân — Sân Green (Bình Thạnh) và cụm Huệ Thiên, Khang Sport, Phúc Lộc (Thủ Đức). Bạn chọn sân theo lịch và vị trí gần nhà.", "marks": [] }
+      ]}],
+      "pages": ["nguoi_moi"], "includeInSchema": true, "featured": false, "order": 23
+    },
+    {
+      "_type": "faq",
+      "question": "Học phí có gồm vợt hay cầu không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Học phí lớp nhóm đã gồm cầu cho buổi tập. Vợt là dụng cụ cá nhân — học viên tự chuẩn bị. Nếu chưa có vợt, V2 tư vấn lựa chọn vợt phù hợp trước buổi đầu.", "marks": [] }
+      ]}],
+      "pages": ["nguoi_moi"], "includeInSchema": true, "featured": false, "order": 24
+    }
+  ],
+
+  "referenceWiring": {
+    "_note": "Slug values are best-guess from src/lib static IDs. Verify in Sanity Studio when wiring.",
+    "relatedLocations": [
+      { "slug": "green", "name": "Sân Green (Bình Thạnh)" },
+      { "slug": "hue-thien", "name": "Sân Huệ Thiên (Thủ Đức)" },
+      { "slug": "khang-sport", "name": "Sân Khang Sport (Thủ Đức)" },
+      { "slug": "phuc-loc", "name": "Sân Phúc Lộc (Thủ Đức)" }
+    ],
+    "relatedPricing": [
+      { "slug": "group-basic-2x", "name": "Lớp nhóm 2 buổi/tuần" },
+      { "slug": "group-basic-3x", "name": "Lớp nhóm 3 buổi/tuần cơ bản" },
+      { "slug": "group-advanced-3x", "name": "Lớp nhóm 3 buổi/tuần nâng cao" },
+      { "slug": "private-1-1", "name": "1 kèm 1" },
+      { "slug": "enterprise", "name": "Doanh nghiệp" }
+    ],
+    "relatedFaqs": "Wire to the 5 newFaqs above after they are created in Sanity Studio (match by question text)."
+  }
+}

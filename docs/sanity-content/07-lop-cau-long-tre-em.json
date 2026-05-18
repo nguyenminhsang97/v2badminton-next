@@ -1,0 +1,161 @@
+{
+  "_meta": {
+    "page": "/lop-cau-long-tre-em/",
+    "draftStatus": "needs_review",
+    "writingRulesApplied": ["W2.3.1 answer-first intro", "W2.3.2 question H2s", "W2.3.3 concrete entities", "W2.3.5 ≥5 FAQs"],
+    "seoTargets": {
+      "primaryKeyword": "lớp cầu lông trẻ em TP.HCM",
+      "secondaryKeywords": ["lớp cầu lông cho trẻ", "dạy cầu lông trẻ em", "lớp cầu lông trẻ em Bình Thạnh", "lớp cầu lông trẻ em Thủ Đức"]
+    }
+  },
+
+  "moneyPage": {
+    "_type": "money_page",
+    "slug": { "_type": "slug", "current": "lop-cau-long-tre-em" },
+    "audience": "tre_em",
+    "h1": "Lớp cầu lông trẻ em tại TP.HCM",
+    "metaTitle": "Lớp Cầu Lông Trẻ Em TP.HCM | Nền Tảng Vận Động | V2",
+    "metaDescription": "Lớp cầu lông trẻ em V2 Badminton tại TP.HCM: dạy nền tảng vận động, phản xạ và cảm giác cầu trước khi vào kỹ thuật. Sân Bình Thạnh và Thủ Đức.",
+    "ctaLabel": "Nhận tư vấn cho phụ huynh",
+
+    "intro": [
+      {
+        "_type": "block", "_key": "i1", "style": "normal", "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "a", "text": "Lớp cầu lông trẻ em tại V2 Badminton thiết kế theo nhịp độ dễ theo, ưu tiên ", "marks": [] },
+          { "_type": "span", "_key": "b", "text": "nền tảng vận động — di chuyển chân, phản xạ và cảm giác cầu", "marks": ["strong"] },
+          { "_type": "span", "_key": "c", "text": " trước khi tăng dần kỹ thuật.", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block", "_key": "i2", "style": "normal", "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "x", "text": "Phụ huynh có thể chọn lớp nhóm 2 buổi/tuần (1.000.000đ/tháng) hoặc 3 buổi/tuần (1.300.000đ/tháng) tại Sân Green (Bình Thạnh, 154/9 Nguyễn Xí, P.26) và cụm Huệ Thiên, Khang Sport, Phúc Lộc (Thủ Đức).", "marks": [] }
+        ]
+      }
+    ],
+
+    "body": [
+      { "_type": "block", "_key": "h2age", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Trẻ mấy tuổi có thể bắt đầu học cầu lông?", "marks": [] }] },
+      { "_type": "block", "_key": "page", "style": "normal", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "V2 nhận trẻ từ 6 tuổi trở lên. Cách HLV tiếp cận thay đổi theo độ tuổi:", "marks": [] }] },
+      { "_type": "block", "_key": "liage1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "6-9 tuổi.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Trọng tâm là vận động nền, phản xạ và cảm giác cầu. Buổi học mang tính game, hạn chế kỹ thuật phức tạp để trẻ không nản.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liage2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "10-12 tuổi.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Bắt đầu chính thức các kỹ thuật cốt lõi: cầm vợt, di chuyển chân, phát cầu, đánh thấp tay. Lớp có cấu trúc rõ hơn.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liage3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "13-15 tuổi.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Có thể vào lớp cơ bản chung với người mới lớn — nhịp lớp và yêu cầu kỹ thuật ngang nhau.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2how", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Một buổi học của trẻ ở V2 diễn ra như thế nào?", "marks": [] }] },
+      { "_type": "block", "_key": "lihow1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "10-15 phút khởi động qua trò vận động", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — không bài tập thể lực khô khan, ưu tiên game di chuyển chân để trẻ vào nhịp tự nhiên.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lihow2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "30-40 phút bài kỹ thuật chính", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — một kỹ thuật/buổi cho trẻ nhỏ, mỗi buổi lặp lại đủ để trẻ nhớ động tác.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lihow3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "15-20 phút đánh tự do hoặc trò chơi mục tiêu", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — đưa kỹ thuật vào tình huống chơi thực tế, có thể bằng game đối kháng nhẹ.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lihow4", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "5 phút tổng kết và bài tập về nhà", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — HLV nhắc lại 1-2 điểm trẻ làm tốt và 1 điểm cần luyện thêm trước buổi sau.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2prep", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Phụ huynh cần chuẩn bị gì cho con?", "marks": [] }] },
+      { "_type": "block", "_key": "liprep1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Giày thể thao đế không trơn (giày badminton hoặc giày running đế phẳng).", "marks": [] }]},
+      { "_type": "block", "_key": "liprep2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Quần áo thể thao thoải mái, thấm mồ hôi tốt.", "marks": [] }]},
+      { "_type": "block", "_key": "liprep3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Nước uống — buổi học vận động liên tục, trẻ cần uống đủ.", "marks": [] }]},
+      { "_type": "block", "_key": "liprep4", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Vợt cầu lông phù hợp độ tuổi.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Trẻ dưới 10 tuổi nên dùng vợt nhỏ và nhẹ (60-75g). Nếu chưa có, phụ huynh nhắn V2 để được tư vấn vợt trước buổi đầu — không cần mua sẵn nếu chưa chắc.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2prog", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Học bao lâu thì trẻ có thể đánh được?", "marks": [] }] },
+      { "_type": "block", "_key": "pprog", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "x", "text": "Với lịch 2-3 buổi/tuần, đa số trẻ sẽ:", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liprog1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Sau 4-6 tuần.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Cầm vợt đúng, di chuyển chân cơ bản, phát cầu được sang lưới ổn định.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liprog2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Sau 3-4 tháng.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Đánh rally ngắn 4-6 lần với bạn cùng lớp, biết đánh thấp tay và phản xạ với cầu đến nhanh.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liprog3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Sau 6-12 tháng.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Đánh đôi cơ bản, biết đập cầu, di chuyển chân tự nhiên hơn. V2 có thể đề xuất chuyển sang lớp nâng cao.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "pprogend", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "x", "text": "Cá nhân hóa rất quan trọng cho trẻ em — tốc độ tiến bộ thay đổi theo độ tuổi, mức độ vận động sẵn có và tần suất tập. Phụ huynh quan sát con qua 2-3 buổi đầu để biết con thuộc nhịp nào và có cần bổ sung 1 kèm 1 không.", "marks": [] }
+      ]}
+    ]
+  },
+
+  "newFaqs": [
+    {
+      "_type": "faq",
+      "question": "Trẻ chưa biết gì có học được cầu lông không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Hoàn toàn được. Lớp trẻ em V2 thiết kế cho trẻ bắt đầu từ con số 0 — HLV dạy từ cầm vợt, di chuyển chân đến phản xạ cơ bản. Phụ huynh không cần lo con phải có nền tảng trước.", "marks": [] }
+      ]}],
+      "pages": ["tre_em"], "includeInSchema": true, "featured": false, "order": 70
+    },
+    {
+      "_type": "faq",
+      "question": "Có cần mua vợt riêng cho con trước khi đến học không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Không cần. Phụ huynh nhắn V2 trước buổi đầu để được tư vấn cỡ vợt và mẫu vợt phù hợp độ tuổi của con. Trẻ dưới 10 tuổi nên dùng vợt nhẹ 60-75g, không nên dùng vợt người lớn.", "marks": [] }
+      ]}],
+      "pages": ["tre_em"], "includeInSchema": true, "featured": false, "order": 71
+    },
+    {
+      "_type": "faq",
+      "question": "Phụ huynh có ngồi xem buổi học của con không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Có. Cả 4 sân V2 (Green, Huệ Thiên, Khang Sport, Phúc Lộc) đều có khu ghế chờ. Phụ huynh nên xem buổi đầu để hiểu cách HLV dạy và cho con cảm giác an toàn. Từ buổi thứ 2 trở đi, nhiều phụ huynh để con tự học.", "marks": [] }
+      ]}],
+      "pages": ["tre_em"], "includeInSchema": true, "featured": false, "order": 72
+    },
+    {
+      "_type": "faq",
+      "question": "Lớp trẻ em V2 có chia theo độ tuổi không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "V2 cố gắng xếp trẻ vào nhóm có độ tuổi gần nhau (6-9 / 10-12 / 13-15) để nhịp lớp đồng đều. Khi số lượng học viên thay đổi, HLV cũng điều chỉnh nội dung trong cùng buổi để mỗi trẻ học đúng tầm.", "marks": [] }
+      ]}],
+      "pages": ["tre_em"], "includeInSchema": true, "featured": false, "order": 73
+    },
+    {
+      "_type": "faq",
+      "question": "Trẻ học bao lâu thì có thể thi đấu được?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Trẻ học đều 2-3 buổi/tuần thường mất 4-6 tháng để có thể thi đấu giao hữu hoặc giải thiếu nhi cấp địa phương. Trẻ muốn thi đấu trình độ cao hơn thường bổ sung 1 kèm 1 (400.000đ/giờ) để chỉnh kỹ thuật và chiến thuật.", "marks": [] }
+      ]}],
+      "pages": ["tre_em"], "includeInSchema": true, "featured": false, "order": 74
+    }
+  ],
+
+  "referenceWiring": {
+    "_note": "Slug values are best-guess. Verify in Sanity Studio.",
+    "relatedLocations": [
+      { "slug": "green", "name": "Sân Green (Bình Thạnh)" },
+      { "slug": "hue-thien", "name": "Sân Huệ Thiên (Thủ Đức)" },
+      { "slug": "khang-sport", "name": "Sân Khang Sport (Thủ Đức)" },
+      { "slug": "phuc-loc", "name": "Sân Phúc Lộc (Thủ Đức)" }
+    ],
+    "relatedPricing": [
+      { "slug": "group-basic-2x", "name": "Lớp nhóm 2 buổi/tuần — phù hợp trẻ nhỏ" },
+      { "slug": "group-basic-3x", "name": "Lớp nhóm 3 buổi/tuần cơ bản" },
+      { "slug": "private-1-1", "name": "1 kèm 1 — cho trẻ muốn chỉnh kỹ thuật" }
+    ],
+    "relatedFaqs": "Wire to the 5 newFaqs above after creation."
+  }
+}
