@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
 import { slugifyValue } from "./shared";
 import {
   CONTENT_FORMAT_OPTIONS,
@@ -150,6 +150,14 @@ export const contentArticle = defineType({
       to: [{ type: "money_page" }],
       description:
         "Liên kết tới trang bán lớp học liên quan. Quan trọng cho SEO và chuyển đổi — hub/bài viết dẫn về money page.",
+    }),
+    defineField({
+      name: "relatedFaqs",
+      title: "Câu hỏi thường gặp liên quan",
+      type: "array",
+      description:
+        "Câu hỏi hiển thị ở cuối bài. Dùng cho khối Q&A và JSON-LD FAQPage (AEO). Tuỳ chọn.",
+      of: [defineArrayMember({ type: "reference", to: [{ type: "faq" }] })],
     }),
   ],
   preview: {
