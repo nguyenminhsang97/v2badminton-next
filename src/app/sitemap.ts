@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { canonicalUrl, coreRoutes } from "@/lib/routes";
 import {
   getCoaches,
+  getContentSitemapEntries,
   getMoneyPageSitemapEntries,
   getPublishedPosts,
 } from "@/lib/sanity";
@@ -32,10 +33,11 @@ const SITE_RELAUNCH_DATE = new Date("2026-04-01T00:00:00Z");
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const generatedAt = SITE_RELAUNCH_DATE;
-  const [posts, coaches, moneyPages] = await Promise.all([
+  const [posts, coaches, moneyPages, contentEntries] = await Promise.all([
     getPublishedPosts(),
     getCoaches(),
     getMoneyPageSitemapEntries(),
+    getContentSitemapEntries(),
   ]);
   const moneyPageUpdatedAtByPath = new Map<string, string | null>(
     moneyPages.map((page) => [`/${page.slug}/`, page.updatedAt] as const),
@@ -137,11 +139,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ]
       : [];
 
+  const contentRoutes = contentEntries.map((entry) => ({
+    url: canonicalUrl(entry.path),
+    lastModified: resolveLastModified(entry.updatedAt, generatedAt),
+    changeFrequency: "weekly" as const,
+    priority: entry.type === "content_hub" ? 0.8 : 0.7,
+  }));
+
   return [
     ...staticRoutes,
     ...aboutRoute,
     ...legalRoutes,
     ...blogRoutes,
     ...coachRoutes,
+    ...contentRoutes,
   ];
 }
