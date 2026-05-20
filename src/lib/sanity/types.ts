@@ -247,3 +247,86 @@ export type SanityPostListItem = Pick<
   | "excerpt"
   | "coverImageUrl"
 >;
+
+// ─── Content Platform (Phase 1) ────────────────────────────────────────────
+
+export type SanityContentFormat = "guide" | "how_to" | "explainer";
+export type SanityContentStatus = "draft" | "published";
+
+export type SanityContentHub = {
+  id: string;
+  slug: string;
+  fullPath: string;
+  title: string;
+  seoTitle: string;
+  seoDescription: string;
+  quickAnswer: string | null;
+  intro: SanityPortableTextBlock[];
+  isIndexed: boolean;
+  updatedAt: string | null;
+};
+
+export type SanityContentNode = SanityContentHub & {
+  parentHubSlug: string;
+  parentNodeSlug: string | null;
+};
+
+export type SanityContentArticle = {
+  id: string;
+  slug: string;
+  fullPath: string;
+  title: string;
+  seoTitle: string;
+  seoDescription: string;
+  contentFormat: SanityContentFormat;
+  status: SanityContentStatus;
+  publishedAt: string | null;
+  updatedAt: string | null;
+  excerpt: string | null;
+  quickAnswer: string | null;
+  coverImageUrl: string | null;
+  coverImageAlt: string | null;
+  body: SanityPortableTextBlock[];
+  isIndexed: boolean;
+  hubSlug: string;
+  nodeSlug: string | null;
+  relatedFaqs: SanityFaq[];
+  relatedMoneyPageSlug: string | null;
+};
+
+export type SanityContentArticleCard = {
+  id: string;
+  slug: string;
+  fullPath: string;
+  title: string;
+  excerpt: string | null;
+  coverImageUrl: string | null;
+  coverImageAlt: string | null;
+  publishedAt: string | null;
+  contentFormat: SanityContentFormat;
+};
+
+export type SanityContentChildNode = {
+  id: string;
+  slug: string;
+  fullPath: string;
+  title: string;
+  quickAnswer: string | null;
+};
+
+export type SanityRouteResolution = {
+  _type: "content_hub" | "content_node" | "content_article";
+  _id: string;
+  isIndexed: boolean;
+};
+
+export type SanityRouteRedirect = {
+  toPath: string;
+  permanent: boolean;
+};
+
+export type SanityContentSitemapEntry = {
+  path: string;
+  updatedAt: string | null;
+  type: "content_hub" | "content_node" | "content_article";
+};

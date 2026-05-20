@@ -489,3 +489,164 @@ export const POST_BY_SLUG_QUERY = defineQuery(`
     "relatedMoneyPageSlug": coalesce(relatedMoneyPage->slug.current, null)
   }
 `);
+
+// ─── Content Platform projections (Phase 1) ────────────────────────────────
+
+export const CONTENT_CHILD_NODE_PROJECTION = `{
+  "id": _id,
+  "slug": slug.current,
+  "fullPath": fullPath.current,
+  title,
+  "quickAnswer": coalesce(quickAnswer, null)
+}`;
+
+export const CONTENT_ARTICLE_CARD_PROJECTION = `{
+  "id": _id,
+  "slug": slug.current,
+  "fullPath": fullPath.current,
+  title,
+  "excerpt": coalesce(excerpt, null),
+  "coverImageUrl": coalesce(coverImage.asset->url, null),
+  "coverImageAlt": coalesce(coverImage.alt, null),
+  "publishedAt": coalesce(publishedAt, null),
+  contentFormat
+}`;
+
+export const CONTENT_ARTICLE_PROJECTION = `{
+  "id": _id,
+  "slug": slug.current,
+  "fullPath": fullPath.current,
+  "updatedAt": coalesce(_updatedAt, null),
+  title,
+  contentFormat,
+  status,
+  publishedAt,
+  "excerpt": coalesce(excerpt, null),
+  "quickAnswer": coalesce(quickAnswer, null),
+  seoTitle,
+  seoDescription,
+  "coverImageUrl": coalesce(coverImage.asset->url, null),
+  "coverImageAlt": coalesce(coverImage.alt, null),
+  "body": coalesce(body, []),
+  "isIndexed": coalesce(isIndexed, true),
+  "hubSlug": parentHub->slug.current,
+  "nodeSlug": coalesce(parentNode->slug.current, null),
+  "relatedMoneyPageSlug": coalesce(relatedMoneyPage->slug.current, null),
+  "relatedFaqs": *[
+    _type == "faq" &&
+    _id in coalesce(^.relatedFaqs[]._ref, []) &&
+    ${PUBLISHED_ONLY_FILTER}
+  ]
+  | order(coalesce(order, 9999) asc, _createdAt asc)
+  ${FAQ_PROJECTION}
+}`;
+
+// ─── Content Platform queries (Phase 1) ────────────────────────────────────
+
+export const ROUTE_RESOLUTION_QUERY = defineQuery(`
+  *[
+    fullPath.current == $path && ${PUBLISHED_ONLY_FILTER} && (
+      _type in ["content_hub", "content_node"] ||
+      (_type == "content_article" && status == "published")
+    )
+  ][0]{ _type, "_id": _id, "isIndexed": coalesce(isIndexed, true) }
+`);
+
+export const CONTENT_HUB_BY_ID_QUERY = defineQuery(`
+  *[
+    _type == "content_hub" &&
+    _id == $id &&
+    ${PUBLISHED_ONLY_FILTER}
+  ][0]{
+    "id": _id,
+    "slug": slug.current,
+    "fullPath": fullPath.current,
+    "updatedAt": coalesce(_updatedAt, null),
+    title,
+    seoTitle,
+    seoDescription,
+    "quickAnswer": coalesce(quickAnswer, null),
+    "intro": coalesce(intro, []),
+    "isIndexed": coalesce(isIndexed, true),
+    "directNodes": *[
+      _type == "content_node" &&
+      parentHub._ref == ^._id &&
+      !defined(parentNode) &&
+      coalesce(isIndexed, true) &&
+      ${PUBLISHED_ONLY_FILTER}
+    ] | order(title asc) ${CONTENT_CHILD_NODE_PROJECTION},
+    "directArticles": *[
+      _type == "content_article" &&
+      parentHub._ref == ^._id &&
+      !defined(parentNode) &&
+      status == "published" &&
+      ${PUBLISHED_ONLY_FILTER}
+    ] | order(coalesce(publishedAt, _createdAt) desc) ${CONTENT_ARTICLE_CARD_PROJECTION}
+  }
+`);
+
+export const CONTENT_NODE_BY_ID_QUERY = defineQuery(`
+  *[
+    _type == "content_node" &&
+    _id == $id &&
+    ${PUBLISHED_ONLY_FILTER}
+  ][0]{
+    "id": _id,
+    "slug": slug.current,
+    "fullPath": fullPath.current,
+    "updatedAt": coalesce(_updatedAt, null),
+    title,
+    seoTitle,
+    seoDescription,
+    "quickAnswer": coalesce(quickAnswer, null),
+    "intro": coalesce(intro, []),
+    "isIndexed": coalesce(isIndexed, true),
+    "parentHubSlug": parentHub->slug.current,
+    "parentNodeSlug": coalesce(parentNode->slug.current, null),
+    "directNodes": *[
+      _type == "content_node" &&
+      parentNode._ref == ^._id &&
+      coalesce(isIndexed, true) &&
+      ${PUBLISHED_ONLY_FILTER}
+    ] | order(title asc) ${CONTENT_CHILD_NODE_PROJECTION},
+    "directArticles": *[
+      _type == "content_article" &&
+      parentNode._ref == ^._id &&
+      status == "published" &&
+      ${PUBLISHED_ONLY_FILTER}
+    ] | order(coalesce(publishedAt, _createdAt) desc) ${CONTENT_ARTICLE_CARD_PROJECTION}
+  }
+`);
+
+export const CONTENT_ARTICLE_BY_ID_QUERY = defineQuery(`
+  *[
+    _type == "content_article" &&
+    _id == $id &&
+    status == "published" &&
+    ${PUBLISHED_ONLY_FILTER}
+  ][0]${CONTENT_ARTICLE_PROJECTION}
+`);
+
+export const CONTENT_REDIRECT_QUERY = defineQuery(`
+  *[
+    _type == "route_redirect" &&
+    fromPath == $path &&
+    ${PUBLISHED_ONLY_FILTER}
+  ][0]{ toPath, "permanent": coalesce(permanent, true) }
+`);
+
+export const CONTENT_SITEMAP_QUERY = defineQuery(`
+  *[
+    (
+      (_type in ["content_hub", "content_node"]) ||
+      (_type == "content_article" && status == "published")
+    ) &&
+    defined(fullPath.current) &&
+    coalesce(isIndexed, true) &&
+    ${PUBLISHED_ONLY_FILTER}
+  ]{
+    "path": fullPath.current,
+    "updatedAt": coalesce(_updatedAt, null),
+    "type": _type
+  }
+`);
