@@ -264,6 +264,8 @@ export type SanityContentHub = {
   intro: SanityPortableTextBlock[];
   isIndexed: boolean;
   updatedAt: string | null;
+  directArticles: SanityContentArticleCard[];
+  directNodes: SanityContentChildNode[];
 };
 
 export type SanityContentNode = SanityContentHub & {

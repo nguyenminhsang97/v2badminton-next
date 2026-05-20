@@ -1,0 +1,88 @@
+import type { Metadata } from "next";
+import { notFound, permanentRedirect, redirect } from "next/navigation";
+import { ArticleView } from "@/components/content/ArticleView";
+import { HubPortal } from "@/components/content/HubPortal";
+import { NodePortal } from "@/components/content/NodePortal";
+import { normalizeContentPath } from "@/lib/content/path";
+import { canonicalUrl, reservedRoutePrefixes } from "@/lib/routes";
+import {
+  getContentArticle,
+  getContentHub,
+  getContentNode,
+  getContentRedirect,
+  resolveContentRoute,
+} from "@/lib/sanity";
+
+export const dynamicParams = true;
+
+type CatchAllPageProps = {
+  params: Promise<{ slug: string[] }>;
+};
+
+export async function generateMetadata({
+  params,
+}: CatchAllPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const path = normalizeContentPath(slug);
+
+  const route = await resolveContentRoute(path);
+
+  if (route == null) {
+    return { robots: { index: false, follow: true } };
+  }
+
+  let seoTitle: string | undefined;
+  let seoDescription: string | undefined;
+
+  if (route._type === "content_hub") {
+    const hub = await getContentHub(route._id);
+    seoTitle = hub?.seoTitle;
+    seoDescription = hub?.seoDescription;
+  } else if (route._type === "content_node") {
+    const node = await getContentNode(route._id);
+    seoTitle = node?.seoTitle;
+    seoDescription = node?.seoDescription;
+  } else {
+    const article = await getContentArticle(route._id);
+    seoTitle = article?.seoTitle;
+    seoDescription = article?.seoDescription;
+  }
+
+  return {
+    title: seoTitle,
+    description: seoDescription,
+    alternates: { canonical: canonicalUrl(path) },
+    robots: { index: route.isIndexed, follow: true },
+  };
+}
+
+export default async function CatchAllPage({ params }: CatchAllPageProps) {
+  const { slug } = await params;
+  const path = normalizeContentPath(slug);
+
+  if (reservedRoutePrefixes.some((p) => path.startsWith(p))) {
+    notFound();
+  }
+
+  const route = await resolveContentRoute(path);
+
+  if (route) {
+    if (route._type === "content_hub") {
+      return <HubPortal id={route._id} path={path} />;
+    }
+    if (route._type === "content_node") {
+      return <NodePortal id={route._id} path={path} />;
+    }
+    return <ArticleView id={route._id} path={path} />;
+  }
+
+  const contentRedirect = await getContentRedirect(path);
+  if (contentRedirect) {
+    if (contentRedirect.permanent) {
+      permanentRedirect(contentRedirect.toPath);
+    }
+    redirect(contentRedirect.toPath);
+  }
+
+  notFound();
+}
