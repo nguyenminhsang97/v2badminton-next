@@ -28,73 +28,117 @@ export async function NodePortal({ id, path }: NodePortalProps) {
     { label: node.title },
   ];
 
+  const articleCount = node.directArticles.length;
+  const subNodeCount = node.directNodes.length;
+  const description = node.seoDescription ?? node.quickAnswer ?? undefined;
+
   return (
     <>
       <ContentStructuredData path={path} breadcrumbTrail={trail} />
 
-      <div className="content-node">
+      <div className="blog-list">
         <ContentBreadcrumbs trail={trail} />
 
-        <h1 className="content-node__title">{node.title}</h1>
-
-        {node.quickAnswer ? (
-          <div className="quick-answer">
-            <p className="quick-answer__label">Tóm tắt nhanh</p>
-            <p className="quick-answer__body">{node.quickAnswer}</p>
+        <section className="blog-list__hero">
+          <div className="section__header">
+            <p className="section__eyebrow">{node.parentHubTitle}</p>
+            <h1 className="section__title">{node.title}</h1>
+            {description ? (
+              <p className="section__desc">{description}</p>
+            ) : null}
           </div>
-        ) : null}
-
-        {node.intro.length > 0 ? (
-          <div className="content-node__intro">
-            <PortableText value={node.intro as PortableTextBlock[]} />
+          <div className="blog-list__hero-meta">
+            {articleCount > 0 ? (
+              <span className="blog-list__hero-chip">
+                {articleCount} bài viết
+              </span>
+            ) : null}
+            {subNodeCount > 0 ? (
+              <span className="blog-list__hero-chip">
+                {subNodeCount} chuyên mục con
+              </span>
+            ) : null}
           </div>
-        ) : null}
+        </section>
 
-        {node.directArticles.length > 0 ? (
-          <section className="content-node__articles">
-            <h2>Bài viết</h2>
-            <ul className="content-card-list">
-              {node.directArticles.map((article) => (
-                <li key={article.id} className="content-card">
-                  {article.coverImageUrl ? (
-                    <Link href={article.fullPath}>
-                      <Image
-                        src={article.coverImageUrl}
-                        alt={article.coverImageAlt ?? article.title}
-                        width={400}
-                        height={225}
-                      />
-                    </Link>
-                  ) : null}
-                  <div className="content-card__body">
-                    <Link href={article.fullPath} className="content-card__title">
-                      {article.title}
-                    </Link>
-                    {article.excerpt ? (
-                      <p className="content-card__excerpt">{article.excerpt}</p>
-                    ) : null}
-                  </div>
-                </li>
-              ))}
-            </ul>
+        {node.quickAnswer || node.intro.length > 0 ? (
+          <section className="blog-post__content-shell">
+            {node.quickAnswer ? (
+              <div className="quick-answer">
+                <p className="quick-answer__label">Tóm tắt nhanh</p>
+                <p className="quick-answer__body">{node.quickAnswer}</p>
+              </div>
+            ) : null}
+            {node.intro.length > 0 ? (
+              <div className="blog-post__body">
+                <PortableText value={node.intro as PortableTextBlock[]} />
+              </div>
+            ) : null}
           </section>
         ) : null}
 
-        {node.directNodes.length > 0 ? (
-          <section className="content-node__subnodes">
-            <h2>Chuyên mục con</h2>
-            <ul className="content-node-list">
-              {node.directNodes.map((childNode) => (
-                <li key={childNode.id} className="content-node-item">
-                  <Link href={childNode.fullPath} className="content-node-item__title">
-                    {childNode.title}
+        {articleCount > 0 ? (
+          <section className="blog-list__grid" aria-label="Danh sách bài viết">
+            {node.directArticles.map((article) => (
+              <article key={article.id} className="blog-card">
+                <Link href={article.fullPath} className="blog-card__media">
+                  {article.coverImageUrl ? (
+                    <Image
+                      src={article.coverImageUrl}
+                      alt={article.coverImageAlt ?? article.title}
+                      className="blog-card__cover"
+                      width={720}
+                      height={405}
+                      sizes="(max-width: 960px) calc(100vw - 32px), 360px"
+                    />
+                  ) : (
+                    <div
+                      className="blog-card__cover blog-card__cover--placeholder"
+                      aria-hidden="true"
+                    />
+                  )}
+                </Link>
+                <div className="blog-card__body">
+                  <span className="blog-card__category">{node.title}</span>
+                  <Link
+                    href={article.fullPath}
+                    className="blog-card__title-link"
+                  >
+                    <h2 className="blog-card__title">{article.title}</h2>
+                  </Link>
+                  {article.excerpt ? (
+                    <p className="blog-card__excerpt">{article.excerpt}</p>
+                  ) : null}
+                  <Link href={article.fullPath} className="blog-card__cta">
+                    Đọc bài viết →
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </section>
+        ) : null}
+
+        {subNodeCount > 0 ? (
+          <section className="blog-list__grid" aria-label="Chuyên mục con">
+            {node.directNodes.map((childNode) => (
+              <article key={childNode.id} className="blog-card">
+                <div className="blog-card__body">
+                  <span className="blog-card__category">Chuyên mục</span>
+                  <Link
+                    href={childNode.fullPath}
+                    className="blog-card__title-link"
+                  >
+                    <h2 className="blog-card__title">{childNode.title}</h2>
                   </Link>
                   {childNode.quickAnswer ? (
-                    <p className="content-node-item__desc">{childNode.quickAnswer}</p>
+                    <p className="blog-card__excerpt">{childNode.quickAnswer}</p>
                   ) : null}
-                </li>
-              ))}
-            </ul>
+                  <Link href={childNode.fullPath} className="blog-card__cta">
+                    Khám phá chuyên mục →
+                  </Link>
+                </div>
+              </article>
+            ))}
           </section>
         ) : null}
       </div>
