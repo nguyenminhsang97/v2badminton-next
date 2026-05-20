@@ -270,7 +270,11 @@ export type SanityContentHub = {
 
 export type SanityContentNode = SanityContentHub & {
   parentHubSlug: string;
+  parentHubTitle: string;
+  parentHubFullPath: string;
   parentNodeSlug: string | null;
+  parentNodeTitle: string | null;
+  parentNodeFullPath: string | null;
 };
 
 export type SanityContentArticle = {
@@ -289,9 +293,12 @@ export type SanityContentArticle = {
   coverImageUrl: string | null;
   coverImageAlt: string | null;
   body: SanityPortableTextBlock[];
-  isIndexed: boolean;
   hubSlug: string;
+  hubTitle: string;
+  hubFullPath: string;
   nodeSlug: string | null;
+  nodeTitle: string | null;
+  nodeFullPath: string | null;
   relatedFaqs: SanityFaq[];
   relatedMoneyPageSlug: string | null;
 };

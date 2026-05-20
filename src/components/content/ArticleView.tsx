@@ -22,23 +22,10 @@ export async function ArticleView({ id, path }: ArticleViewProps) {
 
   const trail = [
     { label: "Trang chủ", href: "/" },
-    ...(article.nodeSlug
-      ? [
-          {
-            label: article.hubSlug,
-            href: `/${article.hubSlug}/`,
-          },
-          {
-            label: article.nodeSlug,
-            href: `/${article.hubSlug}/${article.nodeSlug}/`,
-          },
-        ]
-      : [
-          {
-            label: article.hubSlug,
-            href: `/${article.hubSlug}/`,
-          },
-        ]),
+    { label: article.hubTitle, href: article.hubFullPath },
+    ...(article.nodeTitle && article.nodeFullPath
+      ? [{ label: article.nodeTitle, href: article.nodeFullPath }]
+      : []),
     { label: article.title },
   ];
 

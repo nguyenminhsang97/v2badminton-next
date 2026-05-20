@@ -1,3 +1,12 @@
+// Phase 1 content-platform catch-all route.
+//
+// The locked spec calls for an optional catch-all (`[[...slug]]`), but Next.js
+// 16 rejects that because `(site)/page.tsx` and `(site)/[[...slug]]/page.tsx`
+// resolve to the same `/` with equal specificity. We use a required catch-all
+// (`[...slug]`) instead — content paths always have ≥1 segment, so this
+// matches every routable content URL without colliding with the home route.
+// All other behavior (resolver, redirects, noindex defaults) matches §5 of
+// `.claude/CMS/v2badminton-cms-phase-1-locked-spec.md`.
 import type { Metadata } from "next";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { ArticleView } from "@/components/content/ArticleView";

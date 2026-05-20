@@ -21,14 +21,9 @@ export async function NodePortal({ id, path }: NodePortalProps) {
 
   const trail = [
     { label: "Trang chủ", href: "/" },
-    { label: node.parentHubSlug, href: `/${node.parentHubSlug}/` },
-    ...(node.parentNodeSlug
-      ? [
-          {
-            label: node.parentNodeSlug,
-            href: `/${node.parentHubSlug}/${node.parentNodeSlug}/`,
-          },
-        ]
+    { label: node.parentHubTitle, href: node.parentHubFullPath },
+    ...(node.parentNodeTitle && node.parentNodeFullPath
+      ? [{ label: node.parentNodeTitle, href: node.parentNodeFullPath }]
       : []),
     { label: node.title },
   ];

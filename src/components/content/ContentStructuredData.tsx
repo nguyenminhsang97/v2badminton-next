@@ -38,8 +38,13 @@ export function ContentStructuredData({
         <JsonLd
           id={`content-article-${article.id}`}
           data={{
+            // Phase 1: always emit Article. HowTo requires a step[] array which
+            // our portable-text body does not produce; emitting HowTo without
+            // steps is invalid. Articles tagged `how_to` are still rendered as
+            // Article JSON-LD — the contentFormat affects on-page UX, not the
+            // schema type. Revisit when body gains structured step blocks.
             "@context": "https://schema.org",
-            "@type": article.contentFormat === "how_to" ? "HowTo" : "Article",
+            "@type": "Article",
             headline: article.title,
             description: article.seoDescription,
             datePublished: article.publishedAt ?? undefined,

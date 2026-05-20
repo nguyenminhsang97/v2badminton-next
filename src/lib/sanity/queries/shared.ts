@@ -528,9 +528,12 @@ export const CONTENT_ARTICLE_PROJECTION = `{
   "coverImageUrl": coalesce(coverImage.asset->url, null),
   "coverImageAlt": coalesce(coverImage.alt, null),
   "body": coalesce(body, []),
-  "isIndexed": coalesce(isIndexed, true),
   "hubSlug": parentHub->slug.current,
+  "hubTitle": parentHub->title,
+  "hubFullPath": parentHub->fullPath.current,
   "nodeSlug": coalesce(parentNode->slug.current, null),
+  "nodeTitle": coalesce(parentNode->title, null),
+  "nodeFullPath": coalesce(parentNode->fullPath.current, null),
   "relatedMoneyPageSlug": coalesce(relatedMoneyPage->slug.current, null),
   "relatedFaqs": *[
     _type == "faq" &&
@@ -602,7 +605,11 @@ export const CONTENT_NODE_BY_ID_QUERY = defineQuery(`
     "intro": coalesce(intro, []),
     "isIndexed": coalesce(isIndexed, true),
     "parentHubSlug": parentHub->slug.current,
+    "parentHubTitle": parentHub->title,
+    "parentHubFullPath": parentHub->fullPath.current,
     "parentNodeSlug": coalesce(parentNode->slug.current, null),
+    "parentNodeTitle": coalesce(parentNode->title, null),
+    "parentNodeFullPath": coalesce(parentNode->fullPath.current, null),
     "directNodes": *[
       _type == "content_node" &&
       parentNode._ref == ^._id &&
