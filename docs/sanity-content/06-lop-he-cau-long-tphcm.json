@@ -1,0 +1,168 @@
+{
+  "_meta": {
+    "page": "/lop-he-cau-long-tphcm/",
+    "draftStatus": "needs_review",
+    "writingRulesApplied": ["W2.3.1 answer-first intro", "W2.3.2 question H2s", "W2.3.3 concrete entities", "W2.3.5 ≥5 FAQs"],
+    "seoTargets": {
+      "primaryKeyword": "lớp hè cầu lông TP.HCM",
+      "secondaryKeywords": ["lớp hè cầu lông trẻ em", "khoá hè cầu lông", "học cầu lông mùa hè", "lớp hè thể thao TP.HCM"]
+    },
+    "note": "Plan flags this audience as broader than tre_em alone. Using nguoi_moi as primary audience because summer enrollment includes adults beginning during break."
+  },
+
+  "moneyPage": {
+    "_type": "money_page",
+    "slug": { "_type": "slug", "current": "lop-he-cau-long-tphcm" },
+    "audience": "nguoi_moi",
+    "h1": "Lớp hè cầu lông tại TP.HCM",
+    "metaTitle": "Lớp Hè Cầu Lông TP.HCM 2026 | Trẻ Em & Người Lớn | V2",
+    "metaDescription": "Lớp hè cầu lông V2 Badminton TP.HCM cho trẻ em và người mới: tăng buổi/tuần, mở thêm khung trưa-chiều. Từ 1 triệu/tháng. Sân Bình Thạnh và Thủ Đức.",
+    "ctaLabel": "Đăng ký lớp hè",
+
+    "intro": [
+      {
+        "_type": "block", "_key": "i1", "style": "normal", "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "a", "text": "Lớp hè cầu lông tại V2 Badminton là phiên bản ", "marks": [] },
+          { "_type": "span", "_key": "b", "text": "nhịp tập tăng cường", "marks": ["strong"] },
+          { "_type": "span", "_key": "c", "text": " của lớp nhóm thường xuyên: học sinh và người mới có thể tận dụng kỳ nghỉ hè để tăng từ 2 buổi/tuần lên 3 buổi/tuần hoặc bổ sung buổi 1 kèm 1.", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block", "_key": "i2", "style": "normal", "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "x", "text": "Lịch hè mở thêm các khung trưa (11:30-14:00) và chiều (14:00-15:30) bên cạnh khung sáng cuối tuần và tối trong tuần đã có sẵn. Sân: Green (Bình Thạnh), Huệ Thiên, Khang Sport, Phúc Lộc (Thủ Đức), TP.HCM.", "marks": [] }
+        ]
+      }
+    ],
+
+    "body": [
+      { "_type": "block", "_key": "h2who", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Lớp hè V2 phù hợp với ai?", "marks": [] }] },
+      { "_type": "block", "_key": "liwho1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Học sinh tiểu học và THCS", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — nghỉ hè là khoảng thời gian dồn nhiều buổi nhất, có thể tập 3-4 buổi/tuần thay vì 1-2 như năm học.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liwho2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Sinh viên về nghỉ hè", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — học cường độ cao trong 2-3 tháng để tích lũy nền tảng trước khi quay lại trường.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liwho3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Người mới muốn bắt đầu trong hè", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — tránh phải làm quen với thể thao mới khi đã quay vào lịch học hoặc làm việc bận rộn.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liwho4", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Phụ huynh muốn con vận động", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — thay vì để con ở nhà cả ngày, lớp hè giúp con có hoạt động đều đặn 3-4 buổi/tuần.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2diff", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Khung giờ lớp hè khác năm học như thế nào?", "marks": [] }] },
+      { "_type": "block", "_key": "pdiff", "style": "normal", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Trong hè, V2 giữ nguyên các khung lớp năm học và bổ sung thêm khung trưa-chiều cho học sinh nghỉ:", "marks": [] }] },
+      { "_type": "block", "_key": "lidiff1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Khung trưa (11:30-14:00).", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Sân Khang Sport (Thủ Đức) — phù hợp học sinh sau giờ sáng ở nhà.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lidiff2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Khung chiều (14:00-15:30).", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Sân Phúc Lộc (T2-T4-T6), Sân Green (T3-T5-T7) — học sinh nghỉ trưa xong là đến lớp luôn.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lidiff3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Vẫn có khung sáng cuối tuần (07:00-11:00) và tối trong tuần (18:00-22:00)", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — cho phụ huynh đi cùng con hoặc sinh viên đã quen lịch.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2how", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Đăng ký lớp hè bao nhiêu buổi/tuần là hợp lý?", "marks": [] }] },
+      { "_type": "block", "_key": "lihow1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "3 buổi/tuần — lựa chọn phổ biến nhất.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " 1.300.000đ/tháng cơ bản hoặc 1.500.000đ/tháng nâng cao. 12 buổi/tháng, đủ để học sinh tiến bộ rõ rệt qua 2-3 tháng hè.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lihow2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "3 buổi/tuần + 1-2 buổi 1 kèm 1.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Phù hợp khi học viên muốn sửa kỹ thuật cụ thể trong khi vẫn duy trì nhịp lớp nhóm. 1 kèm 1 là 400.000đ/giờ (chưa gồm sân).", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lihow3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "2 buổi/tuần — vừa đủ duy trì.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " 1.000.000đ/tháng. Phù hợp khi gia đình có nhiều hoạt động khác trong hè.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2fee", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Học phí lớp hè có khác lớp năm học không?", "marks": [] }] },
+      { "_type": "block", "_key": "pfee", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "x", "text": "Không. Học phí lớp nhóm áp dụng đồng nhất: 1.000.000đ/tháng (2 buổi/tuần), 1.300.000đ/tháng (3 buổi cơ bản), 1.500.000đ/tháng (3 buổi nâng cao). Khác biệt nằm ở số khung giờ V2 mở thêm trong hè, không phải ở giá.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2plan", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Lộ trình hè tham khảo: 8-12 tuần học cường độ", "marks": [] }] },
+      { "_type": "block", "_key": "pplan", "style": "normal", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Với khoảng 8-12 tuần nghỉ hè, đây là 3 lộ trình V2 thường tư vấn:", "marks": [] }] },
+      { "_type": "block", "_key": "lipl1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Lộ trình A — Học sinh mới bắt đầu (8-9 tuần).", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " 3 buổi/tuần cơ bản (1.300.000đ/tháng). 4 tuần đầu tập nền tảng (cầm vợt, di chuyển chân, phát cầu). 4 tuần sau bổ sung đánh thấp tay và rally đơn giản. Cuối hè trẻ có thể đánh đôi cơ bản với bạn.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lipl2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Lộ trình B — Học sinh đã có nền tảng (10-12 tuần).", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " 3 buổi/tuần nâng cao (1.500.000đ/tháng) kết hợp 2-3 buổi 1 kèm 1 (400.000đ/giờ) để sửa kỹ thuật cụ thể. Phù hợp trẻ muốn thi đấu giải thiếu nhi địa phương vào cuối hè.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lipl3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Lộ trình C — Người lớn bắt đầu trong hè.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " 2 buổi/tuần (1.000.000đ/tháng) khung tối hoặc cuối tuần, không thay đổi nhiều so với năm học. Phù hợp khi không có nhiều thời gian rảnh hơn trong hè.", "marks": [] }
+      ]}
+    ]
+  },
+
+  "newFaqs": [
+    {
+      "_type": "faq",
+      "question": "Lớp hè V2 bắt đầu từ tháng mấy?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Lớp hè trùng với kỳ nghỉ học sinh, thường từ đầu tháng 6 đến cuối tháng 8. V2 mở thêm khung trưa-chiều ngay khi học sinh bắt đầu nghỉ, học viên đăng ký trong tháng 5 để có nhiều khung để chọn.", "marks": [] }
+      ]}],
+      "pages": ["summer"], "includeInSchema": true, "featured": false, "order": 60
+    },
+    {
+      "_type": "faq",
+      "question": "Trẻ em mấy tuổi có thể tham gia lớp hè?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "V2 nhận trẻ từ 6 tuổi trở lên. Trẻ 6-9 tuổi học theo nhịp dễ theo, ưu tiên vận động nền và phản xạ. Trẻ 10-15 tuổi có thể vào lớp cơ bản chung với người mới. Phụ huynh nhắn V2 để xếp con vào lớp phù hợp độ tuổi.", "marks": [] }
+      ]}],
+      "pages": ["summer", "tre_em"], "includeInSchema": true, "featured": false, "order": 61
+    },
+    {
+      "_type": "faq",
+      "question": "Có lớp hè cấp tốc trong 2-4 tuần không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "V2 không bán gói cấp tốc cố định. Nếu cần lộ trình ngắn (ví dụ chuẩn bị giải nội bộ, sự kiện công ty), bạn đặt 1 kèm 1 hoặc kết hợp 1 kèm 1 với lớp nhóm để tăng tốc trong 2-4 tuần.", "marks": [] }
+      ]}],
+      "pages": ["summer"], "includeInSchema": true, "featured": false, "order": 62
+    },
+    {
+      "_type": "faq",
+      "question": "Học hè có cần đăng ký trọn cả tháng không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Lớp nhóm tính theo tháng nên đăng ký theo gói tháng (8 hoặc 12 buổi/tháng). Nếu gia đình có chuyến đi dài (1-2 tuần), bạn nhắn V2 trước để xếp học bù vào tuần sau hoặc khung khác.", "marks": [] }
+      ]}],
+      "pages": ["summer"], "includeInSchema": true, "featured": false, "order": 63
+    },
+    {
+      "_type": "faq",
+      "question": "Có kết hợp lớp nhóm và 1 kèm 1 trong hè không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Được. Cách phổ biến: lớp nhóm 3 buổi/tuần (1.300.000-1.500.000đ/tháng) duy trì nhịp, kết hợp 1-2 buổi 1 kèm 1 (400.000đ/giờ) để sửa kỹ thuật cụ thể. Nhiều phụ huynh chọn cách này cho trẻ tiến bộ nhanh trong 2-3 tháng hè.", "marks": [] }
+      ]}],
+      "pages": ["summer"], "includeInSchema": true, "featured": false, "order": 64
+    }
+  ],
+
+  "referenceWiring": {
+    "_note": "Slug values are best-guess. Verify in Sanity Studio.",
+    "relatedLocations": [
+      { "slug": "green", "name": "Sân Green (Bình Thạnh)" },
+      { "slug": "hue-thien", "name": "Sân Huệ Thiên (Thủ Đức)" },
+      { "slug": "khang-sport", "name": "Sân Khang Sport (Thủ Đức) — khung trưa hè" },
+      { "slug": "phuc-loc", "name": "Sân Phúc Lộc (Thủ Đức) — khung chiều hè" }
+    ],
+    "relatedPricing": [
+      { "slug": "group-basic-2x", "name": "Lớp nhóm 2 buổi/tuần" },
+      { "slug": "group-basic-3x", "name": "Lớp nhóm 3 buổi/tuần cơ bản (phổ biến nhất hè)" },
+      { "slug": "group-advanced-3x", "name": "Lớp nhóm 3 buổi/tuần nâng cao" },
+      { "slug": "private-1-1", "name": "1 kèm 1 (kết hợp với lớp nhóm)" }
+    ],
+    "relatedFaqs": "Wire to the 5 newFaqs above after creation."
+  }
+}

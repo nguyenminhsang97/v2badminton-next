@@ -1,0 +1,168 @@
+{
+  "_meta": {
+    "page": "/lop-cau-long-buoi-toi/",
+    "draftStatus": "needs_review",
+    "writingRulesApplied": ["W2.3.1 answer-first intro", "W2.3.2 question H2s", "W2.3.3 concrete entities", "W2.3.5 ≥5 FAQs"],
+    "seoTargets": {
+      "primaryKeyword": "lớp cầu lông buổi tối TP.HCM",
+      "secondaryKeywords": ["học cầu lông tối", "lớp cầu lông sau giờ làm", "lớp cầu lông buổi tối Bình Thạnh", "lớp cầu lông buổi tối Thủ Đức"]
+    }
+  },
+
+  "moneyPage": {
+    "_type": "money_page",
+    "slug": { "_type": "slug", "current": "lop-cau-long-buoi-toi" },
+    "audience": "nguoi_di_lam",
+    "h1": "Lớp cầu lông buổi tối tại TP.HCM",
+    "metaTitle": "Lớp Cầu Lông Buổi Tối TP.HCM | 18:00-22:00 | V2 Badminton",
+    "metaDescription": "Lớp cầu lông buổi tối V2 Badminton tại TP.HCM: khung 18:00-20:00 và 20:00-22:00 sau giờ làm, mở tại Sân Green (Bình Thạnh), Huệ Thiên và Phúc Lộc (Thủ Đức).",
+    "ctaLabel": "Đăng ký lớp buổi tối",
+
+    "intro": [
+      {
+        "_type": "block", "_key": "i1", "style": "normal", "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "a", "text": "Lớp cầu lông buổi tối tại V2 Badminton mở hai khung ", "marks": [] },
+          { "_type": "span", "_key": "b", "text": "18:00-20:00 và 20:00-22:00", "marks": ["strong"] },
+          { "_type": "span", "_key": "c", "text": " sau giờ hành chính, phù hợp người đi làm muốn duy trì tập đều mà không hy sinh giờ làm việc ban ngày.", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block", "_key": "i2", "style": "normal", "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "x", "text": "Lớp diễn ra tại Sân Green (Bình Thạnh, T3-T5), Sân Huệ Thiên (Thủ Đức, T2-T4-T6 và T3-T5-T7) và Sân Phúc Lộc (Thủ Đức, T2-T4-T6). Học phí lớp nhóm từ 1.000.000đ/tháng (2 buổi/tuần) đến 1.500.000đ/tháng (3 buổi nâng cao).", "marks": [] }
+        ]
+      }
+    ],
+
+    "body": [
+      { "_type": "block", "_key": "h2slots", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Lớp buổi tối V2 mở những khung giờ nào?", "marks": [] }] },
+      { "_type": "block", "_key": "pslots", "style": "normal", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Khung tối hiện đang mở tại các sân V2:", "marks": [] }] },
+      { "_type": "block", "_key": "lislot1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "18:00-20:00 — Sân Huệ Thiên (T2-T4-T6 và T3-T5-T7), Sân Phúc Lộc (T2-T4-T6), Sân Green (T3-T5).", "marks": ["strong"] }
+      ]},
+      { "_type": "block", "_key": "lislot2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "20:00-22:00 — Sân Huệ Thiên (T2-T4-T6), Sân Phúc Lộc (T2-T4-T6), Sân Green (T3-T5).", "marks": ["strong"] }
+      ]},
+      { "_type": "block", "_key": "pslots2", "style": "normal", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Khung 18:00-20:00 phù hợp người tan làm 17:00-18:00, có 15-30 phút di chuyển đến sân. Khung 20:00-22:00 dành cho người làm tan trễ, ăn tối xong rồi mới đến sân.", "marks": [] }] },
+
+      { "_type": "block", "_key": "h2who", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Lớp tối V2 phù hợp với ai?", "marks": [] }] },
+      { "_type": "block", "_key": "liwho1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Người đi làm văn phòng", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " giờ hành chính 8:00-17:00 hoặc 9:00-18:00 — đa số học viên lớp tối V2.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liwho2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Sinh viên năm cuối, freelancer, người làm ca", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — lịch tối không trùng các nghĩa vụ ban ngày.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liwho3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Phụ huynh đưa con đi học buổi chiều", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — tranh thủ tập trong khi con học các môn khác.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2diff", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Lớp tối khác lớp sáng hay cuối tuần như thế nào?", "marks": [] }] },
+      { "_type": "block", "_key": "pdiff", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "x", "text": "Nội dung kỹ thuật và HLV không khác giữa các khung — sự khác biệt nằm ở nhịp lớp và nhóm học viên:", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lidiff1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Lớp tối có tốc độ cao hơn", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — học viên đã làm việc cả ngày, HLV ưu tiên khởi động kỹ và phân bố cường độ vừa phải để giảm chấn thương.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lidiff2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Nhóm học viên đa dạng độ tuổi", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — lớp tối thường có cả người trẻ và trung niên cùng nhịp.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lidiff3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Tần suất ổn định hơn lớp cuối tuần", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — học viên tập đều 2-3 buổi/tuần trong tuần, tiến bộ nhanh hơn so với chỉ tập T7-CN.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2where", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Sân nào của V2 mở lớp buổi tối?", "marks": [] }] },
+      { "_type": "block", "_key": "liw1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Sân Green (Bình Thạnh).", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " 154/9 đường Nguyễn Xí, P.26. Khung T3-T5 tối 18:00-20:00 và 20:00-22:00.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liw2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Sân Huệ Thiên (Thủ Đức).", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " 520 Quốc Lộ 13, phường Hiệp Bình. Khung T2-T4-T6 và T3-T5-T7 tối 18:00-20:00; T2-T4-T6 tối 20:00-22:00.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liw3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Sân Phúc Lộc (Thủ Đức).", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " 103/11B Đường số 20, phường Hiệp Bình. Khung T2-T4-T6 tối 18:00-20:00 và 20:00-22:00.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2pick", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Cách chọn khung tối phù hợp với lịch làm việc", "marks": [] }] },
+      { "_type": "block", "_key": "ppick", "style": "normal", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Cân nhắc 3 yếu tố thực tế trước khi chọn khung 18:00-20:00 hay 20:00-22:00:", "marks": [] }] },
+      { "_type": "block", "_key": "lipck1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Giờ tan làm thực tế.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Tan 17:00-17:30: khung 18:00-20:00 vừa tầm. Tan 18:00-18:30: cân nhắc đến sân muộn hoặc chuyển sang 20:00-22:00. Tan sau 19:00: khung 20:00-22:00 phù hợp hơn.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lipck2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Khoảng cách từ công ty đến sân.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " V2 đề xuất sân gần nhất theo địa chỉ công ty — Sân Green cho khu Bình Thạnh/Q.1; Huệ Thiên, Khang Sport, Phúc Lộc cho khu Thủ Đức và công nghệ cao.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lipck3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Thói quen ăn tối.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Tập trước bữa tối (18:00-20:00) cần ăn nhẹ vào 15:00-16:00 để có năng lượng. Tập sau bữa tối (20:00-22:00) cần ăn nhẹ và tránh ăn no trong 1 giờ trước buổi.", "marks": [] }
+      ]}
+    ]
+  },
+
+  "newFaqs": [
+    {
+      "_type": "faq",
+      "question": "Tan làm 18:00, có kịp lớp tối 18:00-20:00 không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "V2 hiểu thực tế giao thông TP.HCM. Đến trễ 5-10 phút vẫn vào lớp được — HLV sẽ điều chỉnh phần khởi động cho bạn. Nếu thường xuyên tan trễ, bạn cân nhắc khung 20:00-22:00 thay vì 18:00-20:00.", "marks": [] }
+      ]}],
+      "pages": ["nguoi_di_lam"], "includeInSchema": true, "featured": false, "order": 30
+    },
+    {
+      "_type": "faq",
+      "question": "Lớp 20:00-22:00 có quá muộn không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Khung 20:00-22:00 phù hợp người ăn tối xong rồi tập, hoặc làm tan sau 19:00. HLV V2 ưu tiên cường độ vừa phải buổi này để bạn không khó ngủ sau khi về.", "marks": [] }
+      ]}],
+      "pages": ["nguoi_di_lam"], "includeInSchema": true, "featured": false, "order": 31
+    },
+    {
+      "_type": "faq",
+      "question": "Một buổi tối học V2 kéo dài bao lâu?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Buổi học 90-120 phút, gồm khởi động, phần kỹ thuật và đánh tự do có HLV. Khung 18:00-20:00 và 20:00-22:00 đều đảm bảo đủ thời lượng cho học viên cảm thấy đủ tập nhưng không bị kiệt sức.", "marks": [] }
+      ]}],
+      "pages": ["nguoi_di_lam"], "includeInSchema": true, "featured": false, "order": 32
+    },
+    {
+      "_type": "faq",
+      "question": "Trời mưa buổi tối có nghỉ học không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Cả 4 sân V2 đều là sân trong nhà nên mưa không ảnh hưởng buổi học. Trường hợp ngập đường hoặc thời tiết cực đoan, V2 sẽ chủ động thông báo và sắp xếp buổi học bù.", "marks": [] }
+      ]}],
+      "pages": ["nguoi_di_lam"], "includeInSchema": true, "featured": false, "order": 33
+    },
+    {
+      "_type": "faq",
+      "question": "Có thể đổi sang khung tối khác giữa kỳ không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Có. Nếu lịch làm việc thay đổi, bạn nhắn V2 trước 2-3 ngày để xếp sang khung khác cùng sân hoặc sang sân khác cùng khung. V2 ưu tiên giữ tiến độ học cho học viên.", "marks": [] }
+      ]}],
+      "pages": ["nguoi_di_lam"], "includeInSchema": true, "featured": false, "order": 34
+    }
+  ],
+
+  "referenceWiring": {
+    "_note": "Slug values are best-guess from src/lib static IDs. Verify in Sanity Studio.",
+    "relatedLocations": [
+      { "slug": "green", "name": "Sân Green (Bình Thạnh) — khung T3-T5 tối" },
+      { "slug": "hue-thien", "name": "Sân Huệ Thiên (Thủ Đức) — khung T2-T4-T6, T3-T5-T7 tối" },
+      { "slug": "phuc-loc", "name": "Sân Phúc Lộc (Thủ Đức) — khung T2-T4-T6 tối" }
+    ],
+    "relatedPricing": [
+      { "slug": "group-basic-2x", "name": "Lớp nhóm 2 buổi/tuần" },
+      { "slug": "group-basic-3x", "name": "Lớp nhóm 3 buổi/tuần cơ bản" },
+      { "slug": "group-advanced-3x", "name": "Lớp nhóm 3 buổi/tuần nâng cao" }
+    ],
+    "relatedFaqs": "Wire to the 5 newFaqs above after they are created in Sanity Studio."
+  }
+}

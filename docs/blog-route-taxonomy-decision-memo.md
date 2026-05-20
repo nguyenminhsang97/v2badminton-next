@@ -783,7 +783,7 @@ Priority-ordered for SEO impact + AEO citation potential + editorial feasibility
 
 | # | Question | Asked of | Why needed |
 |---|---|---|---|
-| 13 | Confirm production Sanity has zero published posts at `_type == "post"` | Business / Sanity admin | Determines whether §4 clean-cutover path is safe or whether legacy redirects need to be planned. Run query: `*[_type == "post" && status == "published"]{ slug, publishedAt }` in Sanity Vision. |
+| 13 | Confirm production Sanity has zero published posts at `_type == "post"` | Business / Sanity admin | Determines whether §4 clean-cutover path is safe or whether legacy redirects need to be planned. Run query: `*[_type == "post" && status == "published"]{ slug, publishedAt }` in Sanity Vision. Results must be captured in the [CMS Migration Handoff Brief](./cms-migration-handoff-brief.md) §4 before migration begins. |
 
 If question 13's answer reveals existing published posts, those need a per-post decision: preserve URL (308 redirect from new structure → old slug, keep old URL canonical) OR migrate URL (308 from old → new). The default recommendation is to migrate URLs unless a post has demonstrable Search Console traffic.
 

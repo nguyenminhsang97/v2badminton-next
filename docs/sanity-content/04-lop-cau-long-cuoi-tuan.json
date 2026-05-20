@@ -1,0 +1,173 @@
+{
+  "_meta": {
+    "page": "/lop-cau-long-cuoi-tuan/",
+    "draftStatus": "needs_review",
+    "writingRulesApplied": ["W2.3.1 answer-first intro", "W2.3.2 question H2s", "W2.3.3 concrete entities", "W2.3.5 ≥5 FAQs"],
+    "seoTargets": {
+      "primaryKeyword": "lớp cầu lông cuối tuần TP.HCM",
+      "secondaryKeywords": ["lớp cầu lông thứ 7", "lớp cầu lông chủ nhật", "học cầu lông cuối tuần Bình Thạnh", "học cầu lông cuối tuần Thủ Đức"]
+    }
+  },
+
+  "moneyPage": {
+    "_type": "money_page",
+    "slug": { "_type": "slug", "current": "lop-cau-long-cuoi-tuan" },
+    "audience": "nguoi_di_lam",
+    "h1": "Lớp cầu lông cuối tuần tại TP.HCM",
+    "metaTitle": "Lớp Cầu Lông Cuối Tuần TP.HCM | T7-CN | V2 Badminton",
+    "metaDescription": "Lớp cầu lông cuối tuần V2 Badminton tại TP.HCM: T7-CN khung sáng (07:00-11:00), trưa (11:30-14:00) và chiều (17:00-18:00). Sân Bình Thạnh và Thủ Đức.",
+    "ctaLabel": "Đăng ký lớp cuối tuần",
+
+    "intro": [
+      {
+        "_type": "block", "_key": "i1", "style": "normal", "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "a", "text": "Lớp cầu lông cuối tuần tại V2 Badminton mở thứ 7 và chủ nhật ở ba khung: ", "marks": [] },
+          { "_type": "span", "_key": "b", "text": "sáng (07:00-11:00), trưa (11:30-14:00) và chiều (17:00-18:00)", "marks": ["strong"] },
+          { "_type": "span", "_key": "c", "text": ", phù hợp người làm việc giờ hành chính T2-T6 muốn tập trung tập vào cuối tuần.", "marks": [] }
+        ]
+      },
+      {
+        "_type": "block", "_key": "i2", "style": "normal", "markDefs": [],
+        "children": [
+          { "_type": "span", "_key": "x", "text": "Sân tập: Huệ Thiên, Khang Sport, Phúc Lộc (Thủ Đức) và Sân Green (Bình Thạnh). Học phí lớp nhóm 2 buổi/tuần là 1.000.000đ/tháng.", "marks": [] }
+        ]
+      }
+    ],
+
+    "body": [
+      { "_type": "block", "_key": "h2slots", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Khung cuối tuần V2 có những giờ nào?", "marks": [] }] },
+      { "_type": "block", "_key": "lisl1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Sáng 07:00-11:00.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Sân Huệ Thiên (07:00-09:00 và 09:00-11:00 T7-CN), Sân Green (08:00-10:00 T7-CN). Phù hợp người dậy sớm và muốn xong buổi tập trước trưa.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lisl2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Trưa 11:30-14:00.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Sân Khang Sport (11:30-13:00 T7 và 12:00-14:00 T7-CN). Phù hợp người làm bán thời gian cuối tuần hoặc muốn tập trước khi đi việc khác buổi chiều.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lisl3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Chiều 17:00-18:00.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Sân Huệ Thiên (T7-CN). Phù hợp người không thích dậy sớm và muốn tận hưởng buổi tối tự do sau buổi tập.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2who", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Lớp cuối tuần phù hợp với ai?", "marks": [] }] },
+      { "_type": "block", "_key": "liwho1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Người đi làm giờ hành chính T2-T6", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — không có thời gian học buổi tối trong tuần do giao thông hoặc trách nhiệm gia đình.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liwho2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Học sinh, sinh viên", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — cuối tuần là khung học chính, có thể đi cùng gia đình hoặc bạn.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liwho3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Người mới chưa quen nhịp lớp", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " — khung sáng cuối tuần thường có không khí thoải mái hơn, dễ làm quen.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2only", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Có thể học chỉ T7 hoặc chỉ CN không?", "marks": [] }] },
+      { "_type": "block", "_key": "ponly", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "x", "text": "Lớp nhóm V2 tính theo buổi/tuần, không bắt buộc phải tập cả T7 và CN. Có 3 cách kết hợp phổ biến:", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lion1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Chỉ cuối tuần (2 buổi/tuần — T7 và CN).", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " 1.000.000đ/tháng, 8 buổi/tháng. Phổ biến nhất với người làm hành chính.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lion2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Cuối tuần kết hợp 1 tối trong tuần (3 buổi/tuần).", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " 1.300.000đ/tháng cơ bản hoặc 1.500.000đ/tháng nâng cao. Tiến bộ nhanh hơn.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lion3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Chỉ T7 hoặc chỉ CN (1 buổi/tuần).", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " V2 không bán riêng gói 1 buổi/tuần — bạn nhắn V2 để tư vấn 1 kèm 1 (400.000đ/giờ) thay thế.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2where", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Sân nào của V2 mở lớp T7-CN?", "marks": [] }] },
+      { "_type": "block", "_key": "liwhere1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Sân Green (Bình Thạnh).", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " 154/9 Nguyễn Xí, P.26. Khung sáng 08:00-10:00 T7-CN.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liwhere2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Sân Huệ Thiên (Thủ Đức).", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " 520 Quốc Lộ 13, Hiệp Bình. Khung sáng 07:00-09:00 và 09:00-11:00 T7-CN, chiều 17:00-18:00 T7-CN.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "liwhere3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Sân Khang Sport (Thủ Đức).", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " 8 Đường số 20, Hiệp Bình. Khung trưa 11:30-13:00 T7 và 12:00-14:00 T7-CN.", "marks": [] }
+      ]},
+
+      { "_type": "block", "_key": "h2level", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Lớp cuối tuần có chia trình độ cơ bản và nâng cao không?", "marks": [] }] },
+      { "_type": "block", "_key": "plevel", "style": "normal", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Có. Khung cuối tuần V2 chia làm hai nhóm trình độ để học viên không bị chênh nhịp:", "marks": [] }] },
+      { "_type": "block", "_key": "lilv1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Cơ bản — dành cho người mới và người đã tập dưới 6 tháng.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " HLV ưu tiên cầm vợt, di chuyển chân, phát cầu và đánh thấp tay. Mở tại tất cả các khung sáng và chiều cuối tuần.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lilv2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Nâng cao — cho học viên đã đánh được rally và muốn nâng kỹ thuật.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Tập trung vào đập cầu, di chuyển nhanh, chiến thuật đôi. Mở tại Sân Huệ Thiên các khung 07:00-09:00, 09:00-11:00 và 17:00-18:00 T7-CN; Khang Sport khung 12:00-14:00 T7-CN.", "marks": [] }
+      ]},
+      { "_type": "block", "_key": "lilv3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
+        { "_type": "span", "_key": "a", "text": "Học phí không khác giữa cơ bản và nâng cao đối với gói 2 buổi/tuần", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " (đều 1.000.000đ/tháng). Chỉ gói 3 buổi/tuần phân biệt: 1.300.000đ cơ bản, 1.500.000đ nâng cao.", "marks": [] }
+      ]}
+    ]
+  },
+
+  "newFaqs": [
+    {
+      "_type": "faq",
+      "question": "Một buổi cuối tuần V2 kéo dài bao lâu?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Buổi 07:00-09:00 và 09:00-11:00 dài 120 phút. Buổi 08:00-10:00 ở Sân Green dài 120 phút. Buổi trưa 11:30-13:00 dài 90 phút, 12:00-14:00 dài 120 phút. Buổi chiều 17:00-18:00 dài 60 phút.", "marks": [] }
+      ]}],
+      "pages": ["nguoi_di_lam"], "includeInSchema": true, "featured": false, "order": 40
+    },
+    {
+      "_type": "faq",
+      "question": "Có lớp cầu lông cho trẻ em vào cuối tuần không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Có. Khung sáng cuối tuần (07:00-11:00) là khung phổ biến nhất cho học viên trẻ em vì lịch học chính khoá nghỉ. Phụ huynh nhắn V2 để xếp con vào lớp phù hợp độ tuổi.", "marks": [] }
+      ]}],
+      "pages": ["nguoi_di_lam", "tre_em"], "includeInSchema": true, "featured": false, "order": 41
+    },
+    {
+      "_type": "faq",
+      "question": "Cuối tuần có lễ tết thì lớp có nghỉ không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "V2 nghỉ các ngày Tết Âm lịch (mùng 1-3) và một số ngày lễ chính. Lịch nghỉ cụ thể thông báo trước 1 tuần, các buổi nghỉ sẽ được học bù vào tuần sau hoặc khung tương đương.", "marks": [] }
+      ]}],
+      "pages": ["nguoi_di_lam"], "includeInSchema": true, "featured": false, "order": 42
+    },
+    {
+      "_type": "faq",
+      "question": "Đặt chỗ lớp cuối tuần có cần đăng ký sớm hơn không?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Lớp cuối tuần thường lấp chỗ trước lớp trong tuần — V2 khuyên đăng ký trước 5-7 ngày để giữ chỗ. Nếu lớp đã đủ học viên, V2 sẽ xếp bạn vào sân khác cùng khung hoặc tuần tiếp theo.", "marks": [] }
+      ]}],
+      "pages": ["nguoi_di_lam"], "includeInSchema": true, "featured": false, "order": 43
+    },
+    {
+      "_type": "faq",
+      "question": "Lớp cuối tuần ở Bình Thạnh khác Thủ Đức như thế nào?",
+      "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
+        { "_type": "span", "_key": "s1", "text": "Nội dung và HLV không khác. Bình Thạnh (Sân Green) có 1 khung sáng cuối tuần. Thủ Đức (Huệ Thiên, Khang Sport, Phúc Lộc) có nhiều khung sáng/trưa/chiều T7-CN hơn. Bạn chọn theo vị trí gần nhà.", "marks": [] }
+      ]}],
+      "pages": ["nguoi_di_lam", "binh_thanh", "thu_duc"], "includeInSchema": true, "featured": false, "order": 44
+    }
+  ],
+
+  "referenceWiring": {
+    "_note": "Slug values are best-guess from src/lib static IDs. Verify in Sanity Studio.",
+    "relatedLocations": [
+      { "slug": "green", "name": "Sân Green (Bình Thạnh) — T7-CN sáng" },
+      { "slug": "hue-thien", "name": "Sân Huệ Thiên (Thủ Đức) — T7-CN sáng + chiều" },
+      { "slug": "khang-sport", "name": "Sân Khang Sport (Thủ Đức) — T7-CN trưa" },
+      { "slug": "phuc-loc", "name": "Sân Phúc Lộc (Thủ Đức)" }
+    ],
+    "relatedPricing": [
+      { "slug": "group-basic-2x", "name": "Lớp nhóm 2 buổi/tuần (T7-CN)" },
+      { "slug": "group-basic-3x", "name": "Lớp nhóm 3 buổi/tuần cơ bản" },
+      { "slug": "group-advanced-3x", "name": "Lớp nhóm 3 buổi/tuần nâng cao" }
+    ],
+    "relatedFaqs": "Wire to the 5 newFaqs above after they are created in Sanity Studio."
+  }
+}

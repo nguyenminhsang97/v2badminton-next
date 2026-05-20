@@ -2,6 +2,7 @@ export const siteConfig = {
   name: "V2 Badminton",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://v2badminton.com",
   defaultOgImagePath: "/og-image.jpg",
+  logoPath: "/images/v2-logo.png",
   language: "vi-VN",
   locale: "vi_VN",
   phoneDisplay: "0907 911 886",

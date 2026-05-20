@@ -27,8 +27,12 @@ function latestLastModified(
   return latest ? new Date(latest).toISOString() : fallback;
 }
 
+// Stable fallback date — prevents Google from seeing lastmod change on every request.
+// Update only when the site goes through a meaningful redesign or content restructure.
+const SITE_RELAUNCH_DATE = new Date("2026-04-01T00:00:00Z");
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const generatedAt = new Date();
+  const generatedAt = SITE_RELAUNCH_DATE;
   const [posts, coaches, moneyPages, contentEntries] = await Promise.all([
     getPublishedPosts(),
     getCoaches(),
@@ -54,8 +58,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // before deploying, or (b) temporarily remove it from this set and gate it
   // via publishedMoneyPagePaths like the other money pages.
   //
-  // DO NOT add "/gioi-thieu/" here — it is added in W3.4 inside the same PR
-  // that creates the page and verifies it returns 200.
+  // "/gioi-thieu/" is NOT listed here — it is not a coreRoutes entry, so it
+  // ships as a static sitemap entry (aboutRoute below), added in the same
+  // W3.4 PR that creates the page.
 
   const publishedMoneyPagePaths = new Set(
     moneyPages.map((page) => `/${page.slug}/`),
@@ -83,6 +88,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: generatedAt.toISOString(),
       changeFrequency: "yearly" as const,
       priority: 0.3,
+    },
+  ];
+
+  const aboutRoute = [
+    {
+      url: canonicalUrl("/gioi-thieu/"),
+      lastModified: generatedAt.toISOString(),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
     },
   ];
 
@@ -134,6 +148,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...staticRoutes,
+    ...aboutRoute,
     ...legalRoutes,
     ...blogRoutes,
     ...coachRoutes,
