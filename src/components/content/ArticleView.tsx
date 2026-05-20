@@ -29,6 +29,8 @@ export async function ArticleView({ id, path }: ArticleViewProps) {
     { label: article.title },
   ];
 
+  const categoryLabel = article.nodeTitle ?? article.hubTitle;
+
   return (
     <>
       <ContentStructuredData
@@ -38,51 +40,83 @@ export async function ArticleView({ id, path }: ArticleViewProps) {
         faqs={article.relatedFaqs}
       />
 
-      <article className="content-article">
+      <article className="blog-post">
         <ContentBreadcrumbs trail={trail} />
 
-        <h1 className="content-article__title">{article.title}</h1>
-
-        {article.excerpt ? (
-          <p className="content-article__lead">{article.excerpt}</p>
-        ) : null}
-
-        {article.coverImageUrl ? (
-          <div className="content-article__cover">
-            <Image
-              src={article.coverImageUrl}
-              alt={article.coverImageAlt ?? article.title}
-              width={800}
-              height={450}
-              priority
-            />
+        <header className="blog-post__hero">
+          <div className="blog-post__hero-copy">
+            <span className="blog-post__category">{categoryLabel}</span>
+            <h1 className="blog-post__title">{article.title}</h1>
+            {article.publishedAt ? (
+              <time
+                className="blog-post__date"
+                dateTime={article.publishedAt}
+              >
+                {new Date(article.publishedAt).toLocaleDateString("vi-VN", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </time>
+            ) : null}
           </div>
-        ) : null}
 
-        {article.quickAnswer ? (
-          <div className="quick-answer">
-            <p className="quick-answer__label">Tóm tắt nhanh</p>
-            <p className="quick-answer__body">{article.quickAnswer}</p>
+          {article.coverImageUrl ? (
+            <div className="blog-post__hero-media">
+              <Image
+                src={article.coverImageUrl}
+                alt={article.coverImageAlt ?? article.title}
+                className="blog-post__cover"
+                width={1120}
+                height={630}
+                priority
+                sizes="(max-width: 959px) calc(100vw - 32px), 42vw"
+              />
+            </div>
+          ) : null}
+        </header>
+
+        <section className="blog-post__content-shell">
+          {article.quickAnswer ? (
+            <div className="quick-answer">
+              <p className="quick-answer__label">Tóm tắt nhanh</p>
+              <p className="quick-answer__body">{article.quickAnswer}</p>
+            </div>
+          ) : null}
+          {article.excerpt ? (
+            <p className="section__desc">{article.excerpt}</p>
+          ) : null}
+          <div className="blog-post__body">
+            <PortableText value={article.body as PortableTextBlock[]} />
           </div>
-        ) : null}
-
-        <div className="content-article__body">
-          <PortableText value={article.body as PortableTextBlock[]} />
-        </div>
+        </section>
 
         {article.relatedFaqs.length > 0 ? (
-          <section className="content-article__faqs">
-            <h2>Câu hỏi thường gặp</h2>
+          <section
+            className="blog-post__content-shell"
+            aria-label="Câu hỏi thường gặp"
+          >
+            <p className="section__eyebrow">Hỏi & đáp</p>
+            <h2 className="section__title">Câu hỏi thường gặp</h2>
             <FaqList faqs={article.relatedFaqs} />
           </section>
         ) : null}
 
         {article.relatedMoneyPageSlug ? (
-          <div className="content-article__cta">
-            <Link href={`/${article.relatedMoneyPageSlug}/`} className="btn btn--primary">
-              Đăng ký lớp học ngay
+          <aside className="blog-post__related">
+            <p className="blog-post__related-label">Lớp học liên quan</p>
+            <h2 className="section__title">Sẵn sàng học cùng huấn luyện viên?</h2>
+            <p className="section__desc">
+              Áp dụng kỹ thuật này nhanh hơn với lộ trình có hướng dẫn trực tiếp.
+              Xem học phí, lịch tập và sân tại trang lớp học phù hợp.
+            </p>
+            <Link
+              href={`/${article.relatedMoneyPageSlug}/`}
+              className="btn btn--primary"
+            >
+              Xem lớp học phù hợp
             </Link>
-          </div>
+          </aside>
         ) : null}
       </article>
     </>
