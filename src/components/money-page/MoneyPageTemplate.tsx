@@ -8,9 +8,10 @@ import { PricingCards } from "@/components/blocks/PricingCards";
 import { HOME_SECTION_IDS, toHash, toHomepageHash } from "@/lib/anchors";
 import { getGeneratedRouteImage } from "@/lib/generatedImages";
 import { coreRoutes, getRouteMetadata, type CoreRoutePath } from "@/lib/routes";
-import type { SanityGroupPricingTier, SanityMoneyPage } from "@/lib/sanity";
+import { getArticlesForMoneyPage, type SanityGroupPricingTier, type SanityMoneyPage } from "@/lib/sanity";
 import { Breadcrumb } from "./Breadcrumb";
 import { QuickAnswer } from "./QuickAnswer";
+import { RelatedTechniqueArticles } from "./RelatedTechniqueArticles";
 
 export type MoneyPageTemplateProps = {
   page: SanityMoneyPage;
@@ -107,7 +108,8 @@ function getRelatedMoneyPages(
     .slice(0, 3);
 }
 
-export function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) {
+export async function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) {
+  const relatedArticles = await getArticlesForMoneyPage(page.slug);
   const ctaHref =
     page.audience === "doanh_nghiep"
       ? `/?mode=business${toHash(HOME_SECTION_IDS.contact)}`
@@ -208,6 +210,8 @@ export function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) {
           <FaqList faqs={page.relatedFaqs} />
         </section>
       ) : null}
+
+      <RelatedTechniqueArticles articles={relatedArticles} />
 
       {relatedMoneyPages.length > 0 ? (
         <section className="money-page__section">
