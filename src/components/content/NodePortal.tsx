@@ -1,0 +1,147 @@
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { PortableText } from "@portabletext/react";
+import type { PortableTextBlock } from "@portabletext/types";
+import { getContentNode } from "@/lib/sanity";
+import { ContentBreadcrumbs } from "./ContentBreadcrumbs";
+import { ContentStructuredData } from "./ContentStructuredData";
+
+type NodePortalProps = {
+  id: string;
+  path: string;
+};
+
+export async function NodePortal({ id, path }: NodePortalProps) {
+  const node = await getContentNode(id);
+
+  if (!node) {
+    notFound();
+  }
+
+  const trail = [
+    { label: "Trang chủ", href: "/" },
+    { label: node.parentHubTitle, href: node.parentHubFullPath },
+    ...(node.parentNodeTitle && node.parentNodeFullPath
+      ? [{ label: node.parentNodeTitle, href: node.parentNodeFullPath }]
+      : []),
+    { label: node.title },
+  ];
+
+  const articleCount = node.directArticles.length;
+  const subNodeCount = node.directNodes.length;
+  const description = node.seoDescription ?? node.quickAnswer ?? undefined;
+
+  return (
+    <>
+      <ContentStructuredData path={path} breadcrumbTrail={trail} />
+
+      <div className="blog-list">
+        <ContentBreadcrumbs trail={trail} />
+
+        <section className="blog-list__hero">
+          <div className="section__header">
+            <p className="section__eyebrow">{node.parentHubTitle}</p>
+            <h1 className="section__title">{node.title}</h1>
+            {description ? (
+              <p className="section__desc">{description}</p>
+            ) : null}
+          </div>
+          <div className="blog-list__hero-meta">
+            {articleCount > 0 ? (
+              <span className="blog-list__hero-chip">
+                {articleCount} bài viết
+              </span>
+            ) : null}
+            {subNodeCount > 0 ? (
+              <span className="blog-list__hero-chip">
+                {subNodeCount} chuyên mục con
+              </span>
+            ) : null}
+          </div>
+        </section>
+
+        {node.quickAnswer || node.intro.length > 0 ? (
+          <section className="blog-post__content-shell">
+            {node.quickAnswer ? (
+              <div className="quick-answer">
+                <p className="quick-answer__label">Tóm tắt nhanh</p>
+                <p className="quick-answer__body">{node.quickAnswer}</p>
+              </div>
+            ) : null}
+            {node.intro.length > 0 ? (
+              <div className="blog-post__body">
+                <PortableText value={node.intro as PortableTextBlock[]} />
+              </div>
+            ) : null}
+          </section>
+        ) : null}
+
+        {articleCount > 0 ? (
+          <section className="blog-list__grid" aria-label="Danh sách bài viết">
+            {node.directArticles.map((article) => (
+              <article key={article.id} className="blog-card">
+                <Link href={article.fullPath} className="blog-card__media">
+                  {article.coverImageUrl ? (
+                    <Image
+                      src={article.coverImageUrl}
+                      alt={article.coverImageAlt ?? article.title}
+                      className="blog-card__cover"
+                      width={720}
+                      height={405}
+                      sizes="(max-width: 960px) calc(100vw - 32px), 360px"
+                    />
+                  ) : (
+                    <div
+                      className="blog-card__cover blog-card__cover--placeholder"
+                      aria-hidden="true"
+                    />
+                  )}
+                </Link>
+                <div className="blog-card__body">
+                  <span className="blog-card__category">{node.title}</span>
+                  <Link
+                    href={article.fullPath}
+                    className="blog-card__title-link"
+                  >
+                    <h2 className="blog-card__title">{article.title}</h2>
+                  </Link>
+                  {article.excerpt ? (
+                    <p className="blog-card__excerpt">{article.excerpt}</p>
+                  ) : null}
+                  <Link href={article.fullPath} className="blog-card__cta">
+                    Đọc bài viết →
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </section>
+        ) : null}
+
+        {subNodeCount > 0 ? (
+          <section className="blog-list__grid" aria-label="Chuyên mục con">
+            {node.directNodes.map((childNode) => (
+              <article key={childNode.id} className="blog-card">
+                <div className="blog-card__body">
+                  <span className="blog-card__category">Chuyên mục</span>
+                  <Link
+                    href={childNode.fullPath}
+                    className="blog-card__title-link"
+                  >
+                    <h2 className="blog-card__title">{childNode.title}</h2>
+                  </Link>
+                  {childNode.quickAnswer ? (
+                    <p className="blog-card__excerpt">{childNode.quickAnswer}</p>
+                  ) : null}
+                  <Link href={childNode.fullPath} className="blog-card__cta">
+                    Khám phá chuyên mục →
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </section>
+        ) : null}
+      </div>
+    </>
+  );
+}

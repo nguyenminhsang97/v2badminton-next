@@ -983,7 +983,7 @@ Week 4 Task W4.1 produces the **handoff brief** that captures all of the above a
 - **No blog URLs requested for indexing** during this 30-day plan.
 
 **Hard pre-cutover gate (carried forward to CMS migration kickoff):**
-- **Q13 — Production Sanity Blog Post Check (Hard Gate)** in §10 must be answered and captured in the W4.1 handoff brief before any blog route restructuring or content migration can ship.
+- **Q13 — Production Sanity Blog Post Check (Hard Gate)** in §10 must be answered and captured in the [CMS Migration Handoff Brief](./cms-migration-handoff-brief.md) §4 before any blog route restructuring or content migration can ship.
 
 **One sentence summary for the junior:**
 *Week 1 stops the bleeding (placeholder content out of the index), Week 2 fills the holes (real content into the published money pages), Week 3 builds trust (entity + coaches + About), Week 4 sets up monitoring AND hands off the blog architecture decisions to the CMS migration team via a short brief. Do them in order — every later week depends on earlier weeks shipping cleanly. No blog posts produced in this 30 days; that's deliberate.*

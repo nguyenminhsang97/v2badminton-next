@@ -22,6 +22,10 @@
 /.next/
 /out/
 
+# sanity studio build output (created by `npx sanity deploy`)
+/dist/
+/.sanity/
+
 # production
 /build
 

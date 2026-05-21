@@ -6,6 +6,7 @@ import type {
 } from "@/lib/sanity";
 import { canonicalUrl, type CoreRoutePath } from "@/lib/routes";
 import { siteConfig } from "@/lib/site";
+import type { HomepageCoach } from "@/domain/homepage";
 
 type Thing = {
   "@type": string | readonly string[];
@@ -102,6 +103,17 @@ function buildGeoCoordinates(location: SanityLocation) {
     latitude: location.geoLat,
     longitude: location.geoLng,
   };
+}
+
+function buildLocationMapUrl(location: SanityLocation): string | null {
+  const mapsUrl = location.mapsUrl?.trim();
+  if (mapsUrl) {
+    return mapsUrl;
+  }
+  if (location.geoLat !== null && location.geoLng !== null) {
+    return `https://www.google.com/maps/search/?api=1&query=${location.geoLat},${location.geoLng}`;
+  }
+  return null;
 }
 
 function buildEmbeddedSportsLocation(location: SanityLocation) {
@@ -364,8 +376,39 @@ export function buildOrganizationSchema(): JsonLdNode {
     "@id": `${siteConfig.siteUrl}/#organization`,
     name: siteConfig.name,
     url: siteConfig.siteUrl,
+    logo: canonicalUrl(siteConfig.logoPath),
     telephone: siteConfig.phoneE164,
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        telephone: siteConfig.phoneE164,
+        contactType: "customer service",
+        areaServed: "VN",
+        availableLanguage: ["Vietnamese"],
+      },
+    ],
     sameAs: siteFacebook,
+  };
+}
+
+export function hasRealCoachName(coach: HomepageCoach): boolean {
+  return coach.name.trim().length > 0;
+}
+
+export function buildPersonSchema(coach: HomepageCoach): JsonLdNode {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: coach.name.trim(),
+    ...(coach.photoUrl ? { image: canonicalUrl(coach.photoUrl) } : {}),
+    ...(coach.roleBadge ? { jobTitle: coach.roleBadge } : {}),
+    worksFor: {
+      "@type": "Organization",
+      "@id": `${siteConfig.siteUrl}/#organization`,
+    },
+    ...(coach.credentialTags.length > 0
+      ? { hasCredential: coach.credentialTags }
+      : {}),
   };
 }
 
@@ -455,6 +498,11 @@ export function buildHomepageLocalBusinessSchema(
           geo: buildGeoCoordinates(primaryLocation),
         }
       : {}),
+    areaServed: [
+      { "@type": "AdministrativeArea", name: "Bình Thạnh" },
+      { "@type": "AdministrativeArea", name: "Thủ Đức" },
+      { "@type": "AdministrativeArea", name: "Thành phố Hồ Chí Minh" },
+    ],
     sameAs: siteFacebook,
     location: locations.map(buildEmbeddedSportsLocation),
   };
@@ -475,6 +523,9 @@ export function buildLocalPageBusinessSchema(
     buildOpeningHoursSpecification(scheduleBlocks);
   const areaServed =
     path === "/lop-cau-long-binh-thanh/" ? "Bình Thạnh" : "Thủ Đức";
+  const mapUrl = primaryLocation
+    ? buildLocationMapUrl(primaryLocation)
+    : null;
 
   return {
     "@context": "https://schema.org",
@@ -502,6 +553,7 @@ export function buildLocalPageBusinessSchema(
           geo: buildGeoCoordinates(primaryLocation),
         }
       : {}),
+    ...(mapUrl ? { hasMap: mapUrl } : {}),
     areaServed: {
       "@type": "AdministrativeArea",
       name: areaServed,

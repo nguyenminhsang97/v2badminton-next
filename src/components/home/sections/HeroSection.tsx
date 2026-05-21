@@ -1,8 +1,8 @@
 import ReactDOM from "react-dom";
 import { getImageProps } from "next/image";
-import { StarIcon } from "@/components/ui/BrandIcons";
 import { HOME_SECTION_IDS, toHash } from "@/lib/anchors";
 import { generatedImages } from "@/lib/generatedImages";
+import { siteConfig } from "@/lib/site";
 import type { CtaName } from "@/lib/tracking";
 import type { HomepageHeroSectionProps } from "./sectionProps";
 import { HeroCtas } from "./HeroCtas";
@@ -121,16 +121,17 @@ export function HeroSection({ campaign }: HomepageHeroSectionProps) {
               ))}
             </div>
             <div className="hero__proof-copy">
-              <div className="hero__proof-rating" aria-label="Đánh giá 4.9 trên 5">
-                <div className="hero__proof-stars" aria-hidden="true">
-                  {Array.from({ length: 5 }).map((_, index) => (
-                    <StarIcon key={index} className="hero__proof-star" />
-                  ))}
-                </div>
-                <strong className="hero__proof-score">4.9</strong>
-              </div>
+              <strong className="hero__proof-score">Kinh nghiệm từ 2012</strong>
               <span className="hero__proof-meta">
-                Từ 1.200+ học viên trên TP.HCM
+                9.000+ theo dõi trên{" "}
+                <a
+                  href={siteConfig.facebookUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hero__proof-link"
+                >
+                  Facebook
+                </a>
               </span>
             </div>
           </div>
