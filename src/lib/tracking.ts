@@ -9,7 +9,8 @@ export type TrackingEvent =
   | "form_error"
   | "form_field_focus"
   | "form_abandon"
-  | "time_to_submit";
+  | "time_to_submit"
+  | "cms_article_cta_click";
 
 export type CtaName =
   | "dang_ky_ngay"
@@ -103,6 +104,12 @@ type EventParams = {
     page_type?: PageType;
     page_path?: string;
   };
+  cms_article_cta_click: {
+    article_slug: string;
+    article_hub: string;
+    target_money_page: string;
+    page_path?: string;
+  };
 };
 
 declare global {
@@ -145,6 +152,25 @@ export function registerDelegatedTracking(): () => void {
 
   const handleClick = (event: MouseEvent) => {
     if (!(event.target instanceof Element)) {
+      return;
+    }
+
+    const cmsArticleCta = event.target.closest<HTMLElement>(
+      '[data-track-event="cms_article_cta_click"]',
+    );
+    if (cmsArticleCta) {
+      const articleSlug = cmsArticleCta.dataset.articleSlug;
+      const articleHub = cmsArticleCta.dataset.articleHub;
+      const targetMoneyPage = cmsArticleCta.dataset.targetMoneyPage;
+      const pagePath = cmsArticleCta.dataset.pagePath;
+      if (articleSlug && articleHub && targetMoneyPage) {
+        trackEvent("cms_article_cta_click", {
+          article_slug: articleSlug,
+          article_hub: articleHub,
+          target_money_page: targetMoneyPage,
+          page_path: pagePath,
+        });
+      }
       return;
     }
 
