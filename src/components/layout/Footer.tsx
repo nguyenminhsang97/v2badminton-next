@@ -33,6 +33,7 @@ export function Footer({ siteSettings, showBlogLink, showCoachesLink }: FooterPr
     ...(showCoachesLink
       ? [{ href: "/huan-luyen-vien/", label: "Đội ngũ HLV" }]
       : []),
+    { href: "/ky-thuat-cau-long/", label: "Kỹ thuật cầu lông" },
     ...(showBlogLink ? [{ href: "/blog/", label: "Blog" }] : []),
   ];
 
