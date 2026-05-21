@@ -6,6 +6,7 @@ import {
   contentBodyBlock,
   defineFullPathField,
 } from "./contentShared";
+import { QuickAnswerInput } from "../components/QuickAnswerInput";
 
 /**
  * content_article — the single article model for the whole platform.
@@ -131,6 +132,7 @@ export const contentArticle = defineType({
       rows: 3,
       description:
         "Đoạn trả lời ngắn, trực tiếp cho câu hỏi của bài. Dùng cho AI/Answer Engine.",
+      components: { input: QuickAnswerInput },
     }),
     defineField({
       name: "relatedFaqs",
