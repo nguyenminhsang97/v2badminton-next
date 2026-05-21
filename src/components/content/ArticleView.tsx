@@ -113,6 +113,11 @@ export async function ArticleView({ id, path }: ArticleViewProps) {
             <Link
               href={`/${article.relatedMoneyPageSlug}/`}
               className="btn btn--primary"
+              data-track-event="cms_article_cta_click"
+              data-article-slug={article.slug}
+              data-article-hub={article.hubSlug}
+              data-target-money-page={article.relatedMoneyPageSlug}
+              data-page-path={path}
             >
               Xem lớp học phù hợp
             </Link>
