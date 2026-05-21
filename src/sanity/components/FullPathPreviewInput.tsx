@@ -39,7 +39,6 @@ type ParentDoc = {
 
 type ConflictStatus =
   | { state: "idle" }
-  | { state: "checking" }
   | { state: "ok" }
   | { state: "conflict"; name: string }
   | { state: "error" };
@@ -56,25 +55,27 @@ export function FullPathPreviewInput(props: SlugInputProps) {
   const [parentPath, setParentPath] = useState("/");
   const [status, setStatus] = useState<ConflictStatus>({ state: "idle" });
 
-  // Resolve parent fullPath (hub OR nearest node) from Sanity
+  // Resolve parent fullPath (hub OR nearest node) from Sanity.
+  // Uses Promise.resolve("/") for the no-parent (hub) case to keep all
+  // setState calls inside async callbacks — avoids react-hooks/set-state-in-effect.
   useEffect(() => {
     const parentRef = parentNodeRef ?? parentHubRef;
-    if (!parentRef) {
-      setParentPath("/");
-      return;
-    }
     let cancelled = false;
-    client
-      .fetch<{ fullPath?: { current?: string } } | null>(
-        `*[_id in [$id, $draftId]][0]{fullPath}`,
-        { id: parentRef, draftId: `drafts.${parentRef}` },
-      )
-      .then((parent) => {
-        if (!cancelled) setParentPath(parent?.fullPath?.current ?? "/");
-      })
-      .catch(() => {
-        if (!cancelled) setParentPath("/");
-      });
+
+    const resolvePath: Promise<string> = parentRef
+      ? client
+          .fetch<{ fullPath?: { current?: string } } | null>(
+            `*[_id in [$id, $draftId]][0]{fullPath}`,
+            { id: parentRef, draftId: `drafts.${parentRef}` },
+          )
+          .then((parent) => parent?.fullPath?.current ?? "/")
+          .catch(() => "/")
+      : Promise.resolve("/");
+
+    resolvePath.then((path) => {
+      if (!cancelled) setParentPath(path);
+    });
+
     return () => {
       cancelled = true;
     };
@@ -85,40 +86,42 @@ export function FullPathPreviewInput(props: SlugInputProps) {
     ? normalizePath(`${parentPath.replace(/\/$/, "")}/${currentSlug}`)
     : null;
 
-  // Check route uniqueness whenever predicted path changes
+  // Check route uniqueness whenever predicted path changes.
+  // All setState calls are inside Promise callbacks — avoids react-hooks/set-state-in-effect.
+  // No "checking" intermediate state; status jumps directly to the final result.
   useEffect(() => {
-    if (!predictedPath) {
-      setStatus({ state: "idle" });
-      return;
-    }
-    setStatus({ state: "checking" });
     let cancelled = false;
-    client
-      .fetch<Array<{ title?: string }>>(
-        `*[
-          !(_id in [$id, $draftId]) && (
-            (_type in $types && fullPath.current == $path) ||
-            (_type == "route_redirect" && fromPath == $path)
+
+    const resolveStatus: Promise<ConflictStatus> = predictedPath
+      ? client
+          .fetch<Array<{ title?: string }>>(
+            `*[
+              !(_id in [$id, $draftId]) && (
+                (_type in $types && fullPath.current == $path) ||
+                (_type == "route_redirect" && fromPath == $path)
+              )
+            ][0...1]{title}`,
+            {
+              path: predictedPath,
+              id: docId,
+              draftId: `drafts.${docId}`,
+              types: [...ROUTABLE_TYPES],
+            },
           )
-        ][0...1]{title}`,
-        {
-          path: predictedPath,
-          id: docId,
-          draftId: `drafts.${docId}`,
-          types: [...ROUTABLE_TYPES],
-        },
-      )
-      .then((rows) => {
-        if (cancelled) return;
-        if (rows.length === 0) {
-          setStatus({ state: "ok" });
-        } else {
-          setStatus({ state: "conflict", name: rows[0].title ?? "tài liệu khác" });
-        }
-      })
-      .catch(() => {
-        if (!cancelled) setStatus({ state: "error" });
-      });
+          .then((rows): ConflictStatus => {
+            if (rows.length === 0) return { state: "ok" };
+            return {
+              state: "conflict",
+              name: rows[0].title ?? "tài liệu khác",
+            };
+          })
+          .catch((): ConflictStatus => ({ state: "error" }))
+      : Promise.resolve<ConflictStatus>({ state: "idle" });
+
+    resolveStatus.then((newStatus) => {
+      if (!cancelled) setStatus(newStatus);
+    });
+
     return () => {
       cancelled = true;
     };
@@ -167,9 +170,6 @@ export function FullPathPreviewInput(props: SlugInputProps) {
 
           {/* Route uniqueness status line */}
           <div style={{ fontSize: "12px" }}>
-            {status.state === "checking" && (
-              <span style={{ color: "#999" }}>Đang kiểm tra…</span>
-            )}
             {status.state === "ok" && (
               <span style={{ color: "#1a9e6f", fontWeight: 500 }}>
                 ✓ Route unique — OK to publish
