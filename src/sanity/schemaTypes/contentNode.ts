@@ -1,6 +1,7 @@
 import { defineField, defineType } from "sanity";
 import { slugifyValue } from "./shared";
 import { contentBodyBlock, defineFullPathField } from "./contentShared";
+import { QuickAnswerInput } from "../components/QuickAnswerInput";
 
 /**
  * content_node — a section/branch inside a hub (e.g. /ky-thuat-cau-long/danh-don/).
@@ -77,6 +78,7 @@ export const contentNode = defineType({
       rows: 3,
       description:
         "Đoạn trả lời ngắn, trực tiếp cho câu hỏi cốt lõi của nhánh. Dùng cho AI/Answer Engine.",
+      components: { input: QuickAnswerInput },
     }),
     defineField({
       name: "intro",
