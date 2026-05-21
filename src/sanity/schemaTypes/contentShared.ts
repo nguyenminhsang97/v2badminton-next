@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField } from "sanity";
 import { slugifyValue } from "./shared";
+import { FullPathPreviewInput } from "../components/FullPathPreviewInput";
 
 /**
  * Phase 1 content-platform shared building blocks.
@@ -187,6 +188,7 @@ export function defineFullPathField(options?: {
     group: options?.group,
     description:
       "Tự động tạo từ slug và nhánh cha. Bấm Generate SAU KHI đã đặt slug và chọn nhánh cha. Không sửa tay. Đây là URL thật của trang.",
+    components: { input: FullPathPreviewInput },
     options: {
       source: (document: unknown) =>
         (document as RouteDocument)?.slug?.current ?? "",
