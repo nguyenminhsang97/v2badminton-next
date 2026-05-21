@@ -642,6 +642,22 @@ export const CONTENT_REDIRECT_QUERY = defineQuery(`
   ][0]{ toPath, "permanent": coalesce(permanent, true) }
 `);
 
+/**
+ * Reverse-link query: given a money-page slug, fetch all published articles
+ * that point to it via `relatedMoneyPage`. Used by the money-page template
+ * to surface a "Tài liệu kỹ thuật" section (B.1 — no schema change needed,
+ * derived from the article-side edge).
+ */
+export const ARTICLES_BY_MONEY_PAGE_QUERY = defineQuery(`
+  *[
+    _type == "content_article" &&
+    status == "published" &&
+    ${PUBLISHED_ONLY_FILTER} &&
+    relatedMoneyPage->slug.current == $moneyPageSlug
+  ] | order(coalesce(publishedAt, _createdAt) desc) [0...6]
+  ${CONTENT_ARTICLE_CARD_PROJECTION}
+`);
+
 export const CONTENT_SITEMAP_QUERY = defineQuery(`
   *[
     (
