@@ -4,6 +4,10 @@ import type { SanityContentArticleCard } from "@/lib/sanity";
 
 type RelatedTechniqueArticlesProps = {
   articles: SanityContentArticleCard[];
+  eyebrow?: string;
+  title?: string;
+  category?: string;
+  readCta?: string;
 };
 
 /**
@@ -17,14 +21,18 @@ type RelatedTechniqueArticlesProps = {
  */
 export function RelatedTechniqueArticles({
   articles,
+  eyebrow = "Tài liệu kỹ thuật",
+  title = "Bài viết kỹ thuật liên quan",
+  category = "Kỹ thuật cầu lông",
+  readCta = "Đọc bài viết →",
 }: RelatedTechniqueArticlesProps) {
   if (articles.length === 0) return null;
 
   return (
     <section className="money-page__section">
       <div className="money-page__section-header">
-        <p className="section__eyebrow">Tài liệu kỹ thuật</p>
-        <h2 className="section__title">Bài viết kỹ thuật liên quan</h2>
+        <p className="section__eyebrow">{eyebrow}</p>
+        <h2 className="section__title">{title}</h2>
       </div>
       <div className="blog-list__grid" aria-label="Bài viết kỹ thuật">
         {articles.map((article) => (
@@ -47,7 +55,7 @@ export function RelatedTechniqueArticles({
               )}
             </Link>
             <div className="blog-card__body">
-              <span className="blog-card__category">Kỹ thuật cầu lông</span>
+              <span className="blog-card__category">{category}</span>
               <Link href={article.fullPath} className="blog-card__title-link">
                 <h2 className="blog-card__title">{article.title}</h2>
               </Link>
@@ -55,7 +63,7 @@ export function RelatedTechniqueArticles({
                 <p className="blog-card__excerpt">{article.excerpt}</p>
               ) : null}
               <Link href={article.fullPath} className="blog-card__cta">
-                Đọc bài viết →
+                {readCta}
               </Link>
             </div>
           </article>

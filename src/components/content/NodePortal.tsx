@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
+import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
 import { getContentNode } from "@/lib/sanity";
 import { ContentBreadcrumbs } from "./ContentBreadcrumbs";
 import { ContentStructuredData } from "./ContentStructuredData";
@@ -13,11 +14,16 @@ type NodePortalProps = {
 };
 
 export async function NodePortal({ id, path }: NodePortalProps) {
-  const node = await getContentNode(id);
+  const [node, siteSettings] = await Promise.all([
+    getContentNode(id),
+    loadSiteChromeSettings(),
+  ]);
 
   if (!node) {
     notFound();
   }
+
+  const { cmsUiStrings } = siteSettings;
 
   const trail = [
     { label: "Trang chủ", href: "/" },
@@ -65,7 +71,7 @@ export async function NodePortal({ id, path }: NodePortalProps) {
           <section className="blog-post__content-shell">
             {node.quickAnswer ? (
               <div className="quick-answer">
-                <p className="quick-answer__label">Tóm tắt nhanh</p>
+                <p className="quick-answer__label">{cmsUiStrings.quickAnswerLabel}</p>
                 <p className="quick-answer__body">{node.quickAnswer}</p>
               </div>
             ) : null}
@@ -110,7 +116,7 @@ export async function NodePortal({ id, path }: NodePortalProps) {
                     <p className="blog-card__excerpt">{article.excerpt}</p>
                   ) : null}
                   <Link href={article.fullPath} className="blog-card__cta">
-                    Đọc bài viết →
+                    {cmsUiStrings.readArticleCta}
                   </Link>
                 </div>
               </article>
@@ -134,7 +140,7 @@ export async function NodePortal({ id, path }: NodePortalProps) {
                     <p className="blog-card__excerpt">{childNode.quickAnswer}</p>
                   ) : null}
                   <Link href={childNode.fullPath} className="blog-card__cta">
-                    Khám phá chuyên mục →
+                    {cmsUiStrings.exploreNodeCta}
                   </Link>
                 </div>
               </article>

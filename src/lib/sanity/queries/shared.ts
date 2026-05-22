@@ -254,7 +254,41 @@ export const SITE_SETTINGS_QUERY = defineQuery(`
     phoneE164,
     zaloNumber,
     facebookUrl,
-    "defaultOgImageUrl": defaultOgImage.asset->url
+    "defaultOgImageUrl": defaultOgImage.asset->url,
+    "nav": coalesce(nav, null){
+      "ctaLabel": coalesce(ctaLabel, null)
+    },
+    "footer": coalesce(footer, null){
+      "brandSubtitle": coalesce(brandSubtitle, null),
+      "brandCopy": coalesce(brandCopy, null),
+      "col1Heading": coalesce(col1Heading, null),
+      "col2Heading": coalesce(col2Heading, null),
+      "col3Heading": coalesce(col3Heading, null)
+    },
+    "cmsUiStrings": coalesce(cmsUiStrings, null){
+      "quickAnswerLabel": coalesce(quickAnswerLabel, null),
+      "readArticleCta": coalesce(readArticleCta, null),
+      "exploreNodeCta": coalesce(exploreNodeCta, null),
+      "hubEyebrow": coalesce(hubEyebrow, null),
+      "faqEyebrow": coalesce(faqEyebrow, null),
+      "faqTitle": coalesce(faqTitle, null),
+      "articleAsideLabel": coalesce(articleAsideLabel, null),
+      "articleAsideTitle": coalesce(articleAsideTitle, null),
+      "articleAsideCta": coalesce(articleAsideCta, null),
+      "techDocEyebrow": coalesce(techDocEyebrow, null),
+      "techDocTitle": coalesce(techDocTitle, null),
+      "techDocCategory": coalesce(techDocCategory, null),
+      "moneyPricingEyebrow": coalesce(moneyPricingEyebrow, null),
+      "moneyPricingTitle": coalesce(moneyPricingTitle, null),
+      "moneyLocationsEyebrow": coalesce(moneyLocationsEyebrow, null),
+      "moneyLocationsTitle": coalesce(moneyLocationsTitle, null),
+      "moneyFaqEyebrow": coalesce(moneyFaqEyebrow, null),
+      "moneyFaqTitle": coalesce(moneyFaqTitle, null),
+      "moneyRelatedPagesEyebrow": coalesce(moneyRelatedPagesEyebrow, null),
+      "moneyRelatedPagesTitle": coalesce(moneyRelatedPagesTitle, null),
+      "moneyCtaEyebrow": coalesce(moneyCtaEyebrow, null),
+      "moneyCtaTitle": coalesce(moneyCtaTitle, null)
+    }
   }
 `);
 

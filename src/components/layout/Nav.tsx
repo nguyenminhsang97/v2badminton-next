@@ -51,7 +51,7 @@ const primaryLinks = [
 type NavProps = {
   siteSettings: Pick<
     SiteChromeSettings,
-    "siteName" | "phoneDisplay" | "phoneE164"
+    "siteName" | "phoneDisplay" | "phoneE164" | "nav"
   >;
   showBlogLink: boolean;
   showCoachesLink: boolean;
@@ -174,7 +174,7 @@ export function Nav({ siteSettings, showBlogLink, showCoachesLink }: NavProps) {
               data-cta-location="nav"
               onClick={trackNavCtaClick}
             >
-              Đăng ký học thử
+              {siteSettings.nav.ctaLabel}
             </Link>
           </div>
         </div>
@@ -218,7 +218,7 @@ export function Nav({ siteSettings, showBlogLink, showCoachesLink }: NavProps) {
                 closeMobileMenu();
               }}
             >
-              Đăng ký học thử
+              {siteSettings.nav.ctaLabel}
             </Link>
           </div>
         </details>
