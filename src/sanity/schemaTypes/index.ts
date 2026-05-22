@@ -4,6 +4,7 @@ import { contentArticle } from "./contentArticle";
 import { contentHub } from "./contentHub";
 import { contentNode } from "./contentNode";
 import { faq } from "./faq";
+import { homepageContent } from "./homepageContent";
 import { location } from "./location";
 import { moneyPage } from "./moneyPage";
 import { post } from "./post";
@@ -15,6 +16,7 @@ import { testimonial } from "./testimonial";
 
 export const schemaTypes = [
   siteSettings,
+  homepageContent,
   location,
   pricingTier,
   scheduleBlock,
