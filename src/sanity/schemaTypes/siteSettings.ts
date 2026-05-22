@@ -4,26 +4,18 @@ export const siteSettings = defineType({
   name: "site_settings",
   title: "Cài đặt website",
   type: "document",
-  groups: [
-    { name: "contact", title: "Liên hệ & mạng xã hội" },
-    { name: "nav", title: "Điều hướng" },
-    { name: "footer", title: "Footer" },
-    { name: "cmsUiStrings", title: "Chuỗi giao diện CMS" },
-  ],
   fields: [
     // ─── Contact & identity ─────────────────────────────────────────────────
     defineField({
       name: "siteName",
       title: "Tên website",
       type: "string",
-      group: "contact",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "phoneDisplay",
       title: "Số điện thoại (hiển thị trên web)",
       type: "string",
-      group: "contact",
       description: "Định dạng đẹp để hiển thị trực tiếp. VD: 0907 911 886",
       validation: (Rule) => Rule.required(),
     }),
@@ -31,7 +23,6 @@ export const siteSettings = defineType({
       name: "phoneE164",
       title: "Số điện thoại (link gọi/Zalo tự động)",
       type: "string",
-      group: "contact",
       description:
         "Định dạng quốc tế, bắt đầu bằng +84. VD: +84907911886. Dùng cho nút gọi điện và link Zalo tự động.",
       validation: (Rule) =>
@@ -43,7 +34,6 @@ export const siteSettings = defineType({
       name: "zaloNumber",
       title: "Số Zalo",
       type: "string",
-      group: "contact",
       description: "Số điện thoại Zalo, không có dấu cách. VD: 0907911886",
       validation: (Rule) => Rule.required(),
     }),
@@ -51,14 +41,12 @@ export const siteSettings = defineType({
       name: "facebookUrl",
       title: "Link Facebook",
       type: "url",
-      group: "contact",
       validation: (Rule) => Rule.required().uri({ scheme: ["http", "https"] }),
     }),
     defineField({
       name: "defaultOgImage",
       title: "Ảnh mặc định khi chia sẻ",
       type: "image",
-      group: "contact",
       description:
         "Ảnh hiển thị khi chia sẻ link website lên Facebook, Zalo. Kích thước khuyến nghị: 1200×630px.",
       options: {
@@ -71,7 +59,6 @@ export const siteSettings = defineType({
       name: "nav",
       title: "Điều hướng",
       type: "object",
-      group: "nav",
       description: "Tuỳ chỉnh nhãn nút CTA trong thanh điều hướng.",
       fields: [
         defineField({
@@ -88,7 +75,6 @@ export const siteSettings = defineType({
       name: "footer",
       title: "Footer",
       type: "object",
-      group: "footer",
       description: "Văn bản thương hiệu và tiêu đề cột trong footer.",
       fields: [
         defineField({
@@ -129,7 +115,6 @@ export const siteSettings = defineType({
       name: "cmsUiStrings",
       title: "Chuỗi giao diện CMS",
       type: "object",
-      group: "cmsUiStrings",
       description: "Nhãn và tiêu đề dùng chung trên trang bài viết và lộ trình.",
       fields: [
         // Shared
