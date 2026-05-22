@@ -31,18 +31,28 @@ function getInitials(name: string): string {
 
 export function StaticTestimonialsSection({
   testimonials,
+  content,
 }: HomepageTestimonialsSectionProps) {
   const canExpand = testimonials.length > DEFAULT_VISIBLE_COUNT;
   const displayedTestimonials = testimonials.slice(0, DEFAULT_VISIBLE_COUNT);
 
+  const eyebrow = content?.eyebrow ?? "Cảm nhận học viên";
+  // If CMS provides a title, render it as plain text (loses accent <span>).
+  // If absent, render the hardcoded title with the accent span intact.
+  const cmsTitle = content?.title ?? null;
+
   return (
     <section className="section testimonials-section" id={HOME_SECTION_IDS.testimonials}>
       <div className="section__header">
-        <p className="section__eyebrow">Cảm nhận học viên</p>
-        <h2 className="section__title">
-          Học viên nói gì về{" "}
-          <span className="testimonials-section__accent">V2 Badminton?</span>
-        </h2>
+        <p className="section__eyebrow">{eyebrow}</p>
+        {cmsTitle ? (
+          <h2 className="section__title">{cmsTitle}</h2>
+        ) : (
+          <h2 className="section__title">
+            Học viên nói gì về{" "}
+            <span className="testimonials-section__accent">V2 Badminton?</span>
+          </h2>
+        )}
       </div>
 
       <div className="testimonials-grid">

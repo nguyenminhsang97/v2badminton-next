@@ -490,6 +490,97 @@ export const POST_BY_SLUG_QUERY = defineQuery(`
   }
 `);
 
+// ─── Homepage singleton (W2) ────────────────────────────────────────────────
+
+export const HOMEPAGE_CONTENT_QUERY = defineQuery(`
+  *[
+    _type == "homepage_content" &&
+    _id == "homepage_content" &&
+    ${PUBLISHED_ONLY_FILTER}
+  ][0]{
+    "id": _id,
+    "updatedAt": coalesce(_updatedAt, null),
+    "hero": coalesce(hero, null){
+      "statusLabel": coalesce(statusLabel, null),
+      "subheading": coalesce(subheading, null),
+      "primaryCtaLabel": coalesce(primaryCtaLabel, null),
+      "secondaryCtaLabel": coalesce(secondaryCtaLabel, null),
+      "heroImageAlt": coalesce(heroImageAlt, null)
+    },
+    "statsBar": coalesce(statsBar, null){
+      "items": coalesce(items[]{
+        "value": coalesce(value, null),
+        "label": coalesce(label, null),
+        "icon": coalesce(icon, null)
+      }, [])
+    },
+    "whySection": coalesce(whySection, null){
+      "eyebrow": coalesce(eyebrow, null),
+      "title": coalesce(title, null),
+      "description": coalesce(description, null),
+      "proofStat": coalesce(proofStat, null){
+        "value": coalesce(value, null),
+        "statTitle": coalesce(statTitle, null),
+        "statDescription": coalesce(statDescription, null)
+      },
+      "differentiators": coalesce(differentiators[]{
+        "title": coalesce(title, null),
+        "description": coalesce(description, null),
+        "icon": coalesce(icon, null)
+      }, [])
+    },
+    "courseSection": coalesce(courseSection, null){
+      "eyebrow": coalesce(eyebrow, null),
+      "title": coalesce(title, null),
+      "cards": coalesce(cards[]{
+        "categoryBadge": coalesce(categoryBadge, null),
+        "levelChip": coalesce(levelChip, null),
+        "title": coalesce(title, null),
+        "subtitle": coalesce(subtitle, null),
+        "description": coalesce(description, null),
+        "amount": coalesce(amount, null),
+        "meta": coalesce(meta, null),
+        "imageAlt": coalesce(imageAlt, null),
+        "linkedMoneyPageSlug": coalesce(linkedMoneyPage->slug.current, null)
+      }, [])
+    },
+    "locationsSection": coalesce(locationsSection, null){
+      "eyebrow": coalesce(eyebrow, null),
+      "title": coalesce(title, null),
+      "description": coalesce(description, null)
+    },
+    "faqSection": coalesce(faqSection, null){
+      "eyebrow": coalesce(eyebrow, null),
+      "title": coalesce(title, null)
+    },
+    "pricingStrip": coalesce(pricingStrip, null){
+      "eyebrow": coalesce(eyebrow, null),
+      "title": coalesce(title, null),
+      "secondary": coalesce(secondary, null)
+    },
+    "scheduleSection": coalesce(scheduleSection, null){
+      "eyebrow": coalesce(eyebrow, null),
+      "title": coalesce(title, null),
+      "description": coalesce(description, null)
+    },
+    "coachSection": coalesce(coachSection, null){
+      "eyebrow": coalesce(eyebrow, null),
+      "title": coalesce(title, null),
+      "description": coalesce(description, null)
+    },
+    "testimonialsSection": coalesce(testimonialsSection, null){
+      "eyebrow": coalesce(eyebrow, null),
+      "title": coalesce(title, null)
+    },
+    "enterpriseTeaser": coalesce(enterpriseTeaser, null){
+      "badge": coalesce(badge, null),
+      "title": coalesce(title, null),
+      "description": coalesce(description, null),
+      "ctaLabel": coalesce(ctaLabel, null)
+    }
+  }
+`);
+
 // ─── Content Platform projections (Phase 1) ────────────────────────────────
 
 export const CONTENT_CHILD_NODE_PROJECTION = `{
