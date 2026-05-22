@@ -334,6 +334,112 @@ export type SanityRouteRedirect = {
   permanent: boolean;
 };
 
+// ─── Homepage singleton (W2) ────────────────────────────────────────────────
+
+export type SanityHomepageStatIcon =
+  | "users"
+  | "trophy"
+  | "shuttle"
+  | "calendar"
+  | "mapPin"
+  | "arrowRight";
+
+export type SanityHomepageHero = {
+  statusLabel: string | null;
+  subheading: string | null;
+  primaryCtaLabel: string | null;
+  secondaryCtaLabel: string | null;
+  heroImageAlt: string | null;
+};
+
+export type SanityHomepageStatItem = {
+  value: string | null;
+  label: string | null;
+  icon: SanityHomepageStatIcon | null;
+};
+
+export type SanityHomepageStatsBar = {
+  items: SanityHomepageStatItem[];
+};
+
+export type SanityHomepageProofStat = {
+  value: string | null;
+  statTitle: string | null;
+  statDescription: string | null;
+};
+
+export type SanityHomepageDifferentiator = {
+  title: string | null;
+  description: string | null;
+  icon: SanityHomepageStatIcon | null;
+};
+
+export type SanityHomepageWhySection = {
+  eyebrow: string | null;
+  title: string | null;
+  description: string | null;
+  proofStat: SanityHomepageProofStat | null;
+  differentiators: SanityHomepageDifferentiator[];
+};
+
+export type SanityHomepageCourseCard = {
+  categoryBadge: string | null;
+  levelChip: string | null;
+  title: string | null;
+  subtitle: string | null;
+  description: string | null;
+  amount: string | null;
+  meta: string | null;
+  imageAlt: string | null;
+  linkedMoneyPageSlug: string | null;
+};
+
+export type SanityHomepageCourseSection = {
+  eyebrow: string | null;
+  title: string | null;
+  cards: SanityHomepageCourseCard[];
+};
+
+export type SanityHomepageBasicSection = {
+  eyebrow: string | null;
+  title: string | null;
+  description: string | null;
+};
+
+export type SanityHomepageHeadingOnlySection = {
+  eyebrow: string | null;
+  title: string | null;
+};
+
+export type SanityHomepagePricingStrip = {
+  eyebrow: string | null;
+  title: string | null;
+  secondary: string | null;
+};
+
+export type SanityHomepageEnterpriseTeaser = {
+  badge: string | null;
+  title: string | null;
+  description: string | null;
+  ctaLabel: string | null;
+};
+
+export type SanityHomepageContent = {
+  id: string;
+  updatedAt: string | null;
+  hero: SanityHomepageHero | null;
+  statsBar: SanityHomepageStatsBar | null;
+  whySection: SanityHomepageWhySection | null;
+  courseSection: SanityHomepageCourseSection | null;
+  locationsSection: SanityHomepageBasicSection | null;
+  faqSection: SanityHomepageHeadingOnlySection | null;
+  pricingStrip: SanityHomepagePricingStrip | null;
+  scheduleSection: SanityHomepageBasicSection | null;
+  coachSection: SanityHomepageBasicSection | null;
+  testimonialsSection: SanityHomepageHeadingOnlySection | null;
+  enterpriseTeaser: SanityHomepageEnterpriseTeaser | null;
+};
+
 export type SanityContentSitemapEntry = {
   path: string;
   updatedAt: string | null;

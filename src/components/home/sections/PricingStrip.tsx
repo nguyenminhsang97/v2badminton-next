@@ -1,10 +1,7 @@
 import type { SanityPricingTier } from "@/lib/sanity";
 import Link from "next/link";
 import { HOME_SECTION_IDS, toHash } from "@/lib/anchors";
-
-type PricingStripProps = {
-  tiers: readonly SanityPricingTier[];
-};
+import type { HomepagePricingStripProps } from "./sectionProps";
 
 function getSortedPricingTiers(tiers: readonly SanityPricingTier[]) {
   const groupTiers = tiers
@@ -65,19 +62,23 @@ function buildGroupSummary(
   };
 }
 
-export function PricingStrip({ tiers }: PricingStripProps) {
+export function PricingStrip({ tiers, content }: HomepagePricingStripProps) {
   const { groupTiers, privateTier } = getSortedPricingTiers(tiers);
   const groupSummary = buildGroupSummary(groupTiers);
+
+  const eyebrow = content?.eyebrow ?? "Chi tiết học phí";
+  const title = content?.title ?? "Học phí chính hiện tại";
+  const secondary =
+    content?.secondary ??
+    "Lớp nhóm 2-6 người theo số buổi mỗi tuần, lớp 1 kèm 1 theo lịch riêng.";
 
   return (
     <section className="section pricing-section" id={HOME_SECTION_IDS.pricing}>
       <div className="pricing-strip">
         <div className="pricing-strip__header">
-          <p className="pricing-strip__eyebrow">Chi tiết học phí</p>
-          <h3 className="pricing-strip__title">Học phí chính hiện tại</h3>
-          <p className="pricing-strip__desc">
-            Lớp nhóm 2-6 người theo số buổi mỗi tuần, lớp 1 kèm 1 theo lịch riêng.
-          </p>
+          <p className="pricing-strip__eyebrow">{eyebrow}</p>
+          <h3 className="pricing-strip__title">{title}</h3>
+          <p className="pricing-strip__desc">{secondary}</p>
         </div>
         <div className="pricing-strip__summary" aria-label="Tóm tắt học phí">
           {groupSummary ? (

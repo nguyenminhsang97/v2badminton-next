@@ -37,15 +37,41 @@ type CourseCardDef = {
   tone: "lime" | "orange" | "teal" | "emerald";
 };
 
-type CourseSectionProps = {
-  pricingTiers: SanityPricingTier[];
+import type { HomepageCourseSectionProps } from "./sectionProps";
+
+// Slug → static asset/tone/level map (images stay hardcoded per W2 ticket §D5)
+const COURSE_CARD_DEFAULTS: Record<
+  string,
+  {
+    imageSrc: string;
+    tone: "lime" | "orange" | "teal" | "emerald";
+    level: "co_ban" | "nang_cao" | null;
+  }
+> = {
+  "lop-cau-long-tre-em":           { imageSrc: generatedImages.kidsClass,       tone: "lime",    level: "co_ban" },
+  "hoc-cau-long-cho-nguoi-moi":    { imageSrc: generatedImages.adultBeginner,   tone: "orange",  level: "co_ban" },
+  "lop-cau-long-cho-nguoi-di-lam": { imageSrc: generatedImages.afterWorkClass,  tone: "teal",    level: "co_ban" },
+  "hoc-cau-long-1-kem-1":          { imageSrc: generatedImages.privateCoaching, tone: "emerald", level: null     },
 };
 
-const CARD_LEVEL_MAP: Partial<Record<CourseCardId, "co_ban" | "nang_cao">> = {
-  "course-kids": "co_ban",
-  "course-beginner": "co_ban",
-  "course-working": "co_ban",
-};
+function priceForSlug(
+  slug: string,
+  tiers: readonly SanityPricingTier[],
+): CoursePriceDisplay {
+  switch (slug) {
+    case "lop-cau-long-tre-em":
+      return findGroupPriceBySlug(tiers, "group-basic-2x");
+    case "hoc-cau-long-cho-nguoi-moi":
+      return findGroupPriceRangeBySlugs(tiers, ["group-basic-2x", "group-basic-3x"]);
+    case "lop-cau-long-cho-nguoi-di-lam":
+      return findStartingGroupPrice(tiers);
+    case "hoc-cau-long-1-kem-1":
+      return findPrivatePrice(tiers);
+    default:
+      return findStartingGroupPrice(tiers);
+  }
+}
+
 
 function formatVnd(value: number): string {
   return new Intl.NumberFormat("vi-VN").format(value);
@@ -142,20 +168,9 @@ function findPrivatePrice(
   };
 }
 
-export function CourseSection({ pricingTiers }: CourseSectionProps) {
-  const { setCourseIntent } = useHomepageConversionIntent();
-  const startingGroupPrice = findStartingGroupPrice(pricingTiers);
-  const basicTwoSessionPrice = findGroupPriceBySlug(
-    pricingTiers,
-    "group-basic-2x",
-  );
-  const beginnerGroupPriceRange = findGroupPriceRangeBySlugs(
-    pricingTiers,
-    ["group-basic-2x", "group-basic-3x"],
-  );
-  const privatePrice = findPrivatePrice(pricingTiers);
-
-  const courseCards: CourseCardDef[] = [
+// Hardcoded fallback card set — used when CMS cards are absent or any card is invalid
+function buildHardcodedCards(tiers: readonly SanityPricingTier[]): CourseCardDef[] {
+  return [
     {
       id: "course-kids",
       categoryBadge: "Phổ biến nhất",
@@ -163,7 +178,7 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
       title: "Thiếu nhi cơ bản",
       subtitle: "7 - 12 tuổi",
       description: "Xây nền kỹ thuật và phản xạ cho những buổi đầu tiên.",
-      price: basicTwoSessionPrice,
+      price: findGroupPriceBySlug(tiers, "group-basic-2x"),
       meta: "Sáng cuối tuần · 2 buổi",
       href: "/lop-cau-long-tre-em/",
       imageSrc: generatedImages.kidsClass,
@@ -177,7 +192,7 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
       title: "Người lớn mới học",
       subtitle: "Mới bắt đầu",
       description: "Lộ trình rõ ràng cho người mới cầm vợt và muốn theo đều.",
-      price: beginnerGroupPriceRange,
+      price: findGroupPriceRangeBySlugs(tiers, ["group-basic-2x", "group-basic-3x"]),
       meta: "2 - 3 buổi/tuần",
       href: "/hoc-cau-long-cho-nguoi-moi/",
       imageSrc: generatedImages.adultBeginner,
@@ -191,7 +206,7 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
       title: "Người đi làm",
       subtitle: "Tối & cuối tuần",
       description: "Giữ nhịp tập đều với khung giờ sau giờ làm và cuối tuần.",
-      price: startingGroupPrice,
+      price: findStartingGroupPrice(tiers),
       meta: "Tối & cuối tuần",
       href: "/lop-cau-long-cho-nguoi-di-lam/",
       imageSrc: generatedImages.afterWorkClass,
@@ -205,7 +220,7 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
       title: "1 kèm 1",
       subtitle: "Theo mục tiêu riêng",
       description: "Theo mục tiêu riêng và tăng tốc đúng phần bạn cần.",
-      price: privatePrice,
+      price: findPrivatePrice(tiers),
       meta: "Theo lịch riêng",
       href: "/hoc-cau-long-1-kem-1/",
       imageSrc: generatedImages.privateCoaching,
@@ -213,12 +228,80 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
       tone: "emerald",
     },
   ];
+}
+
+export function CourseSection({ pricingTiers, content }: HomepageCourseSectionProps) {
+  const { setCourseIntent } = useHomepageConversionIntent();
+
+  const eyebrow = content?.eyebrow ?? "Chương trình học";
+  const title = content?.title ?? "Chọn lộ trình phù hợp ngay từ buổi đầu";
+
+  // All-or-nothing CMS card logic (D3/D4):
+  // - empty CMS → hardcoded fallback
+  // - any card fails validation → hardcoded fallback + dev warn
+  // - all cards valid → CMS cards
+  let courseCards: CourseCardDef[];
+  const cmsCards = content?.cards;
+
+  if (!cmsCards || cmsCards.length === 0) {
+    courseCards = buildHardcodedCards(pricingTiers);
+  } else {
+    let allValid = true;
+    const validated: CourseCardDef[] = [];
+
+    for (let i = 0; i < cmsCards.length; i++) {
+      const card = cmsCards[i];
+      const slug = card.linkedMoneyPageSlug;
+
+      if (!slug) {
+        if (process.env.NODE_ENV === "development") {
+          console.warn(`[CourseSection] CMS card at index ${i} has no linkedMoneyPageSlug — falling back to hardcoded cards.`);
+        }
+        allValid = false;
+        break;
+      }
+
+      const defaults = COURSE_CARD_DEFAULTS[slug];
+      if (!defaults) {
+        if (process.env.NODE_ENV === "development") {
+          console.warn(`[CourseSection] CMS card at index ${i} has unknown slug "${slug}" — falling back to hardcoded cards.`);
+        }
+        allValid = false;
+        break;
+      }
+
+      const cardId = `course-cms-${slug}` as CourseCardId;
+      validated.push({
+        id: cardId,
+        categoryBadge: card.categoryBadge ?? "",
+        levelChip: card.levelChip ?? "",
+        title: card.title ?? "",
+        subtitle: card.subtitle ?? "",
+        description: card.description ?? "",
+        price: priceForSlug(slug, pricingTiers),
+        meta: card.meta ?? "",
+        href: `/${slug}/`,
+        imageSrc: defaults.imageSrc,
+        imageAlt: card.imageAlt ?? "",
+        tone: defaults.tone,
+      });
+    }
+
+    courseCards = allValid ? validated : buildHardcodedCards(pricingTiers);
+  }
+
+  // Level map used for "Xem lịch phù hợp" button — keyed by href slug
+  const HREF_LEVEL_MAP: Partial<Record<string, "co_ban" | "nang_cao">> = {
+    "/lop-cau-long-tre-em/":           "co_ban",
+    "/hoc-cau-long-cho-nguoi-moi/":    "co_ban",
+    "/lop-cau-long-cho-nguoi-di-lam/": "co_ban",
+  };
 
   return (
     <section className="section course-section" id={HOME_SECTION_IDS.courses}>
       <div className="section__header course-section__header">
-        <p className="section__eyebrow">Chương trình học</p>
-        <h2 className="section__title">Chọn lộ trình phù hợp ngay từ buổi đầu</h2>
+        <p className="section__eyebrow">{eyebrow}</p>
+        <h2 className="section__title">{title}</h2>
         <p className="section__desc">
           4 lộ trình chính để bạn chọn nhanh theo nhu cầu trước khi để lại
           thông tin.
@@ -299,12 +382,12 @@ export function CourseSection({ pricingTiers }: CourseSectionProps) {
                   <ArrowRightIcon className="course-card__cta-icon" />
                 </Link>
 
-                {CARD_LEVEL_MAP[card.id] ? (
+                {HREF_LEVEL_MAP[card.href] ? (
                   <button
                     type="button"
                     className="course-card__cta course-card__cta--ghost"
                     onClick={() => {
-                      setCourseIntent(CARD_LEVEL_MAP[card.id]!);
+                      setCourseIntent(HREF_LEVEL_MAP[card.href]!);
                       trackEvent("cta_click", {
                         cta_name: "xem_khoa_hoc",
                         cta_location: "course_schedule_jump",

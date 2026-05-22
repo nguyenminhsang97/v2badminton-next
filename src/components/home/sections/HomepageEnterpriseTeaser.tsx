@@ -1,6 +1,7 @@
 "use client";
 
 import { useHomepageBusinessMode } from "@/components/home/conversion/HomepageConversionProvider";
+import type { HomepageEnterpriseTeaserProps } from "./sectionProps";
 import { EnterpriseTeaser } from "./EnterpriseTeaser";
 
 /**
@@ -11,7 +12,7 @@ import { EnterpriseTeaser } from "./EnterpriseTeaser";
  * discoverable for B2B searchers without competing with the B2C
  * decision flow above (course → schedule → contact).
  */
-export function HomepageEnterpriseTeaser() {
+export function HomepageEnterpriseTeaser({ content }: HomepageEnterpriseTeaserProps) {
   const { enterBusinessMode } = useHomepageBusinessMode();
-  return <EnterpriseTeaser onRequestQuote={enterBusinessMode} />;
+  return <EnterpriseTeaser onRequestQuote={enterBusinessMode} content={content} />;
 }
