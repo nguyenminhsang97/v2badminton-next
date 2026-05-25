@@ -29,7 +29,6 @@ export const staticPage = defineType({
     { name: "overview", title: "Tổng quan", default: true },
     { name: "content", title: "Nội dung" },
     { name: "seo", title: "SEO" },
-    { name: "publish", title: "Xuất bản" },
   ],
 
   fields: [
@@ -112,10 +111,8 @@ export const staticPage = defineType({
       options: { hotspot: true },
     }),
 
-    // ─── Publish ──────────────────────────────────────────────────────────
-    // No `status` enum or `isIndexed` field in W3a (per ticket D5).
-    // Sanity's built-in draft/published model handles status; the Publish tab
-    // is reserved for future fields (e.g. W3b's `isIndexed`).
+    // No `status` / `isIndexed` / publish controls in W3a (per ticket D5).
+    // A "Xuất bản" tab will be reintroduced in W3b when a real field exists.
   ],
 
   preview: {
