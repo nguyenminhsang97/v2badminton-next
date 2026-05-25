@@ -485,3 +485,29 @@ export type SanityContentSitemapEntry = {
   updatedAt: string | null;
   type: "content_hub" | "content_node" | "content_article";
 };
+
+// ─── Static pages (W3b) ────────────────────────────────────────────────────
+
+export type SanityStaticPageOgImage = {
+  url: string;
+  alt: string;
+  hotspot: unknown;
+  crop: unknown;
+};
+
+/**
+ * Projection type for STATIC_PAGE_QUERY.
+ * All optional fields are null when not set in the CMS.
+ * Renderer falls back to FALLBACK_* constants for every null field.
+ */
+export type SanityStaticPage = {
+  slug: string;
+  title: string | null;
+  breadcrumbLabel: string | null;
+  eyebrow: string | null;
+  lead: string | null;
+  body: SanityPortableTextBlock[] | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  ogImage: SanityStaticPageOgImage | null;
+};

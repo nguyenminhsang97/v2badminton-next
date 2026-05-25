@@ -798,3 +798,34 @@ export const CONTENT_SITEMAP_QUERY = defineQuery(`
     "type": _type
   }
 `);
+
+// ─── Static pages (W3b) ────────────────────────────────────────────────────
+
+/**
+ * Fetch a single static_page doc by slug.current.
+ * Used by file-routes (e.g. /gioi-thieu/) that own their own URL.
+ * Returns null when no published doc exists — the renderer falls back to
+ * hardcoded JSX in that case.
+ */
+export const STATIC_PAGE_QUERY = defineQuery(`
+  *[
+    _type == "static_page" &&
+    slug.current == $slug &&
+    ${PUBLISHED_ONLY_FILTER}
+  ][0]{
+    "slug": slug.current,
+    title,
+    breadcrumbLabel,
+    eyebrow,
+    lead,
+    body,
+    seoTitle,
+    seoDescription,
+    "ogImage": ogImage{
+      "url": asset->url,
+      "alt": coalesce(asset->altText, ""),
+      hotspot,
+      crop
+    }
+  }
+`);

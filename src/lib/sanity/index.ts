@@ -6,3 +6,4 @@ export * from "./queries/homepage-content";
 export * from "./queries/money-pages";
 export * from "./queries/posts";
 export * from "./queries/site";
+export * from "./queries/static-page";
