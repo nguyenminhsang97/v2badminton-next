@@ -9,33 +9,30 @@ const SECTION_ICON_OPTIONS = [
   { title: "Arrow right (mũi tên)", value: "arrowRight" },
 ] as const;
 
-// ─── Reusable inline helpers ─────────────────────────────────────────────────
+// ─── Reusable inline helpers (no group — used inside inline objects) ──────────
 
-function eyebrowField(group: string) {
+function eyebrowField() {
   return defineField({
     name: "eyebrow",
     title: "Eyebrow (tag nhỏ trên tiêu đề)",
     type: "string",
-    group,
   });
 }
 
-function titleField(group: string) {
+function titleField() {
   return defineField({
     name: "title",
     title: "Tiêu đề section",
     type: "string",
-    group,
   });
 }
 
-function descriptionField(group: string) {
+function descriptionField() {
   return defineField({
     name: "description",
     title: "Mô tả ngắn",
     type: "text",
     rows: 3,
-    group,
   });
 }
 
@@ -157,9 +154,9 @@ export const homepageContent = defineType({
       type: "object",
       group: "stats",
       fields: [
-        eyebrowField("stats"),
-        titleField("stats"),
-        descriptionField("stats"),
+        eyebrowField(),
+        titleField(),
+        descriptionField(),
         defineField({
           name: "proofStat",
           title: "Proof stat (số liệu nổi bật)",
@@ -215,8 +212,8 @@ export const homepageContent = defineType({
       type: "object",
       group: "courses",
       fields: [
-        eyebrowField("courses"),
-        titleField("courses"),
+        eyebrowField(),
+        titleField(),
         defineField({
           name: "cards",
           title: "Course cards",
@@ -262,7 +259,7 @@ export const homepageContent = defineType({
       title: "Section địa điểm",
       type: "object",
       group: "sections",
-      fields: [eyebrowField("sections"), titleField("sections"), descriptionField("sections")],
+      fields: [eyebrowField(), titleField(), descriptionField()],
     }),
 
     defineField({
@@ -270,7 +267,7 @@ export const homepageContent = defineType({
       title: "Section FAQ",
       type: "object",
       group: "sections",
-      fields: [eyebrowField("sections"), titleField("sections")],
+      fields: [eyebrowField(), titleField()],
     }),
 
     defineField({
@@ -279,14 +276,13 @@ export const homepageContent = defineType({
       type: "object",
       group: "sections",
       fields: [
-        eyebrowField("sections"),
-        titleField("sections"),
+        eyebrowField(),
+        titleField(),
         defineField({
           name: "secondary",
           title: "Secondary text",
           description: "Dòng chữ phụ dưới tiêu đề pricing.",
           type: "string",
-          group: "sections",
         }),
       ],
     }),
@@ -296,7 +292,7 @@ export const homepageContent = defineType({
       title: "Section lịch học",
       type: "object",
       group: "sections",
-      fields: [eyebrowField("sections"), titleField("sections"), descriptionField("sections")],
+      fields: [eyebrowField(), titleField(), descriptionField()],
     }),
 
     defineField({
@@ -304,7 +300,7 @@ export const homepageContent = defineType({
       title: "Section HLV",
       type: "object",
       group: "sections",
-      fields: [eyebrowField("sections"), titleField("sections"), descriptionField("sections")],
+      fields: [eyebrowField(), titleField(), descriptionField()],
     }),
 
     defineField({
@@ -312,7 +308,7 @@ export const homepageContent = defineType({
       title: "Section học viên nói gì",
       type: "object",
       group: "sections",
-      fields: [eyebrowField("sections"), titleField("sections")],
+      fields: [eyebrowField(), titleField()],
     }),
 
     defineField({
@@ -321,14 +317,13 @@ export const homepageContent = defineType({
       type: "object",
       group: "sections",
       fields: [
-        defineField({ name: "badge", title: "Badge", type: "string", group: "sections" }),
-        titleField("sections"),
-        descriptionField("sections"),
+        defineField({ name: "badge", title: "Badge", type: "string" }),
+        titleField(),
+        descriptionField(),
         defineField({
           name: "ctaLabel",
           title: "CTA label",
           type: "string",
-          group: "sections",
         }),
       ],
     }),

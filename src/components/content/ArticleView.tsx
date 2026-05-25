@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
 import { FaqList } from "@/components/blocks/FaqList";
+import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
 import { getContentArticle } from "@/lib/sanity";
 import { ContentBreadcrumbs } from "./ContentBreadcrumbs";
 import { ContentStructuredData } from "./ContentStructuredData";
@@ -14,11 +15,16 @@ type ArticleViewProps = {
 };
 
 export async function ArticleView({ id, path }: ArticleViewProps) {
-  const article = await getContentArticle(id);
+  const [article, siteSettings] = await Promise.all([
+    getContentArticle(id),
+    loadSiteChromeSettings(),
+  ]);
 
   if (!article) {
     notFound();
   }
+
+  const { cmsUiStrings } = siteSettings;
 
   const trail = [
     { label: "Trang chủ", href: "/" },
@@ -79,7 +85,7 @@ export async function ArticleView({ id, path }: ArticleViewProps) {
         <section className="blog-post__content-shell">
           {article.quickAnswer ? (
             <div className="quick-answer">
-              <p className="quick-answer__label">Tóm tắt nhanh</p>
+              <p className="quick-answer__label">{cmsUiStrings.quickAnswerLabel}</p>
               <p className="quick-answer__body">{article.quickAnswer}</p>
             </div>
           ) : null}
@@ -94,18 +100,18 @@ export async function ArticleView({ id, path }: ArticleViewProps) {
         {article.relatedFaqs.length > 0 ? (
           <section
             className="blog-post__content-shell"
-            aria-label="Câu hỏi thường gặp"
+            aria-label={cmsUiStrings.faqTitle}
           >
-            <p className="section__eyebrow">Hỏi & đáp</p>
-            <h2 className="section__title">Câu hỏi thường gặp</h2>
+            <p className="section__eyebrow">{cmsUiStrings.faqEyebrow}</p>
+            <h2 className="section__title">{cmsUiStrings.faqTitle}</h2>
             <FaqList faqs={article.relatedFaqs} />
           </section>
         ) : null}
 
         {article.relatedMoneyPageSlug ? (
           <aside className="blog-post__related">
-            <p className="blog-post__related-label">Lớp học liên quan</p>
-            <h2 className="section__title">Sẵn sàng học cùng huấn luyện viên?</h2>
+            <p className="blog-post__related-label">{cmsUiStrings.articleAsideLabel}</p>
+            <h2 className="section__title">{cmsUiStrings.articleAsideTitle}</h2>
             <p className="section__desc">
               Áp dụng kỹ thuật này nhanh hơn với lộ trình có hướng dẫn trực tiếp.
               Xem học phí, lịch tập và sân tại trang lớp học phù hợp.
@@ -119,7 +125,7 @@ export async function ArticleView({ id, path }: ArticleViewProps) {
               data-target-money-page={article.relatedMoneyPageSlug}
               data-page-path={path}
             >
-              Xem lớp học phù hợp
+              {cmsUiStrings.articleAsideCta}
             </Link>
           </aside>
         ) : null}

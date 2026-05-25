@@ -5,6 +5,7 @@ import type { PortableTextBlock } from "@portabletext/types";
 import { FaqList } from "@/components/blocks/FaqList";
 import { LocationsGrid } from "@/components/blocks/LocationsGrid";
 import { PricingCards } from "@/components/blocks/PricingCards";
+import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
 import { HOME_SECTION_IDS, toHash, toHomepageHash } from "@/lib/anchors";
 import { getGeneratedRouteImage } from "@/lib/generatedImages";
 import { coreRoutes, getRouteMetadata, type CoreRoutePath } from "@/lib/routes";
@@ -109,7 +110,11 @@ function getRelatedMoneyPages(
 }
 
 export async function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) {
-  const relatedArticles = await getArticlesForMoneyPage(page.slug);
+  const [relatedArticles, siteSettings] = await Promise.all([
+    getArticlesForMoneyPage(page.slug),
+    loadSiteChromeSettings(),
+  ]);
+  const { cmsUiStrings } = siteSettings;
   const ctaHref =
     page.audience === "doanh_nghiep"
       ? `/?mode=business${toHash(HOME_SECTION_IDS.contact)}`
@@ -137,7 +142,7 @@ export async function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) 
               <PortableText value={page.intro as PortableTextBlock[]} />
             </div>
           ) : null}
-          <QuickAnswer page={page} />
+          <QuickAnswer page={page} quickAnswerLabel={cmsUiStrings.quickAnswerLabel} />
           <div className="money-page__facts" aria-label="Điểm nổi bật">
             {facts.map((fact) => (
               <span key={fact} className="money-page__fact">
@@ -166,8 +171,8 @@ export async function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) 
       {page.relatedPricing.length > 0 ? (
         <section className="money-page__section money-page__section--compact-list">
           <div className="money-page__section-header">
-            <p className="section__eyebrow">Chi phí rõ ràng</p>
-            <h2 className="section__title">Chọn gói học phù hợp</h2>
+            <p className="section__eyebrow">{cmsUiStrings.moneyPricingEyebrow}</p>
+            <h2 className="section__title">{cmsUiStrings.moneyPricingTitle}</h2>
           </div>
           <PricingCards
             tiers={page.relatedPricing}
@@ -190,8 +195,8 @@ export async function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) 
       {page.relatedLocations.length > 0 ? (
         <section className="money-page__section money-page__section--compact-list">
           <div className="money-page__section-header">
-            <p className="section__eyebrow">Địa điểm tập</p>
-            <h2 className="section__title">Chọn sân gần bạn nhất</h2>
+            <p className="section__eyebrow">{cmsUiStrings.moneyLocationsEyebrow}</p>
+            <h2 className="section__title">{cmsUiStrings.moneyLocationsTitle}</h2>
           </div>
           <LocationsGrid
             locations={page.relatedLocations}
@@ -204,20 +209,26 @@ export async function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) 
       {page.relatedFaqs.length > 0 ? (
         <section className="money-page__section">
           <div className="money-page__section-header">
-            <p className="section__eyebrow">Giải đáp trước khi đăng ký</p>
-            <h2 className="section__title">Câu hỏi thường gặp</h2>
+            <p className="section__eyebrow">{cmsUiStrings.moneyFaqEyebrow}</p>
+            <h2 className="section__title">{cmsUiStrings.moneyFaqTitle}</h2>
           </div>
           <FaqList faqs={page.relatedFaqs} />
         </section>
       ) : null}
 
-      <RelatedTechniqueArticles articles={relatedArticles} />
+      <RelatedTechniqueArticles
+        articles={relatedArticles}
+        eyebrow={cmsUiStrings.techDocEyebrow}
+        title={cmsUiStrings.techDocTitle}
+        category={cmsUiStrings.techDocCategory}
+        readCta={cmsUiStrings.readArticleCta}
+      />
 
       {relatedMoneyPages.length > 0 ? (
         <section className="money-page__section">
           <div className="money-page__section-header">
-            <p className="section__eyebrow">Lộ trình liên quan</p>
-            <h2 className="section__title">Lớp khác bạn có thể quan tâm</h2>
+            <p className="section__eyebrow">{cmsUiStrings.moneyRelatedPagesEyebrow}</p>
+            <h2 className="section__title">{cmsUiStrings.moneyRelatedPagesTitle}</h2>
           </div>
           <ul className="money-page__related-links">
             {relatedMoneyPages.map((route) => (
@@ -233,8 +244,8 @@ export async function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) 
 
       <section className="money-page__cta">
         <div className="money-page__cta-copy">
-          <p className="section__eyebrow">Tư vấn nhanh</p>
-          <h2 className="section__title">Nhận lộ trình phù hợp với nhu cầu của bạn</h2>
+          <p className="section__eyebrow">{cmsUiStrings.moneyCtaEyebrow}</p>
+          <h2 className="section__title">{cmsUiStrings.moneyCtaTitle}</h2>
           <p className="section__desc">
             Gửi nhu cầu học, khu vực và khung giờ mong muốn. V2 sẽ gọi lại để
             gợi ý lớp phù hợp nhất.

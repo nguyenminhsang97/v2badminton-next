@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
+import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
 import { getContentHub } from "@/lib/sanity";
 import { ContentBreadcrumbs } from "./ContentBreadcrumbs";
 import { ContentStructuredData } from "./ContentStructuredData";
@@ -13,11 +14,16 @@ type HubPortalProps = {
 };
 
 export async function HubPortal({ id, path }: HubPortalProps) {
-  const hub = await getContentHub(id);
+  const [hub, siteSettings] = await Promise.all([
+    getContentHub(id),
+    loadSiteChromeSettings(),
+  ]);
 
   if (!hub) {
     notFound();
   }
+
+  const { cmsUiStrings } = siteSettings;
 
   const trail = [
     { label: "Trang chủ", href: "/" },
@@ -38,7 +44,7 @@ export async function HubPortal({ id, path }: HubPortalProps) {
 
         <section className="blog-list__hero">
           <div className="section__header">
-            <p className="section__eyebrow">Trung tâm nội dung</p>
+            <p className="section__eyebrow">{cmsUiStrings.hubEyebrow}</p>
             <h1 className="section__title">{hub.title}</h1>
             {description ? (
               <p className="section__desc">{description}</p>
@@ -62,7 +68,7 @@ export async function HubPortal({ id, path }: HubPortalProps) {
           <section className="blog-post__content-shell">
             {hub.quickAnswer ? (
               <div className="quick-answer">
-                <p className="quick-answer__label">Tóm tắt nhanh</p>
+                <p className="quick-answer__label">{cmsUiStrings.quickAnswerLabel}</p>
                 <p className="quick-answer__body">{hub.quickAnswer}</p>
               </div>
             ) : null}
@@ -107,7 +113,7 @@ export async function HubPortal({ id, path }: HubPortalProps) {
                     <p className="blog-card__excerpt">{article.excerpt}</p>
                   ) : null}
                   <Link href={article.fullPath} className="blog-card__cta">
-                    Đọc bài viết →
+                    {cmsUiStrings.readArticleCta}
                   </Link>
                 </div>
               </article>
@@ -128,7 +134,7 @@ export async function HubPortal({ id, path }: HubPortalProps) {
                     <p className="blog-card__excerpt">{node.quickAnswer}</p>
                   ) : null}
                   <Link href={node.fullPath} className="blog-card__cta">
-                    Khám phá chuyên mục →
+                    {cmsUiStrings.exploreNodeCta}
                   </Link>
                 </div>
               </article>

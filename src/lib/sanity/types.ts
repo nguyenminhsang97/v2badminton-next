@@ -35,6 +35,43 @@ export type SanityPortableTextBlock = {
   markDefs?: Array<Record<string, unknown>>;
 };
 
+export type SanitySiteSettingsNav = {
+  ctaLabel: string | null;
+};
+
+export type SanitySiteSettingsFooter = {
+  brandSubtitle: string | null;
+  brandCopy: string | null;
+  col1Heading: string | null;
+  col2Heading: string | null;
+  col3Heading: string | null;
+};
+
+export type SanitySiteSettingsCmsUiStrings = {
+  quickAnswerLabel: string | null;
+  readArticleCta: string | null;
+  exploreNodeCta: string | null;
+  hubEyebrow: string | null;
+  faqEyebrow: string | null;
+  faqTitle: string | null;
+  articleAsideLabel: string | null;
+  articleAsideTitle: string | null;
+  articleAsideCta: string | null;
+  techDocEyebrow: string | null;
+  techDocTitle: string | null;
+  techDocCategory: string | null;
+  moneyPricingEyebrow: string | null;
+  moneyPricingTitle: string | null;
+  moneyLocationsEyebrow: string | null;
+  moneyLocationsTitle: string | null;
+  moneyFaqEyebrow: string | null;
+  moneyFaqTitle: string | null;
+  moneyRelatedPagesEyebrow: string | null;
+  moneyRelatedPagesTitle: string | null;
+  moneyCtaEyebrow: string | null;
+  moneyCtaTitle: string | null;
+};
+
 export type SanitySiteSettings = {
   id: string;
   siteName: string;
@@ -43,6 +80,9 @@ export type SanitySiteSettings = {
   zaloNumber: string;
   facebookUrl: string;
   defaultOgImageUrl: string | null;
+  nav: SanitySiteSettingsNav | null;
+  footer: SanitySiteSettingsFooter | null;
+  cmsUiStrings: SanitySiteSettingsCmsUiStrings | null;
 };
 
 export type SanityCoach = {
