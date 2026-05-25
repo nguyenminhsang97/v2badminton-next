@@ -12,11 +12,13 @@ import { pricingTier } from "./pricingTier";
 import { routeRedirect } from "./routeRedirect";
 import { scheduleBlock } from "./scheduleBlock";
 import { siteSettings } from "./siteSettings";
+import { staticPage } from "./staticPage";
 import { testimonial } from "./testimonial";
 
 export const schemaTypes = [
   siteSettings,
   homepageContent,
+  staticPage,
   location,
   pricingTier,
   scheduleBlock,
