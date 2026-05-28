@@ -22,6 +22,7 @@ import type {
 export type HomepageHeroSectionProps = {
   campaign: HomepageHeroCampaign | null;
   content?: SanityHomepageHero | null;
+  facebookUrl: string;
 };
 
 export type HomepageCoachSectionProps = {

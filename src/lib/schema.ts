@@ -5,8 +5,21 @@ import type {
   SanityScheduleBlock,
 } from "@/lib/sanity";
 import { canonicalUrl, type CoreRoutePath } from "@/lib/routes";
+// siteConfig is intentionally kept for non-contact identity fields only
+// (siteUrl, name, logoPath, language). Contact fields (phone, Facebook URL)
+// are passed in as ContactDetails by each caller.
 import { siteConfig } from "@/lib/site";
 import type { HomepageCoach } from "@/domain/homepage";
+
+/**
+ * Resolved contact details passed into JSON-LD builders.
+ * Callers obtain these from loadSiteChromeSettings() and pass them through;
+ * builders remain pure (no Sanity I/O, no siteConfig reads).
+ */
+export type ContactDetails = {
+  phoneE164: string;
+  facebookUrl: string;
+};
 
 type Thing = {
   "@type": string | readonly string[];
@@ -27,7 +40,6 @@ type CourseSchemaTier = Extract<
   { kind: "group" | "enterprise" }
 >;
 
-const siteFacebook = [siteConfig.facebookUrl];
 const schemaDayUrlPrefix = "https://schema.org/";
 const courseMode = "Offline";
 
@@ -369,7 +381,7 @@ function buildCourseSchemaName(tier: CourseSchemaTier): string {
   return `Khóa Cầu Lông ${courseLevel} ${tier.sessionsPerWeek} Buổi/Tuần`;
 }
 
-export function buildOrganizationSchema(): JsonLdNode {
+export function buildOrganizationSchema(contact: ContactDetails): JsonLdNode {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -377,17 +389,17 @@ export function buildOrganizationSchema(): JsonLdNode {
     name: siteConfig.name,
     url: siteConfig.siteUrl,
     logo: canonicalUrl(siteConfig.logoPath),
-    telephone: siteConfig.phoneE164,
+    telephone: contact.phoneE164,
     contactPoint: [
       {
         "@type": "ContactPoint",
-        telephone: siteConfig.phoneE164,
+        telephone: contact.phoneE164,
         contactType: "customer service",
         areaServed: "VN",
         availableLanguage: ["Vietnamese"],
       },
     ],
-    sameAs: siteFacebook,
+    sameAs: [contact.facebookUrl],
   };
 }
 
@@ -471,6 +483,7 @@ export function buildHomepageLocalBusinessSchema(
   locations: SanityLocation[],
   pricingTiers: SanityPricingTier[],
   scheduleBlocks: SanityScheduleBlock[] = [],
+  contact: ContactDetails,
 ): JsonLdNode {
   const primaryLocation = locations[0];
   const priceRange = buildPriceRange(pricingTiers);
@@ -485,7 +498,7 @@ export function buildHomepageLocalBusinessSchema(
     description:
       "Lớp dạy cầu lông chuyên nghiệp tại Bình Thạnh và Thủ Đức, TP.HCM, dành cho người mới bắt đầu, người đi làm và doanh nghiệp.",
     url: siteConfig.siteUrl,
-    telephone: siteConfig.phoneE164,
+    telephone: contact.phoneE164,
     image: buildSchemaImages(locations),
     ...(priceRange ? { priceRange } : {}),
     ...(openingHoursSpecification.length > 0
@@ -503,7 +516,7 @@ export function buildHomepageLocalBusinessSchema(
       { "@type": "AdministrativeArea", name: "Thủ Đức" },
       { "@type": "AdministrativeArea", name: "Thành phố Hồ Chí Minh" },
     ],
-    sameAs: siteFacebook,
+    sameAs: [contact.facebookUrl],
     location: locations.map(buildEmbeddedSportsLocation),
   };
 }
@@ -516,6 +529,7 @@ export function buildLocalPageBusinessSchema(
   locations: SanityLocation[],
   pricingTiers: SanityPricingTier[],
   scheduleBlocks: SanityScheduleBlock[] = [],
+  contact: ContactDetails,
 ): JsonLdNode {
   const primaryLocation = locations[0];
   const priceRange = buildPriceRange(pricingTiers);
@@ -540,7 +554,7 @@ export function buildLocalPageBusinessSchema(
         ? "Lớp cầu lông tại Bình Thạnh của V2 Badminton với sân Green, phù hợp cho người mới bắt đầu và người đi làm."
         : "Lớp cầu lông tại Thủ Đức của V2 Badminton với các sân Huệ Thiên, Khang Sport (Bình Triệu) và Phúc Lộc, phù hợp cho người mới bắt đầu và người đi làm.",
     url: canonicalUrl(path),
-    telephone: siteConfig.phoneE164,
+    telephone: contact.phoneE164,
     image: buildSchemaImages(locations),
     ...(priceRange ? { priceRange } : {}),
     ...(openingHoursSpecification.length > 0
@@ -558,7 +572,7 @@ export function buildLocalPageBusinessSchema(
       "@type": "AdministrativeArea",
       name: areaServed,
     },
-    sameAs: siteFacebook,
+    sameAs: [contact.facebookUrl],
     location: locations.map(buildEmbeddedSportsLocation),
   };
 }

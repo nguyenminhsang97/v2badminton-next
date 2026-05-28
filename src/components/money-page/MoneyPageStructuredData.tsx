@@ -12,6 +12,7 @@ import {
   buildFaqPageSchema,
   buildHomepageLocalBusinessSchema,
   filterScheduleBlocksForLocations,
+  type ContactDetails,
 } from "@/lib/schema";
 
 type MoneyPageStructuredDataProps = {
@@ -27,6 +28,7 @@ type MoneyPageStructuredDataProps = {
   locations: SanityLocation[];
   pricingTiers: SanityPricingTier[];
   scheduleBlocks?: SanityScheduleBlock[];
+  contact: ContactDetails;
 };
 
 export function MoneyPageStructuredData({
@@ -42,6 +44,7 @@ export function MoneyPageStructuredData({
   locations,
   pricingTiers,
   scheduleBlocks = [],
+  contact,
 }: MoneyPageStructuredDataProps) {
   const hasSchemaFaqs = faqs.some((faq) => faq.includeInSchema);
   const hasCourseSchema = Boolean(courseId && courseName && courseDescription);
@@ -65,6 +68,7 @@ export function MoneyPageStructuredData({
           locations,
           pricingTiers,
           schemaScheduleBlocks,
+          contact,
         )}
       />
       {hasCourseSchema ? (
