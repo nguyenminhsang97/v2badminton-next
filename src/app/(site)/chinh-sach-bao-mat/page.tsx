@@ -54,7 +54,7 @@ export default async function PrivacyPolicyPage() {
   const doc = await getStaticPage("chinh-sach-bao-mat");
 
   const eyebrow = doc?.eyebrow ?? FALLBACK_EYEBROW;
-  const h1 = doc?.h1 ?? FALLBACK_H1;
+  const h1 = doc?.title ?? FALLBACK_H1;
   const lead = doc?.lead ?? FALLBACK_LEAD;
   const hasBody = doc?.body != null && doc.body.length > 0;
 
