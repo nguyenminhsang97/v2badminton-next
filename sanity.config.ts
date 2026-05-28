@@ -2,6 +2,7 @@
 
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
+import { openLivePageAction } from "./src/sanity/actions/openLivePageAction";
 import { schemaTypes } from "./src/sanity/schemaTypes";
 import { singletonActions, singletonTypes, structure } from "./src/sanity/structure";
 
@@ -28,9 +29,11 @@ export default defineConfig({
       ),
   },
   document: {
-    actions: (input, context) =>
-      singletonTypes.has(context.schemaType)
+    actions: (input, context) => {
+      const base = singletonTypes.has(context.schemaType)
         ? input.filter(({ action }) => action && singletonActions.has(action))
-        : input,
+        : input;
+      return [...base, openLivePageAction];
+    },
   },
 });
