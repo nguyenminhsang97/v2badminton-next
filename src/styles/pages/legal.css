@@ -59,6 +59,33 @@
   gap: 8px;
 }
 
+/* ─── Portable Text body path ─────────────────────────────────────────────
+   When body is rendered via <PortableText>, blocks (h2, p, ul, li) are
+   emitted directly inside .legal-page__content with no .legal-page__section
+   wrapper. These selectors mirror the .legal-page__section rules above so
+   both render paths produce identical visual output.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.legal-page__content h2 {
+  margin: 0;
+  color: var(--s5-primary-strong);
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+}
+
+.legal-page__content ul {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 8px;
+}
+
+.legal-page__content p,
+.legal-page__content li {
+  margin: 0;
+  color: var(--s5-muted);
+  line-height: 1.8;
+}
+
 @media (max-width: 767px) {
   .legal-page {
     width: min(100%, calc(100% - 24px));
