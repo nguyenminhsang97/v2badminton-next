@@ -254,7 +254,41 @@ export const SITE_SETTINGS_QUERY = defineQuery(`
     phoneE164,
     zaloNumber,
     facebookUrl,
-    "defaultOgImageUrl": defaultOgImage.asset->url
+    "defaultOgImageUrl": defaultOgImage.asset->url,
+    "nav": coalesce(nav, null){
+      "ctaLabel": coalesce(ctaLabel, null)
+    },
+    "footer": coalesce(footer, null){
+      "brandSubtitle": coalesce(brandSubtitle, null),
+      "brandCopy": coalesce(brandCopy, null),
+      "col1Heading": coalesce(col1Heading, null),
+      "col2Heading": coalesce(col2Heading, null),
+      "col3Heading": coalesce(col3Heading, null)
+    },
+    "cmsUiStrings": coalesce(cmsUiStrings, null){
+      "quickAnswerLabel": coalesce(quickAnswerLabel, null),
+      "readArticleCta": coalesce(readArticleCta, null),
+      "exploreNodeCta": coalesce(exploreNodeCta, null),
+      "hubEyebrow": coalesce(hubEyebrow, null),
+      "faqEyebrow": coalesce(faqEyebrow, null),
+      "faqTitle": coalesce(faqTitle, null),
+      "articleAsideLabel": coalesce(articleAsideLabel, null),
+      "articleAsideTitle": coalesce(articleAsideTitle, null),
+      "articleAsideCta": coalesce(articleAsideCta, null),
+      "techDocEyebrow": coalesce(techDocEyebrow, null),
+      "techDocTitle": coalesce(techDocTitle, null),
+      "techDocCategory": coalesce(techDocCategory, null),
+      "moneyPricingEyebrow": coalesce(moneyPricingEyebrow, null),
+      "moneyPricingTitle": coalesce(moneyPricingTitle, null),
+      "moneyLocationsEyebrow": coalesce(moneyLocationsEyebrow, null),
+      "moneyLocationsTitle": coalesce(moneyLocationsTitle, null),
+      "moneyFaqEyebrow": coalesce(moneyFaqEyebrow, null),
+      "moneyFaqTitle": coalesce(moneyFaqTitle, null),
+      "moneyRelatedPagesEyebrow": coalesce(moneyRelatedPagesEyebrow, null),
+      "moneyRelatedPagesTitle": coalesce(moneyRelatedPagesTitle, null),
+      "moneyCtaEyebrow": coalesce(moneyCtaEyebrow, null),
+      "moneyCtaTitle": coalesce(moneyCtaTitle, null)
+    }
   }
 `);
 
@@ -490,6 +524,97 @@ export const POST_BY_SLUG_QUERY = defineQuery(`
   }
 `);
 
+// ─── Homepage singleton (W2) ────────────────────────────────────────────────
+
+export const HOMEPAGE_CONTENT_QUERY = defineQuery(`
+  *[
+    _type == "homepage_content" &&
+    _id == "homepage_content" &&
+    ${PUBLISHED_ONLY_FILTER}
+  ][0]{
+    "id": _id,
+    "updatedAt": coalesce(_updatedAt, null),
+    "hero": coalesce(hero, null){
+      "statusLabel": coalesce(statusLabel, null),
+      "subheading": coalesce(subheading, null),
+      "primaryCtaLabel": coalesce(primaryCtaLabel, null),
+      "secondaryCtaLabel": coalesce(secondaryCtaLabel, null),
+      "heroImageAlt": coalesce(heroImageAlt, null)
+    },
+    "statsBar": coalesce(statsBar, null){
+      "items": coalesce(items[]{
+        "value": coalesce(value, null),
+        "label": coalesce(label, null),
+        "icon": coalesce(icon, null)
+      }, [])
+    },
+    "whySection": coalesce(whySection, null){
+      "eyebrow": coalesce(eyebrow, null),
+      "title": coalesce(title, null),
+      "description": coalesce(description, null),
+      "proofStat": coalesce(proofStat, null){
+        "value": coalesce(value, null),
+        "statTitle": coalesce(statTitle, null),
+        "statDescription": coalesce(statDescription, null)
+      },
+      "differentiators": coalesce(differentiators[]{
+        "title": coalesce(title, null),
+        "description": coalesce(description, null),
+        "icon": coalesce(icon, null)
+      }, [])
+    },
+    "courseSection": coalesce(courseSection, null){
+      "eyebrow": coalesce(eyebrow, null),
+      "title": coalesce(title, null),
+      "cards": coalesce(cards[]{
+        "categoryBadge": coalesce(categoryBadge, null),
+        "levelChip": coalesce(levelChip, null),
+        "title": coalesce(title, null),
+        "subtitle": coalesce(subtitle, null),
+        "description": coalesce(description, null),
+        "amount": coalesce(amount, null),
+        "meta": coalesce(meta, null),
+        "imageAlt": coalesce(imageAlt, null),
+        "linkedMoneyPageSlug": coalesce(linkedMoneyPage->slug.current, null)
+      }, [])
+    },
+    "locationsSection": coalesce(locationsSection, null){
+      "eyebrow": coalesce(eyebrow, null),
+      "title": coalesce(title, null),
+      "description": coalesce(description, null)
+    },
+    "faqSection": coalesce(faqSection, null){
+      "eyebrow": coalesce(eyebrow, null),
+      "title": coalesce(title, null)
+    },
+    "pricingStrip": coalesce(pricingStrip, null){
+      "eyebrow": coalesce(eyebrow, null),
+      "title": coalesce(title, null),
+      "secondary": coalesce(secondary, null)
+    },
+    "scheduleSection": coalesce(scheduleSection, null){
+      "eyebrow": coalesce(eyebrow, null),
+      "title": coalesce(title, null),
+      "description": coalesce(description, null)
+    },
+    "coachSection": coalesce(coachSection, null){
+      "eyebrow": coalesce(eyebrow, null),
+      "title": coalesce(title, null),
+      "description": coalesce(description, null)
+    },
+    "testimonialsSection": coalesce(testimonialsSection, null){
+      "eyebrow": coalesce(eyebrow, null),
+      "title": coalesce(title, null)
+    },
+    "enterpriseTeaser": coalesce(enterpriseTeaser, null){
+      "badge": coalesce(badge, null),
+      "title": coalesce(title, null),
+      "description": coalesce(description, null),
+      "ctaLabel": coalesce(ctaLabel, null)
+    }
+  }
+`);
+
 // ─── Content Platform projections (Phase 1) ────────────────────────────────
 
 export const CONTENT_CHILD_NODE_PROJECTION = `{
@@ -642,6 +767,22 @@ export const CONTENT_REDIRECT_QUERY = defineQuery(`
   ][0]{ toPath, "permanent": coalesce(permanent, true) }
 `);
 
+/**
+ * Reverse-link query: given a money-page slug, fetch all published articles
+ * that point to it via `relatedMoneyPage`. Used by the money-page template
+ * to surface a "Tài liệu kỹ thuật" section (B.1 — no schema change needed,
+ * derived from the article-side edge).
+ */
+export const ARTICLES_BY_MONEY_PAGE_QUERY = defineQuery(`
+  *[
+    _type == "content_article" &&
+    status == "published" &&
+    ${PUBLISHED_ONLY_FILTER} &&
+    relatedMoneyPage->slug.current == $moneyPageSlug
+  ] | order(coalesce(publishedAt, _createdAt) desc) [0...6]
+  ${CONTENT_ARTICLE_CARD_PROJECTION}
+`);
+
 export const CONTENT_SITEMAP_QUERY = defineQuery(`
   *[
     (
@@ -655,5 +796,36 @@ export const CONTENT_SITEMAP_QUERY = defineQuery(`
     "path": fullPath.current,
     "updatedAt": coalesce(_updatedAt, null),
     "type": _type
+  }
+`);
+
+// ─── Static pages (W3b) ────────────────────────────────────────────────────
+
+/**
+ * Fetch a single static_page doc by slug.current.
+ * Used by file-routes (e.g. /gioi-thieu/) that own their own URL.
+ * Returns null when no published doc exists — the renderer falls back to
+ * hardcoded JSX in that case.
+ */
+export const STATIC_PAGE_QUERY = defineQuery(`
+  *[
+    _type == "static_page" &&
+    slug.current == $slug &&
+    ${PUBLISHED_ONLY_FILTER}
+  ][0]{
+    "slug": slug.current,
+    title,
+    breadcrumbLabel,
+    eyebrow,
+    lead,
+    body,
+    seoTitle,
+    seoDescription,
+    "ogImage": ogImage{
+      "url": asset->url,
+      "alt": coalesce(asset->altText, ""),
+      hotspot,
+      crop
+    }
   }
 `);

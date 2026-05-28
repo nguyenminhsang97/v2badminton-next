@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField } from "sanity";
 import { slugifyValue } from "./shared";
+import { FullPathPreviewInput } from "../components/FullPathPreviewInput";
 
 /**
  * Phase 1 content-platform shared building blocks.
@@ -176,13 +177,18 @@ export function pathDepthAfterHub(fullPath: string): number {
  * globally unique. Pass `warnDepth` for node/article to surface the
  * recommended max-depth-3 soft warning (schema still allows arbitrary depth).
  */
-export function defineFullPathField(options?: { warnDepth?: boolean }) {
+export function defineFullPathField(options?: {
+  warnDepth?: boolean;
+  group?: string;
+}) {
   return defineField({
     name: "fullPath",
     title: "Đường dẫn đầy đủ (URL)",
     type: "slug",
+    group: options?.group,
     description:
       "Tự động tạo từ slug và nhánh cha. Bấm Generate SAU KHI đã đặt slug và chọn nhánh cha. Không sửa tay. Đây là URL thật của trang.",
+    components: { input: FullPathPreviewInput },
     options: {
       source: (document: unknown) =>
         (document as RouteDocument)?.slug?.current ?? "",

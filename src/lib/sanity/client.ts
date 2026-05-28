@@ -32,7 +32,11 @@ const sanityReadClient =
         projectId,
         dataset,
         apiVersion: SANITY_API_VERSION,
-        useCdn: true,
+        // Disable Sanity CDN: Next.js ISR (next.revalidate) already provides
+        // the caching layer. Using the CDN risks serving stale null results for
+        // parameterized GROQ queries that can poison the ISR Data Cache on
+        // build/revalidation — a class of bug observed in W4 preview (2026-05-25).
+        useCdn: false,
         perspective: "published",
         ...(token ? { token } : {}),
       })
@@ -81,7 +85,7 @@ export async function sanityFetchWithStatus<TResult>({
         tags: Array.from(new Set([...SANITY_CACHE_TAGS, ...tags])),
       },
       perspective: "published",
-      useCdn: true,
+      useCdn: false,
     });
 
     return {

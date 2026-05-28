@@ -12,9 +12,15 @@ import {
   HERO_STATUS_LABEL,
 } from "./homepageHeroContent";
 
-export function HeroSection({ campaign }: HomepageHeroSectionProps) {
-  const heroSubheading = campaign?.heroDescription ?? DEFAULT_HERO_SUBHEADING;
-  const heroImageAlt = "HLV hướng dẫn học viên trong buổi tập cầu lông";
+export function HeroSection({ campaign, content }: HomepageHeroSectionProps) {
+  // Precedence: campaign > homepage_content CMS > hardcoded fallback
+  const heroSubheading =
+    campaign?.heroDescription ??
+    content?.subheading ??
+    DEFAULT_HERO_SUBHEADING;
+  const heroImageAlt =
+    content?.heroImageAlt ??
+    "HLV hướng dẫn học viên trong buổi tập cầu lông";
   const commonHeroImageProps = {
     alt: heroImageAlt,
     className: "hero__backdrop-image",
@@ -56,13 +62,19 @@ export function HeroSection({ campaign }: HomepageHeroSectionProps) {
 
   const primaryCta: { href: string; label: string; trackingName: CtaName } = {
     href: primaryCtaHref,
-    label: campaign?.primaryCtaLabel ?? "Đăng ký học thử miễn phí",
+    label:
+      campaign?.primaryCtaLabel ??
+      content?.primaryCtaLabel ??
+      "Đăng ký học thử miễn phí",
     trackingName: campaign ? "campaign_primary" : "dang_ky_hoc_thu",
   };
 
   const secondaryCta: { href: string; label: string; trackingName: CtaName } = {
     href: campaign?.secondaryCtaUrl ?? toHash(HOME_SECTION_IDS.courses),
-    label: campaign?.secondaryCtaLabel ?? "Xem các khóa học",
+    label:
+      campaign?.secondaryCtaLabel ??
+      content?.secondaryCtaLabel ??
+      "Xem các khóa học",
     trackingName: campaign ? "campaign_secondary" : "xem_khoa_hoc",
   };
 
@@ -82,7 +94,7 @@ export function HeroSection({ campaign }: HomepageHeroSectionProps) {
           <div className="hero__copy-stack">
             <span className="hero__status-pill">
               <span className="hero__status-dot" aria-hidden="true" />
-              {HERO_STATUS_LABEL}
+              {content?.statusLabel ?? HERO_STATUS_LABEL}
             </span>
             {campaign?.badgeText ? (
               <span className="hero__campaign-badge">{campaign.badgeText}</span>

@@ -33,6 +33,7 @@ export function Footer({ siteSettings, showBlogLink, showCoachesLink }: FooterPr
     ...(showCoachesLink
       ? [{ href: "/huan-luyen-vien/", label: "Đội ngũ HLV" }]
       : []),
+    { href: "/ky-thuat-cau-long/", label: "Kỹ thuật cầu lông" },
     ...(showBlogLink ? [{ href: "/blog/", label: "Blog" }] : []),
   ];
 
@@ -57,12 +58,11 @@ export function Footer({ siteSettings, showBlogLink, showCoachesLink }: FooterPr
             </span>
             <div className="site-footer__logo-copy">
               <strong className="site-footer__brand-name">{siteSettings.siteName}</strong>
-              <span className="site-footer__brand-subtitle">Bình Thạnh · Thủ Đức</span>
+              <span className="site-footer__brand-subtitle">{siteSettings.footer.brandSubtitle}</span>
             </div>
           </div>
           <p className="site-footer__brand-copy">
-            Lớp cầu lông tại Bình Thạnh &amp; Thủ Đức cho trẻ em, người mới và
-            người đi làm.
+            {siteSettings.footer.brandCopy}
           </p>
           <div className="site-footer__socials">
             <a
@@ -95,7 +95,7 @@ export function Footer({ siteSettings, showBlogLink, showCoachesLink }: FooterPr
 
         <div className="site-footer__columns">
           <section className="site-footer__column">
-            <h3 className="site-footer__heading">Lộ trình nổi bật</h3>
+            <h3 className="site-footer__heading">{siteSettings.footer.col1Heading}</h3>
             <div className="site-footer__stack">
               {featuredRoutes.map((route) => (
                 <Link key={route.path} href={route.path} className="site-footer__link">
@@ -106,7 +106,7 @@ export function Footer({ siteSettings, showBlogLink, showCoachesLink }: FooterPr
           </section>
 
           <section className="site-footer__column">
-            <h3 className="site-footer__heading">Khám phá</h3>
+            <h3 className="site-footer__heading">{siteSettings.footer.col2Heading}</h3>
             <div className="site-footer__stack">
               {academyLinks.map((link) => (
                 <Link key={link.href} href={link.href} className="site-footer__link">
@@ -117,7 +117,7 @@ export function Footer({ siteSettings, showBlogLink, showCoachesLink }: FooterPr
           </section>
 
           <section className="site-footer__column">
-            <h3 className="site-footer__heading">Liên hệ nhanh</h3>
+            <h3 className="site-footer__heading">{siteSettings.footer.col3Heading}</h3>
             <div className="site-footer__stack">
               <span className="site-footer__detail">
                 <MapPinIcon className="site-footer__detail-icon" />

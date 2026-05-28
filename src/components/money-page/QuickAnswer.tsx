@@ -2,9 +2,10 @@ import type { SanityMoneyPage } from "@/lib/sanity";
 
 type QuickAnswerProps = {
   page: SanityMoneyPage;
+  quickAnswerLabel?: string;
 };
 
-export function QuickAnswer({ page }: QuickAnswerProps) {
+export function QuickAnswer({ page, quickAnswerLabel = "Tóm tắt nhanh" }: QuickAnswerProps) {
   // Never render on fallback pages — AI engines must not extract placeholder copy.
   if (page.id.startsWith("fallback:")) {
     return null;
@@ -25,7 +26,7 @@ export function QuickAnswer({ page }: QuickAnswerProps) {
 
   return (
     <div className="quick-answer">
-      <p className="quick-answer__label">Tóm tắt nhanh</p>
+      <p className="quick-answer__label">{quickAnswerLabel}</p>
       <p className="quick-answer__body">{page.metaDescription}</p>
       {locationText ? (
         <p className="quick-answer__body">{locationText}</p>

@@ -30,6 +30,7 @@ import {
   getActiveCampaign,
   getCoaches,
   getFaqs,
+  getHomepageContent,
   getLocations,
   getPricingTiers,
   getScheduleBlocks,
@@ -55,6 +56,7 @@ export default async function Home() {
     chromeSettings,
     coaches,
     testimonials,
+    homepageContent,
   ] =
     await Promise.all([
       getActiveCampaign(),
@@ -65,6 +67,7 @@ export default async function Home() {
       loadSiteChromeSettings(),
       getCoaches(true, 3),
       getTestimonials(true, 6),
+      getHomepageContent(),
     ]);
 
   const courseSchemas = buildCourseSchemas(pricingTiers, {
@@ -103,25 +106,26 @@ export default async function Home() {
         </Suspense>
         <div className="home-page">
           {/* Conversion flow: hero → quick proof → audience pick → location filter → schedule slot → objection handling → form */}
-          <HeroSection campaign={homepageCampaign} />
-          <StatsBar />
-          <PricingStrip tiers={pricingTiers} />
-          <CourseSection pricingTiers={pricingTiers} />
-          <HomepageEnterpriseTeaser />
+          <HeroSection campaign={homepageCampaign} content={homepageContent?.hero} />
+          <StatsBar content={homepageContent?.statsBar} />
+          <PricingStrip tiers={pricingTiers} content={homepageContent?.pricingStrip} />
+          <CourseSection pricingTiers={pricingTiers} content={homepageContent?.courseSection} />
+          <HomepageEnterpriseTeaser content={homepageContent?.enterpriseTeaser} />
           <LocationsSection
             locations={homepageLocations}
             siteSettings={chromeSettings}
+            content={homepageContent?.locationsSection}
           />
-          <DeferredScheduleSection scheduleBlocks={homepageScheduleBlocks} />
-          <FaqSection faqs={homepageFaqs} />
+          <DeferredScheduleSection scheduleBlocks={homepageScheduleBlocks} content={homepageContent?.scheduleSection} />
+          <FaqSection faqs={homepageFaqs} content={homepageContent?.faqSection} />
           <DeferredContactSection
             siteSettings={chromeSettings}
             locations={homepageLocations}
             scheduleBlocks={homepageScheduleBlocks}
           />
-          <WhySection />
-          <CoachSection coaches={homepageCoaches} />
-          <DeferredTestimonialsSection testimonials={homepageTestimonials} />
+          <WhySection content={homepageContent?.whySection} />
+          <CoachSection coaches={homepageCoaches} content={homepageContent?.coachSection} />
+          <DeferredTestimonialsSection testimonials={homepageTestimonials} content={homepageContent?.testimonialsSection} />
         </div>
       </HomepageConversionProvider>
     </>

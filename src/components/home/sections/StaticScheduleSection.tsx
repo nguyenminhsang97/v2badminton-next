@@ -51,7 +51,13 @@ function getScheduleProgramLabel(levels: SanityScheduleLevel[]): string {
 
 export function StaticScheduleSection({
   scheduleBlocks,
+  content,
 }: HomepageScheduleSectionProps) {
+  const eyebrow = content?.eyebrow ?? "Thời khóa biểu";
+  const title = content?.title ?? "Lịch học linh hoạt 7 ngày trong tuần";
+  const description =
+    content?.description ??
+    'Chọn sân, xem giờ phù hợp rồi bấm "Chọn lịch này" để V2 tự điền sân và giờ vào form đăng ký.';
   const tabs = scheduleBlocks.reduce<
     Array<{
       id: string;
@@ -93,11 +99,9 @@ export function StaticScheduleSection({
   return (
     <section className="section schedule-section" id={HOME_SECTION_IDS.schedule}>
       <div className="section__header">
-        <p className="section__eyebrow">Thời khóa biểu</p>
-        <h2 className="section__title">Lịch học linh hoạt 7 ngày trong tuần</h2>
-        <p className="section__desc">
-          Chọn sân, xem giờ phù hợp rồi bấm “Chọn lịch này” để V2 tự điền sân và giờ vào form đăng ký.
-        </p>
+        <p className="section__eyebrow">{eyebrow}</p>
+        <h2 className="section__title">{title}</h2>
+        <p className="section__desc">{description}</p>
       </div>
 
       <div

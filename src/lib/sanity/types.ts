@@ -35,6 +35,43 @@ export type SanityPortableTextBlock = {
   markDefs?: Array<Record<string, unknown>>;
 };
 
+export type SanitySiteSettingsNav = {
+  ctaLabel: string | null;
+};
+
+export type SanitySiteSettingsFooter = {
+  brandSubtitle: string | null;
+  brandCopy: string | null;
+  col1Heading: string | null;
+  col2Heading: string | null;
+  col3Heading: string | null;
+};
+
+export type SanitySiteSettingsCmsUiStrings = {
+  quickAnswerLabel: string | null;
+  readArticleCta: string | null;
+  exploreNodeCta: string | null;
+  hubEyebrow: string | null;
+  faqEyebrow: string | null;
+  faqTitle: string | null;
+  articleAsideLabel: string | null;
+  articleAsideTitle: string | null;
+  articleAsideCta: string | null;
+  techDocEyebrow: string | null;
+  techDocTitle: string | null;
+  techDocCategory: string | null;
+  moneyPricingEyebrow: string | null;
+  moneyPricingTitle: string | null;
+  moneyLocationsEyebrow: string | null;
+  moneyLocationsTitle: string | null;
+  moneyFaqEyebrow: string | null;
+  moneyFaqTitle: string | null;
+  moneyRelatedPagesEyebrow: string | null;
+  moneyRelatedPagesTitle: string | null;
+  moneyCtaEyebrow: string | null;
+  moneyCtaTitle: string | null;
+};
+
 export type SanitySiteSettings = {
   id: string;
   siteName: string;
@@ -43,6 +80,9 @@ export type SanitySiteSettings = {
   zaloNumber: string;
   facebookUrl: string;
   defaultOgImageUrl: string | null;
+  nav: SanitySiteSettingsNav | null;
+  footer: SanitySiteSettingsFooter | null;
+  cmsUiStrings: SanitySiteSettingsCmsUiStrings | null;
 };
 
 export type SanityCoach = {
@@ -334,8 +374,140 @@ export type SanityRouteRedirect = {
   permanent: boolean;
 };
 
+// ─── Homepage singleton (W2) ────────────────────────────────────────────────
+
+export type SanityHomepageStatIcon =
+  | "users"
+  | "trophy"
+  | "shuttle"
+  | "calendar"
+  | "mapPin"
+  | "arrowRight";
+
+export type SanityHomepageHero = {
+  statusLabel: string | null;
+  subheading: string | null;
+  primaryCtaLabel: string | null;
+  secondaryCtaLabel: string | null;
+  heroImageAlt: string | null;
+};
+
+export type SanityHomepageStatItem = {
+  value: string | null;
+  label: string | null;
+  icon: SanityHomepageStatIcon | null;
+};
+
+export type SanityHomepageStatsBar = {
+  items: SanityHomepageStatItem[];
+};
+
+export type SanityHomepageProofStat = {
+  value: string | null;
+  statTitle: string | null;
+  statDescription: string | null;
+};
+
+export type SanityHomepageDifferentiator = {
+  title: string | null;
+  description: string | null;
+  icon: SanityHomepageStatIcon | null;
+};
+
+export type SanityHomepageWhySection = {
+  eyebrow: string | null;
+  title: string | null;
+  description: string | null;
+  proofStat: SanityHomepageProofStat | null;
+  differentiators: SanityHomepageDifferentiator[];
+};
+
+export type SanityHomepageCourseCard = {
+  categoryBadge: string | null;
+  levelChip: string | null;
+  title: string | null;
+  subtitle: string | null;
+  description: string | null;
+  amount: string | null;
+  meta: string | null;
+  imageAlt: string | null;
+  linkedMoneyPageSlug: string | null;
+};
+
+export type SanityHomepageCourseSection = {
+  eyebrow: string | null;
+  title: string | null;
+  cards: SanityHomepageCourseCard[];
+};
+
+export type SanityHomepageBasicSection = {
+  eyebrow: string | null;
+  title: string | null;
+  description: string | null;
+};
+
+export type SanityHomepageHeadingOnlySection = {
+  eyebrow: string | null;
+  title: string | null;
+};
+
+export type SanityHomepagePricingStrip = {
+  eyebrow: string | null;
+  title: string | null;
+  secondary: string | null;
+};
+
+export type SanityHomepageEnterpriseTeaser = {
+  badge: string | null;
+  title: string | null;
+  description: string | null;
+  ctaLabel: string | null;
+};
+
+export type SanityHomepageContent = {
+  id: string;
+  updatedAt: string | null;
+  hero: SanityHomepageHero | null;
+  statsBar: SanityHomepageStatsBar | null;
+  whySection: SanityHomepageWhySection | null;
+  courseSection: SanityHomepageCourseSection | null;
+  locationsSection: SanityHomepageBasicSection | null;
+  faqSection: SanityHomepageHeadingOnlySection | null;
+  pricingStrip: SanityHomepagePricingStrip | null;
+  scheduleSection: SanityHomepageBasicSection | null;
+  coachSection: SanityHomepageBasicSection | null;
+  testimonialsSection: SanityHomepageHeadingOnlySection | null;
+  enterpriseTeaser: SanityHomepageEnterpriseTeaser | null;
+};
+
 export type SanityContentSitemapEntry = {
   path: string;
   updatedAt: string | null;
   type: "content_hub" | "content_node" | "content_article";
+};
+
+// ─── Static pages (W3b) ────────────────────────────────────────────────────
+
+export type SanityStaticPageOgImage = {
+  url: string;
+  alt: string;
+  hotspot: unknown;
+  crop: unknown;
+};
+
+/**
+ * Projection type for STATIC_PAGE_QUERY.
+ * All optional fields are null when not set in the CMS.
+ * Renderer falls back to FALLBACK_* constants for every null field.
+ */
+export type SanityStaticPage = {
+  slug: string;
+  title: string | null;
+  breadcrumbLabel: string | null;
+  eyebrow: string | null;
+  lead: string | null;
+  body: SanityPortableTextBlock[] | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  ogImage: SanityStaticPageOgImage | null;
 };
