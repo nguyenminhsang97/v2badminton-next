@@ -5,6 +5,7 @@ import { notFoundForMissingMoneyPage } from "@/lib/moneyPageFailSafe";
 import { buildMoneyPageMetadata } from "@/lib/moneyPageMetadata";
 import { buildMetadata, canonicalUrl } from "@/lib/routes";
 import { getMoneyPage, getScheduleBlocks } from "@/lib/sanity";
+import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
 import {
   buildBreadcrumbSchema,
   filterScheduleBlocksForLocations,
@@ -26,10 +27,16 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function BinhThanhPage() {
-  const [{ page: moneyPage, degraded }, scheduleBlocks] = await Promise.all([
+  const [{ page: moneyPage, degraded }, scheduleBlocks, chromeSettings] = await Promise.all([
     getMoneyPage(SLUG),
     getScheduleBlocks(),
+    loadSiteChromeSettings(),
   ]);
+
+  const contact = {
+    phoneE164: chromeSettings.phoneE164,
+    facebookUrl: chromeSettings.facebookUrl,
+  };
 
   if (!moneyPage) {
     notFoundForMissingMoneyPage({ slug: SLUG, path: PATH, degraded });
@@ -59,6 +66,7 @@ export default async function BinhThanhPage() {
           localLocations,
           moneyPage.relatedPricing,
           localScheduleBlocks,
+          contact,
         )}
       />
       <JsonLd id="binh-thanh-faq" data={buildFaqPageSchema(moneyPage.relatedFaqs)} />

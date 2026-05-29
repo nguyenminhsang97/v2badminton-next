@@ -3,6 +3,7 @@ import Link from "next/link";
 import { PortableText } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
 import { JsonLd } from "@/components/ui/JsonLd";
+import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
 import { getStaticPage } from "@/lib/sanity";
 import { canonicalUrl } from "@/lib/routes";
 import { buildBreadcrumbSchema, buildOrganizationSchema } from "@/lib/schema";
@@ -60,7 +61,15 @@ export async function generateMetadata(): Promise<Metadata> {
 // ─── Page ──────────────────────────────────────────────────────────────────
 
 export default async function AboutPage() {
-  const doc = await getStaticPage("gioi-thieu");
+  const [doc, chromeSettings] = await Promise.all([
+    getStaticPage("gioi-thieu"),
+    loadSiteChromeSettings(),
+  ]);
+
+  const contact = {
+    phoneE164: chromeSettings.phoneE164,
+    facebookUrl: chromeSettings.facebookUrl,
+  };
 
   const eyebrow = doc?.eyebrow ?? FALLBACK_EYEBROW;
   const h1 = doc?.title ?? FALLBACK_TITLE_H1;
@@ -81,7 +90,7 @@ export default async function AboutPage() {
     <article className="legal-page">
       <JsonLd
         id="about-schema"
-        data={[buildOrganizationSchema(), breadcrumbSchema]}
+        data={[buildOrganizationSchema(contact), breadcrumbSchema]}
       />
 
       <div className="legal-page__hero">
@@ -190,24 +199,24 @@ export default async function AboutPage() {
               <ul>
                 <li>
                   Điện thoại:{" "}
-                  <a href={`tel:${siteConfig.phoneE164}`}>
-                    {siteConfig.phoneDisplay}
+                  <a href={`tel:${chromeSettings.phoneE164}`}>
+                    {chromeSettings.phoneDisplay}
                   </a>
                 </li>
                 <li>
                   Zalo:{" "}
                   <a
-                    href={`https://zalo.me/${siteConfig.zaloNumber}`}
+                    href={`https://zalo.me/${chromeSettings.zaloNumber}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {siteConfig.zaloNumber}
+                    {chromeSettings.zaloNumber}
                   </a>
                 </li>
                 <li>
                   Facebook:{" "}
                   <a
-                    href={siteConfig.facebookUrl}
+                    href={chromeSettings.facebookUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
