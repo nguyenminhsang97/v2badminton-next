@@ -2,9 +2,12 @@
 
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
+import { visionTool } from "@sanity/vision";
 import { openLivePageAction } from "./src/sanity/actions/openLivePageAction";
 import { schemaTypes } from "./src/sanity/schemaTypes";
 import { singletonActions, singletonTypes, structure } from "./src/sanity/structure";
+
+const SANITY_API_VERSION = "2026-04-09";
 
 const envProjectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID?.trim();
 const envDataset = process.env.NEXT_PUBLIC_SANITY_DATASET?.trim();
@@ -20,7 +23,10 @@ export default defineConfig({
   basePath: "/studio",
   projectId,
   dataset,
-  plugins: [structureTool({ structure })],
+  plugins: [
+    structureTool({ structure }),
+    visionTool({ defaultApiVersion: SANITY_API_VERSION }),
+  ],
   schema: {
     types: schemaTypes,
     templates: (templates) =>

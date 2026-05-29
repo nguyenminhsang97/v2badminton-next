@@ -34,6 +34,26 @@ export const pricingTier = defineType({
   initialValue: {
     isActive: true,
   },
+  orderings: [
+    {
+      title: "Thứ tự hiển thị (mặc định)",
+      name: "orderAsc",
+      by: [{ field: "order", direction: "asc" }],
+    },
+    {
+      title: "Đang bán trước",
+      name: "activeFirst",
+      by: [
+        { field: "isActive", direction: "desc" },
+        { field: "order", direction: "asc" },
+      ],
+    },
+    {
+      title: "Tên A → Z",
+      name: "nameAsc",
+      by: [{ field: "name", direction: "asc" }],
+    },
+  ],
   fields: [
     defineField({
       name: "slug",

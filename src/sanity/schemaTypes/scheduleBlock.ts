@@ -60,6 +60,29 @@ export const scheduleBlock = defineType({
   initialValue: {
     isActive: true,
   },
+  orderings: [
+    {
+      title: "Nhóm ngày, ca học (mặc định)",
+      name: "dayTime",
+      by: [
+        { field: "dayGroup", direction: "asc" },
+        { field: "timeLabel", direction: "asc" },
+      ],
+    },
+    {
+      title: "Thứ tự hiển thị",
+      name: "orderAsc",
+      by: [{ field: "order", direction: "asc" }],
+    },
+    {
+      title: "Đang bán trước",
+      name: "activeFirst",
+      by: [
+        { field: "isActive", direction: "desc" },
+        { field: "order", direction: "asc" },
+      ],
+    },
+  ],
   fields: [
     defineField({
       name: "slug",

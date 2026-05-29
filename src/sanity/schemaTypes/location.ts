@@ -8,6 +8,29 @@ export const location = defineType({
   initialValue: {
     isActive: true,
   },
+  orderings: [
+    {
+      title: "Quận, thứ tự (mặc định)",
+      name: "districtOrder",
+      by: [
+        { field: "district", direction: "asc" },
+        { field: "order", direction: "asc" },
+      ],
+    },
+    {
+      title: "Đang hiển thị trước",
+      name: "activeFirst",
+      by: [
+        { field: "isActive", direction: "desc" },
+        { field: "order", direction: "asc" },
+      ],
+    },
+    {
+      title: "Tên A → Z",
+      name: "nameAsc",
+      by: [{ field: "name", direction: "asc" }],
+    },
+  ],
   fields: [
     defineField({
       name: "slug",
