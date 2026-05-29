@@ -1,6 +1,7 @@
 import { defineField, defineType } from "sanity";
 import { slugifyValue } from "./shared";
 import { contentBodyBlock } from "./contentShared";
+import { SerpPreviewInput } from "../components/SerpPreviewInput";
 
 /**
  * static_page — collection of editorial pages whose URL is owned by a file-route
@@ -93,6 +94,7 @@ export const staticPage = defineType({
       description: "Nếu để trống, dùng tiêu đề trang.",
       type: "string",
       group: "seo",
+      components: { input: SerpPreviewInput },
     }),
     defineField({
       name: "seoDescription",
