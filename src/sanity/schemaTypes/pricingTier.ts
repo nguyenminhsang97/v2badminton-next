@@ -34,6 +34,12 @@ export const pricingTier = defineType({
   initialValue: {
     isActive: true,
   },
+  groups: [
+    { name: "overview", title: "Tổng quan", default: true },
+    { name: "pricing", title: "Giá & buổi học" },
+    { name: "cta", title: "Quyền lợi & CTA" },
+    { name: "display", title: "Hiển thị" },
+  ],
   orderings: [
     {
       title: "Thứ tự hiển thị (mặc định)",
@@ -59,6 +65,7 @@ export const pricingTier = defineType({
       name: "slug",
       title: "Slug (URL)",
       type: "slug",
+      group: "overview",
       options: {
         source: "name",
         slugify: slugifyValue,
@@ -69,12 +76,14 @@ export const pricingTier = defineType({
       name: "name",
       title: "Tên gói",
       type: "string",
+      group: "overview",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "shortLabel",
       title: "Nhãn ngắn",
       type: "string",
+      group: "overview",
       description: "Nhãn rút gọn hiển thị trên thẻ học phí. VD: Lớp nhóm, Kèm 1:1",
       validation: (Rule) => Rule.required(),
     }),
@@ -82,6 +91,7 @@ export const pricingTier = defineType({
       name: "kind",
       title: "Loại gói",
       type: "string",
+      group: "overview",
       description:
         "Nhóm: lớp 2–6 người. Kèm riêng: 1:1. Doanh nghiệp: báo giá theo yêu cầu.",
       options: {
@@ -93,6 +103,7 @@ export const pricingTier = defineType({
       name: "billingModel",
       title: "Hình thức tính phí",
       type: "string",
+      group: "overview",
       options: {
         list: [...BILLING_MODEL_OPTIONS],
       },
@@ -105,6 +116,7 @@ export const pricingTier = defineType({
       name: "description",
       title: "Mô tả gói",
       type: "text",
+      group: "overview",
       description:
         "Mô tả ngắn hiển thị trên thẻ học phí trang chủ và các trang nội dung.",
       rows: 4,
@@ -114,6 +126,7 @@ export const pricingTier = defineType({
       name: "groupSize",
       title: "Sĩ số nhóm",
       type: "string",
+      group: "pricing",
       description: "VD: 2–4 người. Hiển thị trên thẻ gói nhóm.",
       hidden: ({ document }) => document?.kind !== "group",
       validation: (Rule) =>
@@ -128,6 +141,7 @@ export const pricingTier = defineType({
       name: "pricePerMonth",
       title: "Học phí/tháng (số)",
       type: "number",
+      group: "pricing",
       description:
         "Nhập số nguyên, không có dấu chấm/phẩy. VD: 800000. Dùng để tính khoảng giá hiển thị.",
       hidden: ({ document }) => document?.kind !== "group",
@@ -143,6 +157,7 @@ export const pricingTier = defineType({
       name: "pricePerHour",
       title: "Học phí/giờ (số)",
       type: "number",
+      group: "pricing",
       description:
         "Nhập số nguyên. VD: 250000. Dùng để tính khoảng giá hiển thị.",
       hidden: ({ document }) => document?.kind !== "private",
@@ -158,6 +173,7 @@ export const pricingTier = defineType({
       name: "displayPrice",
       title: "Giá hiển thị",
       type: "string",
+      group: "pricing",
       description:
         "Chuỗi hiển thị trực tiếp trên thẻ học phí trang chủ và các trang nội dung. VD: 800.000đ/tháng",
       validation: (Rule) => Rule.required(),
@@ -166,6 +182,7 @@ export const pricingTier = defineType({
       name: "sessionsPerWeek",
       title: "Số buổi/tuần",
       type: "number",
+      group: "pricing",
       hidden: ({ document }) => document?.kind !== "group",
       validation: (Rule) =>
         Rule.custom((value, context) => {
@@ -179,6 +196,7 @@ export const pricingTier = defineType({
       name: "sessionsPerMonth",
       title: "Số buổi/tháng",
       type: "number",
+      group: "pricing",
       hidden: ({ document }) => document?.kind !== "group",
       validation: (Rule) =>
         Rule.custom((value, context) => {
@@ -192,6 +210,7 @@ export const pricingTier = defineType({
       name: "features",
       title: "Quyền lợi / Tính năng",
       type: "array",
+      group: "cta",
       description:
         "Danh sách quyền lợi hiển thị trên thẻ học phí. VD: Sân chuẩn, HLV 1:1, Lịch linh hoạt",
       of: [defineArrayMember({ type: "string" })],
@@ -201,6 +220,7 @@ export const pricingTier = defineType({
       name: "ctaLabel",
       title: "Nội dung nút đăng ký",
       type: "string",
+      group: "cta",
       description: "VD: Đăng ký học thử, Nhận báo giá",
       validation: (Rule) => Rule.required(),
     }),
@@ -208,6 +228,7 @@ export const pricingTier = defineType({
       name: "ctaAction",
       title: "Hành động nút đăng ký",
       type: "string",
+      group: "cta",
       description:
         "Đăng ký học thử: mở form liên hệ. Nhận báo giá: chuyển sang chế độ doanh nghiệp.",
       options: {
@@ -219,6 +240,7 @@ export const pricingTier = defineType({
       name: "order",
       title: "Thứ tự hiển thị",
       type: "number",
+      group: "display",
       description: "Số nhỏ hơn hiển thị trước trên trang chủ và các trang nội dung.",
       validation: (Rule) => Rule.integer().min(0),
     }),
@@ -226,6 +248,7 @@ export const pricingTier = defineType({
       name: "isActive",
       title: "Hiển thị trên web?",
       type: "boolean",
+      group: "display",
       description: "Tắt để ẩn gói này khỏi website mà không cần xóa.",
       validation: (Rule) => Rule.required(),
     }),

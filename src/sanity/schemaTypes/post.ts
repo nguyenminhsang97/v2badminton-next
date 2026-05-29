@@ -20,6 +20,12 @@ export const post = defineType({
   initialValue: {
     status: "draft",
   },
+  groups: [
+    { name: "overview", title: "Tổng quan", default: true },
+    { name: "body", title: "Nội dung" },
+    { name: "seo", title: "SEO" },
+    { name: "references", title: "Liên kết" },
+  ],
   orderings: [
     {
       title: "Ngày đăng — mới nhất (mặc định)",
@@ -45,12 +51,14 @@ export const post = defineType({
       name: "title",
       title: "Title",
       type: "string",
+      group: "overview",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "slug",
       title: "Slug",
       type: "slug",
+      group: "overview",
       options: {
         source: "title",
         slugify: slugifyValue,
@@ -61,6 +69,7 @@ export const post = defineType({
       name: "status",
       title: "Status",
       type: "string",
+      group: "overview",
       options: {
         list: [...POST_STATUS_OPTIONS],
       },
@@ -70,6 +79,7 @@ export const post = defineType({
       name: "category",
       title: "Category",
       type: "string",
+      group: "overview",
       options: {
         list: [...POST_CATEGORY_OPTIONS],
       },
@@ -79,18 +89,21 @@ export const post = defineType({
       name: "publishedAt",
       title: "Published At",
       type: "datetime",
+      group: "overview",
       hidden: ({ document }) => document?.status !== "published",
     }),
     defineField({
       name: "excerpt",
       title: "Excerpt",
       type: "text",
+      group: "overview",
       rows: 3,
     }),
     defineField({
       name: "coverImage",
       title: "Cover Image",
       type: "image",
+      group: "overview",
       options: {
         hotspot: true,
       },
@@ -99,6 +112,7 @@ export const post = defineType({
       name: "body",
       title: "Body",
       type: "array",
+      group: "body",
       of: [
         defineArrayMember({
           type: "block",
@@ -141,11 +155,13 @@ export const post = defineType({
       name: "metaTitle",
       title: "Meta Title",
       type: "string",
+      group: "seo",
     }),
     defineField({
       name: "metaDescription",
       title: "Meta Description",
       type: "text",
+      group: "seo",
       rows: 3,
     }),
     defineField({
@@ -153,6 +169,7 @@ export const post = defineType({
       title: "Related Money Page",
       description: "Internal link ve money page lien quan - quan trong cho SEO",
       type: "reference",
+      group: "references",
       to: [{ type: "money_page" }],
     }),
   ],
