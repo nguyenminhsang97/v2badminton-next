@@ -125,6 +125,10 @@ export const contentArticle = defineType({
       type: "reference",
       group: "structure",
       to: [{ type: "content_hub" }],
+      description: "Chỉ hiện hub đang được index.",
+      options: {
+        filter: "isIndexed == true",
+      },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -134,7 +138,10 @@ export const contentArticle = defineType({
       group: "structure",
       to: [{ type: "content_node" }],
       description:
-        "Để trống nếu bài nằm trực tiếp dưới hub. Chọn nhánh để bài nằm sâu hơn.",
+        "Để trống nếu bài nằm trực tiếp dưới hub. Chọn nhánh để bài nằm sâu hơn. Chỉ hiện nhánh đang được index.",
+      options: {
+        filter: "isIndexed == true",
+      },
     }),
     defineFullPathField({ warnDepth: true, group: "structure" }),
     defineField({

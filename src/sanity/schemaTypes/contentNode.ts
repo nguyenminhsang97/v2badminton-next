@@ -65,7 +65,10 @@ export const contentNode = defineType({
       type: "reference",
       group: "structure",
       to: [{ type: "content_hub" }],
-      description: "Hub gốc chứa nhánh này.",
+      description: "Hub gốc chứa nhánh này. Chỉ hiện hub đang được index.",
+      options: {
+        filter: "isIndexed == true",
+      },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -75,7 +78,10 @@ export const contentNode = defineType({
       group: "structure",
       to: [{ type: "content_node" }],
       description:
-        "Để trống nếu nhánh nằm trực tiếp dưới hub. Chọn nhánh cha để tạo cấu trúc sâu hơn.",
+        "Để trống nếu nhánh nằm trực tiếp dưới hub. Chọn nhánh cha để tạo cấu trúc sâu hơn. Chỉ hiện nhánh đang được index.",
+      options: {
+        filter: "isIndexed == true",
+      },
     }),
     defineFullPathField({ warnDepth: true, group: "structure" }),
     defineField({
