@@ -60,6 +60,11 @@ export const scheduleBlock = defineType({
   initialValue: {
     isActive: true,
   },
+  groups: [
+    { name: "overview", title: "Tổng quan", default: true },
+    { name: "details", title: "Chi tiết" },
+    { name: "display", title: "Hiển thị" },
+  ],
   orderings: [
     {
       title: "Nhóm ngày, ca học (mặc định)",
@@ -88,6 +93,7 @@ export const scheduleBlock = defineType({
       name: "slug",
       title: "Slug (URL)",
       type: "slug",
+      group: "overview",
       description:
         "Tự động tạo từ sân tập, mã ca và nhóm ngày. Không thay đổi sau khi đã publish.",
       options: {
@@ -109,6 +115,7 @@ export const scheduleBlock = defineType({
       name: "location",
       title: "Sân tập",
       type: "reference",
+      group: "overview",
       to: [{ type: "location" }],
       validation: (Rule) => Rule.required(),
     }),
@@ -116,6 +123,7 @@ export const scheduleBlock = defineType({
       name: "dayGroup",
       title: "Nhóm ngày",
       type: "string",
+      group: "overview",
       description:
         "VD: Thứ 2–4–6, Cuối tuần. Hiển thị trên bảng lịch học trang chủ.",
       validation: (Rule) => Rule.required(),
@@ -124,6 +132,7 @@ export const scheduleBlock = defineType({
       name: "timeLabel",
       title: "Ca học",
       type: "string",
+      group: "overview",
       description:
         "VD: 17:00 – 18:30. Hiển thị trên bảng lịch học trang chủ.",
       validation: (Rule) => Rule.required(),
@@ -132,6 +141,7 @@ export const scheduleBlock = defineType({
       name: "timeSlotId",
       title: "Mã ca học",
       type: "string",
+      group: "overview",
       description:
         "Mã liên kết ca học với form đăng ký khi user chọn lịch. VD: sang-thu-2-4-6",
       validation: (Rule) => Rule.required(),
@@ -140,6 +150,7 @@ export const scheduleBlock = defineType({
       name: "levels",
       title: "Trình độ",
       type: "array",
+      group: "details",
       description:
         "Trình độ phù hợp cho ca học này. Hiển thị dưới dạng tag trên bảng lịch trang chủ.",
       of: [
@@ -156,6 +167,7 @@ export const scheduleBlock = defineType({
       name: "order",
       title: "Thứ tự hiển thị",
       type: "number",
+      group: "display",
       description: "Số nhỏ hơn hiển thị trước trên bảng lịch trang chủ.",
       validation: (Rule) => Rule.integer().min(0),
     }),
@@ -163,6 +175,7 @@ export const scheduleBlock = defineType({
       name: "isActive",
       title: "Hiển thị trên web?",
       type: "boolean",
+      group: "display",
       description: "Tắt để ẩn ca học này khỏi website mà không cần xóa.",
       validation: (Rule) => Rule.required(),
     }),
