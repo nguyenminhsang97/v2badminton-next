@@ -9,6 +9,29 @@ export const coach = defineType({
     featured: false,
     showStars: true,
   },
+  orderings: [
+    {
+      title: "Nổi bật, thứ tự (mặc định)",
+      name: "featuredOrder",
+      by: [
+        { field: "featured", direction: "desc" },
+        { field: "order", direction: "asc" },
+      ],
+    },
+    {
+      title: "Đang dạy trước",
+      name: "activeFirst",
+      by: [
+        { field: "isActive", direction: "desc" },
+        { field: "order", direction: "asc" },
+      ],
+    },
+    {
+      title: "Tên A → Z",
+      name: "nameAsc",
+      by: [{ field: "name", direction: "asc" }],
+    },
+  ],
   fields: [
     defineField({
       name: "name",

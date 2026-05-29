@@ -38,6 +38,26 @@ export const contentArticle = defineType({
     status: "draft",
     contentFormat: "guide",
   },
+  orderings: [
+    {
+      title: "Ngày đăng — mới nhất (mặc định)",
+      name: "publishedDesc",
+      by: [{ field: "publishedAt", direction: "desc" }],
+    },
+    {
+      title: "Trạng thái + tiêu đề",
+      name: "statusTitle",
+      by: [
+        { field: "status", direction: "asc" },
+        { field: "title", direction: "asc" },
+      ],
+    },
+    {
+      title: "Tiêu đề A → Z",
+      name: "titleAsc",
+      by: [{ field: "title", direction: "asc" }],
+    },
+  ],
   fields: [
     defineField({
       name: "title",

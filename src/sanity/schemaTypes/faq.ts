@@ -9,6 +9,29 @@ export const faq = defineType({
     includeInSchema: true,
     featured: false,
   },
+  orderings: [
+    {
+      title: "Thứ tự hiển thị (mặc định)",
+      name: "orderAsc",
+      by: [
+        { field: "order", direction: "asc" },
+        { field: "homepageOrder", direction: "asc" },
+      ],
+    },
+    {
+      title: "Nổi bật trên trang chủ",
+      name: "featuredFirst",
+      by: [
+        { field: "featured", direction: "desc" },
+        { field: "homepageOrder", direction: "asc" },
+      ],
+    },
+    {
+      title: "Câu hỏi A → Z",
+      name: "questionAsc",
+      by: [{ field: "question", direction: "asc" }],
+    },
+  ],
   fields: [
     defineField({
       name: "question",
