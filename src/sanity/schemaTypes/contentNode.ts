@@ -2,6 +2,7 @@ import { defineField, defineType } from "sanity";
 import { slugifyValue } from "./shared";
 import { contentBodyBlock, defineFullPathField } from "./contentShared";
 import { QuickAnswerInput } from "../components/QuickAnswerInput";
+import { SerpPreviewInput } from "../components/SerpPreviewInput";
 
 /**
  * content_node — a section/branch inside a hub (e.g. /ky-thuat-cau-long/danh-don/).
@@ -99,6 +100,7 @@ export const contentNode = defineType({
       title: "Tiêu đề SEO",
       type: "string",
       group: "seo",
+      components: { input: SerpPreviewInput },
       validation: (Rule) => Rule.required(),
     }),
     defineField({

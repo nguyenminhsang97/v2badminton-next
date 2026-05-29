@@ -7,6 +7,7 @@ import {
   defineFullPathField,
 } from "./contentShared";
 import { QuickAnswerInput } from "../components/QuickAnswerInput";
+import { SerpPreviewInput } from "../components/SerpPreviewInput";
 
 /**
  * content_article — the single article model for the whole platform.
@@ -178,6 +179,7 @@ export const contentArticle = defineType({
       type: "string",
       group: "seo",
       description: "Tối đa ~60 ký tự.",
+      components: { input: SerpPreviewInput },
       validation: (Rule) => Rule.required(),
     }),
     defineField({

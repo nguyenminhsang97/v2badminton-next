@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { AUDIENCE_OPTIONS, slugifyValue } from "./shared";
+import { SerpPreviewInput } from "../components/SerpPreviewInput";
 
 const bodyBlockField = defineArrayMember({
   type: "block",
@@ -150,6 +151,7 @@ export const moneyPage = defineType({
       group: "seo",
       description:
         "Hiển thị trên tab trình duyệt và kết quả tìm kiếm Google. Tối đa ~60 ký tự.",
+      components: { input: SerpPreviewInput },
       validation: (Rule) => Rule.required(),
     }),
     defineField({

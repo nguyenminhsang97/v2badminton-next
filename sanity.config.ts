@@ -1,11 +1,25 @@
 "use client";
 
-import { defineConfig } from "sanity";
+import { defineConfig, type DocumentBadgeComponent } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 import { openLivePageAction } from "./src/sanity/actions/openLivePageAction";
+import {
+  draftStatusBadge,
+  missingCoachPhotoBadge,
+  missingCoverImageBadge,
+  missingHeroImageBadge,
+  missingMetaDescriptionBadge,
+} from "./src/sanity/badges/readinessBadges";
 import { schemaTypes } from "./src/sanity/schemaTypes";
 import { singletonActions, singletonTypes, structure } from "./src/sanity/structure";
+
+const BADGES_BY_TYPE: Record<string, DocumentBadgeComponent[]> = {
+  content_article: [missingCoverImageBadge, draftStatusBadge],
+  money_page: [missingHeroImageBadge, missingMetaDescriptionBadge],
+  coach: [missingCoachPhotoBadge],
+  post: [draftStatusBadge],
+};
 
 const SANITY_API_VERSION = "2026-04-09";
 
@@ -40,6 +54,10 @@ export default defineConfig({
         ? input.filter(({ action }) => action && singletonActions.has(action))
         : input;
       return [...base, openLivePageAction];
+    },
+    badges: (prev, context) => {
+      const extra = BADGES_BY_TYPE[context.schemaType] ?? [];
+      return [...prev, ...extra];
     },
   },
 });

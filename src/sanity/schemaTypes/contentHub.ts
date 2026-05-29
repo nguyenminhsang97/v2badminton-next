@@ -2,6 +2,7 @@ import { defineField, defineType } from "sanity";
 import { slugifyValue } from "./shared";
 import { contentBodyBlock, defineFullPathField } from "./contentShared";
 import { QuickAnswerInput } from "../components/QuickAnswerInput";
+import { SerpPreviewInput } from "../components/SerpPreviewInput";
 
 /**
  * content_hub — top-level content portal (e.g. /ky-thuat-cau-long/).
@@ -81,6 +82,7 @@ export const contentHub = defineType({
       group: "seo",
       description:
         "Hiển thị trên tab trình duyệt và kết quả Google. Tối đa ~60 ký tự.",
+      components: { input: SerpPreviewInput },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
