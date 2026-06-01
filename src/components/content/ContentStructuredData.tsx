@@ -1,10 +1,23 @@
 import { JsonLd } from "@/components/ui/JsonLd";
 import { canonicalUrl } from "@/lib/routes";
-import type { SanityContentArticle, SanityFaq } from "@/lib/sanity";
+import type { SanityArticleAuthor, SanityContentArticle, SanityFaq } from "@/lib/sanity";
 import {
   buildBreadcrumbSchema,
   buildFaqPageSchema,
 } from "@/lib/schema";
+
+function buildAuthorSchema(author: SanityArticleAuthor) {
+  if (author.kind === "coach" && author.coach?.name) {
+    return {
+      "@type": "Person",
+      name: author.coach.name,
+      ...(author.coach.credentialTags.length > 0
+        ? { jobTitle: author.coach.credentialTags.join(", ") }
+        : {}),
+    };
+  }
+  return { "@type": "Organization", name: "Đội ngũ V2 Badminton" };
+}
 
 type BreadcrumbTrailItem = { label: string; href?: string };
 
@@ -53,6 +66,20 @@ export function ContentStructuredData({
               ? { image: article.coverImageUrl }
               : {}),
             url: canonicalUrl(path),
+            author: buildAuthorSchema(article.author),
+            publisher: { "@type": "Organization", name: "V2 Badminton" },
+            ...(article.reviewer && article.lastReviewed
+              ? {
+                  reviewedBy: {
+                    "@type": "Person",
+                    name: article.reviewer.name,
+                    ...(article.reviewer.credentialTags.length > 0
+                      ? { jobTitle: article.reviewer.credentialTags.join(", ") }
+                      : {}),
+                  },
+                  dateReviewed: article.lastReviewed,
+                }
+              : {}),
           }}
         />
       ) : null}

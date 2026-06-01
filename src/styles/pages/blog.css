@@ -184,6 +184,41 @@
   font-weight: 600;
 }
 
+.blog-post__byline {
+  display: grid;
+  gap: 4px;
+  font-size: 0.88rem;
+  color: var(--s5-muted);
+}
+
+.blog-post__byline-author,
+.blog-post__byline-dates,
+.blog-post__byline-reviewer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 0;
+  line-height: 1.5;
+}
+
+.blog-post__byline-label {
+  font-weight: 600;
+  color: var(--s5-primary-strong);
+  margin-right: 2px;
+}
+
+.blog-post__byline-name {
+  font-weight: 600;
+}
+
+.blog-post__byline-credentials {
+  opacity: 0.75;
+}
+
+.blog-post__byline-date {
+  font-style: normal;
+}
+
 .blog-post__body {
   color: var(--s5-muted);
   font-size: 1.05rem;
