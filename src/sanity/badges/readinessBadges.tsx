@@ -36,10 +36,15 @@ export const missingCoverImageBadge: DocumentBadgeComponent = (props) => {
   const doc = getDoc(props);
   if (!doc) return null;
   if (doc.coverImage) return null;
+  // Cover image is OPTIONAL on content_article per the 2026-05-29 policy
+  // (S8 deferred — see .claude/CMS/v2badminton-studio-ui-ux-roadmap.md).
+  // This badge is a SOFT HINT, not a publish blocker: tooltip text intentionally
+  // avoids "cần thêm" / "bắt buộc" so it does not contradict the policy.
   return {
     label: "Thiếu ảnh bìa",
     color: "warning",
-    title: "Bài viết chưa có cover image. Cần thêm trước khi publish.",
+    title:
+      "Có thể thêm cover image để hiển thị đẹp hơn ở danh sách và làm OG image khi chia sẻ. Không bắt buộc.",
   };
 };
 missingCoverImageBadge.displayName = "MissingCoverImageBadge";
