@@ -78,6 +78,73 @@ export const contentArticle = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "authorKind",
+      title: "Loại tác giả",
+      type: "string",
+      group: "overview",
+      description:
+        "Chọn 'Tổ chức' nếu bài do đội ngũ V2 Badminton biên soạn. Chọn 'HLV' để gán HLV cụ thể.",
+      options: {
+        list: [
+          { title: "Đội ngũ V2 Badminton (tổ chức)", value: "organization" },
+          { title: "HLV cụ thể", value: "coach" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "organization",
+    }),
+    defineField({
+      name: "authorCoach",
+      title: "HLV tác giả",
+      type: "reference",
+      group: "overview",
+      to: [{ type: "coach" }],
+      description:
+        "Chọn HLV đã biên soạn bài viết này. Chỉ hiển thị khi Loại tác giả = HLV cụ thể.",
+      hidden: ({ document }) => document?.authorKind !== "coach",
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const doc = context.document as { authorKind?: string } | undefined;
+          if (doc?.authorKind === "coach" && !value) {
+            return "Nên chọn HLV tác giả khi Loại tác giả là 'HLV cụ thể'.";
+          }
+          return true;
+        }).warning(),
+    }),
+    defineField({
+      name: "reviewer",
+      title: "HLV review chuyên môn",
+      type: "reference",
+      group: "overview",
+      to: [{ type: "coach" }],
+      description:
+        "HLV đã kiểm tra chuyên môn bài viết. Để trống nếu chưa có review. Khi có giá trị, cần kèm Ngày review.",
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const doc = context.document as { lastReviewed?: string } | undefined;
+          if (value && !doc?.lastReviewed) {
+            return "Nên nhập Ngày review gần nhất khi đã chọn HLV review.";
+          }
+          return true;
+        }).warning(),
+    }),
+    defineField({
+      name: "lastReviewed",
+      title: "Ngày review gần nhất",
+      type: "datetime",
+      group: "overview",
+      description:
+        "Ngày HLV review lần gần nhất. Bắt buộc kèm theo khi có HLV review.",
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const doc = context.document as { reviewer?: unknown } | undefined;
+          if (value && !doc?.reviewer) {
+            return "Nên chọn HLV review khi đã nhập Ngày review.";
+          }
+          return true;
+        }).warning(),
+    }),
+    defineField({
       name: "contentFormat",
       title: "Định dạng nội dung",
       type: "string",
