@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
 import { buildMoneyPageMetadata } from "@/lib/moneyPageMetadata";
 import {
   buildPublishedMoneyPageFallback,
@@ -59,10 +60,16 @@ export async function generatePublishedMoneyPageMetadata(
 export async function renderPublishedMoneyPage(
   config: PublishedMoneyPageRouteConfig,
 ) {
-  const [{ page: moneyPage }, scheduleBlocks] = await Promise.all([
+  const [{ page: moneyPage }, scheduleBlocks, chromeSettings] = await Promise.all([
     getMoneyPage(config.slug),
     getScheduleBlocks(),
+    loadSiteChromeSettings(),
   ]);
+
+  const contact = {
+    phoneE164: chromeSettings.phoneE164,
+    facebookUrl: chromeSettings.facebookUrl,
+  };
 
   const resolvedPage = moneyPage ?? buildPublishedMoneyPageFallback(config.path);
   const shouldRenderCourseSchema = SERVICE_MONEY_PAGE_PATHS.has(config.path);
@@ -84,6 +91,7 @@ export async function renderPublishedMoneyPage(
         locations={resolvedPage.relatedLocations}
         pricingTiers={resolvedPage.relatedPricing}
         scheduleBlocks={scheduleBlocks}
+        contact={contact}
       />
       <MoneyPageTemplate page={resolvedPage} path={config.path} />
     </>
