@@ -2,7 +2,6 @@ import ReactDOM from "react-dom";
 import { getImageProps } from "next/image";
 import { HOME_SECTION_IDS, toHash } from "@/lib/anchors";
 import { generatedImages } from "@/lib/generatedImages";
-import { siteConfig } from "@/lib/site";
 import type { CtaName } from "@/lib/tracking";
 import type { HomepageHeroSectionProps } from "./sectionProps";
 import { HeroCtas } from "./HeroCtas";
@@ -12,7 +11,7 @@ import {
   HERO_STATUS_LABEL,
 } from "./homepageHeroContent";
 
-export function HeroSection({ campaign, content }: HomepageHeroSectionProps) {
+export function HeroSection({ campaign, content, facebookUrl }: HomepageHeroSectionProps) {
   // Precedence: campaign > homepage_content CMS > hardcoded fallback
   const heroSubheading =
     campaign?.heroDescription ??
@@ -137,7 +136,7 @@ export function HeroSection({ campaign, content }: HomepageHeroSectionProps) {
               <span className="hero__proof-meta">
                 9.000+ theo dõi trên{" "}
                 <a
-                  href={siteConfig.facebookUrl}
+                  href={facebookUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hero__proof-link"

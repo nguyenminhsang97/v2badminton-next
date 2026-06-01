@@ -70,6 +70,11 @@ export default async function Home() {
       getHomepageContent(),
     ]);
 
+  const contact = {
+    phoneE164: chromeSettings.phoneE164,
+    facebookUrl: chromeSettings.facebookUrl,
+  };
+
   const courseSchemas = buildCourseSchemas(pricingTiers, {
     locations,
     scheduleBlocks,
@@ -87,7 +92,7 @@ export default async function Home() {
 
   return (
     <>
-      <JsonLd id="organization-schema" data={buildOrganizationSchema()} />
+      <JsonLd id="organization-schema" data={buildOrganizationSchema(contact)} />
       <JsonLd id="website-schema" data={buildWebsiteSchema()} />
       <JsonLd
         id="homepage-business-schema"
@@ -95,6 +100,7 @@ export default async function Home() {
           locations,
           pricingTiers,
           scheduleBlocks,
+          contact,
         )}
       />
       <JsonLd id="homepage-faq-schema" data={buildFaqPageSchema(faqs)} />
@@ -106,7 +112,7 @@ export default async function Home() {
         </Suspense>
         <div className="home-page">
           {/* Conversion flow: hero → quick proof → audience pick → location filter → schedule slot → objection handling → form */}
-          <HeroSection campaign={homepageCampaign} content={homepageContent?.hero} />
+          <HeroSection campaign={homepageCampaign} content={homepageContent?.hero} facebookUrl={chromeSettings.facebookUrl} />
           <StatsBar content={homepageContent?.statsBar} />
           <PricingStrip tiers={pricingTiers} content={homepageContent?.pricingStrip} />
           <CourseSection pricingTiers={pricingTiers} content={homepageContent?.courseSection} />

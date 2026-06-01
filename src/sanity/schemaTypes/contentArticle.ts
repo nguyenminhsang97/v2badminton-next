@@ -7,6 +7,7 @@ import {
   defineFullPathField,
 } from "./contentShared";
 import { QuickAnswerInput } from "../components/QuickAnswerInput";
+import { SerpPreviewInput } from "../components/SerpPreviewInput";
 
 /**
  * content_article — the single article model for the whole platform.
@@ -38,6 +39,26 @@ export const contentArticle = defineType({
     status: "draft",
     contentFormat: "guide",
   },
+  orderings: [
+    {
+      title: "Ngày đăng — mới nhất (mặc định)",
+      name: "publishedDesc",
+      by: [{ field: "publishedAt", direction: "desc" }],
+    },
+    {
+      title: "Trạng thái + tiêu đề",
+      name: "statusTitle",
+      by: [
+        { field: "status", direction: "asc" },
+        { field: "title", direction: "asc" },
+      ],
+    },
+    {
+      title: "Tiêu đề A → Z",
+      name: "titleAsc",
+      by: [{ field: "title", direction: "asc" }],
+    },
+  ],
   fields: [
     defineField({
       name: "title",
@@ -171,6 +192,10 @@ export const contentArticle = defineType({
       type: "reference",
       group: "structure",
       to: [{ type: "content_hub" }],
+      description: "Chỉ hiện hub đang được index.",
+      options: {
+        filter: "isIndexed == true",
+      },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -180,7 +205,10 @@ export const contentArticle = defineType({
       group: "structure",
       to: [{ type: "content_node" }],
       description:
-        "Để trống nếu bài nằm trực tiếp dưới hub. Chọn nhánh để bài nằm sâu hơn.",
+        "Để trống nếu bài nằm trực tiếp dưới hub. Chọn nhánh để bài nằm sâu hơn. Chỉ hiện nhánh đang được index.",
+      options: {
+        filter: "isIndexed == true",
+      },
     }),
     defineFullPathField({ warnDepth: true, group: "structure" }),
     defineField({
@@ -225,6 +253,7 @@ export const contentArticle = defineType({
       type: "string",
       group: "seo",
       description: "Tối đa ~60 ký tự.",
+      components: { input: SerpPreviewInput },
       validation: (Rule) => Rule.required(),
     }),
     defineField({

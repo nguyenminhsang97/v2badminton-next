@@ -15,6 +15,7 @@
     "test:mobile:headed": "playwright test --project=mobile-chrome --project=mobile-safari --headed"
   },
   "dependencies": {
+    "@sanity/vision": "^5.28.0",
     "@sentry/nextjs": "^10.51.0",
     "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.37.0",

@@ -9,17 +9,47 @@ export const faq = defineType({
     includeInSchema: true,
     featured: false,
   },
+  groups: [
+    { name: "content", title: "Nội dung", default: true },
+    { name: "display", title: "Hiển thị" },
+    { name: "seo", title: "SEO" },
+  ],
+  orderings: [
+    {
+      title: "Thứ tự hiển thị (mặc định)",
+      name: "orderAsc",
+      by: [
+        { field: "order", direction: "asc" },
+        { field: "homepageOrder", direction: "asc" },
+      ],
+    },
+    {
+      title: "Nổi bật trên trang chủ",
+      name: "featuredFirst",
+      by: [
+        { field: "featured", direction: "desc" },
+        { field: "homepageOrder", direction: "asc" },
+      ],
+    },
+    {
+      title: "Câu hỏi A → Z",
+      name: "questionAsc",
+      by: [{ field: "question", direction: "asc" }],
+    },
+  ],
   fields: [
     defineField({
       name: "question",
       title: "Câu hỏi",
       type: "string",
+      group: "content",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "answer",
       title: "Trả lời",
       type: "array",
+      group: "content",
       of: [
         defineArrayMember({
           type: "block",
@@ -57,6 +87,7 @@ export const faq = defineType({
       name: "pages",
       title: "Hiển thị ở trang",
       type: "array",
+      group: "display",
       description:
         "Chọn trang để câu hỏi này xuất hiện. Một câu hỏi có thể xuất hiện ở nhiều trang.",
       of: [
@@ -76,6 +107,7 @@ export const faq = defineType({
       name: "includeInSchema",
       title: "Hiển thị trong Google FAQ?",
       type: "boolean",
+      group: "seo",
       description:
         "Bật để câu hỏi này xuất hiện trong kết quả tìm kiếm Google dạng FAQ.",
       validation: (Rule) => Rule.required(),
@@ -84,6 +116,7 @@ export const faq = defineType({
       name: "featured",
       title: "Hiển thị trên homepage?",
       type: "boolean",
+      group: "display",
       initialValue: false,
       description:
         "Bật để FAQ này được ưu tiên hiển thị trong block hỏi đáp trang chủ.",
@@ -92,6 +125,7 @@ export const faq = defineType({
       name: "homepageOrder",
       title: "Thứ tự trên homepage",
       type: "number",
+      group: "display",
       description:
         "Số nhỏ hơn hiển thị trước trong block FAQ trang chủ.",
       hidden: ({ document }) => !document?.featured,
@@ -101,6 +135,7 @@ export const faq = defineType({
       name: "order",
       title: "Thứ tự hiển thị",
       type: "number",
+      group: "display",
       description:
         "Số nhỏ hơn hiển thị trước trong danh sách đầy đủ và fallback homepage.",
       validation: (Rule) => Rule.integer().min(0),
