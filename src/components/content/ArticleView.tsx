@@ -2,10 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
+import type { PortableTextComponentProps } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
 import { FaqList } from "@/components/blocks/FaqList";
 import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
 import { getContentArticle } from "@/lib/sanity";
+import { slugifyHeading } from "@/lib/slugify";
+import { ArticleByline } from "./ArticleByline";
 import { ContentBreadcrumbs } from "./ContentBreadcrumbs";
 import { ContentStructuredData } from "./ContentStructuredData";
 
@@ -25,6 +28,31 @@ export async function ArticleView({ id, path }: ArticleViewProps) {
   }
 
   const { cmsUiStrings } = siteSettings;
+
+  // Heading anchor IDs — de-duped: repeat slugs get -2, -3, etc.
+  // blockText extracts plain text from a PortableText block without @portabletext/toolkit.
+  function blockText(block: PortableTextBlock): string {
+    return ((block.children ?? []) as Array<{ text?: string }>)
+      .map((span) => span.text ?? "")
+      .join("");
+  }
+  const seenSlugs: Record<string, number> = {};
+  function makeHeadingId(value: PortableTextBlock): string {
+    const base = slugifyHeading(blockText(value));
+    const count = (seenSlugs[base] = (seenSlugs[base] ?? 0) + 1);
+    return count === 1 ? base : `${base}-${count}`;
+  }
+
+  const portableTextComponents = {
+    block: {
+      h2: ({ children, value }: PortableTextComponentProps<PortableTextBlock>) => (
+        <h2 id={makeHeadingId(value)}>{children}</h2>
+      ),
+      h3: ({ children, value }: PortableTextComponentProps<PortableTextBlock>) => (
+        <h3 id={makeHeadingId(value)}>{children}</h3>
+      ),
+    },
+  };
 
   const trail = [
     { label: "Trang chủ", href: "/" },
@@ -53,18 +81,13 @@ export async function ArticleView({ id, path }: ArticleViewProps) {
           <div className="blog-post__hero-copy">
             <span className="blog-post__category">{categoryLabel}</span>
             <h1 className="blog-post__title">{article.title}</h1>
-            {article.publishedAt ? (
-              <time
-                className="blog-post__date"
-                dateTime={article.publishedAt}
-              >
-                {new Date(article.publishedAt).toLocaleDateString("vi-VN", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </time>
-            ) : null}
+            <ArticleByline
+              author={article.author}
+              publishedAt={article.publishedAt}
+              updatedAt={article.updatedAt}
+              reviewer={article.reviewer}
+              lastReviewed={article.lastReviewed}
+            />
           </div>
 
           {article.coverImageUrl ? (
@@ -93,7 +116,10 @@ export async function ArticleView({ id, path }: ArticleViewProps) {
             <p className="section__desc">{article.excerpt}</p>
           ) : null}
           <div className="blog-post__body">
-            <PortableText value={article.body as PortableTextBlock[]} />
+            <PortableText
+              value={article.body as PortableTextBlock[]}
+              components={portableTextComponents}
+            />
           </div>
         </section>
 

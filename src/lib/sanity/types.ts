@@ -317,6 +317,16 @@ export type SanityContentNode = SanityContentHub & {
   parentNodeFullPath: string | null;
 };
 
+export type SanityArticleCoachByline = {
+  id: string;
+  name: string;
+  credentialTags: string[];
+};
+
+export type SanityArticleAuthor =
+  | { kind: "organization"; coach?: undefined }
+  | { kind: "coach"; coach: SanityArticleCoachByline };
+
 export type SanityContentArticle = {
   id: string;
   slug: string;
@@ -341,6 +351,9 @@ export type SanityContentArticle = {
   nodeFullPath: string | null;
   relatedFaqs: SanityFaq[];
   relatedMoneyPageSlug: string | null;
+  author: SanityArticleAuthor;
+  reviewer: SanityArticleCoachByline | null;
+  lastReviewed: string | null;
 };
 
 export type SanityContentArticleCard = {
