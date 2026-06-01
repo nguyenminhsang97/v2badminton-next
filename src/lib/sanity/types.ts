@@ -325,7 +325,7 @@ export type SanityArticleCoachByline = {
 
 export type SanityArticleAuthor =
   | { kind: "organization"; coach?: undefined }
-  | { kind: "coach"; coach: SanityArticleCoachByline | null };
+  | { kind: "coach"; coach: SanityArticleCoachByline };
 
 export type SanityContentArticle = {
   id: string;

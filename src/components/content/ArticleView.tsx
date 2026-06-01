@@ -4,11 +4,10 @@ import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 import type { PortableTextComponentProps } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
-import { toPlainText } from "@portabletext/toolkit";
 import { FaqList } from "@/components/blocks/FaqList";
 import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
 import { getContentArticle } from "@/lib/sanity";
-import { slugifyValue } from "@/sanity/schemaTypes/shared";
+import { slugifyHeading } from "@/lib/slugify";
 import { ArticleByline } from "./ArticleByline";
 import { ContentBreadcrumbs } from "./ContentBreadcrumbs";
 import { ContentStructuredData } from "./ContentStructuredData";
@@ -31,9 +30,15 @@ export async function ArticleView({ id, path }: ArticleViewProps) {
   const { cmsUiStrings } = siteSettings;
 
   // Heading anchor IDs — de-duped: repeat slugs get -2, -3, etc.
+  // blockText extracts plain text from a PortableText block without @portabletext/toolkit.
+  function blockText(block: PortableTextBlock): string {
+    return ((block.children ?? []) as Array<{ text?: string }>)
+      .map((span) => span.text ?? "")
+      .join("");
+  }
   const seenSlugs: Record<string, number> = {};
   function makeHeadingId(value: PortableTextBlock): string {
-    const base = slugifyValue(toPlainText(value));
+    const base = slugifyHeading(blockText(value));
     const count = (seenSlugs[base] = (seenSlugs[base] ?? 0) + 1);
     return count === 1 ? base : `${base}-${count}`;
   }

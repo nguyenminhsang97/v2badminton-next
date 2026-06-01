@@ -660,14 +660,17 @@ export const CONTENT_ARTICLE_PROJECTION = `{
   "nodeTitle": coalesce(parentNode->title, null),
   "nodeFullPath": coalesce(parentNode->fullPath.current, null),
   "relatedMoneyPageSlug": coalesce(relatedMoneyPage->slug.current, null),
-  "author": {
-    "kind": coalesce(authorKind, "organization"),
-    "coach": select(authorKind == "coach" => authorCoach->{
-      "id": _id,
-      "name": name,
-      "credentialTags": coalesce(credentialTags, [])
-    })
-  },
+  "author": select(
+    authorKind == "coach" && defined(authorCoach) && defined(authorCoach->_id) => {
+      "kind": "coach",
+      "coach": authorCoach->{
+        "id": _id,
+        "name": name,
+        "credentialTags": coalesce(credentialTags, [])
+      }
+    },
+    { "kind": "organization" }
+  ),
   "reviewer": select(
     defined(reviewer) && reviewer->isActive == true => reviewer->{
       "id": _id,

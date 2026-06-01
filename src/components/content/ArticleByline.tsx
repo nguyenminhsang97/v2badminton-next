@@ -17,14 +17,14 @@ function formatDate(iso: string) {
 }
 
 function authorLabel(author: SanityArticleAuthor): string {
-  if (author.kind === "coach" && author.coach?.name) {
+  if (author.kind === "coach") {
     return author.coach.name;
   }
   return "Đội ngũ V2 Badminton";
 }
 
 function authorCredentials(author: SanityArticleAuthor): string[] {
-  if (author.kind === "coach" && author.coach?.credentialTags?.length) {
+  if (author.kind === "coach" && author.coach.credentialTags.length > 0) {
     return author.coach.credentialTags;
   }
   return [];
