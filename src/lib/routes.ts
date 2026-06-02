@@ -41,7 +41,7 @@ export const coreRoutes: readonly RouteMetadataEntry[] = [
     pageType: "homepage",
     title: "V2 Badminton — Dạy Cầu Lông Bình Thạnh & Thủ Đức | HCM",
     description:
-      "V2 Badminton — Lớp dạy cầu lông chuyên nghiệp tại Bình Thạnh & Thủ Đức, TP.HCM. Dành cho người mới bắt đầu, nhân viên văn phòng và doanh nghiệp. Đăng ký học thử miễn phí!",
+      "V2 Badminton — Lớp dạy cầu lông tại Bình Thạnh & Thủ Đức, TP.HCM. Cho người mới, dân văn phòng và doanh nghiệp. Đăng ký học thử miễn phí!",
     ogTitle: "V2 Badminton — Dạy Cầu Lông Bình Thạnh & Thủ Đức",
     ogDescription:
       "Lớp dạy cầu lông chuyên nghiệp cho người mới bắt đầu, nhân viên văn phòng và doanh nghiệp tại TP.HCM.",
