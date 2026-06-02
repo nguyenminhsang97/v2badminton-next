@@ -219,6 +219,23 @@
   font-style: normal;
 }
 
+.blog-post__byline-policy {
+  margin-top: 4px;
+}
+
+.blog-post__byline-policy-link {
+  font-size: 0.82rem;
+  color: var(--s5-muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  opacity: 0.75;
+}
+
+.blog-post__byline-policy-link:hover {
+  color: var(--s5-primary);
+  opacity: 1;
+}
+
 .blog-post__body {
   color: var(--s5-muted);
   font-size: 1.05rem;
