@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { SanityArticleAuthor, SanityArticleCoachByline } from "@/lib/sanity/types";
 
 type ArticleBylineProps = {
@@ -88,6 +89,12 @@ export function ArticleByline({
           </time>
         </div>
       )}
+
+      <div className="blog-post__byline-policy">
+        <Link href="/chinh-sach-bien-tap/" className="blog-post__byline-policy-link">
+          Chính sách biên tập
+        </Link>
+      </div>
     </div>
   );
 }
