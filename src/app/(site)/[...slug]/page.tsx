@@ -28,6 +28,16 @@ type CatchAllPageProps = {
   params: Promise<{ slug: string[] }>;
 };
 
+// Strip a trailing brand suffix authored in the CMS seoTitle field (e.g.
+// "…— V2 Badminton") before returning the title to Next.js. The global
+// layout template (`"%s | V2 Badminton"`) appends one brand suffix; without
+// this helper CMS docs that already include the suffix produce a double:
+// "… — V2 Badminton | V2 Badminton".
+function stripBrandSuffix(title: string | undefined): string | undefined {
+  if (!title) return title;
+  return title.replace(/\s*[—|]\s*V2 Badminton\s*$/u, "").trim() || undefined;
+}
+
 export async function generateMetadata({
   params,
 }: CatchAllPageProps): Promise<Metadata> {
@@ -45,15 +55,15 @@ export async function generateMetadata({
 
   if (route._type === "content_hub") {
     const hub = await getContentHub(route._id);
-    seoTitle = hub?.seoTitle;
+    seoTitle = stripBrandSuffix(hub?.seoTitle);
     seoDescription = hub?.seoDescription;
   } else if (route._type === "content_node") {
     const node = await getContentNode(route._id);
-    seoTitle = node?.seoTitle;
+    seoTitle = stripBrandSuffix(node?.seoTitle);
     seoDescription = node?.seoDescription;
   } else {
     const article = await getContentArticle(route._id);
-    seoTitle = article?.seoTitle;
+    seoTitle = stripBrandSuffix(article?.seoTitle);
     seoDescription = article?.seoDescription;
   }
 
