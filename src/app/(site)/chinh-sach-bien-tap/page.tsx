@@ -94,13 +94,13 @@ export default async function EditorialPolicyPage() {
             </section>
 
             <section className="legal-page__section">
-              <h2>Quy trình kiểm tra và review chuyên môn</h2>
+              <h2>Review chuyên môn</h2>
               <p>
-                Nội dung được đội ngũ HLV kiểm tra trước khi đăng lên website.
                 Các bài viết được review bởi một HLV cụ thể sẽ hiển thị dòng
-                &ldquo;Review chuyên môn&rdquo; kèm tên HLV và ngày review gần
-                nhất trong phần thông tin bài viết. Bài viết không có dòng này
-                là nội dung biên soạn chung của đội ngũ V2 Badminton.
+                &ldquo;Review chuyên môn&rdquo; kèm tên HLV và ngày review
+                trong phần thông tin bài viết. Bài viết không có dòng này là
+                nội dung biên soạn chung của đội ngũ V2 Badminton — không phải
+                xác nhận cá nhân từ một HLV cụ thể.
               </p>
             </section>
 
