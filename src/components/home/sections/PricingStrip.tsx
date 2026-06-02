@@ -77,7 +77,7 @@ export function PricingStrip({ tiers, content }: HomepagePricingStripProps) {
       <div className="pricing-strip">
         <div className="pricing-strip__header">
           <p className="pricing-strip__eyebrow">{eyebrow}</p>
-          <h3 className="pricing-strip__title">{title}</h3>
+          <p className="pricing-strip__title">{title}</p>
           <p className="pricing-strip__desc">{secondary}</p>
         </div>
         <div className="pricing-strip__summary" aria-label="Tóm tắt học phí">

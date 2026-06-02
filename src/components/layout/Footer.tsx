@@ -19,8 +19,8 @@ type FooterProps = {
 
 const legalLinks = [
   { href: siteConfig.privacyPolicyPath, label: "Chính sách bảo mật" },
-  { href: toHomepageHash(HOME_SECTION_IDS.contact), label: "Điều khoản hỗ trợ" },
-  { href: toHomepageHash(HOME_SECTION_IDS.pricing), label: "Học phí & hoàn phí" },
+  { href: toHomepageHash(HOME_SECTION_IDS.contact), label: "Liên hệ hỗ trợ" },
+  { href: toHomepageHash(HOME_SECTION_IDS.pricing), label: "Học phí" },
 ] as const;
 
 export function Footer({ siteSettings, showBlogLink, showCoachesLink }: FooterProps) {
@@ -95,7 +95,7 @@ export function Footer({ siteSettings, showBlogLink, showCoachesLink }: FooterPr
 
         <div className="site-footer__columns">
           <section className="site-footer__column">
-            <h3 className="site-footer__heading">{siteSettings.footer.col1Heading}</h3>
+            <h2 className="site-footer__heading">{siteSettings.footer.col1Heading}</h2>
             <div className="site-footer__stack">
               {featuredRoutes.map((route) => (
                 <Link key={route.path} href={route.path} className="site-footer__link">
@@ -106,7 +106,7 @@ export function Footer({ siteSettings, showBlogLink, showCoachesLink }: FooterPr
           </section>
 
           <section className="site-footer__column">
-            <h3 className="site-footer__heading">{siteSettings.footer.col2Heading}</h3>
+            <h2 className="site-footer__heading">{siteSettings.footer.col2Heading}</h2>
             <div className="site-footer__stack">
               {academyLinks.map((link) => (
                 <Link key={link.href} href={link.href} className="site-footer__link">
@@ -117,7 +117,7 @@ export function Footer({ siteSettings, showBlogLink, showCoachesLink }: FooterPr
           </section>
 
           <section className="site-footer__column">
-            <h3 className="site-footer__heading">{siteSettings.footer.col3Heading}</h3>
+            <h2 className="site-footer__heading">{siteSettings.footer.col3Heading}</h2>
             <div className="site-footer__stack">
               <span className="site-footer__detail">
                 <MapPinIcon className="site-footer__detail-icon" />
