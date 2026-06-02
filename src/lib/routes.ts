@@ -76,7 +76,7 @@ export const coreRoutes: readonly RouteMetadataEntry[] = [
     path: "/lop-cau-long-thu-duc/",
     pageType: "seo_local",
     title:
-      "Lớp Cầu Lông Thủ Đức | Huệ Thiên & Phúc Lộc | V2 Badminton",
+      "Lớp Cầu Lông Thủ Đức | Huệ Thiên, Khang Sport, Phúc Lộc | V2 Badminton",
     description:
       "Học cầu lông tại Thủ Đức với V2 Badminton. Có sân Huệ Thiên, Khang Sport (Bình Triệu) và Phúc Lộc, lịch chiều tối trong tuần và cuối tuần linh hoạt.",
     ogImage: generatedImages.localThuDuc,

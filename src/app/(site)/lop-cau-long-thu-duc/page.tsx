@@ -1,4 +1,3 @@
-// W10.2: title updated in routes.ts — touch to bust Vercel build cache
 import type { Metadata } from "next";
 import { MoneyPageTemplate } from "@/components/money-page/MoneyPageTemplate";
 import { JsonLd } from "@/components/ui/JsonLd";
