@@ -30,11 +30,17 @@ const FALLBACK_BREADCRUMB_LABEL = "Giới thiệu";
 // ─── Metadata ─────────────────────────────────────────────────────────────
 
 export async function generateMetadata(): Promise<Metadata> {
-  const doc = await getStaticPage("gioi-thieu");
+  const [doc, chromeSettings] = await Promise.all([
+    getStaticPage("gioi-thieu"),
+    loadSiteChromeSettings(),
+  ]);
   const title = doc?.seoTitle ?? FALLBACK_SEO_TITLE;
   const description = doc?.seoDescription ?? FALLBACK_SEO_DESCRIPTION;
+  // Prefer per-page OG image, then CMS site-wide default, then static file fallback.
   const ogImageUrl =
-    doc?.ogImage?.url ?? canonicalUrl(siteConfig.defaultOgImagePath);
+    doc?.ogImage?.url ??
+    chromeSettings.defaultOgImageUrl ??
+    canonicalUrl(siteConfig.defaultOgImagePath);
 
   return {
     title: { absolute: title },
