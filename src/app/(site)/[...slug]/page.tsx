@@ -21,6 +21,7 @@ import {
   getContentRedirect,
   resolveContentRoute,
 } from "@/lib/sanity";
+import { siteConfig } from "@/lib/site";
 
 export const dynamicParams = true;
 
@@ -52,26 +53,53 @@ export async function generateMetadata({
 
   let seoTitle: string | undefined;
   let seoDescription: string | undefined;
+  let ogImage: string;
+  let ogType: "article" | "website";
 
   if (route._type === "content_hub") {
     const hub = await getContentHub(route._id);
     seoTitle = stripBrandSuffix(hub?.seoTitle);
     seoDescription = hub?.seoDescription;
+    ogImage = canonicalUrl(siteConfig.defaultOgImagePath);
+    ogType = "website";
   } else if (route._type === "content_node") {
     const node = await getContentNode(route._id);
     seoTitle = stripBrandSuffix(node?.seoTitle);
     seoDescription = node?.seoDescription;
+    ogImage = canonicalUrl(siteConfig.defaultOgImagePath);
+    ogType = "website";
   } else {
     const article = await getContentArticle(route._id);
     seoTitle = stripBrandSuffix(article?.seoTitle);
     seoDescription = article?.seoDescription;
+    ogImage =
+      article?.coverImageUrl ?? canonicalUrl(siteConfig.defaultOgImagePath);
+    ogType = "article";
   }
+
+  const ogTitle = seoTitle ? `${seoTitle} | ${siteConfig.name}` : undefined;
+  const url = canonicalUrl(path);
 
   return {
     title: seoTitle,
     description: seoDescription,
-    alternates: { canonical: canonicalUrl(path) },
+    alternates: { canonical: url },
     robots: { index: route.isIndexed, follow: true },
+    openGraph: {
+      title: ogTitle,
+      description: seoDescription,
+      url,
+      siteName: siteConfig.name,
+      locale: siteConfig.locale,
+      type: ogType,
+      images: [ogImage],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: ogTitle,
+      description: seoDescription,
+      images: [ogImage],
+    },
   };
 }
 
