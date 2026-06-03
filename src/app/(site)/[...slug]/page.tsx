@@ -12,6 +12,7 @@ import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { ArticleView } from "@/components/content/ArticleView";
 import { HubPortal } from "@/components/content/HubPortal";
 import { NodePortal } from "@/components/content/NodePortal";
+import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
 import { normalizeContentPath } from "@/lib/content/path";
 import { canonicalUrl, reservedRoutePrefixes } from "@/lib/routes";
 import {
@@ -45,11 +46,18 @@ export async function generateMetadata({
   const { slug } = await params;
   const path = normalizeContentPath(slug);
 
-  const route = await resolveContentRoute(path);
+  const [route, chromeSettings] = await Promise.all([
+    resolveContentRoute(path),
+    loadSiteChromeSettings(),
+  ]);
 
   if (route == null) {
     return { robots: { index: false, follow: true } };
   }
+
+  // Prefer CMS-managed site-wide default OG image; fall back to the static file.
+  const siteDefaultOgImage =
+    chromeSettings.defaultOgImageUrl ?? canonicalUrl(siteConfig.defaultOgImagePath);
 
   let seoTitle: string | undefined;
   let seoDescription: string | undefined;
@@ -60,20 +68,19 @@ export async function generateMetadata({
     const hub = await getContentHub(route._id);
     seoTitle = stripBrandSuffix(hub?.seoTitle);
     seoDescription = hub?.seoDescription;
-    ogImage = canonicalUrl(siteConfig.defaultOgImagePath);
+    ogImage = siteDefaultOgImage;
     ogType = "website";
   } else if (route._type === "content_node") {
     const node = await getContentNode(route._id);
     seoTitle = stripBrandSuffix(node?.seoTitle);
     seoDescription = node?.seoDescription;
-    ogImage = canonicalUrl(siteConfig.defaultOgImagePath);
+    ogImage = siteDefaultOgImage;
     ogType = "website";
   } else {
     const article = await getContentArticle(route._id);
     seoTitle = stripBrandSuffix(article?.seoTitle);
     seoDescription = article?.seoDescription;
-    ogImage =
-      article?.coverImageUrl ?? canonicalUrl(siteConfig.defaultOgImagePath);
+    ogImage = article?.coverImageUrl ?? siteDefaultOgImage;
     ogType = "article";
   }
 

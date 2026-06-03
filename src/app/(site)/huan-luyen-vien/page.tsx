@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CoachCardsGrid, getUsableCoaches } from "@/components/coaches/CoachCardsGrid";
+import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { canonicalUrl } from "@/lib/routes";
 import { getCoaches } from "@/lib/sanity";
@@ -8,48 +9,49 @@ import { siteConfig } from "@/lib/site";
 
 const pagePath = "/huan-luyen-vien/";
 
-const coachMetadata: Metadata = {
-  title: {
-    absolute: "Đội ngũ huấn luyện viên | V2 Badminton",
-  },
-  description:
-    "Xem đội ngũ huấn luyện viên tại V2 Badminton và nhóm học viên mỗi HLV đang đồng hành.",
-  alternates: {
-    canonical: canonicalUrl(pagePath),
-  },
-  openGraph: {
-    title: "Đội ngũ huấn luyện viên | V2 Badminton",
-    description:
-      "Đội ngũ huấn luyện viên đồng hành cùng lớp thiếu nhi, người mới, người đi làm và lộ trình cá nhân hóa tại V2 Badminton.",
-    url: canonicalUrl(pagePath),
-    locale: siteConfig.locale,
-    siteName: siteConfig.name,
-    type: "website",
-    images: [canonicalUrl(siteConfig.defaultOgImagePath)],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Đội ngũ huấn luyện viên | V2 Badminton",
-    description:
-      "Đội ngũ huấn luyện viên đồng hành cùng lớp thiếu nhi, người mới, người đi làm và lộ trình cá nhân hóa tại V2 Badminton.",
-    images: [canonicalUrl(siteConfig.defaultOgImagePath)],
-  },
-};
+const COACH_PAGE_TITLE = "Đội ngũ huấn luyện viên | V2 Badminton";
+const COACH_PAGE_DESCRIPTION =
+  "Xem đội ngũ huấn luyện viên tại V2 Badminton và nhóm học viên mỗi HLV đang đồng hành.";
+const COACH_PAGE_OG_DESCRIPTION =
+  "Đội ngũ huấn luyện viên đồng hành cùng lớp thiếu nhi, người mới, người đi làm và lộ trình cá nhân hóa tại V2 Badminton.";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const coaches = getUsableCoaches(await getCoaches());
+  const [coaches, chromeSettings] = await Promise.all([
+    getCoaches(),
+    loadSiteChromeSettings(),
+  ]);
+  const usableCoaches = getUsableCoaches(coaches);
 
-  if (coaches.length > 0) {
-    return coachMetadata;
-  }
+  // Prefer CMS-managed site-wide default OG image; fall back to the static file.
+  const ogImage =
+    chromeSettings.defaultOgImageUrl ?? canonicalUrl(siteConfig.defaultOgImagePath);
 
-  return {
-    ...coachMetadata,
-    robots: {
-      index: false,
-      follow: true,
+  const metadata: Metadata = {
+    title: { absolute: COACH_PAGE_TITLE },
+    description: COACH_PAGE_DESCRIPTION,
+    alternates: { canonical: canonicalUrl(pagePath) },
+    openGraph: {
+      title: COACH_PAGE_TITLE,
+      description: COACH_PAGE_OG_DESCRIPTION,
+      url: canonicalUrl(pagePath),
+      locale: siteConfig.locale,
+      siteName: siteConfig.name,
+      type: "website",
+      images: [ogImage],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: COACH_PAGE_TITLE,
+      description: COACH_PAGE_OG_DESCRIPTION,
+      images: [ogImage],
     },
   };
+
+  if (usableCoaches.length === 0) {
+    return { ...metadata, robots: { index: false, follow: true } };
+  }
+
+  return metadata;
 }
 
 export default async function CoachesPage() {

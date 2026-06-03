@@ -97,6 +97,12 @@ export type SiteChromeSettings = {
   phoneE164: string;
   zaloNumber: string;
   facebookUrl: string;
+  /**
+   * CMS-managed default OG image URL (`site_settings.defaultOgImage`).
+   * Null when the field is unset in Sanity — callers fall back to
+   * `canonicalUrl(siteConfig.defaultOgImagePath)` in that case.
+   */
+  defaultOgImageUrl: string | null;
   nav: SiteNavSettings;
   footer: SiteFooterSettings;
   cmsUiStrings: SiteCmsUiStrings;
@@ -108,6 +114,7 @@ export const FALLBACK_SITE_SETTINGS: SiteChromeSettings = {
   phoneE164: siteConfig.phoneE164,
   zaloNumber: siteConfig.zaloNumber,
   facebookUrl: siteConfig.facebookUrl,
+  defaultOgImageUrl: null,
   nav: FALLBACK_NAV,
   footer: FALLBACK_FOOTER,
   cmsUiStrings: FALLBACK_CMS_UI_STRINGS,
@@ -130,6 +137,7 @@ export function resolveSiteChromeSettings(
     phoneE164: raw.phoneE164,
     zaloNumber: raw.zaloNumber,
     facebookUrl: raw.facebookUrl,
+    defaultOgImageUrl: raw.defaultOgImageUrl ?? null,
     nav: {
       ctaLabel: raw.nav?.ctaLabel ?? FALLBACK_NAV.ctaLabel,
     },
