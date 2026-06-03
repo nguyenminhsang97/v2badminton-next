@@ -3,6 +3,7 @@
 import { defineConfig, type DocumentBadgeComponent } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
+import { DashboardIcon } from "@sanity/icons";
 import { openLivePageAction } from "./src/sanity/actions/openLivePageAction";
 import {
   draftStatusBadge,
@@ -13,6 +14,7 @@ import {
 } from "./src/sanity/badges/readinessBadges";
 import { schemaTypes } from "./src/sanity/schemaTypes";
 import { singletonActions, singletonTypes, structure } from "./src/sanity/structure";
+import { DashboardTool } from "./src/sanity/tools/DashboardTool";
 
 const BADGES_BY_TYPE: Record<string, DocumentBadgeComponent[]> = {
   content_article: [missingCoverImageBadge, draftStatusBadge],
@@ -40,6 +42,18 @@ export default defineConfig({
   plugins: [
     structureTool({ structure }),
     visionTool({ defaultApiVersion: SANITY_API_VERSION }),
+  ],
+  // Register the dashboard as the first tool in the toolbar.
+  // `prev` already contains the tools contributed by the plugins above
+  // (structure + vision). Prepending keeps them all intact.
+  tools: (prev) => [
+    {
+      name: "dashboard",
+      title: "Bảng điều khiển",
+      icon: DashboardIcon,
+      component: DashboardTool,
+    },
+    ...prev,
   ],
   schema: {
     types: schemaTypes,
