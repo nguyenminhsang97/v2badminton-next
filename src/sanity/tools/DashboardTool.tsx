@@ -13,8 +13,11 @@
  * Empty   → shows "0" (a real count, not a placeholder).
  *
  * All fetches are read-only.  No mutations.  No links/actions added beyond PR 1.
- * Static placeholder sections (Lối tắt sửa nhanh / Nhóm nội dung / Mở trang
- * trực tiếp) are unchanged — those get interactive in PR 3.
+ * PR 3 wires the static placeholder sections:
+ *   - "Lối tắt sửa nhanh" → IntentLinkCard components pointing to Studio
+ *     structure paths (e.g. /studio/structure/settings-group;site_settings)
+ *   - "Nhóm nội dung" → same pattern for document-type list views
+ *   - "Mở trang trực tiếp" → LivePageCard components opening production URLs
  *
  * Companion spec: .claude/CMS/v2badminton-studio-ui-ux-phase-2-dashboard-plan.md
  * Query spec:     src/sanity/tools/dashboardQueries.ts
@@ -29,6 +32,7 @@ import {
   type DashboardQueryResult,
   type DashboardRecentItem,
 } from "./dashboardQueries";
+import { SITE_URL } from "../lib/resolvePath";
 
 // ─── Data-fetch hook ──────────────────────────────────────────────────────────
 
@@ -206,44 +210,78 @@ function SectionHeading({ children }: SectionHeadingProps) {
   );
 }
 
-type PlaceholderCardProps = {
-  label: string;
-  description?: string;
+// ─── Shared card style ────────────────────────────────────────────────────────
+
+const CARD_STYLE: React.CSSProperties = {
+  border: "1px solid var(--card-border-color, #e5e7eb)",
+  borderRadius: 6,
+  padding: "12px 16px",
+  background: "var(--card-bg-color, #ffffff)",
+  textDecoration: "none",
+  display: "block",
 };
 
-function PlaceholderCard({ label, description }: PlaceholderCardProps) {
+const CARD_LABEL_STYLE: React.CSSProperties = {
+  fontSize: 13,
+  fontWeight: 500,
+  color: "var(--card-fg-color, #111827)",
+  margin: "0 0 2px",
+};
+
+const CARD_DESC_STYLE: React.CSSProperties = {
+  fontSize: 11,
+  color: "var(--card-muted-fg-color, #6b7280)",
+  margin: 0,
+};
+
+// ─── IntentLinkCard — links to a Studio structure path ───────────────────────
+
+/**
+ * A clickable card that navigates to a Studio structure pane.
+ * `href` should be a path like "/studio/structure/settings-group;site_settings".
+ * Uses a plain <a> tag; the Studio SPA intercepts same-origin clicks.
+ */
+function IntentLinkCard({
+  label,
+  description,
+  href,
+}: {
+  label: string;
+  description?: string;
+  href: string;
+}) {
   return (
-    <div
-      style={{
-        border: "1px solid var(--card-border-color, #e5e7eb)",
-        borderRadius: 6,
-        padding: "12px 16px",
-        background: "var(--card-bg-color, #ffffff)",
-        opacity: 0.65,
-      }}
+    <a href={href} style={CARD_STYLE}>
+      <p style={CARD_LABEL_STYLE}>{label}</p>
+      {description ? <p style={CARD_DESC_STYLE}>{description}</p> : null}
+    </a>
+  );
+}
+
+// ─── LivePageCard — opens a published URL in a new tab ───────────────────────
+
+/**
+ * A clickable card that opens a production URL in a new tab.
+ * Always uses the SITE_URL base from the shared resolvePath util.
+ */
+function LivePageCard({
+  label,
+  path,
+}: {
+  label: string;
+  path: string;
+}) {
+  const url = `${SITE_URL}${path}`;
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={CARD_STYLE}
     >
-      <p
-        style={{
-          fontSize: 13,
-          fontWeight: 500,
-          color: "var(--card-fg-color, #111827)",
-          margin: "0 0 2px",
-        }}
-      >
-        {label}
-      </p>
-      {description ? (
-        <p
-          style={{
-            fontSize: 11,
-            color: "var(--card-muted-fg-color, #6b7280)",
-            margin: 0,
-          }}
-        >
-          {description}
-        </p>
-      ) : null}
-    </div>
+      <p style={CARD_LABEL_STYLE}>{label}</p>
+      <p style={CARD_DESC_STYLE}>{url.replace(/^https?:\/\//, "")}</p>
+    </a>
   );
 }
 
@@ -451,28 +489,35 @@ export function DashboardTool(_props: { tool: Tool }) {
           </div>
         </div>
 
-        {/* Quick-edit shortcuts — placeholders until PR 3 */}
+        {/* Quick-edit shortcuts — wired in PR 3 */}
         <div>
           <SectionHeading>Lối tắt sửa nhanh</SectionHeading>
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            <PlaceholderCard
+            <IntentLinkCard
               label="Nội dung trang chủ"
               description="Hero, stats bar, các section"
+              href="/studio/structure/settings-group;homepage_content"
             />
-            <PlaceholderCard
+            <IntentLinkCard
               label="Cài đặt website"
               description="Liên hệ, nav, footer, microcopy"
+              href="/studio/structure/settings-group;site_settings"
             />
-            <PlaceholderCard
+            <IntentLinkCard
               label="Bài viết kỹ thuật"
               description="Hub kỹ thuật cầu lông"
+              href="/studio/structure/pages-group;content_article"
             />
-            <PlaceholderCard label="Money pages" description="9 trang dịch vụ" />
+            <IntentLinkCard
+              label="Money pages"
+              description="9 trang dịch vụ"
+              href="/studio/structure/pages-group;money_page"
+            />
           </div>
         </div>
       </div>
 
-      {/* ── Content groups — placeholders until PR 3 ────────────────────── */}
+      {/* ── Content groups — wired in PR 3 ──────────────────────────────── */}
       <div style={{ marginBottom: 32 }}>
         <SectionHeading>Nhóm nội dung</SectionHeading>
         <div
@@ -482,14 +527,30 @@ export function DashboardTool(_props: { tool: Tool }) {
             gap: 12,
           }}
         >
-          <PlaceholderCard label="Bài viết" description="content_article" />
-          <PlaceholderCard label="Money pages" description="money_page" />
-          <PlaceholderCard label="Trang tĩnh" description="static_page" />
-          <PlaceholderCard label="Cài đặt website" description="site_settings" />
+          <IntentLinkCard
+            label="Bài viết"
+            description="content_article"
+            href="/studio/structure/pages-group;content_article"
+          />
+          <IntentLinkCard
+            label="Money pages"
+            description="money_page"
+            href="/studio/structure/pages-group;money_page"
+          />
+          <IntentLinkCard
+            label="Trang tĩnh"
+            description="static_page"
+            href="/studio/structure/pages-group;static_page"
+          />
+          <IntentLinkCard
+            label="Cài đặt website"
+            description="site_settings"
+            href="/studio/structure/settings-group;site_settings"
+          />
         </div>
       </div>
 
-      {/* ── Open-live-page quick links — placeholders until PR 3 ────────── */}
+      {/* ── Open-live-page quick links — wired in PR 3 ──────────────────── */}
       <div style={{ marginBottom: 32 }}>
         <SectionHeading>Mở trang trực tiếp</SectionHeading>
         <div
@@ -499,15 +560,9 @@ export function DashboardTool(_props: { tool: Tool }) {
             gap: 12,
           }}
         >
-          <PlaceholderCard label="Trang chủ" description="v2badminton.com/" />
-          <PlaceholderCard
-            label="Kỹ thuật cầu lông"
-            description="v2badminton.com/ky-thuat-cau-long/"
-          />
-          <PlaceholderCard
-            label="Giới thiệu"
-            description="v2badminton.com/gioi-thieu/"
-          />
+          <LivePageCard label="Trang chủ" path="/" />
+          <LivePageCard label="Kỹ thuật cầu lông" path="/ky-thuat-cau-long/" />
+          <LivePageCard label="Giới thiệu" path="/gioi-thieu/" />
         </div>
       </div>
 
@@ -527,8 +582,8 @@ export function DashboardTool(_props: { tool: Tool }) {
             textAlign: "center",
           }}
         >
-          Liên kết trực tiếp và bảng vận hành nội dung sẽ được bổ sung trong
-          bản cập nhật tiếp theo.
+          Bảng vận hành nội dung (content-ops view) sẽ được bổ sung trong PR
+          tiếp theo nếu cần.
         </p>
       </div>
     </div>
