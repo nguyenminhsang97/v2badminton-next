@@ -107,6 +107,8 @@ type StatTileProps = {
   label: string;
   tone?: "default" | "caution" | "critical";
   value: string | number;
+  /** Optional clarifying description shown below the count when data is ready. */
+  description?: string;
   loading?: boolean;
   errorMessage?: string;
 };
@@ -115,6 +117,7 @@ function StatTile({
   label,
   tone = "default",
   value,
+  description,
   loading = false,
   errorMessage,
 }: StatTileProps) {
@@ -130,7 +133,7 @@ function StatTile({
     ? "Lỗi tải dữ liệu"
     : loading
       ? "Đang tải…"
-      : null;
+      : (description ?? null);
 
   return (
     <div
@@ -355,8 +358,9 @@ export function DashboardTool(_props: { tool: Tool }) {
           }}
         >
           <StatTile
-            label="Bản nháp"
+            label="Nháp biên tập"
             value={data?.draftCount ?? "—"}
+            description="Bài viết/post có trạng thái draft"
             loading={isLoading}
             errorMessage={errorMessage}
           />
