@@ -115,6 +115,8 @@ type EventParams = {
 declare global {
   interface Window {
     dataLayer?: Array<Record<string, unknown>>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    gtag?: (...args: any[]) => void;
     v2TrackEvent?: <TEvent extends TrackingEvent>(
       eventName: TEvent,
       params?: EventParams[TEvent],
@@ -130,11 +132,18 @@ export function trackEvent<TEvent extends TrackingEvent>(
     return;
   }
 
+  // Push to dataLayer — picked up by GTM (if loaded) and by gtag (which also
+  // uses dataLayer internally). Preserves future GTM compatibility.
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({
     event: eventName,
     ...(params ?? {}),
   });
+
+  // Also fire directly via gtag so events reach GA4 without a GTM container.
+  if (typeof window.gtag === "function") {
+    window.gtag("event", eventName, params ?? {});
+  }
 }
 
 export function registerGlobalTracker(): void {
