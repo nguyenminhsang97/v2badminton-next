@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { GoogleTagManager, GoogleTagManagerNoscript } from "@/components/analytics/GoogleTagManager";
 import { Footer } from "@/components/layout/Footer";
 import { FloatingCta } from "@/components/layout/FloatingCta";
@@ -27,6 +28,7 @@ export default async function SiteLayout({
 
   return (
     <div className="app-shell">
+      <GoogleAnalytics />
       <GoogleTagManager />
       <TrackingBootstrap />
       <Nav
