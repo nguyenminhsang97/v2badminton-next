@@ -18,6 +18,8 @@
  *     structure paths (e.g. /studio/structure/settings-group;site_settings)
  *   - "Nhóm nội dung" → same pattern for document-type list views
  *   - "Mở trang trực tiếp" → LivePageCard components opening production URLs
+ * PR 4A adds "Bảng vận hành nội dung" — a sortable content-ops table rendered
+ *   via ContentOpsTable (src/sanity/tools/ContentOpsTable.tsx).
  *
  * Companion spec: .claude/CMS/v2badminton-studio-ui-ux-phase-2-dashboard-plan.md
  * Query spec:     src/sanity/tools/dashboardQueries.ts
@@ -33,6 +35,7 @@ import {
   type DashboardRecentItem,
 } from "./dashboardQueries";
 import { SITE_URL } from "../lib/resolvePath";
+import { ContentOpsTable } from "./ContentOpsTable";
 
 // ─── Data-fetch hook ──────────────────────────────────────────────────────────
 
@@ -566,6 +569,12 @@ export function DashboardTool(_props: { tool: Tool }) {
         </div>
       </div>
 
+      {/* ── Content-ops table (PR 4A) ───────────────────────────────────── */}
+      <div style={{ marginBottom: 32 }}>
+        <SectionHeading>Bảng vận hành nội dung</SectionHeading>
+        <ContentOpsTable />
+      </div>
+
       {/* ── Footer note ─────────────────────────────────────────────────── */}
       <div
         style={{
@@ -582,8 +591,7 @@ export function DashboardTool(_props: { tool: Tool }) {
             textAlign: "center",
           }}
         >
-          Bảng vận hành nội dung (content-ops view) sẽ được bổ sung trong PR
-          tiếp theo nếu cần.
+          Dữ liệu chỉ đọc — không có hành động nào thay đổi nội dung từ bảng này.
         </p>
       </div>
     </div>

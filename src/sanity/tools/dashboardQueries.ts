@@ -110,6 +110,40 @@ export const DASHBOARD_QUERY = `{
   }
 }`;
 
+// ─── Content-ops query (PR 4A) ────────────────────────────────────────────
+//
+// Kept separate from DASHBOARD_QUERY so the table can fail independently of
+// the count tiles.  Returns BOTH the published document and its native Sanity
+// draft twin (drafts.*) when both exist — JS post-processing in
+// src/sanity/lib/contentOpsStatus.ts groups them into one logical row per doc.
+//
+// 200-row cap is well above the current corpus (~30 docs) and leaves headroom
+// for content Phase 2.  Re-evaluate if the corpus grows past 100.
+//
+// Does NOT use PUBLISHED_ONLY because detecting the "Có thay đổi chưa đăng"
+// chip requires seeing both the published and draft versions in the result set.
+
+export const CONTENT_OPS_QUERY = `*[
+  _type in [
+    "content_article", "content_hub", "content_node",
+    "money_page", "static_page", "post"
+  ]
+] | order(_updatedAt desc) [0...200] {
+  _id,
+  _type,
+  _updatedAt,
+  "title": coalesce(title, h1, name, slug.current, "Untitled"),
+  "slug": slug.current,
+  "fullPath": fullPath.current,
+  "isIndexed": isIndexed,
+  "status": status,
+  "seoTitle": seoTitle,
+  "seoDescription": seoDescription,
+  "metaDescription": metaDescription,
+  "hasCover": defined(coverImage),
+  "hasHero": defined(heroImage)
+}`;
+
 // ─── TypeScript types ─────────────────────────────────────────────────────
 
 export type DashboardRecentItem = {
