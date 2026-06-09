@@ -10,6 +10,8 @@
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit --pretty false",
     "verify:production-env": "node scripts/verify-production-env.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:mobile": "playwright test --project=mobile-chrome --project=mobile-safari",
     "test:mobile:headed": "playwright test --project=mobile-chrome --project=mobile-safari --headed"
@@ -34,9 +36,11 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^6.0.2",
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
     "playwright": "^1.59.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.8"
   }
 }

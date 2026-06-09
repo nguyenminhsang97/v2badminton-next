@@ -23,6 +23,11 @@ const OPTIONAL_WARNING_GROUPS = [
     vars: ["TURNSTILE_SECRET_KEY", "NEXT_PUBLIC_TURNSTILE_SITE_KEY"] as const,
     message: "Turnstile verification will be skipped on the JS path.",
   },
+  {
+    vars: ["SANITY_REVALIDATE_SECRET"] as const,
+    message:
+      "Sanity webhook revalidation endpoint will reject all requests (no secret configured).",
+  },
 ] as const;
 
 let hasValidatedRuntimeEnv = false;
