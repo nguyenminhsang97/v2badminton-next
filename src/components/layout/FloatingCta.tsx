@@ -68,13 +68,17 @@ export function FloatingCta({ siteSettings }: FloatingCtaProps) {
         href={`tel:${siteSettings.phoneE164}`}
         className="floating-cta__button floating-cta__button--phone"
         aria-label={`Gọi ${siteSettings.phoneDisplay}`}
-        onClick={() =>
+        onClick={() => {
           trackEvent("cta_click", {
             cta_name: "dang_ky_ngay",
             cta_location: "floating_cta:phone",
             page_path: typeof window !== "undefined" ? window.location.pathname : "/",
-          })
-        }
+          });
+          trackEvent("contact_click", {
+            method: "phone",
+            page_path: typeof window !== "undefined" ? window.location.pathname : "/",
+          });
+        }}
       >
         <PhoneIcon className="floating-cta__icon" />
         <span className="floating-cta__copy">

@@ -163,7 +163,17 @@ export function Nav({ siteSettings, showBlogLink, showCoachesLink }: NavProps) {
           </nav>
 
           <div className="site-nav__actions">
-            <a href={`tel:${siteSettings.phoneE164}`} className="site-nav__phone">
+            <a
+              href={`tel:${siteSettings.phoneE164}`}
+              className="site-nav__phone"
+              onClick={() =>
+                trackEvent("contact_click", {
+                  method: "phone",
+                  page_type: pageType,
+                  page_path: pathname ?? "/",
+                })
+              }
+            >
               <PhoneIcon className="site-nav__phone-icon" />
               <strong>{siteSettings.phoneDisplay}</strong>
             </a>
@@ -204,7 +214,17 @@ export function Nav({ siteSettings, showBlogLink, showCoachesLink }: NavProps) {
               </Link>
             ))}
 
-            <a href={`tel:${siteSettings.phoneE164}`} className="site-nav__mobile-phone">
+            <a
+              href={`tel:${siteSettings.phoneE164}`}
+              className="site-nav__mobile-phone"
+              onClick={() =>
+                trackEvent("contact_click", {
+                  method: "phone",
+                  page_type: pageType,
+                  page_path: pathname ?? "/",
+                })
+              }
+            >
               Gọi {siteSettings.phoneDisplay}
             </a>
 
