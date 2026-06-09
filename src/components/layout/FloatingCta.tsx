@@ -89,13 +89,17 @@ export function FloatingCta({ siteSettings }: FloatingCtaProps) {
         rel="noopener noreferrer"
         className="floating-cta__button floating-cta__button--zalo"
         aria-label="Nhắn Zalo cho V2 Badminton"
-        onClick={() =>
+        onClick={() => {
           trackEvent("cta_click", {
             cta_name: "nhan_zalo_tu_van",
             cta_location: "floating_cta:zalo",
             page_path: typeof window !== "undefined" ? window.location.pathname : "/",
-          })
-        }
+          });
+          trackEvent("contact_click", {
+            method: "zalo",
+            page_path: typeof window !== "undefined" ? window.location.pathname : "/",
+          });
+        }}
       >
         <MessageCircleIcon className="floating-cta__icon" />
         <span className="floating-cta__copy">
