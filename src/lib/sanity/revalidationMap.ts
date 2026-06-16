@@ -51,11 +51,12 @@ const REVALIDATION_MAP: Record<string, readonly string[]> = {
   // Blog
   post: ["sanity:posts"],
 
-  // Content platform (hubs, nodes, articles) — broad tag covers route
+  // Content platform (hubs, nodes, articles, courts) — broad tag covers route
   // resolution, parent/child listings, sitemap, redirects, and slug changes
   content_hub: ["sanity:content"],
   content_node: ["sanity:content"],
   content_article: ["sanity:content"],
+  court: ["sanity:content"],
 
   // Route redirects (content platform)
   route_redirect: ["sanity:content"],
@@ -106,7 +107,7 @@ export function getRevalidationTags(payload: SanityWebhookPayload): string[] {
 
   // Add per-id tags for content platform types
   const id = payload._id;
-  if (id && ["content_hub", "content_node", "content_article"].includes(payload._type)) {
+  if (id && ["content_hub", "content_node", "content_article", "court"].includes(payload._type)) {
     tags.add(`sanity:content:${id}`);
   }
 
