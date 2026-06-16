@@ -50,7 +50,7 @@ export const DASHBOARD_QUERY = `{
   // dataset.  Native Sanity draft twins (drafts.**) are excluded to avoid
   // double-counting.
   "draftCount": count(*[
-    _type in ["content_article", "post"] &&
+    _type in ["content_article", "court", "post"] &&
     ${PUBLISHED_ONLY} &&
     status == "draft"
   ]),
@@ -60,7 +60,7 @@ export const DASHBOARD_QUERY = `{
   // indexed hub/node that exist in the published dataset.
   "publishedCount": count(*[
     (
-      (_type in ["content_article", "post"] && status == "published") ||
+      (_type in ["content_article", "court", "post"] && status == "published") ||
       _type in ["money_page", "static_page"] ||
       (_type in ["content_hub", "content_node"] && isIndexed == true)
     ) &&
@@ -73,7 +73,7 @@ export const DASHBOARD_QUERY = `{
   // Only counts published docs — draft docs with missing SEO are expected.
   "missingSeoCount": count(*[
     (
-      (_type in ["content_article","content_hub","content_node","static_page"] &&
+      (_type in ["content_article","court","content_hub","content_node","static_page"] &&
         (!defined(seoDescription) || length(seoDescription) < 50)) ||
       (_type == "money_page" &&
         (!defined(metaDescription) || length(metaDescription) < 50))
@@ -84,7 +84,7 @@ export const DASHBOARD_QUERY = `{
   // ── Thiếu ảnh bìa (missing article cover) ───────────────────────────────
   // Mirrors missingCoverImageBadge — soft hint only, not a blocker.
   "missingCoverCount": count(*[
-    _type == "content_article" &&
+    _type in ["content_article", "court"] &&
     ${PUBLISHED_ONLY} &&
     !defined(coverImage)
   ]),
@@ -95,6 +95,7 @@ export const DASHBOARD_QUERY = `{
   "recentlyUpdated": *[
     _type in [
       "content_article",
+      "court",
       "content_hub",
       "content_node",
       "money_page",
@@ -125,7 +126,7 @@ export const DASHBOARD_QUERY = `{
 
 export const CONTENT_OPS_QUERY = `*[
   _type in [
-    "content_article", "content_hub", "content_node",
+    "content_article", "court", "content_hub", "content_node",
     "money_page", "static_page", "post"
   ]
 ] | order(_updatedAt desc) [0...200] {

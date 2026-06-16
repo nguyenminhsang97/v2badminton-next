@@ -19,6 +19,7 @@ export const ROUTABLE_TYPES = [
   "content_hub",
   "content_node",
   "content_article",
+  "court",
 ] as const;
 
 export const CONTENT_STATUS_OPTIONS = [

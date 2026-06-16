@@ -34,6 +34,7 @@ export const ROUTABLE_TYPES = new Set([
   "content_hub",
   "content_node",
   "content_article",
+  "court",
   "money_page",
   "static_page",
   "post",
@@ -78,7 +79,8 @@ export function resolvePath(
 
     case "content_hub":
     case "content_node":
-    case "content_article": {
+    case "content_article":
+    case "court": {
       const fullPath = doc.fullPath?.current?.trim();
       if (!fullPath) return null;
       return ensureTrailingSlash(ensureLeadingSlash(fullPath));

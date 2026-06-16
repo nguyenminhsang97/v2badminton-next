@@ -23,6 +23,7 @@ const ROUTABLE_TYPES = [
   "content_hub",
   "content_node",
   "content_article",
+  "court",
 ] as const;
 
 function normalizePath(input: string): string {

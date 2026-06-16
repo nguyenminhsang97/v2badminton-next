@@ -157,7 +157,7 @@ function deriveStatusChip(args: {
   }
 
   if (
-    (_type === "content_article" || _type === "post") &&
+    (_type === "content_article" || _type === "court" || _type === "post") &&
     editorialStatus === "draft"
   ) {
     return "Nháp";
@@ -185,7 +185,7 @@ function deriveCoverStatus(args: {
   hasHero: boolean;
 }): CoverStatus {
   const { _type, hasCover, hasHero } = args;
-  if (_type === "content_article") return hasCover ? "✓" : "—";
+  if (_type === "content_article" || _type === "court") return hasCover ? "✓" : "—";
   if (_type === "money_page") return hasHero ? "✓" : "—";
   return "Không áp dụng";
 }
@@ -207,7 +207,8 @@ export function resolveOpsPath(row: ContentOpsRow): string | null {
   switch (_type) {
     case "content_hub":
     case "content_node":
-    case "content_article": {
+    case "content_article":
+    case "court": {
       if (!fullPath) return null;
       const p = fullPath.startsWith("/") ? fullPath : `/${fullPath}`;
       return p.endsWith("/") ? p : `${p}/`;
