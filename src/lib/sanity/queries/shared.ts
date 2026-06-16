@@ -688,13 +688,95 @@ export const CONTENT_ARTICLE_PROJECTION = `{
   ${FAQ_PROJECTION}
 }`;
 
+// ─── Court directory (Phase 2) ─────────────────────────────────────────────
+
+export const COURT_CARD_PROJECTION = `{
+  "id": _id,
+  "slug": slug.current,
+  "fullPath": fullPath.current,
+  name,
+  shortName,
+  "quickAnswer": coalesce(quickAnswer, null),
+  "coverImageUrl": coalesce(coverImage.asset->url, null),
+  "coverImageAlt": coalesce(coverImage.alt, null),
+  "lastReviewedAt": coalesce(lastReviewedAt, null),
+  "publishedAt": coalesce(publishedAt, null)
+}`;
+
+export const COURT_PROJECTION = `{
+  "id": _id,
+  "slug": slug.current,
+  "fullPath": fullPath.current,
+  "updatedAt": coalesce(_updatedAt, null),
+  name,
+  shortName,
+  status,
+  publishedAt,
+  "lastReviewedAt": coalesce(lastReviewedAt, null),
+  addressText,
+  mapsUrl,
+  "geoLat": coalesce(geoLat, null),
+  "geoLng": coalesce(geoLng, null),
+  "courtCount": coalesce(courtCount, null),
+  "surfaceType": coalesce(surfaceType, null),
+  "lighting": coalesce(lighting, null),
+  "parking": coalesce(parking, null),
+  "priceRangeText": coalesce(priceRangeText, null),
+  "openingHours": coalesce(openingHours, null),
+  "contactInfo": coalesce(contactInfo, null),
+  "reviewSummary": coalesce(reviewSummary, []),
+  "pros": coalesce(pros, []),
+  "cons": coalesce(cons, []),
+  "bestFor": coalesce(bestFor, []),
+  "v2PartnerNote": coalesce(v2PartnerNote, null),
+  "coverImageUrl": coalesce(coverImage.asset->url, null),
+  "coverImageAlt": coalesce(coverImage.alt, null),
+  "gallery": coalesce(gallery[]{ "url": asset->url, "alt": coalesce(alt, null) }, []),
+  "quickAnswer": coalesce(quickAnswer, null),
+  seoTitle,
+  seoDescription,
+  "hubSlug": parentHub->slug.current,
+  "hubTitle": parentHub->title,
+  "hubFullPath": parentHub->fullPath.current,
+  "nodeSlug": coalesce(parentNode->slug.current, null),
+  "nodeTitle": coalesce(parentNode->title, null),
+  "nodeFullPath": coalesce(parentNode->fullPath.current, null),
+  "relatedMoneyPageSlug": coalesce(relatedMoneyPage->slug.current, null),
+  "relatedFaqs": *[
+    _type == "faq" &&
+    _id in coalesce(^.relatedFaqs[]._ref, []) &&
+    ${PUBLISHED_ONLY_FILTER}
+  ]
+  | order(coalesce(order, 9999) asc, _createdAt asc)
+  ${FAQ_PROJECTION}
+}`;
+
+export const COURT_BY_ID_QUERY = defineQuery(`
+  *[
+    _type == "court" &&
+    _id == $id &&
+    status == "published" &&
+    ${PUBLISHED_ONLY_FILTER}
+  ][0]${COURT_PROJECTION}
+`);
+
+export const COURTS_IN_AREA_QUERY = defineQuery(`
+  *[
+    _type == "court" &&
+    parentNode._ref == $areaId &&
+    status == "published" &&
+    coalesce(isIndexed, true) &&
+    ${PUBLISHED_ONLY_FILTER}
+  ] | order(coalesce(publishedAt, _createdAt) desc) ${COURT_CARD_PROJECTION}
+`);
+
 // ─── Content Platform queries (Phase 1) ────────────────────────────────────
 
 export const ROUTE_RESOLUTION_QUERY = defineQuery(`
   *[
     fullPath.current == $path && ${PUBLISHED_ONLY_FILTER} && (
       _type in ["content_hub", "content_node"] ||
-      (_type == "content_article" && status == "published")
+      (_type in ["content_article", "court"] && status == "published")
     )
   ][0]{ _type, "_id": _id, "isIndexed": coalesce(isIndexed, true) }
 `);
@@ -806,7 +888,7 @@ export const CONTENT_SITEMAP_QUERY = defineQuery(`
   *[
     (
       (_type in ["content_hub", "content_node"]) ||
-      (_type == "content_article" && status == "published")
+      (_type in ["content_article", "court"] && status == "published")
     ) &&
     defined(fullPath.current) &&
     coalesce(isIndexed, true) &&

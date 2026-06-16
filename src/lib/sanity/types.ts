@@ -377,7 +377,7 @@ export type SanityContentChildNode = {
 };
 
 export type SanityRouteResolution = {
-  _type: "content_hub" | "content_node" | "content_article";
+  _type: "content_hub" | "content_node" | "content_article" | "court";
   _id: string;
   isIndexed: boolean;
 };
@@ -496,7 +496,97 @@ export type SanityHomepageContent = {
 export type SanityContentSitemapEntry = {
   path: string;
   updatedAt: string | null;
-  type: "content_hub" | "content_node" | "content_article";
+  type: "content_hub" | "content_node" | "content_article" | "court";
+};
+
+// ─── Court directory (Phase 2 — locked spec: .claude/CMS/v2badminton-cms-phase-2-locked-spec.md) ──
+
+export type SanityCourtSurface = "wood" | "synthetic" | "acrylic" | "concrete" | "other";
+export type SanityCourtLighting = "excellent" | "good" | "adequate" | "poor";
+export type SanityCourtParking = "free" | "paid" | "street_only" | "none";
+export type SanityCourtBestFor =
+  | "beginner"
+  | "intermediate"
+  | "advanced"
+  | "kids"
+  | "evening_play"
+  | "morning_play"
+  | "tournament_practice";
+
+export type SanityCourtOpeningHoursDay = {
+  open: string | null;
+  close: string | null;
+};
+
+export type SanityCourtOpeningHours = {
+  monday: SanityCourtOpeningHoursDay | null;
+  tuesday: SanityCourtOpeningHoursDay | null;
+  wednesday: SanityCourtOpeningHoursDay | null;
+  thursday: SanityCourtOpeningHoursDay | null;
+  friday: SanityCourtOpeningHoursDay | null;
+  saturday: SanityCourtOpeningHoursDay | null;
+  sunday: SanityCourtOpeningHoursDay | null;
+};
+
+export type SanityCourtContactInfo = {
+  phone: string | null;
+  facebookUrl: string | null;
+  bookingUrl: string | null;
+};
+
+export type SanityCourt = {
+  id: string;
+  slug: string;
+  fullPath: string;
+  updatedAt: string | null;
+  name: string;
+  shortName: string;
+  status: SanityContentStatus;
+  publishedAt: string | null;
+  lastReviewedAt: string | null;
+  addressText: string;
+  mapsUrl: string;
+  geoLat: number | null;
+  geoLng: number | null;
+  courtCount: number | null;
+  surfaceType: SanityCourtSurface | null;
+  lighting: SanityCourtLighting | null;
+  parking: SanityCourtParking | null;
+  priceRangeText: string | null;
+  openingHours: SanityCourtOpeningHours | null;
+  contactInfo: SanityCourtContactInfo | null;
+  reviewSummary: SanityPortableTextBlock[];
+  pros: string[];
+  cons: string[];
+  bestFor: SanityCourtBestFor[];
+  v2PartnerNote: string | null;
+  coverImageUrl: string | null;
+  coverImageAlt: string | null;
+  gallery: Array<{ url: string; alt: string | null }>;
+  quickAnswer: string | null;
+  seoTitle: string;
+  seoDescription: string;
+  hubSlug: string;
+  hubTitle: string;
+  hubFullPath: string;
+  nodeSlug: string | null;
+  nodeTitle: string | null;
+  nodeFullPath: string | null;
+  relatedFaqs: SanityFaq[];
+  relatedMoneyPageSlug: string | null;
+};
+
+export type SanityCourtCard = {
+  id: string;
+  slug: string;
+  fullPath: string;
+  name: string;
+  shortName: string;
+  quickAnswer: string | null;
+  coverImageUrl: string | null;
+  coverImageAlt: string | null;
+  lastReviewedAt: string | null;
+  publishedAt: string | null;
 };
 
 // ─── Static pages (W3b) ────────────────────────────────────────────────────
