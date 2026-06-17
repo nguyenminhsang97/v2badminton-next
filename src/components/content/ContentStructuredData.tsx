@@ -1,8 +1,9 @@
 import { JsonLd } from "@/components/ui/JsonLd";
 import { canonicalUrl } from "@/lib/routes";
-import type { SanityArticleAuthor, SanityContentArticle, SanityFaq } from "@/lib/sanity";
+import type { SanityArticleAuthor, SanityContentArticle, SanityCourt, SanityFaq } from "@/lib/sanity";
 import {
   buildBreadcrumbSchema,
+  buildCourtSportsActivityLocationSchema,
   buildFaqPageSchema,
 } from "@/lib/schema";
 
@@ -25,6 +26,8 @@ type ContentStructuredDataProps = {
   path: string;
   breadcrumbTrail: BreadcrumbTrailItem[];
   article?: SanityContentArticle;
+  court?: SanityCourt;
+  courtAreaLabel?: string;
   faqs?: SanityFaq[];
 };
 
@@ -32,6 +35,8 @@ export function ContentStructuredData({
   path,
   breadcrumbTrail,
   article,
+  court,
+  courtAreaLabel,
   faqs = [],
 }: ContentStructuredDataProps) {
   const breadcrumbItems = breadcrumbTrail.map((item) => ({
@@ -81,6 +86,12 @@ export function ContentStructuredData({
                 }
               : {}),
           }}
+        />
+      ) : null}
+      {court && courtAreaLabel ? (
+        <JsonLd
+          id={`content-court-${court.id}`}
+          data={buildCourtSportsActivityLocationSchema(court, path, courtAreaLabel)}
         />
       ) : null}
       {hasSchemaFaqs ? (

@@ -1,4 +1,6 @@
 import type {
+  SanityCourt,
+  SanityCourtOpeningHours,
   SanityFaq,
   SanityLocation,
   SanityPricingTier,
@@ -633,5 +635,98 @@ export function buildCoursePageSchema(
     courseMode,
     availableLanguage: "vi",
     ...(hasCourseInstance.length > 0 ? { hasCourseInstance } : {}),
+  };
+}
+
+// ─── Court directory (Phase 2 — locked spec: .claude/CMS/v2badminton-cms-phase-2-locked-spec.md) ────
+
+const courtDayMap: Array<[keyof SanityCourtOpeningHours, string]> = [
+  ["monday", "Monday"],
+  ["tuesday", "Tuesday"],
+  ["wednesday", "Wednesday"],
+  ["thursday", "Thursday"],
+  ["friday", "Friday"],
+  ["saturday", "Saturday"],
+  ["sunday", "Sunday"],
+];
+
+function buildCourtOpeningHoursSpecification(
+  hours: SanityCourtOpeningHours | null,
+) {
+  if (!hours) return [];
+  return courtDayMap
+    .map(([key, schemaDay]) => {
+      const day = hours[key];
+      if (!day || !day.open || !day.close) return null;
+      return {
+        "@type": "OpeningHoursSpecification" as const,
+        dayOfWeek: `${schemaDayUrlPrefix}${schemaDay}`,
+        opens: day.open,
+        closes: day.close,
+      };
+    })
+    .filter((v) => v !== null);
+}
+
+function buildCourtAdditionalProperty(court: SanityCourt) {
+  const props: Array<{
+    "@type": "PropertyValue";
+    name: string;
+    value: string;
+  }> = [];
+  if (court.surfaceType)
+    props.push({ "@type": "PropertyValue", name: "Mặt sân", value: court.surfaceType });
+  if (court.lighting)
+    props.push({ "@type": "PropertyValue", name: "Đèn chiếu sáng", value: court.lighting });
+  if (court.parking)
+    props.push({ "@type": "PropertyValue", name: "Chỗ đỗ xe", value: court.parking });
+  if (court.priceRangeText)
+    props.push({ "@type": "PropertyValue", name: "Giá thuê", value: court.priceRangeText });
+  if (court.courtCount !== null && court.courtCount !== undefined)
+    props.push({ "@type": "PropertyValue", name: "Số sân", value: String(court.courtCount) });
+  return props;
+}
+
+export function buildCourtSportsActivityLocationSchema(
+  court: SanityCourt,
+  path: string,
+  areaLabel: string,
+): JsonLdNode {
+  const openingHoursSpecification = buildCourtOpeningHoursSpecification(
+    court.openingHours,
+  );
+  const additionalProperty = buildCourtAdditionalProperty(court);
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "SportsActivityLocation",
+    name: court.name,
+    url: canonicalUrl(path),
+    ...(court.coverImageUrl ? { image: court.coverImageUrl } : {}),
+    description: court.seoDescription,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: court.addressText,
+      addressLocality: areaLabel,
+      addressRegion: "Hồ Chí Minh",
+      addressCountry: "VN",
+    },
+    ...(court.geoLat !== null && court.geoLng !== null
+      ? {
+          geo: {
+            "@type": "GeoCoordinates",
+            latitude: court.geoLat,
+            longitude: court.geoLng,
+          },
+        }
+      : {}),
+    ...(court.contactInfo?.phone
+      ? { telephone: court.contactInfo.phone }
+      : {}),
+    ...(openingHoursSpecification.length > 0
+      ? { openingHoursSpecification }
+      : {}),
+    ...(additionalProperty.length > 0 ? { additionalProperty } : {}),
+    sport: "Badminton",
   };
 }

@@ -25,6 +25,11 @@ export async function HubPortal({ id, path }: HubPortalProps) {
 
   const { cmsUiStrings } = siteSettings;
 
+  const isCourtHub = hub.slug === "san-cau-long";
+  const subNodeLabel = isCourtHub ? "khu vực" : "chuyên mục con";
+  const subNodeCategory = isCourtHub ? "Khu vực" : "Chuyên mục";
+  const subNodeListLabel = isCourtHub ? "Khu vực" : "Chuyên mục con";
+
   const trail = [
     { label: "Trang chủ", href: "/" },
     { label: hub.title },
@@ -58,7 +63,7 @@ export async function HubPortal({ id, path }: HubPortalProps) {
             ) : null}
             {subNodeCount > 0 ? (
               <span className="blog-list__hero-chip">
-                {subNodeCount} chuyên mục con
+                {subNodeCount} {subNodeLabel}
               </span>
             ) : null}
           </div>
@@ -122,11 +127,11 @@ export async function HubPortal({ id, path }: HubPortalProps) {
         ) : null}
 
         {subNodeCount > 0 ? (
-          <section className="blog-list__grid" aria-label="Chuyên mục con">
+          <section className="blog-list__grid" aria-label={subNodeListLabel}>
             {hub.directNodes.map((node) => (
               <article key={node.id} className="blog-card">
                 <div className="blog-card__body">
-                  <span className="blog-card__category">Chuyên mục</span>
+                  <span className="blog-card__category">{subNodeCategory}</span>
                   <Link href={node.fullPath} className="blog-card__title-link">
                     <h2 className="blog-card__title">{node.title}</h2>
                   </Link>

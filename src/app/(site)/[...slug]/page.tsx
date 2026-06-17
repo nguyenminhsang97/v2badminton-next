@@ -10,6 +10,7 @@
 import type { Metadata } from "next";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { ArticleView } from "@/components/content/ArticleView";
+import { CourtView } from "@/components/content/CourtView";
 import { HubPortal } from "@/components/content/HubPortal";
 import { NodePortal } from "@/components/content/NodePortal";
 import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
@@ -20,6 +21,7 @@ import {
   getContentHub,
   getContentNode,
   getContentRedirect,
+  getCourt,
   resolveContentRoute,
 } from "@/lib/sanity";
 import { siteConfig } from "@/lib/site";
@@ -76,6 +78,12 @@ export async function generateMetadata({
     seoDescription = node?.seoDescription;
     ogImage = siteDefaultOgImage;
     ogType = "website";
+  } else if (route._type === "court") {
+    const court = await getCourt(route._id);
+    seoTitle = stripBrandSuffix(court?.seoTitle);
+    seoDescription = court?.seoDescription;
+    ogImage = court?.coverImageUrl ?? siteDefaultOgImage;
+    ogType = "website";
   } else {
     const article = await getContentArticle(route._id);
     seoTitle = stripBrandSuffix(article?.seoTitle);
@@ -126,6 +134,9 @@ export default async function CatchAllPage({ params }: CatchAllPageProps) {
     }
     if (route._type === "content_node") {
       return <NodePortal id={route._id} path={path} />;
+    }
+    if (route._type === "court") {
+      return <CourtView id={route._id} path={path} />;
     }
     return <ArticleView id={route._id} path={path} />;
   }
