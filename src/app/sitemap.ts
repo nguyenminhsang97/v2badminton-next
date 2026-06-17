@@ -6,6 +6,7 @@ import {
   getMoneyPageSitemapEntries,
   getPublishedPosts,
 } from "@/lib/sanity";
+import type { SanityContentSitemapEntry } from "@/lib/sanity";
 
 function resolveLastModified(
   value: string | null | undefined,
@@ -25,6 +26,15 @@ function latestLastModified(
     .sort((left, right) => right - left)[0];
 
   return latest ? new Date(latest).toISOString() : fallback;
+}
+
+function priorityForContentType(type: SanityContentSitemapEntry["type"]): number {
+  switch (type) {
+    case "content_hub": return 0.8;
+    case "content_node": return 0.7;
+    case "content_article": return 0.7;
+    case "court": return 0.6;
+  }
 }
 
 // Stable fallback date — prevents Google from seeing lastmod change on every request.
@@ -143,7 +153,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: canonicalUrl(entry.path),
     lastModified: resolveLastModified(entry.updatedAt, generatedAt),
     changeFrequency: "weekly" as const,
-    priority: entry.type === "content_hub" ? 0.8 : 0.7,
+    priority: priorityForContentType(entry.type),
   }));
 
   return [

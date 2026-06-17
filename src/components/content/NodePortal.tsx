@@ -4,7 +4,8 @@ import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
 import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
-import { getContentNode } from "@/lib/sanity";
+import { getContentNode, getCourtsInArea } from "@/lib/sanity";
+import type { SanityCourtCard } from "@/lib/sanity";
 import { ContentBreadcrumbs } from "./ContentBreadcrumbs";
 import { ContentStructuredData } from "./ContentStructuredData";
 
@@ -22,6 +23,11 @@ export async function NodePortal({ id, path }: NodePortalProps) {
   if (!node) {
     notFound();
   }
+
+  const isCourtArea = node.parentHubSlug === "san-cau-long";
+  const courts: SanityCourtCard[] = isCourtArea
+    ? await getCourtsInArea(node.id)
+    : [];
 
   const { cmsUiStrings } = siteSettings;
 
@@ -54,11 +60,19 @@ export async function NodePortal({ id, path }: NodePortalProps) {
             ) : null}
           </div>
           <div className="blog-list__hero-meta">
-            {articleCount > 0 ? (
-              <span className="blog-list__hero-chip">
-                {articleCount} bài viết
-              </span>
-            ) : null}
+            {isCourtArea ? (
+              courts.length > 0 ? (
+                <span className="blog-list__hero-chip">
+                  {courts.length} sân
+                </span>
+              ) : null
+            ) : (
+              articleCount > 0 ? (
+                <span className="blog-list__hero-chip">
+                  {articleCount} bài viết
+                </span>
+              ) : null
+            )}
             {subNodeCount > 0 ? (
               <span className="blog-list__hero-chip">
                 {subNodeCount} chuyên mục con
@@ -83,7 +97,56 @@ export async function NodePortal({ id, path }: NodePortalProps) {
           </section>
         ) : null}
 
-        {articleCount > 0 ? (
+        {isCourtArea ? (
+          courts.length > 0 ? (
+            <section className="blog-list__grid" aria-label="Danh sách sân">
+              {courts.map((court) => (
+                <article key={court.id} className="blog-card">
+                  <Link href={court.fullPath} className="blog-card__media">
+                    {court.coverImageUrl ? (
+                      <Image
+                        src={court.coverImageUrl}
+                        alt={court.coverImageAlt ?? court.name}
+                        className="blog-card__cover"
+                        width={720}
+                        height={405}
+                        sizes="(max-width: 960px) calc(100vw - 32px), 360px"
+                      />
+                    ) : (
+                      <div
+                        className="blog-card__cover blog-card__cover--placeholder"
+                        aria-hidden="true"
+                      />
+                    )}
+                  </Link>
+                  <div className="blog-card__body">
+                    <span className="blog-card__category">{node.title}</span>
+                    <Link
+                      href={court.fullPath}
+                      className="blog-card__title-link"
+                    >
+                      <h2 className="blog-card__title">{court.shortName}</h2>
+                    </Link>
+                    {court.quickAnswer ? (
+                      <p className="blog-card__excerpt">{court.quickAnswer}</p>
+                    ) : null}
+                    <Link href={court.fullPath} className="blog-card__cta">
+                      Xem chi tiết sân
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </section>
+          ) : (
+            <section className="blog-post__content-shell">
+              <p className="section__desc">
+                Đang cập nhật danh sách sân tại khu vực này.
+              </p>
+            </section>
+          )
+        ) : null}
+
+        {!isCourtArea && articleCount > 0 ? (
           <section className="blog-list__grid" aria-label="Danh sách bài viết">
             {node.directArticles.map((article) => (
               <article key={article.id} className="blog-card">
@@ -124,7 +187,7 @@ export async function NodePortal({ id, path }: NodePortalProps) {
           </section>
         ) : null}
 
-        {subNodeCount > 0 ? (
+        {!isCourtArea && subNodeCount > 0 ? (
           <section className="blog-list__grid" aria-label="Chuyên mục con">
             {node.directNodes.map((childNode) => (
               <article key={childNode.id} className="blog-card">
