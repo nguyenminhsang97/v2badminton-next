@@ -10,7 +10,8 @@ export type TrackingEvent =
   | "form_field_focus"
   | "form_abandon"
   | "time_to_submit"
-  | "cms_article_cta_click";
+  | "cms_article_cta_click"
+  | "cms_court_cta_click";
 
 export type CtaName =
   | "dang_ky_ngay"
@@ -33,7 +34,13 @@ export type CtaLocation =
 
 export type ContactMethod = "zalo" | "phone" | "messenger";
 export type MapLocation = "hue_thien" | "green" | "khang_sport" | "phuc_loc";
-export type FormFieldName = "name" | "phone" | "level" | "court" | "time_slot" | "message";
+export type FormFieldName =
+  | "name"
+  | "phone"
+  | "level"
+  | "court"
+  | "time_slot"
+  | "message";
 export type SubmissionMethod = "js" | "no_js";
 
 const CTA_NAMES: ReadonlySet<CtaName> = new Set([
@@ -110,6 +117,12 @@ type EventParams = {
     target_money_page: string;
     page_path?: string;
   };
+  cms_court_cta_click: {
+    court_slug: string;
+    court_hub: string;
+    target_money_page: string;
+    page_path?: string;
+  };
 };
 
 declare global {
@@ -176,6 +189,25 @@ export function registerDelegatedTracking(): () => void {
         trackEvent("cms_article_cta_click", {
           article_slug: articleSlug,
           article_hub: articleHub,
+          target_money_page: targetMoneyPage,
+          page_path: pagePath,
+        });
+      }
+      return;
+    }
+
+    const cmsCourtCta = event.target.closest<HTMLElement>(
+      '[data-track-event="cms_court_cta_click"]',
+    );
+    if (cmsCourtCta) {
+      const courtSlug = cmsCourtCta.dataset.courtSlug;
+      const courtHub = cmsCourtCta.dataset.courtHub;
+      const targetMoneyPage = cmsCourtCta.dataset.targetMoneyPage;
+      const pagePath = cmsCourtCta.dataset.pagePath;
+      if (courtSlug && courtHub && targetMoneyPage) {
+        trackEvent("cms_court_cta_click", {
+          court_slug: courtSlug,
+          court_hub: courtHub,
           target_money_page: targetMoneyPage,
           page_path: pagePath,
         });

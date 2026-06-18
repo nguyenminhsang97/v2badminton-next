@@ -9,6 +9,11 @@ import { HOME_SECTION_IDS, toHomepageHash } from "@/lib/anchors";
 import { coreRoutes } from "@/lib/routes";
 import { trackEvent } from "@/lib/tracking";
 
+// PR4 (2026-06-17): nav entry for /san-cau-long/ is staged but hidden.
+// Flip to `true` in PR5c, AFTER the san-cau-long hub + >=3 area nodes + >=5 courts
+// are published (locked-spec Q4 rule). One-line change; no other edits required.
+const EXPOSE_SAN_CAU_LONG = false;
+
 const primaryLinks = [
   {
     href: toHomepageHash(HOME_SECTION_IDS.courses),
@@ -34,6 +39,11 @@ const primaryLinks = [
     href: toHomepageHash(HOME_SECTION_IDS.schedule),
     label: "Lịch tập",
     kind: "anchor" as const,
+  },
+  {
+    href: "/san-cau-long/",
+    label: "Sân cầu lông",
+    kind: "route" as const,
   },
   {
     href: toHomepageHash(HOME_SECTION_IDS.enterprise),
@@ -73,7 +83,8 @@ export function Nav({ siteSettings, showBlogLink, showCoachesLink }: NavProps) {
         .filter(
           (link) =>
             (link.href !== "/huan-luyen-vien/" || showCoachesLink) &&
-            (link.href !== "/blog/" || showBlogLink),
+            (link.href !== "/blog/" || showBlogLink) &&
+            (link.href !== "/san-cau-long/" || EXPOSE_SAN_CAU_LONG),
         )
         .map((link) => ({
           ...link,
@@ -144,13 +155,18 @@ export function Nav({ siteSettings, showBlogLink, showCoachesLink }: NavProps) {
             <FeatherMarkIcon className="site-logo__icon" />
           </span>
           <span className="site-logo__copy">
-            <strong className="site-logo__title">{siteSettings.siteName}</strong>
+            <strong className="site-logo__title">
+              {siteSettings.siteName}
+            </strong>
             <span className="site-logo__subtitle">BÌNH THẠNH · THỦ ĐỨC</span>
           </span>
         </Link>
 
         <div className="site-header__desktop-shell">
-          <nav className="site-nav site-nav--desktop" aria-label="Điều hướng chính">
+          <nav
+            className="site-nav site-nav--desktop"
+            aria-label="Điều hướng chính"
+          >
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -275,6 +291,10 @@ function isNavLinkActive(
 
   if (resolvedHref === "/blog/") {
     return normalizedPath.startsWith("/blog/");
+  }
+
+  if (resolvedHref === "/san-cau-long/") {
+    return normalizedPath.startsWith("/san-cau-long/");
   }
 
   return resolvedHref === normalizedPath;
