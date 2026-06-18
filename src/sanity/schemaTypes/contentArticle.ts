@@ -4,6 +4,7 @@ import {
   CONTENT_FORMAT_OPTIONS,
   CONTENT_STATUS_OPTIONS,
   contentBodyBlock,
+  contentBodyImage,
   defineFullPathField,
 } from "./contentShared";
 import { QuickAnswerInput } from "../components/QuickAnswerInput";
@@ -216,7 +217,7 @@ export const contentArticle = defineType({
       title: "Nội dung chính",
       type: "array",
       group: "body",
-      of: [contentBodyBlock],
+      of: [contentBodyBlock, contentBodyImage],
       validation: (Rule) => Rule.required().min(1),
     }),
     defineField({

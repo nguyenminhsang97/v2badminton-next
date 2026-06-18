@@ -652,7 +652,24 @@ export const CONTENT_ARTICLE_PROJECTION = `{
   seoDescription,
   "coverImageUrl": coalesce(coverImage.asset->url, null),
   "coverImageAlt": coalesce(coverImage.alt, null),
-  "body": coalesce(body, []),
+  "body": coalesce(
+    body[]{
+      ...,
+      _type == "bodyImage" => {
+        "_type": "bodyImage",
+        _key,
+        "url": asset->url,
+        "alt": coalesce(alt, ""),
+        "caption": coalesce(caption, null),
+        "size": coalesce(size, "inline"),
+        "width": asset->metadata.dimensions.width,
+        "height": asset->metadata.dimensions.height,
+        "lqip": asset->metadata.lqip,
+        "hotspot": coalesce(hotspot, null)
+      }
+    },
+    []
+  ),
   "hubSlug": parentHub->slug.current,
   "hubTitle": parentHub->title,
   "hubFullPath": parentHub->fullPath.current,

@@ -73,6 +73,132 @@ export const contentBodyBlock = defineArrayMember({
   },
 });
 
+/**
+ * Inline body image — used ONLY by `content_article.body`. Not added to court
+ * `reviewSummary` or hub/node `intro` (those keep `of: [contentBodyBlock]`).
+ *
+ * Stored `_type` is "bodyImage" (the array-member name), not "image". Keep the
+ * GROQ conditional projection, TS discriminator, and PortableText renderer key
+ * all aligned to "bodyImage".
+ *
+ * Async validation surfaces non-blocking warnings about image dimensions and
+ * file size (see thresholds below) so editors can deliberately override for a
+ * small diagram or long banner. Pattern mirrors `findPathConflict` —
+ * `getClient({ apiVersion }).fetch(...)` for asset metadata.
+ */
+export const ARTICLE_BODY_IMAGE_SIZES = [
+  { title: "Trong cột (mặc định)", value: "inline" },
+  { title: "Rộng", value: "wide" },
+  { title: "Toàn khung", value: "full" },
+] as const;
+
+const BODY_IMAGE_MIN_WIDTH_PX = 1440;
+const BODY_IMAGE_MAX_BYTES = 800 * 1024;
+const BODY_IMAGE_ASPECT_MIN = 0.4;
+const BODY_IMAGE_ASPECT_MAX = 3.0;
+
+type BodyImageAssetMetadata = {
+  width?: number | null;
+  height?: number | null;
+  size?: number | null;
+};
+
+export const contentBodyImage = defineArrayMember({
+  name: "bodyImage",
+  type: "image",
+  title: "Ảnh chèn vào nội dung",
+  options: { hotspot: true },
+  fields: [
+    defineField({
+      name: "alt",
+      title: "Mô tả ảnh (alt)",
+      type: "string",
+      description:
+        "Bắt buộc cho SEO và trợ năng. Mô tả nội dung ảnh trong ngữ cảnh bài viết.",
+      validation: (Rule) => Rule.required().min(3),
+    }),
+    defineField({
+      name: "caption",
+      title: "Chú thích (tuỳ chọn)",
+      type: "string",
+      description: "Tối đa 140 ký tự. Hiển thị dưới ảnh.",
+      validation: (Rule) => Rule.max(140),
+    }),
+    defineField({
+      name: "size",
+      title: "Kích thước hiển thị",
+      type: "string",
+      initialValue: "inline",
+      description:
+        "Trong cột = nằm gọn trong cột chữ. Rộng = lớn hơn cột chữ. Toàn khung = chiếm hết bề ngang khung bài.",
+      options: { list: [...ARTICLE_BODY_IMAGE_SIZES], layout: "radio" },
+      validation: (Rule) => Rule.required(),
+    }),
+  ],
+  validation: (Rule) =>
+    Rule.custom(async (value, context) => {
+      const ref = (value as { asset?: { _ref?: string } } | undefined)?.asset
+        ?._ref;
+      if (!ref) return true;
+      const client = (
+        context as unknown as RouteValidationContext
+      ).getClient({ apiVersion: SANITY_VALIDATION_API_VERSION });
+      const meta = await client.fetch<BodyImageAssetMetadata | null>(
+        `*[_id == $id][0]{
+          "width": metadata.dimensions.width,
+          "height": metadata.dimensions.height,
+          size
+        }`,
+        { id: ref },
+      );
+      const warnings: string[] = [];
+      const w = meta?.width ?? null;
+      const h = meta?.height ?? null;
+      if (w !== null && w < BODY_IMAGE_MIN_WIDTH_PX) {
+        warnings.push(
+          `Ảnh chỉ rộng ${w}px — nên ≥ ${BODY_IMAGE_MIN_WIDTH_PX}px để rõ trên màn hình retina.`,
+        );
+      }
+      if (meta?.size && meta.size > BODY_IMAGE_MAX_BYTES) {
+        warnings.push(
+          `File ảnh ${(meta.size / 1024).toFixed(0)} KB — nên nén xuống ≤ ${
+            BODY_IMAGE_MAX_BYTES / 1024
+          } KB trước khi upload.`,
+        );
+      }
+      if (w !== null && h !== null && h > 0) {
+        const ratio = w / h;
+        if (ratio < BODY_IMAGE_ASPECT_MIN || ratio > BODY_IMAGE_ASPECT_MAX) {
+          warnings.push(
+            `Tỉ lệ ảnh ${ratio.toFixed(2)} hơi bất thường — kiểm tra lại ảnh có bị cắt nhầm không.`,
+          );
+        }
+      }
+      return warnings.length === 0 ? true : warnings.join(" ");
+    }).warning(),
+  preview: {
+    select: {
+      alt: "alt",
+      caption: "caption",
+      size: "size",
+      media: "asset",
+    },
+    prepare({ alt, caption, size, media }) {
+      const sizeLabel =
+        size === "wide"
+          ? "Rộng"
+          : size === "full"
+            ? "Toàn khung"
+            : "Trong cột";
+      return {
+        title: (alt as string) || "(thiếu alt)",
+        subtitle: `${sizeLabel}${caption ? ` · ${caption}` : ""}`,
+        media,
+      };
+    },
+  },
+});
+
 /** Normalize any path to a single leading + trailing slash, lowercased. */
 export function normalizePath(input: string): string {
   const trimmed = (input ?? "").trim().toLowerCase().replace(/^\/+|\/+$/g, "");

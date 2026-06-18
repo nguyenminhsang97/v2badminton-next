@@ -276,6 +276,52 @@
   align-items: start;
 }
 
+/* Inline body images (CMS-IBI) — figure drives sizing so it centers in the
+   column; image fills the figure. `data-size` switches the max-width cap.
+   No float, no DOM breakout, mobile collapses every variant to 100%. */
+.blog-post__body-figure {
+  margin: 1.5rem auto;
+  max-width: 100%;
+  display: block;
+}
+
+.blog-post__body-figure img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  display: block;
+}
+
+.blog-post__body-figure[data-size="inline"] {
+  max-width: 720px;
+}
+
+.blog-post__body-figure[data-size="wide"] {
+  max-width: 960px;
+}
+
+.blog-post__body-figure[data-size="full"] {
+  max-width: 100%;
+}
+
+.blog-post__body-figure figcaption {
+  margin: 0.5rem auto 0;
+  font-size: 0.875rem;
+  color: var(--s5-muted);
+  text-align: center;
+  max-width: 720px;
+  line-height: 1.5;
+}
+
+@media (max-width: 720px) {
+  .blog-post__body-figure[data-size="inline"],
+  .blog-post__body-figure[data-size="wide"],
+  .blog-post__body-figure[data-size="full"] {
+    max-width: 100%;
+  }
+}
+
 @media (min-width: 960px) {
   .blog-post__hero {
     grid-template-columns: minmax(0, 1fr) minmax(360px, 0.96fr);

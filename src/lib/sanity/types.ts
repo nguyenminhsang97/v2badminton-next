@@ -35,6 +35,32 @@ export type SanityPortableTextBlock = {
   markDefs?: Array<Record<string, unknown>>;
 };
 
+/**
+ * Inline body image — emitted by content_article.body for `_type == "bodyImage"`
+ * array members. Discriminator MUST match the Sanity array-member `name`
+ * ("bodyImage"), not the underlying schema `type` ("image").
+ */
+export type SanityArticleBodyImageSize = "inline" | "wide" | "full";
+
+export type SanityArticleBodyImage = {
+  _key?: string;
+  _type: "bodyImage";
+  url: string | null;
+  alt: string;
+  caption: string | null;
+  size: SanityArticleBodyImageSize;
+  width: number | null;
+  height: number | null;
+  lqip: string | null;
+  hotspot:
+    | { x: number; y: number; height: number; width: number }
+    | null;
+};
+
+export type SanityArticleBodyNode =
+  | SanityPortableTextBlock
+  | SanityArticleBodyImage;
+
 export type SanitySiteSettingsNav = {
   ctaLabel: string | null;
 };
@@ -342,7 +368,7 @@ export type SanityContentArticle = {
   quickAnswer: string | null;
   coverImageUrl: string | null;
   coverImageAlt: string | null;
-  body: SanityPortableTextBlock[];
+  body: SanityArticleBodyNode[];
   hubSlug: string;
   hubTitle: string;
   hubFullPath: string;

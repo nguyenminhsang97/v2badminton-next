@@ -7,10 +7,40 @@ import type { PortableTextBlock } from "@portabletext/types";
 import { FaqList } from "@/components/blocks/FaqList";
 import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
 import { getContentArticle } from "@/lib/sanity";
+import type { SanityArticleBodyImage } from "@/lib/sanity";
 import { slugifyHeading } from "@/lib/slugify";
 import { ArticleByline } from "./ArticleByline";
 import { ContentBreadcrumbs } from "./ContentBreadcrumbs";
 import { ContentStructuredData } from "./ContentStructuredData";
+
+function ArticleBodyImage({ value }: { value: SanityArticleBodyImage }) {
+  if (!value?.url) return null;
+  const width = value.width ?? 1440;
+  const height = value.height ?? Math.round((width * 9) / 16);
+  const size = value.size ?? "inline";
+  const sizes =
+    size === "full"
+      ? "(max-width: 959px) calc(100vw - 64px), 1120px"
+      : size === "wide"
+        ? "(max-width: 959px) calc(100vw - 64px), 960px"
+        : "(max-width: 720px) calc(100vw - 64px), 720px";
+  return (
+    <figure className="blog-post__body-figure" data-size={size}>
+      <Image
+        src={value.url}
+        alt={value.alt}
+        width={width}
+        height={height}
+        sizes={sizes}
+        loading="lazy"
+        {...(value.lqip
+          ? { placeholder: "blur" as const, blurDataURL: value.lqip }
+          : {})}
+      />
+      {value.caption ? <figcaption>{value.caption}</figcaption> : null}
+    </figure>
+  );
+}
 
 type ArticleViewProps = {
   id: string;
@@ -51,6 +81,9 @@ export async function ArticleView({ id, path }: ArticleViewProps) {
       h3: ({ children, value }: PortableTextComponentProps<PortableTextBlock>) => (
         <h3 id={makeHeadingId(value)}>{children}</h3>
       ),
+    },
+    types: {
+      bodyImage: ArticleBodyImage,
     },
   };
 
