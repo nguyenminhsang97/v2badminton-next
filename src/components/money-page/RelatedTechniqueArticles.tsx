@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { sanityImageLoader } from "@/lib/sanity/image";
 import type { SanityContentArticleCard } from "@/lib/sanity";
 
 type RelatedTechniqueArticlesProps = {
@@ -46,6 +47,7 @@ export function RelatedTechniqueArticles({
                   width={720}
                   height={405}
                   sizes="(max-width: 960px) calc(100vw - 32px), 360px"
+                  loader={sanityImageLoader}
                 />
               ) : (
                 <div

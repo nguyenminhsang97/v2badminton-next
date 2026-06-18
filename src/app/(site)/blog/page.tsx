@@ -9,6 +9,7 @@ import {
   type SanityPostCategory,
   type SanityPostListItem,
 } from "@/lib/sanity";
+import { sanityImageLoader } from "@/lib/sanity/image";
 import { siteConfig } from "@/lib/site";
 
 const BLOG_CATEGORY_OPTIONS: ReadonlyArray<{
@@ -156,6 +157,9 @@ export default async function BlogListPage({
           {filteredPosts.map((post) => {
             const coverImageUrl =
               post.coverImageUrl ?? getGeneratedBlogCategoryImage();
+            const coverImageLoader = post.coverImageUrl
+              ? sanityImageLoader
+              : undefined;
             const coverAlt = post.coverImageUrl
               ? post.title
               : `Ảnh minh họa bài viết ${getCategoryLabel(post.category)}`;
@@ -170,6 +174,7 @@ export default async function BlogListPage({
                     width={720}
                     height={405}
                     sizes="(max-width: 960px) calc(100vw - 32px), 360px"
+                    loader={coverImageLoader}
                   />
                 </Link>
                 <div className="blog-card__body">

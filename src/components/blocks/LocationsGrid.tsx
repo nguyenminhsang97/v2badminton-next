@@ -2,6 +2,7 @@ import Image from "next/image";
 import type { HomepageLocation } from "@/domain/homepage";
 import { HOME_SECTION_IDS, toHomepageHash } from "@/lib/anchors";
 import { getGeneratedLocationImage } from "@/lib/generatedImages";
+import { sanityImageLoader } from "@/lib/sanity/image";
 
 export type LocationsGridProps = {
   locations: HomepageLocation[];
@@ -28,6 +29,7 @@ export function LocationsGrid({
         {locations.map((location) => {
           const imageUrl =
             location.imageUrl ?? getGeneratedLocationImage(location.district);
+          const imageLoader = location.imageUrl ? sanityImageLoader : undefined;
           const imageAlt = location.imageUrl
             ? location.imageAlt ?? location.name
             : `Ảnh minh họa sân cầu lông trong nhà tại khu vực ${location.districtLabel}`;
@@ -47,6 +49,7 @@ export function LocationsGrid({
                     className="location-card__thumb-image"
                     fill
                     sizes="88px"
+                    loader={imageLoader}
                   />
                 </span>
               )}

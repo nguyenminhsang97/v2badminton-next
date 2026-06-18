@@ -7,6 +7,7 @@ import type { PortableTextBlock } from "@portabletext/types";
 import { FaqList } from "@/components/blocks/FaqList";
 import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
 import { getCourt } from "@/lib/sanity";
+import { sanityImageLoader } from "@/lib/sanity/image";
 import type {
   SanityCourtBestFor,
   SanityCourtLighting,
@@ -154,6 +155,7 @@ export async function CourtView({ id, path }: CourtViewProps) {
                 height={630}
                 priority
                 sizes="(max-width: 959px) calc(100vw - 32px), 42vw"
+                loader={sanityImageLoader}
               />
             </div>
           ) : null}
@@ -366,6 +368,7 @@ export async function CourtView({ id, path }: CourtViewProps) {
                   width={560}
                   height={315}
                   sizes="(max-width: 959px) calc(100vw - 32px), 33vw"
+                  loader={sanityImageLoader}
                 />
               ))}
             </div>
