@@ -5,6 +5,7 @@ import { PortableText } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
 import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
 import { getContentHub } from "@/lib/sanity";
+import { sanityImageLoader } from "@/lib/sanity/image";
 import { ContentBreadcrumbs } from "./ContentBreadcrumbs";
 import { ContentStructuredData } from "./ContentStructuredData";
 
@@ -98,6 +99,7 @@ export async function HubPortal({ id, path }: HubPortalProps) {
                       width={720}
                       height={405}
                       sizes="(max-width: 960px) calc(100vw - 32px), 360px"
+                      loader={sanityImageLoader}
                     />
                   ) : (
                     <div

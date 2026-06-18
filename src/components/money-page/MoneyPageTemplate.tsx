@@ -10,6 +10,7 @@ import { HOME_SECTION_IDS, toHash, toHomepageHash } from "@/lib/anchors";
 import { getGeneratedRouteImage } from "@/lib/generatedImages";
 import { coreRoutes, getRouteMetadata, type CoreRoutePath } from "@/lib/routes";
 import { getArticlesForMoneyPage, type SanityGroupPricingTier, type SanityMoneyPage } from "@/lib/sanity";
+import { sanityImageLoader } from "@/lib/sanity/image";
 import { Breadcrumb } from "./Breadcrumb";
 import { QuickAnswer } from "./QuickAnswer";
 import { RelatedTechniqueArticles } from "./RelatedTechniqueArticles";
@@ -122,6 +123,7 @@ export async function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) 
   const scheduleHref = toHomepageHash(HOME_SECTION_IDS.schedule);
   const facts = buildMoneyPageFacts(page);
   const heroImageUrl = page.heroImageUrl ?? getGeneratedRouteImage(path);
+  const heroImageLoader = page.heroImageUrl ? sanityImageLoader : undefined;
   const hasHeroImage = heroImageUrl !== null;
   const pagePath = path ?? "/";
   const pageType = path ? getRouteMetadata(path).pageType : "seo_service";
@@ -163,6 +165,7 @@ export async function MoneyPageTemplate({ page, path }: MoneyPageTemplateProps) 
               loading="eager"
               fetchPriority="high"
               sizes="(max-width: 959px) calc(100vw - 32px), 44vw"
+              loader={heroImageLoader}
             />
           </div>
         ) : null}

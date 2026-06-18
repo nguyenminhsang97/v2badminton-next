@@ -5,6 +5,7 @@ import { PortableText } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
 import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
 import { getContentNode, getCourtsInArea } from "@/lib/sanity";
+import { sanityImageLoader } from "@/lib/sanity/image";
 import type { SanityCourtCard } from "@/lib/sanity";
 import { ContentBreadcrumbs } from "./ContentBreadcrumbs";
 import { ContentStructuredData } from "./ContentStructuredData";
@@ -111,6 +112,7 @@ export async function NodePortal({ id, path }: NodePortalProps) {
                         width={720}
                         height={405}
                         sizes="(max-width: 960px) calc(100vw - 32px), 360px"
+                        loader={sanityImageLoader}
                       />
                     ) : (
                       <div
@@ -159,6 +161,7 @@ export async function NodePortal({ id, path }: NodePortalProps) {
                       width={720}
                       height={405}
                       sizes="(max-width: 960px) calc(100vw - 32px), 360px"
+                      loader={sanityImageLoader}
                     />
                   ) : (
                     <div

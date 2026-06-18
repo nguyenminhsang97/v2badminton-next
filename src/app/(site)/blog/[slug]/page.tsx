@@ -10,6 +10,7 @@ import { JsonLd } from "@/components/ui/JsonLd";
 import { canonicalUrl, coreRouteMap, type CoreRoutePath } from "@/lib/routes";
 import { siteConfig } from "@/lib/site";
 import { getPostBySlug, getPublishedPosts } from "@/lib/sanity";
+import { sanityImageLoader } from "@/lib/sanity/image";
 
 type BlogPostPageProps = {
   params: Promise<{
@@ -79,6 +80,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       ? coreRouteMap[relatedPath]
       : null;
   const coverImageUrl = post.coverImageUrl ?? getGeneratedBlogCategoryImage();
+  const coverImageLoader = post.coverImageUrl ? sanityImageLoader : undefined;
   const coverAlt = post.coverImageUrl
     ? post.title
     : `Ảnh minh họa bài viết ${getCategoryLabel(post.category)}`;
@@ -133,6 +135,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             height={630}
             priority
             sizes="(max-width: 959px) calc(100vw - 32px), 42vw"
+            loader={coverImageLoader}
           />
         </div>
       </header>

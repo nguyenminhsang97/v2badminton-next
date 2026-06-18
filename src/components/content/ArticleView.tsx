@@ -7,6 +7,7 @@ import type { PortableTextBlock } from "@portabletext/types";
 import { FaqList } from "@/components/blocks/FaqList";
 import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
 import { getContentArticle } from "@/lib/sanity";
+import { sanityImageLoader } from "@/lib/sanity/image";
 import type { SanityArticleBodyImage } from "@/lib/sanity";
 import { slugifyHeading } from "@/lib/slugify";
 import { ArticleByline } from "./ArticleByline";
@@ -33,6 +34,7 @@ function ArticleBodyImage({ value }: { value: SanityArticleBodyImage }) {
         height={height}
         sizes={sizes}
         loading="lazy"
+        loader={sanityImageLoader}
         {...(value.lqip
           ? { placeholder: "blur" as const, blurDataURL: value.lqip }
           : {})}
@@ -133,6 +135,7 @@ export async function ArticleView({ id, path }: ArticleViewProps) {
                 height={630}
                 priority
                 sizes="(max-width: 959px) calc(100vw - 32px), 42vw"
+                loader={sanityImageLoader}
               />
             </div>
           ) : null}
