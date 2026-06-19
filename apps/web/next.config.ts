@@ -29,6 +29,10 @@ const CSP_REPORT_ONLY = [
 
 const nextConfig: NextConfig = {
   allowedDevOrigins: ["127.0.0.1"],
+  // Workspace package consumed as source via tsconfig paths; npm symlinks it
+  // under apps/web/node_modules/@v2/schema-shared, so SWC needs explicit
+  // transpile permission. See .claude/CMS/CMS-STUDIO-SPLIT-IMPLEMENTATION-PLAN.md §4.5.
+  transpilePackages: ["@v2/schema-shared"],
   // NEXT_PUBLIC_* Sanity vars are public (browser-bundle safe) and committed
   // here so Vercel builds work without separate env-var dashboard settings.
   env: {
