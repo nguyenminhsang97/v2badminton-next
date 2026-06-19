@@ -2,6 +2,7 @@
   "name": "v2badminton-next",
   "version": "0.1.0",
   "private": true,
+  "workspaces": ["apps/*", "packages/*"],
   "scripts": {
     "dev": "next dev",
     "sanity:dev": "next dev",
