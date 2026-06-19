@@ -6,7 +6,7 @@ import {
   FAQ_PAGE_OPTIONS,
   SCHEDULE_LEVEL_OPTIONS,
   STUDENT_GROUP_OPTIONS,
-} from "@/sanity/schemaTypes/shared";
+} from "../../../packages/schema-shared/src/options";
 
 export type SanityDistrict = (typeof DISTRICT_OPTIONS)[number]["value"];
 export type SanityFaqPage = (typeof FAQ_PAGE_OPTIONS)[number]["value"];
