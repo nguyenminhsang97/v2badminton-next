@@ -1,4 +1,4 @@
-export * from "../../../packages/schema-shared/src/options";
+export * from "@v2/schema-shared";
 
 export function slugifyValue(input: string) {
   return input

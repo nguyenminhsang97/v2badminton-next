@@ -4,44 +4,18 @@
   "private": true,
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
-    "dev": "next dev",
-    "sanity:dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint",
-    "typecheck": "next typegen && tsc --noEmit --pretty false",
-    "verify:production-env": "node scripts/verify-production-env.mjs",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:e2e": "playwright test",
-    "test:mobile": "playwright test --project=mobile-chrome --project=mobile-safari",
-    "test:mobile:headed": "playwright test --project=mobile-chrome --project=mobile-safari --headed"
-  },
-  "dependencies": {
-    "@sanity/vision": "^5.28.0",
-    "@sentry/nextjs": "^10.51.0",
-    "@upstash/ratelimit": "^2.0.8",
-    "@upstash/redis": "^1.37.0",
-    "@vercel/postgres": "^0.10.0",
-    "jose": "^6.2.3",
-    "next": "16.2.4",
-    "next-sanity": "^12.3.1",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "resend": "^6.12.2",
-    "sanity": "^5.23.0",
-    "styled-components": "^6.4.1"
+    "dev": "npm run -w apps/web dev",
+    "dev:web": "npm run -w apps/web dev",
+    "build": "npm run -w packages/schema-shared typecheck && npm run -w apps/web build",
+    "build:web": "npm run -w apps/web build",
+    "start": "npm run -w apps/web start",
+    "lint": "npm run -w apps/web lint",
+    "typecheck": "npm run -w packages/schema-shared typecheck && npm run -w apps/web typecheck",
+    "test": "npm run -w apps/web test",
+    "test:e2e": "npm run -w apps/web test:e2e",
+    "verify:production-env": "npm run -w apps/web verify:production-env"
   },
   "devDependencies": {
-    "@playwright/test": "^1.59.1",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "@vitejs/plugin-react": "^6.0.2",
-    "eslint": "^9",
-    "eslint-config-next": "16.2.4",
-    "playwright": "^1.59.1",
-    "typescript": "^5",
-    "vitest": "^4.1.8"
+    "typescript": "^5"
   }
 }
