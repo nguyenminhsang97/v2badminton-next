@@ -39,6 +39,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Workaround for npm/cli#4828: the package-lock.json was generated on
+      # Windows and is missing Linux platform-specific optional native bindings
+      # (e.g. @rolldown/binding-linux-x64-gnu used by Vitest 4.x via Rolldown).
+      # `npm ci` is strict to the lockfile and won't fix this; a follow-up
+      # `npm install --no-save --include=optional` repairs node_modules for
+      # this runner without touching the committed lockfile.
+      - name: Repair missing optional native deps (npm/cli#4828)
+        run: npm install --no-save --include=optional
+
       - name: Lint
         run: npm run lint
 
