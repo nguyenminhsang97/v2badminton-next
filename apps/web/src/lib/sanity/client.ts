@@ -6,13 +6,17 @@ type SanityQueryParams = Record<string, unknown>;
 export const SANITY_API_VERSION = "2026-04-09";
 
 /**
- * Sprint 2 revalidation choice:
- * - use time-based ISR via `next.revalidate`
- * - default to 300 seconds
- * - avoid webhook/on-demand setup on the critical path for the first frontend wiring pass
+ * Revalidation choice:
+ * - use time-based ISR via `next.revalidate` only as a long safety net
+ * - default to 86400 seconds (24h); on-demand webhook revalidation
+ *   (`revalidateTag` in /api/revalidate/sanity) is the real freshness path
+ * - a short window (e.g. 300s) multiplied across every Sanity-backed route
+ *   and crawler traffic causes large numbers of ISR Writes for no benefit,
+ *   since the webhook already pushes published edits live within seconds
  *
  * Operator expectation:
- * - in production, published Sanity edits may take up to this window to show on the site
+ * - in production, published Sanity edits appear within seconds via the webhook;
+ *   the 24h timer only matters if the webhook is ever missed
  * - in `next dev`, Next renders on-demand so content appears fresh immediately
  */
 export const SANITY_REVALIDATE_SECONDS = resolveSanityRevalidateSeconds();
@@ -128,7 +132,7 @@ function resolveSanityRevalidateSeconds() {
   const rawValue = process.env.SANITY_REVALIDATE_SECONDS?.trim();
 
   if (!rawValue) {
-    return 300;
+    return 86400;
   }
 
   const parsedValue = Number.parseInt(rawValue, 10);
@@ -140,9 +144,9 @@ function resolveSanityRevalidateSeconds() {
   if (!hasWarnedInvalidRevalidate) {
     hasWarnedInvalidRevalidate = true;
     console.warn(
-      `[sanity] Invalid SANITY_REVALIDATE_SECONDS="${rawValue}". Falling back to 300 seconds.`,
+      `[sanity] Invalid SANITY_REVALIDATE_SECONDS="${rawValue}". Falling back to 86400 seconds.`,
     );
   }
 
-  return 300;
+  return 86400;
 }
