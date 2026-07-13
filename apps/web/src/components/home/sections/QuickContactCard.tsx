@@ -33,7 +33,7 @@ export function QuickContactCard({ contactSettings }: QuickContactCardProps) {
             })
           }
         >
-          Đăng ký học thử miễn phí
+          Đăng ký học thử
         </a>
 
         <a
