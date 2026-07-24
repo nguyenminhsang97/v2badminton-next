@@ -19,12 +19,12 @@ const PATH = "/gioi-thieu/";
 const FALLBACK_SEO_TITLE =
   "Giới thiệu V2 Badminton | Học viện cầu lông Bình Thạnh & Thủ Đức";
 const FALLBACK_SEO_DESCRIPTION =
-  "V2 Badminton là học viện dạy cầu lông tại Bình Thạnh và Thủ Đức, TP.HCM. Đào tạo trẻ em, người mới, người đi làm và doanh nghiệp.";
+  "V2 Badminton là học viện dạy cầu lông tại Bình Thạnh và Thủ Đức, TP.HCM, hoạt động từ năm 2012. Đào tạo trẻ em, người mới, người đi làm và doanh nghiệp.";
 const FALLBACK_EYEBROW = "Giới thiệu";
 const FALLBACK_TITLE_H1 =
   "Về V2 Badminton — học viện cầu lông tại Bình Thạnh & Thủ Đức";
 const FALLBACK_LEAD =
-  "V2 Badminton là học viện dạy cầu lông tại Bình Thạnh và Thủ Đức, TP.HCM. Chúng tôi tập trung đào tạo trẻ em và người mới bắt đầu, đồng thời hỗ trợ người đi làm và doanh nghiệp có nhu cầu tập luyện.";
+  "V2 Badminton là học viện dạy cầu lông tại Bình Thạnh và Thủ Đức, TP.HCM, hoạt động từ năm 2012 và do HLV trưởng Bùi Trần Quốc Việt sáng lập. Chúng tôi tập trung đào tạo trẻ em và người mới bắt đầu, đồng thời hỗ trợ người đi làm và doanh nghiệp có nhu cầu tập luyện.";
 const FALLBACK_BREADCRUMB_LABEL = "Giới thiệu";
 
 // ─── Metadata ─────────────────────────────────────────────────────────────
@@ -113,11 +113,11 @@ export default async function AboutPage() {
             <section className="legal-page__section">
               <h2>V2 Badminton là ai?</h2>
               <p>
-                V2 Badminton là học viện dạy cầu lông tại Bình Thạnh và Thủ
-                Đức, TP.HCM. Chúng tôi duy trì đội ngũ HLV riêng và tổ chức
-                lớp theo nhóm nhỏ để HLV có thời gian theo sát từng học viên.
-                Nội dung chi tiết về lịch sử, quy trình đào tạo và đội ngũ
-                đang được cập nhật trong Studio.
+                V2 Badminton là học viện dạy cầu lông hoạt động từ năm 2012,
+                do HLV trưởng Bùi Trần Quốc Việt sáng lập. V2 xây dựng lộ
+                trình học theo cấp độ và duy trì đội ngũ HLV riêng thay vì
+                thuê giáo viên thời vụ, tập trung tại Bình Thạnh và Thủ Đức,
+                TP.HCM.
               </p>
             </section>
 
@@ -144,14 +144,48 @@ export default async function AboutPage() {
             </section>
 
             <section className="legal-page__section">
-              <h2>Đội ngũ huấn luyện viên</h2>
+              <h2>Đội ngũ huấn luyện viên gồm những ai?</h2>
               <p>
-                Xem danh sách HLV, chứng chỉ và khoá lớp phụ trách tại{" "}
+                Điểm khác biệt của V2 là phần lớn huấn luyện viên trưởng
+                thành từ chính học viên do V2 đào tạo, nên cách dạy thống
+                nhất qua từng cấp độ:
+              </p>
+              <ul>
+                <li>
+                  <strong>2012:</strong> HLV trưởng Bùi Trần Quốc Việt thành
+                  lập V2 Badminton.
+                </li>
+                <li>
+                  <strong>2016:</strong> bắt đầu đào tạo học viên thành HLV
+                  nội bộ và huấn luyện thêm các HLV mới.
+                </li>
+                <li>
+                  <strong>2020:</strong> HLV Nguyễn Minh Sang phụ trách lớp
+                  thiếu nhi.
+                </li>
+                <li>
+                  <strong>2023:</strong> HLV Đinh Nguyễn Nhật Nam tham gia
+                  đội ngũ.
+                </li>
+                <li>
+                  <strong>2024:</strong> HLV Nguyễn Thị Hoàng Mai và Dương
+                  Đức Huy ra mắt, đều trưởng thành từ học viên V2 và hiện là
+                  sinh viên chuyên ngành cầu lông tại Trường Đại học Thể dục
+                  Thể thao TP.HCM.
+                </li>
+              </ul>
+              <p>
+                Ba HLV của V2 có chứng chỉ BWF Coach Level 1 của Liên đoàn
+                Cầu lông Thế giới (BWF): HLV trưởng Bùi Trần Quốc Việt (cấp
+                năm 2025), HLV Đinh Nguyễn Nhật Nam và HLV Nguyễn Minh Sang
+                (cấp năm 2026).
+              </p>
+              <p>
+                Xem chi tiết tại{" "}
                 <Link href="/huan-luyen-vien/">
                   trang đội ngũ huấn luyện viên
                 </Link>
-                . Nội dung chi tiết trên trang này (lịch sử đội ngũ, chứng chỉ
-                của từng HLV) đang được cập nhật.
+                .
               </p>
             </section>
 

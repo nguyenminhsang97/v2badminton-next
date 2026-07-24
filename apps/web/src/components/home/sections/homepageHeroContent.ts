@@ -1,5 +1,5 @@
 export const DEFAULT_HERO_SUBHEADING =
-  "Lộ trình bài bản cho trẻ em, người mới và người đi làm cùng đội ngũ HLV V2 tại Bình Thạnh và Thủ Đức.";
+  "Lộ trình bài bản cho trẻ em, người mới và người đi làm, dẫn dắt bởi đội ngũ HLV V2 — trong đó có HLV chứng chỉ BWF Coach Level 1 — tại Bình Thạnh và Thủ Đức.";
 
 export const HERO_SOCIAL_PROOF = [
   { initials: "NH", accent: "hero__avatar--green" },

@@ -86,10 +86,12 @@ export default async function EditorialPolicyPage() {
               <h2>Ai biên soạn nội dung?</h2>
               <p>
                 Toàn bộ bài viết kỹ thuật trên website do đội ngũ HLV V2
-                Badminton biên soạn, có tham chiếu tới tài liệu kỹ thuật của
-                BWF (Liên đoàn Cầu lông Thế giới) và kinh nghiệm giảng dạy
-                thực tế. Danh sách HLV và các chứng chỉ chuyên môn cụ thể
-                được liệt kê trên{" "}
+                Badminton biên soạn, có tham chiếu tới tài liệu kỹ thuật
+                chính thức của BWF (Liên đoàn Cầu lông Thế giới) và kinh
+                nghiệm giảng dạy thực tế từ năm 2012. Ba HLV có chứng chỉ
+                BWF Coach Level 1: HLV trưởng Bùi Trần Quốc Việt (2025), HLV
+                Đinh Nguyễn Nhật Nam và HLV Nguyễn Minh Sang (2026). Xem
+                thêm tại{" "}
                 <Link href="/huan-luyen-vien/">trang đội ngũ huấn luyện viên</Link>.
               </p>
             </section>
