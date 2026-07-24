@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PortableText } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
 import { JsonLd } from "@/components/ui/JsonLd";
@@ -85,11 +86,11 @@ export default async function EditorialPolicyPage() {
               <h2>Ai biên soạn nội dung?</h2>
               <p>
                 Toàn bộ bài viết kỹ thuật trên website do đội ngũ HLV V2
-                Badminton biên soạn. Nội dung dựa trên tài liệu kỹ thuật chính
-                thức của BWF (Liên đoàn Cầu lông Thế giới) và kinh nghiệm
-                giảng dạy thực tế. HLV trưởng Bùi Trần Quốc Việt cùng các HLV
-                Nguyễn Minh Sang và Đinh Nguyễn Nhật Nam có chứng chỉ BWF Coach
-                Level 1.
+                Badminton biên soạn, có tham chiếu tới tài liệu kỹ thuật của
+                BWF (Liên đoàn Cầu lông Thế giới) và kinh nghiệm giảng dạy
+                thực tế. Danh sách HLV và các chứng chỉ chuyên môn cụ thể
+                được liệt kê trên{" "}
+                <Link href="/huan-luyen-vien/">trang đội ngũ huấn luyện viên</Link>.
               </p>
             </section>
 

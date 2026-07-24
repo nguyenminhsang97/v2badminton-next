@@ -42,7 +42,7 @@ export const faqs: readonly FaqItem[] = [
     order: 3,
     question: "Học phí và lịch học như thế nào?",
     answerText:
-      "Học phí gồm: lớp nhóm 2 buổi/tuần 1.000.000 đ/tháng; lớp nhóm 3 buổi/tuần 1.300.000 đ/tháng (cơ bản) hoặc 1.500.000 đ/tháng (nâng cao); 1 kèm 1 là 400.000 đ/giờ/học viên (chưa gồm phí thuê sân — V2 sẽ hỗ trợ đặt sân thuận tiện); chương trình doanh nghiệp tư vấn theo quy mô. Lịch học mở các khung sáng, chiều, tối và cuối tuần — chi tiết ở phần Lịch học.",
+      "V2 có lớp nhóm theo số buổi/tuần, hình thức 1 kèm 1 và chương trình cho doanh nghiệp. Vui lòng xem phần Học phí trên trang hoặc liên hệ V2 để nhận báo giá và tư vấn theo nhu cầu. Lịch học mở các khung sáng, chiều, tối và cuối tuần — chi tiết ở phần Lịch học.",
     schemaEligible: true,
   },
   {
@@ -105,7 +105,7 @@ export const faqs: readonly FaqItem[] = [
     order: 5,
     question: "Lớp học mấy người?",
     answerText:
-      "V2 có lớp nhóm nhỏ từ 2 đến 6 người và cả hình thức 1 kèm 1 nếu bạn muốn được theo sát hơn.",
+      "V2 có lớp nhóm nhỏ và cả hình thức 1 kèm 1 nếu bạn muốn được theo sát hơn. Sĩ số cụ thể được ghi trong phần Học phí hoặc bạn có thể liên hệ V2 để biết sĩ số hiện tại của từng lớp.",
     schemaEligible: true,
   },
   {
@@ -114,7 +114,7 @@ export const faqs: readonly FaqItem[] = [
     order: 6,
     question: "Học phí cho người mới bắt đầu là bao nhiêu?",
     answerText:
-      "Người mới có thể bắt đầu với lớp cơ bản 3 buổi/tuần giá 1.300.000 đ/tháng hoặc lớp 2 buổi/tuần giá 1.000.000 đ/tháng. Nếu muốn học riêng, hình thức 1 kèm 1 là 400.000 đ/giờ/học viên (chưa gồm phí thuê sân — V2 sẽ hỗ trợ đặt sân thuận tiện).",
+      "Người mới có thể chọn lớp nhóm cơ bản theo số buổi/tuần hoặc hình thức 1 kèm 1 nếu cần lịch riêng. Xem phần Học phí trên trang hoặc liên hệ V2 để nhận báo giá và tư vấn phù hợp với mục tiêu.",
     schemaEligible: true,
   },
   {

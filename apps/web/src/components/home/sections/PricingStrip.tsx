@@ -70,7 +70,7 @@ export function PricingStrip({ tiers, content }: HomepagePricingStripProps) {
   const title = content?.title ?? "Học phí chính hiện tại";
   const secondary =
     content?.secondary ??
-    "Lớp nhóm 2-6 người theo số buổi mỗi tuần, lớp 1 kèm 1 theo lịch riêng.";
+    "Lớp nhóm theo số buổi mỗi tuần và lớp 1 kèm 1 theo lịch riêng.";
 
   return (
     <section className="section pricing-section" id={HOME_SECTION_IDS.pricing}>

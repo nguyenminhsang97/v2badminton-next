@@ -38,7 +38,7 @@ const DEFAULT_DIFFERENTIATORS = [
     Icon: UsersIcon,
   },
   {
-    title: "4 sân thuận tiện",
+    title: "Sân thuận tiện",
     description: "Ưu tiên sân gần nhà hoặc chỗ làm để đi học thuận hơn mỗi tuần.",
     Icon: MapPinIcon,
   },
@@ -56,11 +56,11 @@ export function WhySection({ content }: HomepageWhySectionProps) {
     content?.description ??
     "Mỗi buổi học có mục tiêu rõ, nhóm nhỏ và khung giờ đủ linh hoạt để theo đều.";
 
-  const proofValue = content?.proofStat?.value ?? "2-6";
-  const proofTitle = content?.proofStat?.statTitle ?? "học viên mỗi nhóm";
+  const proofValue = content?.proofStat?.value ?? "Nhóm nhỏ";
+  const proofTitle = content?.proofStat?.statTitle ?? "HLV theo sát từng buổi";
   const proofDescription =
     content?.proofStat?.statDescription ??
-    "HLV có đủ thời gian quan sát và chỉnh kỹ thuật ngay trên sân.";
+    "HLV có thời gian quan sát và chỉnh kỹ thuật ngay trên sân.";
 
   const cmsDiffs = content?.differentiators;
   const differentiators =

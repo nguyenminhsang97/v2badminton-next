@@ -33,6 +33,10 @@ export function StaticTestimonialsSection({
   testimonials,
   content,
 }: HomepageTestimonialsSectionProps) {
+  if (testimonials.length === 0) {
+    return null;
+  }
+
   const canExpand = testimonials.length > DEFAULT_VISIBLE_COUNT;
   const displayedTestimonials = testimonials.slice(0, DEFAULT_VISIBLE_COUNT);
 

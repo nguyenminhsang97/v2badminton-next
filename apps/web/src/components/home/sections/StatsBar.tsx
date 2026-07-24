@@ -41,6 +41,10 @@ export function StatsBar({ content }: HomepageStatsSectionProps) {
           icon: STAT_ICONS[stat.icon as SanityHomepageStatIcon],
         }));
 
+  if (items.length === 0) {
+    return null;
+  }
+
   return (
     <section className="stats-bar" aria-label="Điểm nổi bật của V2 Badminton">
       <div className="stats-bar__inner">

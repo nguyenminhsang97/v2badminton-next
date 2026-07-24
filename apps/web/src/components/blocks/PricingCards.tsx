@@ -55,8 +55,10 @@ function getTierLabel(tier: SanityPricingTier): string {
 
 function getTierTags(tier: SanityPricingTier): readonly string[] {
   switch (tier.kind) {
-    case "group":
-      return ["4-6 học viên", "HLV theo sát"];
+    case "group": {
+      const sizeTag = tier.groupSize?.trim() || "Nhóm nhỏ";
+      return [sizeTag, "HLV theo sát"];
+    }
     case "private":
       return ["Theo lịch riêng", "Tăng tốc kỹ thuật"];
     case "enterprise":

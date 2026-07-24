@@ -64,7 +64,7 @@ export function HeroSection({ campaign, content, facebookUrl }: HomepageHeroSect
     label:
       campaign?.primaryCtaLabel ??
       content?.primaryCtaLabel ??
-      "Đăng ký học thử miễn phí",
+      "Đăng ký học thử",
     trackingName: campaign ? "campaign_primary" : "dang_ky_hoc_thu",
   };
 
