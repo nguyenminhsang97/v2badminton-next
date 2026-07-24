@@ -124,13 +124,15 @@ export function HeroSection({ campaign, content, facebookUrl }: HomepageHeroSect
           </p>
 
           <div className="hero__proof">
-            <div className="hero__avatars" aria-hidden="true">
-              {HERO_SOCIAL_PROOF.map((avatar) => (
-                <span key={avatar.initials} className={`hero__avatar ${avatar.accent}`}>
-                  {avatar.initials}
-                </span>
-              ))}
-            </div>
+            {HERO_SOCIAL_PROOF.length > 0 ? (
+              <div className="hero__avatars" aria-hidden="true">
+                {HERO_SOCIAL_PROOF.map((avatar) => (
+                  <span key={avatar.initials} className={`hero__avatar ${avatar.accent}`}>
+                    {avatar.initials}
+                  </span>
+                ))}
+              </div>
+            ) : null}
             <div className="hero__proof-copy">
               <strong className="hero__proof-score">Kinh nghiệm từ 2012</strong>
               <span className="hero__proof-meta">
