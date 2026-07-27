@@ -1,11 +1,11 @@
 export const DEFAULT_HERO_SUBHEADING =
-  "Lộ trình bài bản cho thiếu nhi, người mới và người đi làm, cùng HLV chứng chỉ BWF tại Bình Thạnh, Thủ Đức.";
+  "Lộ trình bài bản cho trẻ em, người mới và người đi làm, dẫn dắt bởi đội ngũ HLV V2 — trong đó có HLV chứng chỉ BWF Coach Level 1 — tại Bình Thạnh và Thủ Đức.";
 
-export const HERO_SOCIAL_PROOF = [
-  { initials: "NH", accent: "hero__avatar--green" },
-  { initials: "VA", accent: "hero__avatar--indigo" },
-  { initials: "MK", accent: "hero__avatar--violet" },
-  { initials: "TL", accent: "hero__avatar--sky" },
-] as const;
+// Avatar row cũ dùng initials placeholder (NH/VA/MK/TL) chưa có nguồn thật.
+// Gỡ để tránh ngụ ý học viên thật. Bật lại khi có ảnh học viên đã consent.
+export const HERO_SOCIAL_PROOF: ReadonlyArray<{
+  initials: string;
+  accent: string;
+}> = [];
 
 export const HERO_STATUS_LABEL = "HỌC VIỆN CẦU LÔNG UY TÍN TP.HCM";
