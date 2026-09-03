@@ -13,6 +13,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Local agent/worktree artifacts:
+    ".claude/worktrees/**",
+    ".codex/tmp/**",
+    ".codex-artifacts/**",
+    "outputs/**",
     ".playwright-mcp/**",
     "playwright-report/**",
     "test-results/**",
