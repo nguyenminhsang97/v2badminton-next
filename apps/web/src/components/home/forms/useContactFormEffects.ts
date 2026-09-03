@@ -3,7 +3,10 @@
 import { useEffect, useEffectEvent, useRef } from "react";
 import type { SchedulePrefill } from "../conversion/HomepageConversionProvider";
 import type { ContactFormServerState, FormErrors, FormValues } from "./contactForm.shared";
-import { BUSINESS_MESSAGE } from "./contactForm.shared";
+import {
+  BUSINESS_MESSAGE,
+  resolveSchedulePrefillLevel,
+} from "./contactForm.shared";
 
 type UseContactFormEffectsParams = {
   selectedSchedulePrefill: SchedulePrefill | null;
@@ -48,11 +51,8 @@ export function useContactFormEffects({
         ...prev,
         court: selectedSchedulePrefill.courtId,
         time_slot: selectedSchedulePrefill.timeSlotId,
+        level: resolveSchedulePrefillLevel(prev.level, selectedSchedulePrefill),
       };
-
-      if (prev.level === "" && selectedSchedulePrefill.levelHint) {
-        nextValues.level = selectedSchedulePrefill.levelHint;
-      }
 
       if (
         autoPrefilledMessage === null ||
@@ -81,6 +81,10 @@ export function useContactFormEffects({
   const applyBusinessMode = useEffectEvent(() => {
     setOptionalOpen(true);
     setDirtySinceServer(true);
+
+    // Chế độ doanh nghiệp vừa xoá court/time_slot, nên prefill lịch kế tiếp
+    // phải được áp lại kể cả khi user bấm đúng dòng lịch đã bấm trước đó.
+    lastAppliedPrefillKeyRef.current = null;
 
     setValues((prev) => {
       const nextValues: FormValues = {

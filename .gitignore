@@ -1,7 +1,9 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+# Unanchored so workspace installs (apps/*/node_modules, packages/*/node_modules)
+# are ignored too, not just the repo root.
+node_modules/
 /.pnp
 .pnp.*
 .yarn/*
