@@ -1,9 +1,11 @@
 # Production Cutover Guide — `v2badminton.com`
 
 > **Audience:** A junior dev (you) executing the cutover for the first time.
-> **Goal:** Switch `https://v2badminton.com` (currently a stale Cloudflare-cached static page) to the new Next.js 16 production deployment at commit **`cb201f9`**.
+> **Goal:** Switch `https://v2badminton.com` (currently a stale Cloudflare-cached static page) to the new Next.js 16 production deployment.
 > **Total time:** ~3.5 hours spread across 2 calendar days. Active "danger window" is **30 min**.
 > **Rollback time if anything goes wrong:** **2–10 minutes**.
+>
+> **`<CUTOVER_COMMIT>` and `cutover-<YYYY-MM-DD>` are placeholders.** Substitute the commit you are actually shipping — normally the current `main` HEAD on the day you run this — and the date you run it. This guide was first written on 2026-05-11 against commit `cb201f9`; do **not** ship that commit today, it is many features behind.
 
 ---
 
@@ -22,7 +24,7 @@
 ### What you need on hand
 - Access to **Vercel** for project `v2badminton-next` (Settings + Deployments permissions)
 - Access to **Cloudflare** for zone `v2badminton.com` (DNS edit + Page Rules permissions)
-- Access to **Sanity Studio** for this project (to verify lead writes)
+- Access to **Sanity Studio** for this project (to verify CMS content renders; leads do **not** go to Sanity — see §2.3)
 - **A real phone you'll use to receive a test SMS/Zalo** (for end-to-end lead test)
 - A test email address you control (Gmail is fine)
 - This terminal: PowerShell on Windows, opened in the repo root `D:\V2\v2badminton-next`
@@ -30,6 +32,8 @@
   - Session A (30 min, anytime): Phase 0 + Phase 1 + Phase 2
   - Session B (1 hour, off-peak 2–4 AM ICT): Phase 3 + Phase 4 + Phase 5 first hour
   - Background watching (next 23 hours): Phase 5 monitoring
+
+> **Repo layout note:** this repo is an npm workspaces monorepo. The website lives in `apps/web/`, shared schema options in `packages/schema-shared/`. Root scripts (`npm run build`, `npm run lint`, `npm run typecheck`, `npm run verify:production-env`) fan out to the right workspace, so keep running them from the repo root. But **env files must live in `apps/web/`** (`apps/web/.env.local`, `apps/web/.env.production.local`) because npm scripts run with `apps/web/` as the working directory — a `.env.production.local` at the repo root is ignored.
 
 ### Glossary
 - **Apex domain**: `v2badminton.com` (no `www`).
@@ -39,32 +43,38 @@
 - **SSL "Issued"**: Vercel has generated a Let's Encrypt cert for the domain. Required before users can load HTTPS.
 
 ### Cutover commit
-The exact code state going live: **`cb201f9`** (already on `main`). Phase 0 makes this permanent.
+Pick the commit going live before you start — normally the current `main` HEAD:
+
+```bash
+git fetch origin && git rev-parse --short origin/main
+```
+
+Use that value everywhere this guide writes `<CUTOVER_COMMIT>`. Phase 0 makes it permanent with a tag.
 
 ---
 
 ## Phase 0 — Tag the cutover commit (5 min)
 
-**Why:** Even after future commits land on main, you can always check out `cutover-2026-05-11` to see the exact code that went live. Essential for rollback diagnostics.
+**Why:** Even after future commits land on main, you can always check out `cutover-<YYYY-MM-DD>` to see the exact code that went live. Essential for rollback diagnostics.
 
 ```bash
 # In your repo root
 git fetch origin
 git checkout main
 git pull --ff-only origin main
-git tag -a cutover-2026-05-11 cb201f9 -m "Cutover to v2badminton.com production"
-git push origin cutover-2026-05-11
+git tag -a cutover-<YYYY-MM-DD> <CUTOVER_COMMIT> -m "Cutover to v2badminton.com production"
+git push origin cutover-<YYYY-MM-DD>
 ```
 
 **Verify:**
 ```bash
-git tag -l cutover-2026-05-11
+git tag -l cutover-<YYYY-MM-DD>
 # Should output:
-# cutover-2026-05-11
+# cutover-<YYYY-MM-DD>
 ```
 
 ### ✅ Phase 0 checkpoint
-- [ ] Tag `cutover-2026-05-11` exists locally
+- [ ] Tag `cutover-<YYYY-MM-DD>` exists locally
 - [ ] Tag pushed to origin
 - [ ] `git status` shows clean working tree
 - [ ] You are on branch `main`
@@ -110,14 +120,14 @@ cat .vercel/project.json
 ### 1.3 — Pull current Production env to local file
 
 ```bash
-npx vercel@latest env pull .env.production.local --environment=production
+npx vercel@latest env pull apps/web/.env.production.local --environment=production
 ```
 
-This downloads all Production-scope env vars to a local file `.env.production.local`. The file is gitignored — **do not commit it**.
+This downloads all Production-scope env vars to a local file `apps/web/.env.production.local`. The file is gitignored — **do not commit it**.
 
 **Verify the file exists:**
 ```bash
-ls .env.production.local
+ls apps/web/.env.production.local
 # Should list the file (size > 0)
 ```
 
@@ -130,17 +140,17 @@ This is the gate. The script checks every required var has the right value.
 
 **Option A (recommended — uses dotenv-cli):**
 ```bash
-npx dotenv-cli@latest -e .env.production.local -- node scripts/verify-production-env.mjs
+npx dotenv-cli@latest -e apps/web/.env.production.local -- npm run verify:production-env
 ```
 
 **Option B (manual env loading in PowerShell):**
 ```powershell
-Get-Content .env.production.local | ForEach-Object {
+Get-Content apps/web/.env.production.local | ForEach-Object {
   if ($_ -match '^([^#=]+)=(.*)$') {
     Set-Item -Path "env:$($matches[1])" -Value $matches[2]
   }
 }
-node scripts/verify-production-env.mjs
+npm run verify:production-env
 ```
 
 **Expected output:**
@@ -199,15 +209,15 @@ Production cutover env check failed:
 
 ```bash
 # Repeat the pull + verify until the script passes.
-rm .env.production.local
-npx vercel@latest env pull .env.production.local --environment=production
-npx dotenv-cli@latest -e .env.production.local -- node scripts/verify-production-env.mjs
+rm apps/web/.env.production.local
+npx vercel@latest env pull apps/web/.env.production.local --environment=production
+npx dotenv-cli@latest -e apps/web/.env.production.local -- npm run verify:production-env
 ```
 
 ### 1.6 — Clean up the local env file
 
 ```bash
-rm .env.production.local
+rm apps/web/.env.production.local
 ```
 
 > **Why:** It contains production secrets. Even though it's gitignored, you don't want it sitting around on a laptop.
@@ -215,7 +225,7 @@ rm .env.production.local
 ### ✅ Phase 1 checkpoint
 - [ ] `npx vercel@latest env ls production` shows all required vars
 - [ ] `verify-production-env.mjs` exited with `Production cutover env check passed.`
-- [ ] `.env.production.local` deleted
+- [ ] `apps/web/.env.production.local` deleted
 - [ ] Vercel Postgres is linked to the project (Settings → Storage)
 
 ---
@@ -228,7 +238,7 @@ rm .env.production.local
 
 ```bash
 # Make sure you are on the cutover commit
-git checkout cb201f9
+git checkout <CUTOVER_COMMIT>
 
 # Trigger a production deployment from your local code state
 npx vercel@latest --prod
@@ -289,18 +299,20 @@ This is the most important step in Phase 2. The lead form path is the business-c
 3. Complete the Turnstile captcha if shown.
 4. Click submit.
 
+> **Where a lead actually lands:** the pipeline writes to Postgres and then fires the optional email/Telegram notifications (`apps/web/src/lib/leadPipeline.ts`, `apps/web/src/lib/db/`). There is no `lead` document type in Sanity and nothing writes leads there — do not wait for one.
+
 **Pass criteria — split into MUST-PASS (launch blockers) and SHOULD-PASS (ops notifications):**
 
 **MUST-PASS (launch blockers — if any fail, do NOT proceed to cutover):**
 - [ ] Form shows green success state ("Cam on..." or similar)
-- [ ] Open Vercel Dashboard -> Storage -> Postgres -> Data -> `leads` (or similar) table -> row exists for this submission (~10 seconds)
-- [ ] Open Sanity Studio (`/studio`) -> lead document appears under the appropriate type (~30 seconds)
+- [ ] Open Vercel Dashboard -> Storage -> Postgres -> Data -> `leads` table -> row exists for this submission (~10 seconds)
+- [ ] Vercel Function logs (Dashboard -> Functions -> Logs) show the submission handled with no error
 
 **SHOULD-PASS (ops alerts — failures are warnings, not blockers):**
 - [ ] Within 30 seconds: email arrives at `NOTIFY_EMAIL_TO` (check spam folder)
 - [ ] Within 30 seconds: Telegram notification arrives (if `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` configured)
 
-**Why this split:** Email and Telegram are configured as **optional** in `src/lib/env.ts`. The lead is still captured to Postgres + Sanity even when notifications are skipped. A missing email or Telegram alert is an operational gap (you won't get pinged about leads in real time), not a data-loss bug.
+**Why this split:** Email and Telegram are configured as **optional** in `apps/web/src/lib/env.ts`. The lead is still captured to Postgres even when notifications are skipped. A missing email or Telegram alert is an operational gap (you won't get pinged about leads in real time), not a data-loss bug.
 
 > **STOP IF** any MUST-PASS check fails. The form-submission red-error case is almost always a missing/wrong env (most often `TURNSTILE_SECRET_KEY`, `FORM_TOKEN_SECRET`, or `POSTGRES_URL`). Check Vercel Function logs: Dashboard -> Functions -> Logs.
 >
@@ -324,7 +336,7 @@ In Chrome on the Vercel URL:
 - [ ] All 8 smoke-test URLs loaded cleanly
 - [ ] Test lead form submission succeeded (green state)
 - [ ] Test lead persisted to Postgres `leads` table
-- [ ] Test lead appeared in Sanity Studio
+- [ ] No error in the Vercel Function logs for the submission
 
 **SHOULD-PASS (proceed but flag as known-issue):**
 - [ ] Email notification received
@@ -444,14 +456,14 @@ If found: **toggle OFF** (don't delete yet — easier to restore if Vercel www r
 ```powershell
 # Confirm you're still on the cutover commit
 git log -1 --oneline
-# Should show: cb201f9 fix(ui): sprint 3 - polish and a11y conventions (#36)
+# Should show: <CUTOVER_COMMIT> plus that commit's subject line
 
 # Confirm the production deployment from Phase 2 is still the active production deployment
 npx vercel@latest list v2badminton-next --environment production --status READY | Select-Object -First 10
 # The top row should be the deployment URL from Phase 2.1 (which you saved as $env:CUTOVER_DEPLOY_URL).
 ```
 
-> **STOP IF** the top production deployment is not the one you smoke-tested in Phase 2.1. Re-run `npx vercel@latest --prod` from the `cb201f9` checkout before proceeding.
+> **STOP IF** the top production deployment is not the one you smoke-tested in Phase 2.1. Re-run `npx vercel@latest --prod` from the `<CUTOVER_COMMIT>` checkout before proceeding.
 
 ### 4.2 — Cloudflare DNS edits (5 min)
 
@@ -552,7 +564,7 @@ Repeat the entire Phase 2.2 smoke test, but using **`https://v2badminton.com`** 
 | `https://v2badminton.com/hoc-cau-long-cho-nguoi-moi/` | Money page loads | MUST-PASS |
 | `https://v2badminton.com/studio` | Sanity Studio loads (login may be needed) | MUST-PASS |
 | `https://www.v2badminton.com/` | Redirects 308 to `https://v2badminton.com/` (NOT `/s`) | MUST-PASS |
-| Lead form submit: green success + row in Postgres + doc in Sanity | Lead is persisted | **MUST-PASS** |
+| Lead form submit: green success + row in Postgres | Lead is persisted | **MUST-PASS** |
 | Lead form submit: email arrived | Notification works | SHOULD-PASS |
 | Lead form submit: Telegram arrived | Notification works | SHOULD-PASS |
 
@@ -571,7 +583,7 @@ You can come back to this 48h after cutover. For now leave DNS-only (gray cloud)
 - [ ] `nslookup` confirms Vercel IPs / CNAME
 - [ ] `vercel domains inspect` shows Valid + Issued for both apex + www
 - [ ] All MUST-PASS smoke tests passed on real domain
-- [ ] Real test lead persisted to Postgres + Sanity
+- [ ] Real test lead persisted to Postgres
 
 **SHOULD-PASS (warning, not blocker):**
 - [ ] Email notification received
@@ -634,7 +646,7 @@ Performance scores should be similar or better. SEO score should be ≥ 95.
 
 ### Scenario A: A new bad deploy happens AFTER cutover and you need to fall back to the cutover deploy
 
-**Use case:** You are days post-cutover. Someone merges code. A new production deployment goes out. Something breaks. You want to rollback to the cutover deploy (`cb201f9`).
+**Use case:** You are days post-cutover. Someone merges code. A new production deployment goes out. Something breaks. You want to rollback to the cutover deploy (`<CUTOVER_COMMIT>`).
 
 **Action: Promote the cutover deployment URL.** No DNS change. ~30 seconds.
 
@@ -648,7 +660,7 @@ npx vercel@latest promote https://v2badminton-next-<CUTOVER-HASH>.vercel.app
 
 Or via Vercel Dashboard:
 1. Deployments tab
-2. Find the cutover commit `cb201f9` deployment (or a later known-good)
+2. Find the cutover commit `<CUTOVER_COMMIT>` deployment (or a later known-good)
 3. ... menu on that row -> **Promote to Production**
 
 The domain immediately serves the chosen deployment. DNS unchanged.
@@ -716,7 +728,7 @@ nslookup -type=TXT v2badminton.com 1.1.1.1
 - [ ] Update Sentry project settings → Allowed Domains → ensure `v2badminton.com` listed
 - [ ] Update Turnstile widget settings → Domains → ensure `v2badminton.com` listed
 - [ ] Update Resend → Verified Sender Domain → ensure SPF/DKIM still valid
-- [ ] Push the `cutover-2026-05-11` tag note to internal team chat for reference
+- [ ] Push the `cutover-<YYYY-MM-DD>` tag note to internal team chat for reference
 - [ ] Schedule a Lighthouse run weekly via GitHub Actions (optional but nice)
 
 ---
@@ -753,7 +765,7 @@ Stop and escalate to a senior dev / project owner if:
 
 ```powershell
 # Recheck production env
-npx dotenv-cli -e .env.production.local -- node scripts/verify-production-env.mjs
+npx dotenv-cli -e apps/web/.env.production.local -- npm run verify:production-env
 
 # List recent ready production deployments
 npx vercel@latest list v2badminton-next --environment production --status READY | Select-Object -First 10
@@ -837,4 +849,4 @@ npx vercel@latest env ls production
 
 ## Done. The site is now live on `v2badminton.com`
 
-Update internal Slack/Telegram: "Cutover complete at <timestamp>. Tag: `cutover-2026-05-11`. Commit: `cb201f9`. Last-known-good Vercel deploy: `$CUTOVER_DEPLOY_URL`. Rollback procedure documented in `docs/cutover-guide.md`. First 24h monitoring active."
+Update internal Slack/Telegram: "Cutover complete at <timestamp>. Tag: `cutover-<YYYY-MM-DD>`. Commit: `<CUTOVER_COMMIT>`. Last-known-good Vercel deploy: `$CUTOVER_DEPLOY_URL`. Rollback procedure documented in `docs/cutover-guide.md`. First 24h monitoring active."
