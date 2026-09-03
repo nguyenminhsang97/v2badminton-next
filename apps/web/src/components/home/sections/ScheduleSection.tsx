@@ -32,14 +32,14 @@ function buildSchedulePrefill(
     return null;
   }
 
-  const isBasicOnly =
-    scheduleBlock.levels.length === 1 && scheduleBlock.levels[0] === "co_ban";
+  const levels = scheduleBlock.levels;
 
   return {
     courtId,
     timeSlotId: scheduleBlock.timeSlotId,
     message: `Quan tâm lịch: ${scheduleBlock.dayGroup} | ${scheduleBlock.timeLabel} | ${scheduleBlock.locationName}`,
-    levelHint: isBasicOnly ? "co_ban" : undefined,
+    levels,
+    levelHint: levels.length === 1 ? levels[0] : undefined,
   };
 }
 

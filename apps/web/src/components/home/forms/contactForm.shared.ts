@@ -44,6 +44,32 @@ export const INITIAL_VALUES: FormValues = {
 
 export const INITIAL_SERVER_STATE = INITIAL_SUBMIT_LEAD_RESULT;
 
+type SchedulePrefillLevelSource = {
+  levels: readonly ScheduleLevel[];
+  levelHint?: ScheduleLevel;
+};
+
+/**
+ * Quyết định `level` sau khi user bấm một dòng lịch.
+ *
+ * Dòng lịch được bấm là nguồn chân lý: giữ trình độ user đã chọn nếu dòng đó
+ * thực sự nhận trình độ đó, ngược lại thay bằng trình độ duy nhất của dòng
+ * (nếu có) hoặc để trống cho user tự chọn.
+ *
+ * Nếu không có bước này, `level` từ chế độ doanh nghiệp sẽ kẹt lại và lead
+ * chọn lịch nhóm bị `buildLeadType()` phân loại nhầm thành `corporate`.
+ */
+export function resolveSchedulePrefillLevel(
+  previousLevel: FormValues["level"],
+  prefill: SchedulePrefillLevelSource,
+): FormValues["level"] {
+  if (previousLevel !== "" && prefill.levels.includes(previousLevel)) {
+    return previousLevel;
+  }
+
+  return prefill.levelHint ?? "";
+}
+
 export function buildLeadType(
   level: LeadFormValues["level"],
   businessMode: boolean,

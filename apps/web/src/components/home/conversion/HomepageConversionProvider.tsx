@@ -15,6 +15,9 @@ export type SchedulePrefill = {
   courtId: CourtId;
   timeSlotId: TimeSlotId;
   message: string;
+  /** Trình độ mà dòng lịch được chọn thực sự nhận. */
+  levels: ScheduleLevel[];
+  /** Chỉ có khi dòng lịch chỉ mở đúng một trình độ. */
   levelHint?: ScheduleLevel;
 };
 
