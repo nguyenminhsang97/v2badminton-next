@@ -1,0 +1,48 @@
+{
+  "name": "@v2/web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "sanity:dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "next typegen && tsc --noEmit --pretty false",
+    "verify:production-env": "node scripts/verify-production-env.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:mobile": "playwright test --project=mobile-chrome --project=mobile-safari",
+    "test:mobile:headed": "playwright test --project=mobile-chrome --project=mobile-safari --headed"
+  },
+  "dependencies": {
+    "@sanity/icons": "^3.7.4",
+    "@sanity/vision": "^5.28.0",
+    "@sentry/nextjs": "^10.51.0",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.37.0",
+    "@v2/schema-shared": "*",
+    "@vercel/postgres": "^0.10.0",
+    "jose": "^6.2.3",
+    "next": "16.2.4",
+    "next-sanity": "^12.3.1",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "resend": "^6.12.2",
+    "sanity": "^5.23.0",
+    "styled-components": "^6.4.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^6.0.2",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.4",
+    "playwright": "^1.59.1",
+    "typescript": "^5",
+    "vitest": "^4.1.8"
+  }
+}

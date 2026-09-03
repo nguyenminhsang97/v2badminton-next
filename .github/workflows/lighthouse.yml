@@ -34,8 +34,8 @@ jobs:
       - name: Restore Next.js cache
         uses: actions/cache@v5
         with:
-          path: ${{ github.workspace }}/.next/cache
-          key: ${{ runner.os }}-nextjs-lhci-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          path: apps/web/.next/cache
+          key: ${{ runner.os }}-nextjs-lhci-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('apps/web/**/*.{js,jsx,ts,tsx}') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-lhci-${{ hashFiles('**/package-lock.json') }}-
 
@@ -43,27 +43,31 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build
+        run: npm run -w apps/web build
 
       - name: Start Next.js
+        working-directory: apps/web
         run: npm run start -- -H 127.0.0.1 -p 3000 > next-start.log 2>&1 &
 
       - name: Wait for app
         run: npx wait-on@9.0.5 http://127.0.0.1:3000/
 
       - name: Collect mobile reports
+        working-directory: apps/web
         run: npx @lhci/cli@0.15.1 collect --config=.lighthouserc.mobile.json
 
       - name: Collect desktop reports
+        working-directory: apps/web
         run: npx @lhci/cli@0.15.1 collect --config=.lighthouserc.desktop.json --additive
 
       - name: Upload temporary Lighthouse reports
+        working-directory: apps/web
         run: npx @lhci/cli@0.15.1 upload --target=temporary-public-storage
 
       - name: Upload raw Lighthouse artifacts
         uses: actions/upload-artifact@v7
         with:
           name: lighthouse-reports
-          path: .lighthouseci
+          path: apps/web/.lighthouseci
           if-no-files-found: error
           include-hidden-files: true

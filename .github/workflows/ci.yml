@@ -31,13 +31,24 @@ jobs:
       - name: Restore Next.js cache
         uses: actions/cache@v5
         with:
-          path: ${{ github.workspace }}/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          path: apps/web/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('apps/web/**/*.{js,jsx,ts,tsx}') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
 
       - name: Install dependencies
         run: npm ci
+
+      # Workaround for npm/cli#4828: the package-lock.json was generated on
+      # Windows. While its optionalDependencies field correctly lists every
+      # @rolldown/binding-* variant, the `packages` resolution section only
+      # has an install record for @rolldown/binding-win32-x64-msvc. `npm ci`
+      # on Linux therefore can't install the Linux binding, and Vitest 4.x
+      # (which uses Rolldown internally) crashes at startup. Explicitly
+      # install the Linux binding for this runner without modifying the
+      # committed lockfile.
+      - name: Install Linux Rolldown binding (npm/cli#4828 workaround)
+        run: npm install --no-save @rolldown/binding-linux-x64-gnu
 
       - name: Lint
         run: npm run lint
@@ -47,3 +58,6 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Test
+        run: npm test

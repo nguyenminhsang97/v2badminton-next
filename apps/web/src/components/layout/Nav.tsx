@@ -1,0 +1,301 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useMemo, useRef, useState } from "react";
+import type { SiteChromeSettings } from "@/components/layout/siteSettings";
+import { FeatherMarkIcon, PhoneIcon } from "@/components/ui/BrandIcons";
+import { HOME_SECTION_IDS, toHomepageHash } from "@/lib/anchors";
+import { coreRoutes } from "@/lib/routes";
+import { trackEvent } from "@/lib/tracking";
+
+// PR4 (2026-06-17): nav entry for /san-cau-long/ is staged but hidden.
+// Flip to `true` in PR5c, AFTER the san-cau-long hub + >=3 area nodes + >=5 courts
+// are published (locked-spec Q4 rule). One-line change; no other edits required.
+const EXPOSE_SAN_CAU_LONG = false;
+
+const primaryLinks = [
+  {
+    href: toHomepageHash(HOME_SECTION_IDS.courses),
+    label: "Khóa học",
+    kind: "anchor" as const,
+  },
+  {
+    href: toHomepageHash(HOME_SECTION_IDS.pricing),
+    label: "Học phí",
+    kind: "anchor" as const,
+  },
+  {
+    href: "/huan-luyen-vien/",
+    label: "HLV",
+    kind: "route" as const,
+  },
+  {
+    href: toHomepageHash(HOME_SECTION_IDS.locations),
+    label: "Sân tập",
+    kind: "anchor" as const,
+  },
+  {
+    href: toHomepageHash(HOME_SECTION_IDS.schedule),
+    label: "Lịch tập",
+    kind: "anchor" as const,
+  },
+  {
+    href: "/san-cau-long/",
+    label: "Sân cầu lông",
+    kind: "route" as const,
+  },
+  {
+    href: toHomepageHash(HOME_SECTION_IDS.enterprise),
+    label: "Doanh nghiệp",
+    kind: "anchor" as const,
+  },
+  { href: "/blog/", label: "Blog", kind: "route" as const },
+  {
+    href: toHomepageHash(HOME_SECTION_IDS.contact),
+    label: "Liên hệ",
+    kind: "anchor" as const,
+  },
+] as const;
+
+type NavProps = {
+  siteSettings: Pick<
+    SiteChromeSettings,
+    "siteName" | "phoneDisplay" | "phoneE164" | "nav"
+  >;
+  showBlogLink: boolean;
+  showCoachesLink: boolean;
+};
+
+export function Nav({ siteSettings, showBlogLink, showCoachesLink }: NavProps) {
+  const pathname = usePathname();
+  const mobileNavRef = useRef<HTMLDetailsElement>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const normalizedPath = withTrailingSlash(pathname);
+  const pageType = coreRoutes.find(
+    (route) => route.path === normalizedPath,
+  )?.pageType;
+
+  const navLinks = useMemo(
+    () =>
+      primaryLinks
+        .filter(
+          (link) =>
+            (link.href !== "/huan-luyen-vien/" || showCoachesLink) &&
+            (link.href !== "/blog/" || showBlogLink) &&
+            (link.href !== "/san-cau-long/" || EXPOSE_SAN_CAU_LONG),
+        )
+        .map((link) => ({
+          ...link,
+          active: isNavLinkActive(link, normalizedPath),
+        })),
+    [normalizedPath, showBlogLink, showCoachesLink],
+  );
+
+  useEffect(() => {
+    mobileNavRef.current?.removeAttribute("open");
+    requestAnimationFrame(() => setIsMobileMenuOpen(false));
+  }, [pathname]);
+
+  useEffect(() => {
+    const forceSolid = normalizedPath !== "/";
+    const viewport = window.visualViewport;
+
+    function syncScrollState() {
+      const scrollTop = Math.max(
+        window.scrollY,
+        document.documentElement.scrollTop,
+        document.body.scrollTop,
+      );
+
+      setIsScrolled(forceSolid || scrollTop > 8);
+    }
+
+    syncScrollState();
+    window.addEventListener("scroll", syncScrollState, { passive: true });
+    document.addEventListener("scroll", syncScrollState, { passive: true });
+    window.addEventListener("resize", syncScrollState, { passive: true });
+    window.addEventListener("pageshow", syncScrollState);
+    viewport?.addEventListener("scroll", syncScrollState, { passive: true });
+    viewport?.addEventListener("resize", syncScrollState, { passive: true });
+    requestAnimationFrame(() => syncScrollState());
+
+    return () => {
+      window.removeEventListener("scroll", syncScrollState);
+      document.removeEventListener("scroll", syncScrollState);
+      window.removeEventListener("resize", syncScrollState);
+      window.removeEventListener("pageshow", syncScrollState);
+      viewport?.removeEventListener("scroll", syncScrollState);
+      viewport?.removeEventListener("resize", syncScrollState);
+    };
+  }, [normalizedPath]);
+
+  function trackNavCtaClick() {
+    trackEvent("cta_click", {
+      cta_name: "dang_ky_ngay",
+      cta_location: "nav",
+      page_type: pageType,
+      page_path: pathname ?? "/",
+    });
+  }
+
+  function closeMobileMenu() {
+    mobileNavRef.current?.removeAttribute("open");
+    setIsMobileMenuOpen(false);
+  }
+
+  return (
+    <header
+      className={`site-header ${isScrolled ? "site-header--scrolled" : "site-header--floating"}`}
+    >
+      <div className="site-header__inner">
+        <Link href="/" className="site-logo" aria-label={siteSettings.siteName}>
+          <span className="site-logo__mark">
+            <FeatherMarkIcon className="site-logo__icon" />
+          </span>
+          <span className="site-logo__copy">
+            <strong className="site-logo__title">
+              {siteSettings.siteName}
+            </strong>
+            <span className="site-logo__subtitle">BÌNH THẠNH · THỦ ĐỨC</span>
+          </span>
+        </Link>
+
+        <div className="site-header__desktop-shell">
+          <nav
+            className="site-nav site-nav--desktop"
+            aria-label="Điều hướng chính"
+          >
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`site-nav__link ${link.active ? "site-nav__link--active" : ""}`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="site-nav__actions">
+            <a
+              href={`tel:${siteSettings.phoneE164}`}
+              className="site-nav__phone"
+              onClick={() =>
+                trackEvent("contact_click", {
+                  method: "phone",
+                  page_type: pageType,
+                  page_path: pathname ?? "/",
+                })
+              }
+            >
+              <PhoneIcon className="site-nav__phone-icon" />
+              <strong>{siteSettings.phoneDisplay}</strong>
+            </a>
+            <Link
+              href={toHomepageHash(HOME_SECTION_IDS.contact)}
+              className="site-nav__cta"
+              data-cta-name="dang_ky_ngay"
+              data-cta-location="nav"
+              onClick={trackNavCtaClick}
+            >
+              {siteSettings.nav.ctaLabel}
+            </Link>
+          </div>
+        </div>
+
+        <details
+          ref={mobileNavRef}
+          className="site-nav site-nav--mobile"
+          onToggle={(event) => setIsMobileMenuOpen(event.currentTarget.open)}
+        >
+          <summary className="site-nav__summary" aria-label="Mở menu">
+            <span />
+            <span />
+            <span />
+          </summary>
+          <div className="site-nav__panel">
+            <p className="site-nav__group-title">Menu</p>
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`site-nav__mobile-link ${
+                  link.active ? "site-nav__mobile-link--active" : ""
+                }`}
+                onClick={closeMobileMenu}
+              >
+                {link.label}
+              </Link>
+            ))}
+
+            <a
+              href={`tel:${siteSettings.phoneE164}`}
+              className="site-nav__mobile-phone"
+              onClick={() =>
+                trackEvent("contact_click", {
+                  method: "phone",
+                  page_type: pageType,
+                  page_path: pathname ?? "/",
+                })
+              }
+            >
+              Gọi {siteSettings.phoneDisplay}
+            </a>
+
+            <Link
+              href={toHomepageHash(HOME_SECTION_IDS.contact)}
+              className="site-nav__mobile-cta"
+              data-cta-name="dang_ky_ngay"
+              data-cta-location="nav"
+              onClick={() => {
+                trackNavCtaClick();
+                closeMobileMenu();
+              }}
+            >
+              {siteSettings.nav.ctaLabel}
+            </Link>
+          </div>
+        </details>
+        {isMobileMenuOpen ? (
+          <button
+            type="button"
+            className="site-nav__scrim"
+            aria-label="Đóng menu"
+            onClick={closeMobileMenu}
+          />
+        ) : null}
+      </div>
+    </header>
+  );
+}
+
+function withTrailingSlash(pathname: string | null): string {
+  if (!pathname || pathname === "/") {
+    return "/";
+  }
+
+  return pathname.endsWith("/") ? pathname : `${pathname}/`;
+}
+
+function isNavLinkActive(
+  link: (typeof primaryLinks)[number],
+  normalizedPath: string,
+): boolean {
+  if (link.kind !== "route") {
+    return false;
+  }
+
+  const resolvedHref = withTrailingSlash(link.href.split("#")[0] || "/");
+
+  if (resolvedHref === "/blog/") {
+    return normalizedPath.startsWith("/blog/");
+  }
+
+  if (resolvedHref === "/san-cau-long/") {
+    return normalizedPath.startsWith("/san-cau-long/");
+  }
+
+  return resolvedHref === normalizedPath;
+}
