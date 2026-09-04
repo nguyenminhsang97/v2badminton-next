@@ -1,5 +1,7 @@
 # Blog + Content Hub Strategy for SEO, AEO, and Future CMS
 
+> **2026-07-09 draft addendum:** [Blog vs Content Platform Addendum](./blog-content-platform-addendum-2026-07-09.md) narrows blog scope to news-only and moves evergreen content to the content platform. Do not implement conflicting blog-route work until the addendum is approved or rejected.
+
 > **Revision 2** — incorporates business decisions on the 12 questions from §14 of the original memo. Key shift: **all blog publishing is deferred to a post-CMS-migration launch**. The current 30-day SEO + AEO plan focuses on service pages, About page, coach/trust content, schema, and indexing cleanup — no blog posts produced during the 30 days.
 >
 > **Status:** Approved canonical blog strategy memo. Incorporated by reference into the [Unified SEO + AEO 30-Day Plan](./seo-aeo-30-day-unified-plan.md). Implementation is deferred until CMS migration / post-CMS blog launch.

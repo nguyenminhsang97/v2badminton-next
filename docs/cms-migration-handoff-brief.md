@@ -1,5 +1,7 @@
 # CMS Migration Handoff Brief
 
+> **2026-07-09 draft addendum:** [Blog vs Content Platform Addendum](./blog-content-platform-addendum-2026-07-09.md) supersedes the evergreen blog-category migration direction if approved. Do not implement `/blog/<category>/<slug>/` work before this decision is resolved.
+
 > **Document type:** Handoff brief — decisions and pointers only. This is NOT the CMS migration plan. It does not contain implementation code, GROQ queries, or Sanity Studio configuration. Those belong in a separate CMS migration plan written by the migration team.
 >
 > **Produced by:** Week 4 (W4.1) of the [Unified SEO + AEO 30-Day Plan](./seo-aeo-30-day-unified-plan.md)
