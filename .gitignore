@@ -65,3 +65,7 @@ next-env.d.ts
 
 .vercel
 .claude/
+
+# local MCP server config — often holds API tokens, and this repo is public.
+# Commit only a template that references env vars (git add -f), never real tokens.
+.mcp.json
