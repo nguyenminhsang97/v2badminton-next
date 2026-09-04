@@ -1,3 +1,43 @@
+## Status
+
+`OPEN — RAISED` by the `S12` post-28-day review on 2026-09-04. This is the only
+tracked perf metric that has moved **backwards** since the ticket was filed, and
+it is now the top remaining perf ticket.
+
+| | Homepage decoded HTML |
+|---|---|
+| Recorded when this ticket was filed | 143.8 KiB |
+| **Production, measured 2026-09-04** | **194.7 KiB** |
+| Success criterion | < 80 KiB |
+
+That is +50.9 KiB (+35 %) against a target that is now 2.4× away.
+
+### New evidence for the stated hypothesis
+
+The hypothesis in this ticket — that Sanity-backed sections serialize too much
+into the initial server HTML — is supported by a build comparison rather than left
+as a guess. A local production build made **without Sanity credentials** (the env
+files sit at the repo root, where npm scripts do not read them, so the build
+renders fallback content) prerenders the homepage at **136.1 KiB**, versus
+194.7 KiB live. Roughly **~59 KiB of the live homepage is CMS-sourced content and
+its serialization.**
+
+The same pattern is larger on money pages: `/hoc-cau-long-cho-nguoi-moi/` is
+34.9 KiB from that CMS-less build and **102.2 KiB** in production.
+
+The practical consequence: this cost **scales with published CMS content**, so it
+grows as editors publish and will not self-correct. That is what moves this ticket
+up rather than leaving it as generic post-launch polish.
+
+### Caveat on the comparison
+
+The CMS-less local build is not a clean before/after — it isolates "with CMS
+content" vs "without", not drift over time. It bounds where the bytes come from;
+it does not prove when they arrived. A dated re-measure of production is the only
+honest trend line, and this entry is the first one.
+
+---
+
 ## Context
 Homepage HTML measured about `143.8 KiB` decoded during the launch perf pass, versus about `38.4 KiB` on representative money pages. The extra `~105 KiB` is now the clearest remaining homepage-specific cost after C1/C2 removed the major client-hydration bottlenecks. This aligns with Finding H5 from `tickets/S9-HOMEPAGE-INVESTIGATION.md`: the homepage likely serializes too much section data into the initial server HTML.
 
