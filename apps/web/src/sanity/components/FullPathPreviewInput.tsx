@@ -34,6 +34,7 @@ function normalizePath(input: string): string {
 type ParentDoc = {
   _id?: string;
   slug?: { current?: string };
+  fullPath?: { current?: string };
   parentHub?: { _ref?: string };
   parentNode?: { _ref?: string };
 };
@@ -44,17 +45,43 @@ type ConflictStatus =
   | { state: "conflict"; name: string }
   | { state: "error" };
 
+type PublishedState = "unknown" | "unpublished" | "published";
+
 export function FullPathPreviewInput(props: SlugInputProps) {
   const client = useClient({ apiVersion: API_VERSION });
   const doc = useFormValue([]) as ParentDoc;
 
   const currentSlug = doc?.slug?.current ?? "";
+  const currentFullPath = doc?.fullPath?.current ?? "";
   const parentHubRef = doc?.parentHub?._ref;
   const parentNodeRef = doc?.parentNode?._ref;
   const docId = doc?._id?.replace(/^drafts\./, "") ?? "";
 
   const [parentPath, setParentPath] = useState("/");
   const [status, setStatus] = useState<ConflictStatus>({ state: "idle" });
+  const [publishedState, setPublishedState] =
+    useState<PublishedState>("unknown");
+
+  // A published twin means this URL has already gone public. Lock the input
+  // in Studio; path changes should go through a redirect + rename runbook.
+  useEffect(() => {
+    let cancelled = false;
+
+    const resolvePublishedState: Promise<PublishedState> = docId
+      ? client
+          .fetch<boolean>("defined(*[_id == $id][0]._id)", { id: docId })
+          .then((exists) => (exists ? "published" : "unpublished"))
+          .catch(() => "unknown")
+      : Promise.resolve("unpublished");
+
+    resolvePublishedState.then((nextState) => {
+      if (!cancelled) setPublishedState(nextState);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [client, docId]);
 
   // Resolve parent fullPath (hub OR nearest node) from Sanity.
   // Uses Promise.resolve("/") for the no-parent (hub) case to keep all
@@ -86,6 +113,11 @@ export function FullPathPreviewInput(props: SlugInputProps) {
   const predictedPath = currentSlug
     ? normalizePath(`${parentPath.replace(/\/$/, "")}/${currentSlug}`)
     : null;
+  const isPathLocked =
+    publishedState === "published" && currentFullPath.trim().length > 0;
+  const displayPath = isPathLocked
+    ? normalizePath(currentFullPath)
+    : predictedPath;
 
   // Check route uniqueness whenever predicted path changes.
   // All setState calls are inside Promise callbacks — avoids react-hooks/set-state-in-effect.
@@ -93,7 +125,7 @@ export function FullPathPreviewInput(props: SlugInputProps) {
   useEffect(() => {
     let cancelled = false;
 
-    const resolveStatus: Promise<ConflictStatus> = predictedPath
+    const resolveStatus: Promise<ConflictStatus> = displayPath
       ? client
           .fetch<Array<{ title?: string }>>(
             `*[
@@ -103,7 +135,7 @@ export function FullPathPreviewInput(props: SlugInputProps) {
               )
             ][0...1]{title}`,
             {
-              path: predictedPath,
+              path: displayPath,
               id: docId,
               draftId: `drafts.${docId}`,
               types: [...ROUTABLE_TYPES],
@@ -126,16 +158,16 @@ export function FullPathPreviewInput(props: SlugInputProps) {
     return () => {
       cancelled = true;
     };
-  }, [client, predictedPath, docId]);
+  }, [client, displayPath, docId]);
 
   // Split path into segments for color coding
-  const segments = predictedPath
-    ? predictedPath.replace(/^\/|\/$/g, "").split("/")
+  const segments = displayPath
+    ? displayPath.replace(/^\/|\/$/g, "").split("/")
     : [];
 
   return (
     <div>
-      {predictedPath && segments.length > 0 && (
+      {displayPath && segments.length > 0 && (
         <div style={{ marginBottom: "8px" }}>
           {/* Color-segmented URL preview */}
           <div
@@ -185,11 +217,26 @@ export function FullPathPreviewInput(props: SlugInputProps) {
               <span style={{ color: "#999" }}>Could not check for conflicts</span>
             )}
           </div>
+
+          {isPathLocked && (
+            <div
+              style={{
+                marginTop: "6px",
+                color: "#92400e",
+                fontSize: "12px",
+                lineHeight: 1.4,
+              }}
+            >
+              URL đã khoá vì tài liệu đã từng publish. Nếu cần đổi đường dẫn,
+              tạo route_redirect từ URL cũ sang URL mới trước, rồi thực hiện
+              rename trong ticket riêng. Xem docs/cms/url-rename-runbook.md.
+            </div>
+          )}
         </div>
       )}
 
       {/* Default Generate button + slug widget */}
-      {props.renderDefault(props)}
+      {isPathLocked ? null : props.renderDefault(props)}
     </div>
   );
 }

@@ -22,6 +22,38 @@ export const ROUTABLE_TYPES = [
   "court",
 ] as const;
 
+// File-routed pages are matched before the content catch-all. A CMS fullPath or
+// route_redirect source on these paths would never behave as editors expect.
+export const FILE_ROUTED_PATHS = [
+  "/",
+  "/blog/",
+  "/cau-long-doanh-nghiep/",
+  "/chinh-sach-bao-mat/",
+  "/chinh-sach-bien-tap/",
+  "/gia-hoc-cau-long-tphcm/",
+  "/gioi-thieu/",
+  "/hoc-cau-long-1-kem-1/",
+  "/hoc-cau-long-cho-nguoi-moi/",
+  "/huan-luyen-vien/",
+  "/lop-cau-long-binh-thanh/",
+  "/lop-cau-long-buoi-toi/",
+  "/lop-cau-long-cho-nguoi-di-lam/",
+  "/lop-cau-long-cuoi-tuan/",
+  "/lop-cau-long-thu-duc/",
+  "/lop-cau-long-tre-em/",
+  "/lop-he-cau-long-tphcm/",
+  "/team-building-cau-long/",
+] as const;
+
+const CODE_RESERVED_PREFIXES = [
+  "/api/",
+  "/blog/",
+  "/dich-vu/",
+  "/khuyen-mai/",
+  "/san-pham/",
+  "/studio/",
+] as const;
+
 export const CONTENT_STATUS_OPTIONS = [
   { title: "Nháp", value: "draft" },
   { title: "Đã đăng", value: "published" },
@@ -267,6 +299,21 @@ export async function findPathConflict(
   context: RouteValidationContext,
 ): Promise<string | true> {
   const normalized = normalizePath(path);
+  if (
+    FILE_ROUTED_PATHS.includes(
+      normalized as (typeof FILE_ROUTED_PATHS)[number],
+    )
+  ) {
+    return `Đường dẫn "${normalized}" đã thuộc về một file route trong code. Hãy dùng next.config.ts redirects nếu cần đổi URL này. Xem docs/cms/url-rename-runbook.md.`;
+  }
+
+  const reservedPrefix = CODE_RESERVED_PREFIXES.find(
+    (prefix) => normalized.startsWith(prefix),
+  );
+  if (reservedPrefix) {
+    return `Đường dẫn "${normalized}" nằm trong prefix code-reserved "${reservedPrefix}". CMS route_redirect không áp dụng ở đây; hãy dùng next.config.ts redirects nếu cần đổi URL này. Xem docs/cms/url-rename-runbook.md.`;
+  }
+
   const rawId = context.document?._id?.replace(/^drafts\./, "") ?? "";
   const client = context.getClient({
     apiVersion: SANITY_VALIDATION_API_VERSION,

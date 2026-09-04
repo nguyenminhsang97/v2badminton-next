@@ -27,6 +27,20 @@ const CSP_REPORT_ONLY = [
   "frame-ancestors 'self'",
 ].join("; ");
 
+type FileRouteRedirect = {
+  source: string;
+  destination: string;
+  permanent: boolean;
+};
+
+// File-routed page URL moves belong here because CMS route_redirect records are
+// resolved only by the content catch-all, after filesystem routes have matched.
+// Follow docs/cms/url-rename-runbook.md before adding entries.
+const FILE_ROUTE_REDIRECTS: FileRouteRedirect[] = [
+  // Example:
+  // { source: "/old-money-page/", destination: "/new-money-page/", permanent: true },
+];
+
 const nextConfig: NextConfig = {
   allowedDevOrigins: ["127.0.0.1"],
   // Workspace package consumed as source via tsconfig paths; npm symlinks it
@@ -51,6 +65,9 @@ const nextConfig: NextConfig = {
   },
   trailingSlash: true,
   poweredByHeader: false,
+  async redirects() {
+    return FILE_ROUTE_REDIRECTS;
+  },
   async headers() {
     return [
       {
