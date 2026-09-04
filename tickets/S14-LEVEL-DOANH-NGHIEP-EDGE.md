@@ -70,4 +70,10 @@ Compatibility-based resolution — the clicked schedule row is the source of tru
 
 ## Notes
 This was not a launch blocker, but it is exactly the kind of edge that can confuse high-intent leads if
-left untracked — and it was corrupting lead classification in the database, not just the UI.
+left untracked. The blast radius reached the database and the notification payload, not just the UI.
+
+**Production impact was potential, not realised.** Checked against the Neon `leads` table on
+2026-09-04: 27 leads since 2026-04-07, **zero** rows with `level = 'doanh_nghiep'`. Five leads carry a
+level plus court and time slot (the schedule-prefill path), the other 22 left the optional block empty.
+So no stored lead was ever mis-tagged corporate — the fix closes the hole before it cost a real lead
+rather than repairing damage already done.
