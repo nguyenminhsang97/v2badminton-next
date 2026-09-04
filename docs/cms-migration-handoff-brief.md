@@ -1,5 +1,14 @@
 # CMS Migration Handoff Brief
 
+> ⚠️ **Status as of 2026-09-04 — the migration this brief hands off has already happened, differently.**
+> Content shipped as `content_article` + `content_hub` + `content_node` under hub URLs
+> (`/ky-thuat-cau-long/…`, `/tin-v2/…`), not as `/blog/<category>/<slug>/`. Seven articles are live and
+> indexed. **Q13 in §4 is moot in its original form** — there is no legacy `post` content to redirect;
+> the live content is in the new types already. The nested `/blog/` pattern remains the stated target,
+> so the gap and the open risk are documented in
+> [§0 of the blog memo](./blog-route-taxonomy-decision-memo.md). Read that section first.
+>
+
 > **Document type:** Handoff brief — decisions and pointers only. This is NOT the CMS migration plan. It does not contain implementation code, GROQ queries, or Sanity Studio configuration. Those belong in a separate CMS migration plan written by the migration team.
 >
 > **Produced by:** Week 4 (W4.1) of the [Unified SEO + AEO 30-Day Plan](./seo-aeo-30-day-unified-plan.md)

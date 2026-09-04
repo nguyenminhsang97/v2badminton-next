@@ -6,6 +6,69 @@
 
 ---
 
+## 0. Current state vs. this memo — read before implementing (added 2026-09-04)
+
+**This memo is still the target architecture.** The content system shipped between May and June 2026 is an
+**interim step**, not a replacement. What follows is the gap between the two, verified against the live site
+and the production Sanity schemas — not against older planning docs.
+
+### What actually shipped (interim)
+
+| Area | Memo target | Live today |
+|---|---|---|
+| Post URL | `/blog/<category>/<slug>/` | `/ky-thuat-cau-long/<slug>/`, `/tin-v2/<slug>/` |
+| Archive URL | `/blog/<category>/` | `/ky-thuat-cau-long/`, `/tin-v2/` |
+| Document type | extended `post` | new `content_article` + `content_hub` + `content_node` |
+| Categories | 5 (`nguoi-moi`, `ky-thuat`, `thiet-bi`, `san-tap`, `tin-v2`) | 2 hubs live: technique, V2 news |
+| `/blog/` route | the root of everything | exists but empty; excluded from the sitemap |
+| Published posts | none (deferred) | 7 articles live and in the sitemap |
+
+The legacy `post` document type still exists alongside `content_article` and is unused in production.
+
+### Memo requirements the interim system already satisfies
+
+`quickAnswer` (the AEO answer block), `reviewer` + `lastReviewed` (the §7 editorial gate), `relatedFaqs`,
+`relatedMoneyPage` (the §9 spoke-to-hub link), `seoTitle` / `seoDescription`, and a `status` publish gate —
+all present on `content_article`. The §7 writing rules, the §8 blog-vs-service boundary, and the §9 internal
+linking strategy apply to the interim system unchanged and should keep being followed.
+
+### Memo requirements still missing
+
+1. **Nested `/blog/<category>/<slug>/` routing** and the 5-category taxonomy (§3-§5).
+2. **Controlled tag vocabulary** (§11.2) — no `tag` document type exists.
+3. **Affiliate / disclosure fields** (§11.7) — no `disclosureType`, `affiliateLinks`, `sponsoredStatus`,
+   `reviewPolicy`, or `productProvidedFreeBy`.
+4. **`/chinh-sach-danh-gia/` review-policy page** (§11.11). The site has `/chinh-sach-bien-tap/`
+   (editorial policy), which covers part of the intent but is not the affiliate-disclosure target.
+5. `canonicalUrl` / `noIndex` overrides on articles (hubs and nodes have `noIndex`; articles do not).
+
+**Items 3 and 4 gate the first `thiet-bi` post.** No equipment content is live, so nothing is blocked today —
+but per §6.3 and §13 an affiliate post without the disclosure block is a Vietnamese consumer-protection
+exposure, not just an SEO risk. Build those fields before the first equipment review, not after.
+
+### Before executing the URL migration — one thing to weigh first
+
+Q13 in §14 asked whether production had published `post` documents that would need redirects. That question
+is now moot in its original form: the live content sits in `content_article` under hub URLs, and **7 of those
+URLs are already published, indexed, and listed in `sitemap.xml`**. Migrating to the nested pattern therefore
+means moving live indexed URLs, which §4's own hygiene rule requires be done with 308 redirects for every one
+of them.
+
+The infrastructure for that already exists and is CMS-driven: the `route_redirect` document type
+(`fromPath`, `toPath`, `permanent`) is served by the `[...slug]` route, so an editor can add redirects without
+a code change. That de-risks the mechanics.
+
+**The open question is whether the move is net-positive at all**, and it should be answered before the work is
+scheduled. `/ky-thuat-cau-long/cach-cam-vot-cau-long/` is one level shallower than
+`/blog/ky-thuat/cach-cam-vot-cau-long/` and carries the exact keyword phrase "kỹ thuật cầu lông" in the path,
+where the nested form carries the abbreviated `ky-thuat` under a generic `/blog/` segment. §3's case for
+Option B was built for a site with **zero** published posts and a flat `/blog/<slug>/` pattern that had no
+topical signal at all. That premise no longer holds — the interim hubs already provide the topical clustering
+Option B was chosen to deliver. Re-run the §3 comparison against the live hub structure, not against the
+abandoned flat pattern, before committing to the migration.
+
+---
+
 ## 1. Strategic Goal
 
 The blog exists to do **four jobs**, in order of business impact for V2 Badminton:

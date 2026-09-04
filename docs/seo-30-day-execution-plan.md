@@ -1,5 +1,13 @@
 # SEO 30-Day Execution Plan (Junior Developer Guide)
 
+> ⚠️ **Status as of 2026-09-04 — this document no longer describes the live site.**
+> The site went live on `v2badminton.com` and all 13 money pages are published and in `sitemap.xml`.
+> Sources moved from `src/…` to `apps/web/src/…` in the workspace split (`d2797bd`), so every file path
+> below is one level off. Weeks 1-4 of the code work shipped; what is unverified here is the operational
+> follow-up (Search Console submission, Core Web Vitals review, coach bios). Treat this as a historical
+> record of intent, not a to-do list — verify against production before acting on any item.
+>
+
 This plan turns the SEO audit findings into concrete, day-by-day work. Follow it top-to-bottom. Do not skip the verification steps — they catch the mistakes juniors most often make on this codebase.
 
 **Owner:** assigned junior dev

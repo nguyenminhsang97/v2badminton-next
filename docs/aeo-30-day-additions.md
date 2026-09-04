@@ -1,5 +1,13 @@
 # AEO 30-Day Plan — Additions to the SEO Plan
 
+> ⚠️ **Status as of 2026-09-04 — this document no longer describes the live site.**
+> The site went live on `v2badminton.com` and all 13 money pages are published and in `sitemap.xml`.
+> Sources moved from `src/…` to `apps/web/src/…` in the workspace split (`d2797bd`), so every file path
+> below is one level off. Weeks 1-4 of the code work shipped; what is unverified here is the operational
+> follow-up (Search Console submission, Core Web Vitals review, coach bios). Treat this as a historical
+> record of intent, not a to-do list — verify against production before acting on any item.
+>
+
 This document **adds** AEO (Answer Engine Optimization) tasks on top of [seo-30-day-execution-plan.md](./seo-30-day-execution-plan.md). Do the SEO tasks first each week; these AEO tasks layer on.
 
 **Why a separate doc:** AEO success depends on the SEO foundations already in motion (real Sanity content, no thin pages, indexable HTML). Don't start the AEO content tasks until the matching SEO week's deliverables are in.
