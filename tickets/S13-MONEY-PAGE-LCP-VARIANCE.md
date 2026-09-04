@@ -22,3 +22,24 @@ Per-route Sanity fetch timing, ISR cache warmness, or route-level data differenc
 
 ## Notes
 This ticket is intentionally narrow. Money pages already cleared the practical ship gate, so the goal is explanation and selective smoothing, not emergency optimization.
+
+## Data point added 2026-09-04 (from the `S12` post-28-day review)
+
+Not a re-ranking — one measurement recorded so the next person does not have to
+re-derive it. Decoded HTML on production, same fetch method for all four:
+
+| Route | Decoded HTML | LCP at launch (this ticket) |
+|---|---|---|
+| `/hoc-cau-long-cho-nguoi-moi/` | **102.2 KiB** | **1.83 s** (the fast outlier) |
+| `/lop-cau-long-cho-nguoi-di-lam/` | 90.1 KiB | ~2.95–3.20 s |
+| `/lop-cau-long-cuoi-tuan/` | 82.1 KiB | ~2.95–3.20 s |
+| `/lop-cau-long-tre-em/` | 76.9 KiB | ~2.95–3.20 s |
+
+**The fastest route carries the largest HTML.** So document weight does not explain
+the spread, and the "richer Sanity content on the slow routes" line in
+*Investigation Paths* is contradicted by the byte counts — it points the other way.
+That leaves per-route fetch timing and ISR cache warmness as the live hypotheses.
+
+Worth noting the launch LCP figures are lab numbers and the HTML sizes are from
+today, so this is suggestive, not conclusive — but it is enough to stop anyone
+spending a day on the payload-size theory first.
