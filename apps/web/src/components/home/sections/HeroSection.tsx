@@ -24,6 +24,18 @@ export function HeroSection({ campaign, content, facebookUrl }: HomepageHeroSect
     alt: heroImageAlt,
     className: "hero__backdrop-image",
     fetchPriority: "high" as const,
+    // Without this the LCP element ships as loading="lazy" fetchPriority="high",
+    // which are two instructions that fight each other: next/image computes
+    // `isLazy = !priority && !preload && (loading === 'lazy' || loading === undefined)`
+    // (shared/lib/get-img-props.js:269), and passing only fetchPriority leaves
+    // `loading` undefined, so isLazy stays true. fetchPriority then only says
+    // "when you do fetch this, fetch it urgently" — it never says "fetch it now",
+    // and a lazy image waits for layout, which waits for CSS and script.
+    // Safe with the <picture> + <source media> below: the browser resolves a
+    // single candidate, so eager cannot pull down both variants. (That caveat in
+    // the Next docs applies to the light/dark pattern, where two <Image>s
+    // coexist in the DOM and are hidden with CSS. Different shape.)
+    loading: "eager" as const,
     sizes: "100vw",
   };
   const {
