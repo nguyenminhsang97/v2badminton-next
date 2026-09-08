@@ -75,9 +75,13 @@ export default async function Home() {
     facebookUrl: chromeSettings.facebookUrl,
   };
 
+  // `locationsDefinedOnPage` is safe here because <JsonLd id="homepage-business-schema">
+  // below renders buildHomepageLocalBusinessSchema() with this same `locations`
+  // array, so every @id these courses reference is defined on the page.
   const courseSchemas = buildCourseSchemas(pricingTiers, {
     locations,
     scheduleBlocks,
+    locationsDefinedOnPage: true,
   });
   const homepageCampaign = toHomepageHeroCampaign(campaign);
   const homepageCoaches = toHomepageCoaches(coaches);
