@@ -24,6 +24,18 @@ export function HeroSection({ campaign, content, facebookUrl }: HomepageHeroSect
     alt: heroImageAlt,
     className: "hero__backdrop-image",
     fetchPriority: "high" as const,
+    // Without this the LCP element ships as loading="lazy" fetchPriority="high",
+    // which are two instructions that fight each other: next/image computes
+    // `isLazy = !priority && !preload && (loading === 'lazy' || loading === undefined)`
+    // (shared/lib/get-img-props.js:269), and passing only fetchPriority leaves
+    // `loading` undefined, so isLazy stays true. fetchPriority then only says
+    // "when you do fetch this, fetch it urgently" — it never says "fetch it now",
+    // and a lazy image waits for layout, which waits for CSS and script.
+    // Safe with the <picture> + <source media> below: the browser resolves a
+    // single candidate, so eager cannot pull down both variants. (That caveat in
+    // the Next docs applies to the light/dark pattern, where two <Image>s
+    // coexist in the DOM and are hidden with CSS. Different shape.)
+    loading: "eager" as const,
     sizes: "100vw",
   };
   const {
@@ -53,6 +65,23 @@ export function HeroSection({ campaign, content, facebookUrl }: HomepageHeroSect
     src: generatedImages.afterWorkClass,
     width: 1122,
     height: 1402,
+  });
+
+  // The mobile counterpart of the preload above, and it is the one that matters
+  // most: the hero image is the LCP element, and on mobile it lives in a
+  // <source media="(max-width: 767px)"> inside <body>, so without this the
+  // browser cannot discover it until it has parsed past ~600 KB of scripts.
+  // Measured on production before this existed: the mobile hero started
+  // downloading at 754 ms and LCP landed at 792 ms, while desktop — which had
+  // the preload — reached LCP in about a quarter of the time.
+  // The two media queries are mutually exclusive, so exactly one preload is
+  // ever used and neither viewport fetches the other's image.
+  ReactDOM.preload(generatedImages.afterWorkClass, {
+    as: "image",
+    imageSrcSet: mobileHeroSrcSet,
+    imageSizes: "100vw",
+    fetchPriority: "high",
+    media: "(max-width: 767px)",
   });
   const primaryCtaHref =
     campaign?.primaryCtaUrl ??
