@@ -21,12 +21,45 @@ import {
   getContentHub,
   getContentNode,
   getContentRedirect,
+  getContentSitemapEntries,
   getCourt,
   resolveContentRoute,
 } from "@/lib/sanity";
 import { siteConfig } from "@/lib/site";
 
 export const dynamicParams = true;
+
+// Without this export the whole CMS content tree renders dynamically on every
+// request and is never cached — Next is explicit about it: "You must always
+// return an array from generateStaticParams, even if it's empty. Otherwise, the
+// route will be dynamically rendered." (node_modules/next/dist/docs —
+// generate-static-params.md.) `dynamicParams = true` alone does not satisfy
+// that; it only says what to do with paths this function did not return.
+//
+// Measured on one production build, before and after, on the same machine:
+//
+//   /ky-thuat-cau-long/  before  private, no-cache, no-store, must-revalidate
+//                        after   s-maxage=300, stale-while-revalidate=31535700
+//
+// and the route table moves from `ƒ (Dynamic)` to `● (SSG)` with a 5m
+// revalidate. On production that was the difference between x-vercel-cache MISS
+// on every repeat request and a CDN hit.
+//
+// Freshness is unchanged: every type below is tagged `sanity:content` and the
+// Sanity webhook already purges it through `revalidateTag` in
+// /api/revalidate/sanity, so edits still propagate without waiting out the 5m.
+//
+// Paths not returned here still work — `dynamicParams = true` renders them on
+// first visit and caches the result — so a court published after a deploy is
+// served correctly before the next build. And if Sanity is unreachable at build
+// time, getContentSitemapEntries falls back to [], which prerenders nothing but
+// keeps the route cacheable rather than failing the build.
+export async function generateStaticParams() {
+  const entries = await getContentSitemapEntries();
+  return entries.map((entry) => ({
+    slug: entry.path.split("/").filter(Boolean),
+  }));
+}
 
 type CatchAllPageProps = {
   params: Promise<{ slug: string[] }>;
