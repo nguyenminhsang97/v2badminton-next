@@ -53,8 +53,16 @@ export async function generateMetadata({
     loadSiteChromeSettings(),
   ]);
 
+  // Unknown path. The page below calls notFound(), but see the note there: the
+  // response is already streaming, so it is served as HTTP 200 + noindex rather
+  // than a 404 status. The noindex is what keeps it out of the index, so it is
+  // load-bearing — do not drop it. The title stops browser tabs and history
+  // entries for missing pages from reading as the generic site name.
   if (route == null) {
-    return { robots: { index: false, follow: true } };
+    return {
+      title: "Không tìm thấy trang",
+      robots: { index: false, follow: true },
+    };
   }
 
   // Prefer CMS-managed site-wide default OG image; fall back to the static file.
@@ -149,5 +157,26 @@ export default async function CatchAllPage({ params }: CatchAllPageProps) {
     redirect(contentRedirect.toPath);
   }
 
+  // This serves HTTP 200, not 404 — deliberately, and it is not a bug.
+  //
+  // `(site)/loading.tsx` means the response has already begun streaming by the
+  // time we get here, and response headers cannot be rewritten once sent. Next
+  // documents exactly this: "Next.js will return a 200 HTTP status code for
+  // streamed responses, and 404 for non-streamed responses… Some crawlers may
+  // label these responses as 'soft 404s'. In the streaming case, this does not
+  // lead to indexation because the page is explicitly marked noindex in the
+  // HTML." (node_modules/next/dist/docs — not-found.md and loading.md.)
+  //
+  // generateMetadata above emits that noindex for the same unknown path, so the
+  // mitigation is in place and users still get the real 404 UI from
+  // `(site)/not-found.tsx`.
+  //
+  // Getting a true 404 status would mean proving the path does not exist
+  // *before* streaming starts — i.e. a Sanity lookup inside `proxy.ts`, on
+  // every request to the whole site. TTFB is already 506–978 ms; paying that on
+  // every real page view to change a status code that Google is documented not
+  // to penalise is a bad trade. Only revisit this if a 404 status is needed for
+  // compliance or analytics, and if so read the "Status Codes" section of
+  // loading.md first.
   notFound();
 }
