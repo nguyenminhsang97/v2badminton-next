@@ -71,22 +71,42 @@ Sentry-attributable share of that, after separating real SDK code from the
 / ~69 KiB uncompressed**, against the ~253 KiB (`200.2` + `52.9`) S9 Finding 3
 attributed to Sentry.
 
-### Follow-up this decision depends on — ☑ SHIPPED 2026-09-04
+### Follow-up this decision depends on — ☑ SHIPPED 2026-09-08
 
 **Wire Web Vitals into the GA4 property that already exists** before committing to
 another perf sprint. `useReportWebVitals` → `G-ME9V2DXWJX` is a small change and it
 is the precondition for ever closing an S10-shaped ticket on evidence rather than
 on a synthetic re-measure.
 
-**Done the same day** (`src/components/analytics/WebVitals.tsx`, mounted in the
+**Shipped 2026-09-08** (`src/components/analytics/WebVitals.tsx`, mounted in the
 site layout): LCP, CLS, INP, FCP, TTFB and FID now report as a `web_vitals` GA4
 event through the existing `trackEvent` channel, tagged with rating, delta,
 `metric_id` for dedupe, and page path.
 
 **The gap this closes is a wait, not a switch.** GA4 needs real traffic to
 accumulate before the data means anything. Do not re-rank `S10` or `S11` off the
-first few days — give it the same 28 days this ticket originally asked for, from
-**2026-09-04**, then read the mobile LCP and INP distributions and decide.
+first few days — give it the same 28 days this ticket originally asked for.
+
+> ### 📅 Read the data on 2026-10-06
+>
+> Collection started **2026-09-08** (PR #104 merged). In GA4, open the
+> `web_vitals` event and break it down by `metric_name` and `page_path`. Three
+> questions, in order:
+>
+> 1. **What is real p75 mobile LCP?** If it is already under 2.5 s, the lab
+>    numbers this project has been chasing are noise — close `S10` and `S11`.
+> 2. **Is INP a problem?** INP is the ranking-relevant interactivity metric, not
+>    TBT. Nothing in this project has ever measured it on real users.
+> 3. **Which page is worst?** It may not be the homepage. Every perf ticket here
+>    assumes it is.
+>
+> Google's own CrUX shows **"No Data"** for this origin — the site is below its
+> traffic threshold — so this GA4 event is the only field data that will ever
+> exist for it. There is no second source to fall back on.
+
+*Date corrected 2026-09-08: an earlier revision of this section dated the ship
+2026-09-04 and set the milestone to 2026-10-02. PR #104 merged 2026-09-08, so
+both were four days early.*
 
 ---
 

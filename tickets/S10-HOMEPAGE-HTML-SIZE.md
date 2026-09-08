@@ -166,7 +166,7 @@ payload, or the number changes.
    worse for SEO than the duplication. Any implementation must be page-aware, or
    restricted to the homepage where `buildHomepageLocalBusinessSchema` is
    guaranteed to define them.
-4. ~~**Check a correctness question found in passing**~~ — **SETTLED 2026-09-04,
+4. ~~**Check a correctness question found in passing**~~ — **SETTLED 2026-09-08,
    no action needed.** `buildCourseInstances` filters *schedule blocks* by
    location (`filterScheduleBlocksForLocations`) but emits **all** locations
    unfiltered, which would be a false claim if any course did not run at every
