@@ -50,7 +50,7 @@ const primaryLinks = [
     label: "Doanh nghiệp",
     kind: "anchor" as const,
   },
-  { href: "/blog/", label: "Blog", kind: "route" as const },
+  { href: "/tin-tuc/", label: "Tin tức", kind: "route" as const },
   {
     href: toHomepageHash(HOME_SECTION_IDS.contact),
     label: "Liên hệ",
@@ -83,7 +83,7 @@ export function Nav({ siteSettings, showBlogLink, showCoachesLink }: NavProps) {
         .filter(
           (link) =>
             (link.href !== "/huan-luyen-vien/" || showCoachesLink) &&
-            (link.href !== "/blog/" || showBlogLink) &&
+            (link.href !== "/tin-tuc/" || showBlogLink) &&
             (link.href !== "/san-cau-long/" || EXPOSE_SAN_CAU_LONG),
         )
         .map((link) => ({
@@ -289,8 +289,8 @@ function isNavLinkActive(
 
   const resolvedHref = withTrailingSlash(link.href.split("#")[0] || "/");
 
-  if (resolvedHref === "/blog/") {
-    return normalizedPath.startsWith("/blog/");
+  if (resolvedHref === "/tin-tuc/") {
+    return normalizedPath.startsWith("/tin-tuc/");
   }
 
   if (resolvedHref === "/san-cau-long/") {

@@ -31,18 +31,18 @@ type BlogListPageProps = {
 
 const blogMetadata: Metadata = {
   title: {
-    absolute: "Blog | V2 Badminton",
+    absolute: "Tin tức | V2 Badminton",
   },
   description:
-    "Tips cầu lông, hướng dẫn kỹ thuật và cẩm nang cho người mới bắt đầu tại TP.HCM.",
+    "Tin tức, thông báo và cập nhật chương trình từ V2 Badminton tại TP.HCM.",
   alternates: {
-    canonical: canonicalUrl("/blog/"),
+    canonical: canonicalUrl("/tin-tuc/"),
   },
   openGraph: {
-    title: "Blog | V2 Badminton",
+    title: "Tin tức | V2 Badminton",
     description:
-      "Tips cầu lông, hướng dẫn kỹ thuật và cẩm nang cho người mới bắt đầu tại TP.HCM.",
-    url: canonicalUrl("/blog/"),
+      "Tin tức, thông báo và cập nhật chương trình từ V2 Badminton tại TP.HCM.",
+    url: canonicalUrl("/tin-tuc/"),
     locale: siteConfig.locale,
     siteName: siteConfig.name,
     type: "website",
@@ -50,9 +50,9 @@ const blogMetadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Blog | V2 Badminton",
+    title: "Tin tức | V2 Badminton",
     description:
-      "Tips cầu lông, hướng dẫn kỹ thuật và cẩm nang cho người mới bắt đầu tại TP.HCM.",
+      "Tin tức, thông báo và cập nhật chương trình từ V2 Badminton tại TP.HCM.",
     images: [canonicalUrl(siteConfig.defaultOgImagePath)],
   },
 };
@@ -105,11 +105,11 @@ export default async function BlogListPage({
     <div className="blog-list">
       <section className="blog-list__hero">
         <div className="section__header">
-          <p className="section__eyebrow">Nội dung chuyên sâu</p>
-          <h1 className="section__title">Blog V2 Badminton</h1>
+          <p className="section__eyebrow">Cập nhật từ V2</p>
+          <h1 className="section__title">Tin tức V2 Badminton</h1>
           <p className="section__desc">
-            Tips, hướng dẫn và cẩm nang cầu lông cho người mới bắt đầu, người đi
-            làm và phụ huynh đang tìm lộ trình phù hợp tại TP.HCM.
+            Thông báo, cập nhật chương trình và tin hoạt động của V2 Badminton
+            tại TP.HCM.
           </p>
         </div>
         <div className="blog-list__hero-meta">
@@ -127,8 +127,8 @@ export default async function BlogListPage({
           const isActive = option.value === selectedCategory;
           const href =
             option.value === "all"
-              ? "/blog/"
-              : `/blog/?category=${option.value}`;
+              ? "/tin-tuc/"
+              : `/tin-tuc/?category=${option.value}`;
 
           return (
             <Link
@@ -166,7 +166,7 @@ export default async function BlogListPage({
 
             return (
               <article key={post.id} className="blog-card">
-                <Link href={`/blog/${post.slug}/`} className="blog-card__media">
+                <Link href={`/tin-tuc/${post.slug}/`} className="blog-card__media">
                   <Image
                     src={coverImageUrl}
                     alt={coverAlt}
@@ -182,7 +182,7 @@ export default async function BlogListPage({
                     {getCategoryLabel(post.category)}
                   </span>
                   <Link
-                    href={`/blog/${post.slug}/`}
+                    href={`/tin-tuc/${post.slug}/`}
                     className="blog-card__title-link"
                   >
                     <h2 className="blog-card__title">{post.title}</h2>
@@ -190,7 +190,7 @@ export default async function BlogListPage({
                   {post.excerpt ? (
                     <p className="blog-card__excerpt">{post.excerpt}</p>
                   ) : null}
-                  <Link href={`/blog/${post.slug}/`} className="blog-card__cta">
+                  <Link href={`/tin-tuc/${post.slug}/`} className="blog-card__cta">
                     Đọc bài viết →
                   </Link>
                 </div>

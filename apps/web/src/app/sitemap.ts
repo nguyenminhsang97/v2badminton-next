@@ -114,7 +114,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     posts.length > 0
       ? [
           {
-            url: canonicalUrl("/blog/"),
+            url: canonicalUrl("/tin-tuc/"),
             lastModified: latestLastModified(
               posts.map((post) => post.updatedAt ?? post.publishedAt),
               generatedAt,
@@ -123,7 +123,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             priority: 0.7,
           },
           ...posts.map((post) => ({
-            url: canonicalUrl(`/blog/${post.slug}/`),
+            url: canonicalUrl(`/tin-tuc/${post.slug}/`),
             lastModified: resolveLastModified(
               post.updatedAt ?? post.publishedAt,
               generatedAt,

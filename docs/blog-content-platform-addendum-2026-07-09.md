@@ -1,6 +1,8 @@
 # Blog vs Content Platform Addendum
 
-Status: draft decision for owner approval.
+Status: **APPROVED by the owner, 2026-09-08.** Implemented the same day; see
+"Decision record" at the foot of this document for what shipped and why the
+timing mattered.
 
 This addendum exists because the approved blog taxonomy memo was written before
 the content platform shipped. The newer content platform now owns stronger SEO
@@ -31,7 +33,9 @@ addendum is explicitly rejected.
 
 ## Blog Route Policy
 
-- Keep `/blog/` as the news feed while the public route already exists.
+- ~~Keep `/blog/` as the news feed while the public route already exists.~~
+  **Superseded 2026-09-08: the feed is `/tin-tuc/`, with `/blog/:slug*`
+  permanently redirecting to it. See the decision record below.**
 - Keep individual news posts on the simplest stable route the current code
   supports unless a separate approved ticket changes it.
 - Do not add category archives for evergreen categories.
@@ -77,9 +81,73 @@ small and launch blog only when a real news cadence exists.
 
 ## Approval Checklist
 
-- [ ] Owner confirms blog is news-only.
-- [ ] Owner confirms evergreen content belongs in content-platform docs.
-- [ ] Owner confirms whether the public news feed remains `/blog/` or moves to
-      `/tin-tuc/` before launch.
+- [x] Owner confirms blog is news-only. *(2026-09-08)*
+- [x] Owner confirms evergreen content belongs in content-platform docs. *(2026-09-08)*
+- [x] Owner confirms whether the public news feed remains `/blog/` or moves to
+      `/tin-tuc/` before launch. **→ `/tin-tuc/`, shipped 2026-09-08.**
 - [ ] CMS handoff brief is updated after approval to remove superseded blog
-      migration deliverables.
+      migration deliverables. *(still open — separate pass)*
+
+---
+
+## Decision record — 2026-09-08
+
+**The feed moved to `/tin-tuc/`. The window to do it for free was open, and it
+is now closed.**
+
+### Why it was free on this date
+
+Verified against live production before touching anything:
+
+| Check | Result |
+|---|---|
+| `/blog/` HTTP status | 200 |
+| `robots` meta | **`noindex, follow`** |
+| Published posts | **0** — `blog/page.tsx` sets `noindex` when the list is empty |
+| `/blog/` in `sitemap.xml` | **absent** |
+
+Nothing was indexed, so there was no ranking, no backlink and no redirect
+project at stake. This document's own pre-launch gate — *"If published posts
+exist, record their current URLs and create redirects before any route
+migration"* — did not trigger, because the precondition was not met.
+
+The owner confirmed the intent to publish news regularly. That is what made the
+decision urgent rather than optional: the same rename after the first post is
+indexed becomes a redirect project with real risk.
+
+### Why `/tin-tuc/` and not `/blog/`
+
+Two reasons, neither of them a ranking claim — URL wording is a very weak
+signal and nobody should expect traffic from this change:
+
+1. **The name now matches the content.** This addendum narrowed the feed to
+   time-stamped news; evergreen technique, beginner and court content moved to
+   the content platform. "Blog" described a format the feed no longer has.
+2. **`/blog/` was the only English segment on an all-Vietnamese site** —
+   `/hoc-cau-long-cho-nguoi-moi/`, `/lop-cau-long-tre-em/`,
+   `/gia-hoc-cau-long-tphcm/`, `/huan-luyen-vien/`, `/gioi-thieu/`.
+
+### What shipped
+
+- Route `(site)/blog/` → `(site)/tin-tuc/` (`git mv`, history preserved).
+- Every `/blog/` URL updated: `sitemap.ts`, `Nav`, `Footer`, `routes.ts`,
+  `contentOpsStatus.ts`, both page files, and the SEO regression test.
+- **`/blog/:slug*` → `/tin-tuc/:slug*` permanent redirect** in
+  `next.config.ts`'s `FILE_ROUTE_REDIRECTS`. Not for search engines — there is
+  nothing indexed — but for links shared before the rename.
+- `/blog/` **stays** in `FILE_ROUTED_PATHS` and `CODE_RESERVED_PREFIXES`, and
+  `/tin-tuc/` is added to both. A redirect source is resolved before the content
+  catch-all just as a page is, so CMS content placed at `/blog/` would be
+  equally unreachable.
+- Visible copy: nav/footer label "Blog" → "Tin tức"; page title, H1, meta and
+  OG/Twitter descriptions rewritten from "Tips cầu lông, hướng dẫn kỹ thuật và
+  cẩm nang…" to news wording. **The old copy promised exactly the evergreen
+  content this addendum moved away**, so renaming without it would have shipped
+  a page that contradicted itself.
+
+### Left for the owner
+
+The new Vietnamese copy is deliberately plain — "Thông báo, cập nhật chương
+trình và tin hoạt động của V2 Badminton tại TP.HCM." It is accurate but it is
+not brand voice. Adjust the wording freely; the routing decision does not
+depend on it.

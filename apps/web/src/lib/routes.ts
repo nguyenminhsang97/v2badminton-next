@@ -202,7 +202,7 @@ export const routeCards = coreRoutes.map((route) => ({
 export const reservedRoutePrefixes = [
   "/san-pham/",
   "/dich-vu/",
-  "/blog/",
+  "/tin-tuc/",
   "/khuyen-mai/",
 ] as const;
 
