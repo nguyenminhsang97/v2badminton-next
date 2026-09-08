@@ -24,9 +24,13 @@ export const ROUTABLE_TYPES = [
 
 // File-routed pages are matched before the content catch-all. A CMS fullPath or
 // route_redirect source on these paths would never behave as editors expect.
+// `/blog/` is no longer a page but stays listed: it is now a permanent redirect
+// declared in next.config, which is also resolved before the catch-all, so CMS
+// content placed there would be equally unreachable.
 export const FILE_ROUTED_PATHS = [
   "/",
   "/blog/",
+  "/tin-tuc/",
   "/cau-long-doanh-nghiep/",
   "/chinh-sach-bao-mat/",
   "/chinh-sach-bien-tap/",
@@ -48,6 +52,7 @@ export const FILE_ROUTED_PATHS = [
 const CODE_RESERVED_PREFIXES = [
   "/api/",
   "/blog/",
+  "/tin-tuc/",
   "/dich-vu/",
   "/khuyen-mai/",
   "/san-pham/",

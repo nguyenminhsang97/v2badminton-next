@@ -109,7 +109,7 @@ describe("SEO regression guardrails", () => {
     for (const rule of rules) {
       expect(values(rule.allow)).toContain("/");
       expect(values(rule.disallow)).toEqual(["/api/"]);
-      expect(values(rule.disallow)).not.toContain("/blog/");
+      expect(values(rule.disallow)).not.toContain("/tin-tuc/");
     }
   });
 
@@ -122,8 +122,8 @@ describe("SEO regression guardrails", () => {
     expect(urls).toContain(canonicalUrl("/lop-cau-long-cuoi-tuan/"));
     expect(urls).toContain(canonicalUrl("/gioi-thieu/"));
     expect(urls).toContain(canonicalUrl("/chinh-sach-bao-mat/"));
-    expect(urls).toContain(canonicalUrl("/blog/"));
-    expect(urls).toContain(canonicalUrl("/blog/tin-v2-open-day/"));
+    expect(urls).toContain(canonicalUrl("/tin-tuc/"));
+    expect(urls).toContain(canonicalUrl("/tin-tuc/tin-v2-open-day/"));
     expect(urls).toContain(canonicalUrl("/huan-luyen-vien/"));
     expect(urls).toContain(canonicalUrl("/ky-thuat-cau-long/"));
     expect(urls).toContain(canonicalUrl("/san-cau-long/green-garden/"));

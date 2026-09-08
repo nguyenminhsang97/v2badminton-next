@@ -34,7 +34,7 @@ export function Footer({ siteSettings, showBlogLink, showCoachesLink }: FooterPr
       ? [{ href: "/huan-luyen-vien/", label: "Đội ngũ HLV" }]
       : []),
     { href: "/ky-thuat-cau-long/", label: "Kỹ thuật cầu lông" },
-    ...(showBlogLink ? [{ href: "/blog/", label: "Blog" }] : []),
+    ...(showBlogLink ? [{ href: "/tin-tuc/", label: "Tin tức" }] : []),
   ];
 
   const featuredRoutes = coreRoutes.filter((route) =>

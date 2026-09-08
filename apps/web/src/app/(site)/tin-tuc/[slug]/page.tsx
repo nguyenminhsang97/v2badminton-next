@@ -42,7 +42,7 @@ export async function generateMetadata({
     },
     description,
     alternates: {
-      canonical: canonicalUrl(`/blog/${post.slug}/`),
+      canonical: canonicalUrl(`/tin-tuc/${post.slug}/`),
     },
     openGraph: {
       title,
@@ -99,7 +99,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       name: siteConfig.name,
       url: siteConfig.siteUrl,
     },
-    mainEntityOfPage: canonicalUrl(`/blog/${post.slug}/`),
+    mainEntityOfPage: canonicalUrl(`/tin-tuc/${post.slug}/`),
     image: post.coverImageUrl ?? undefined,
     dateModified: post.updatedAt ?? undefined,
   };
@@ -110,7 +110,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
       <header className="blog-post__hero">
         <div className="blog-post__hero-copy">
-          <Link href="/blog/" className="blog-post__back">
+          <Link href="/tin-tuc/" className="blog-post__back">
             ← Blog
           </Link>
           <span className="blog-post__category">{getCategoryLabel(post.category)}</span>

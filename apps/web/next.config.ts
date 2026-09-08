@@ -37,8 +37,12 @@ type FileRouteRedirect = {
 // resolved only by the content catch-all, after filesystem routes have matched.
 // Follow docs/cms/url-rename-runbook.md before adding entries.
 const FILE_ROUTE_REDIRECTS: FileRouteRedirect[] = [
-  // Example:
-  // { source: "/old-money-page/", destination: "/new-money-page/", permanent: true },
+  // /blog/ -> /tin-tuc/ (2026-09-08). The news feed was renamed while it still
+  // had zero published posts and was noindex, so nothing was indexed and no
+  // ranking or backlink was at stake. This redirect exists for links shared
+  // before the rename, not for search engines.
+  // `:slug*` matches the index and any post path in one rule.
+  { source: "/blog/:slug*", destination: "/tin-tuc/:slug*", permanent: true },
 ];
 
 const nextConfig: NextConfig = {

@@ -217,7 +217,7 @@ export function resolveOpsPath(row: ContentOpsRow): string | null {
     case "static_page":
       return slug ? `/${slug}/` : null;
     case "post":
-      return slug ? `/blog/${slug}/` : null;
+      return slug ? `/tin-tuc/${slug}/` : null;
     default:
       return null;
   }

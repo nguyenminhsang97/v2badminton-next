@@ -67,7 +67,10 @@ Then verify:
 Do not create CMS pages or CMS redirects under code-owned prefixes:
 
 - `/api/`
-- `/blog/`
+- `/blog/` — retired 2026-09-08, now a permanent redirect to `/tin-tuc/`. Still
+  reserved: a redirect source resolves before the content catch-all, so CMS
+  content placed here would be unreachable.
+- `/tin-tuc/` — the news feed
 - `/dich-vu/`
 - `/khuyen-mai/`
 - `/san-pham/`
