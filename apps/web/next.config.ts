@@ -41,8 +41,13 @@ const FILE_ROUTE_REDIRECTS: FileRouteRedirect[] = [
   // had zero published posts and was noindex, so nothing was indexed and no
   // ranking or backlink was at stake. This redirect exists for links shared
   // before the rename, not for search engines.
-  // `:slug*` matches the index and any post path in one rule.
-  { source: "/blog/:slug*", destination: "/tin-tuc/:slug*", permanent: true },
+  // Split into two rules on purpose. A single `/blog/:slug*` -> `/tin-tuc/:slug*`
+  // works, but with `trailingSlash: true` it sends post URLs to a slashless
+  // destination that then needs a second 308 to add the slash back — a two-hop
+  // chain for every shared link. `:slug+` (one or more) carries the trailing
+  // slash itself, and the index gets its own rule because `+` cannot match empty.
+  { source: "/blog", destination: "/tin-tuc/", permanent: true },
+  { source: "/blog/:slug+", destination: "/tin-tuc/:slug+/", permanent: true },
 ];
 
 const nextConfig: NextConfig = {
