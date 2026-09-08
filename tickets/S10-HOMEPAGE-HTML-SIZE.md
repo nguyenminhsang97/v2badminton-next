@@ -29,12 +29,115 @@ The practical consequence: this cost **scales with published CMS content**, so i
 grows as editors publish and will not self-correct. That is what moves this ticket
 up rather than leaving it as generic post-launch polish.
 
-### Caveat on the comparison
+### Caveat on the comparison — superseded, read the investigation below
 
-The CMS-less local build is not a clean before/after — it isolates "with CMS
-content" vs "without", not drift over time. It bounds where the bytes come from;
-it does not prove when they arrived. A dated re-measure of production is the only
-honest trend line, and this entry is the first one.
+The CMS-less local build is not a clean before/after: it isolates "with CMS
+content" vs "without", not drift over time.
+
+**Superseded on the same day.** Once the env files are placed where npm scripts
+actually read them, a local build reproduces production to within 0.4 KiB
+(194.3 vs 194.7), so the 136.1 KiB figure above is a *misconfigured* build, not a
+meaningful CMS-less baseline. The `~59 KiB` inference still points the right way,
+but the byte-level breakdown in the next section replaces it with direct
+measurement — and reaches a different conclusion about what to do.
+
+---
+
+## Investigation 2026-09-04 — where the bytes actually are
+
+Profiled the live homepage byte by byte. **Two of this ticket's four hypotheses
+are dead, the real cost is elsewhere, and the 80 KiB target is not reachable by
+any of the approaches listed below.** Read this before starting work.
+
+### Byte breakdown of the 194.7 KiB page
+
+| Part | Size | Share |
+|---|---|---|
+| **RSC flight payload** (`self.__next_f.push`) | **106.3 KiB** | **54.6 %** |
+| JSON-LD in `<script>` markup | 23.3 KiB | 12.0 % |
+| All other markup (head, attrs, visible DOM) | 65.1 KiB | 33.4 % |
+| — of which every top-level `<section>` combined | 49.5 KiB | 25.4 % |
+
+### Hypotheses this kills
+
+- **"Reduce repeated string duplication or verbose markup"** — measurable, and
+  small. Every long string appearing more than once in the RSC payload wastes
+  **5.5 KiB total**. Not worth a sprint.
+- **"Profile decoded HTML contribution per section"** — done. All top-level
+  sections *combined* are 49.5 KiB. Even deleting every section outright leaves
+  145 KiB. Section markup is not the problem.
+
+### The real cost: everything server-rendered is emitted twice
+
+App Router ships the rendered HTML **and** the RSC flight payload that
+reproduces it for hydration and client navigation. Anything a server component
+renders is paid for in both. That is inherent to the architecture, not a defect
+here — but it means the flight payload sets a floor no markup trimming can go
+below.
+
+**Structured data is the clearest case.** Verified by counting occurrences across
+the whole document: `streetAddress` appears **42 times** — 21 in the flight
+payload, 21 in the markup. Same 2× for `hasCourseInstance` (8 = 4 + 4) and
+`FAQPage` (2 = 1 + 1). Total JSON-LD cost: **46.0 KiB, 23.6 % of the page**.
+
+Inside that, the same **~4 distinct venues** are serialized as full
+`SportsActivityLocation` nodes (name + `PostalAddress` + `GeoCoordinates` +
+image) **34 times** across both copies — 16.3 KiB — because
+`buildCourseInstances` inlines `locations.map(buildEmbeddedSportsLocation)` into
+every one of the 4 `Course` blocks, on top of the `LocalBusiness` block that
+already lists them all.
+
+FAQ answers land in the document **4 times each**: visible markup, `FAQPage`
+JSON-LD, and both of those again inside the flight payload.
+
+### The target is unreachable as written
+
+| Scenario | Resulting page | vs 80 KiB target |
+|---|---|---|
+| Today | 194.7 KiB | +114.7 |
+| Dedupe the 34 location nodes to `@id` refs | ~181.7 KiB | +101.7 |
+| **Delete 100 % of structured data** | **148.7 KiB** | **+68.7** |
+
+Deleting all structured data — which we obviously will not do — still misses the
+target by 68.7 KiB. **No combination of the four approaches in this ticket
+reaches 80 KiB.** Either the page stops server-rendering this much in the initial
+payload, or the number changes.
+
+### Options, ranked, with the risk attached to each
+
+1. **Re-set the target on evidence** (recommended first step). 80 KiB was chosen
+   when the page measured 143.8 KiB, against money pages at ~38.4 KiB. Those
+   money pages now measure 76.9–102.2 KiB themselves, so the comparison the
+   target rested on no longer holds. Decide what number matters — and consider
+   whether total HTML is even the right metric versus above-the-fold payload.
+2. **Architectural: keep below-the-fold sections out of the initial payload** —
+   the only lever large enough to matter. This ticket already names it ("moving
+   schedule content to a lightweight route-handler fetch with a reserved-height
+   shell"). Suspense boundaries or post-mount fetches for schedule, testimonials
+   and FAQ. Real work, real CLS risk, needs reserved heights.
+3. **Dedupe location nodes to `@id` references** — ~13 KiB, ~6.7 %, doubled
+   because it lands in both copies. **Not free of risk:** `buildCourseInstances`
+   is shared with money pages via `buildCoursePageSchema`, and not every money
+   page emits a `LocalBusiness` block defining those nodes. Emitting a bare
+   `@id` on a page that never defines the node produces a **dangling reference** —
+   worse for SEO than the duplication. Any implementation must be page-aware, or
+   restricted to the homepage where `buildHomepageLocalBusinessSchema` is
+   guaranteed to define them.
+4. **Check a correctness question found in passing** — `buildCourseInstances`
+   filters *schedule blocks* by location (`filterScheduleBlocksForLocations`) but
+   then emits **all** locations unfiltered. If a course does not actually run at
+   all four venues, the Course schema is currently claiming venues it should not.
+   This is a factual-accuracy question, not a size one, and it needs the real
+   Sanity data to settle.
+
+### Reproducing these measurements
+
+A local production build now reproduces production almost exactly — **194.3 KiB
+local vs 194.7 KiB live** — but only when the env files are where npm scripts
+read them. They currently sit at the **repo root**, where the build silently
+ignores them and renders fallback content (that build produces a misleading
+136.1 KiB). Copy `.env.local` and `.env.production.local` into `apps/web/` before
+measuring, as `docs/cutover-guide.md` already says.
 
 ---
 
