@@ -123,12 +123,14 @@ payload, or the number changes.
    worse for SEO than the duplication. Any implementation must be page-aware, or
    restricted to the homepage where `buildHomepageLocalBusinessSchema` is
    guaranteed to define them.
-4. **Check a correctness question found in passing** — `buildCourseInstances`
-   filters *schedule blocks* by location (`filterScheduleBlocksForLocations`) but
-   then emits **all** locations unfiltered. If a course does not actually run at
-   all four venues, the Course schema is currently claiming venues it should not.
-   This is a factual-accuracy question, not a size one, and it needs the real
-   Sanity data to settle.
+4. ~~**Check a correctness question found in passing**~~ — **SETTLED 2026-09-04,
+   no action needed.** `buildCourseInstances` filters *schedule blocks* by
+   location (`filterScheduleBlocksForLocations`) but emits **all** locations
+   unfiltered, which would be a false claim if any course did not run at every
+   venue. **The owner confirms all four courses genuinely run at all four
+   venues**, so the emitted schema is factually correct as-is. Recorded here so
+   nobody re-opens it — but note this also means the duplication in option 3 is
+   real data, not a bug, and removing it is purely a size decision.
 
 ### Reproducing these measurements
 

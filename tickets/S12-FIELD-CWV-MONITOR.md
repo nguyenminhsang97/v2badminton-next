@@ -71,12 +71,22 @@ Sentry-attributable share of that, after separating real SDK code from the
 / ~69 KiB uncompressed**, against the ~253 KiB (`200.2` + `52.9`) S9 Finding 3
 attributed to Sentry.
 
-### Follow-up this decision depends on
+### Follow-up this decision depends on — ☑ SHIPPED 2026-09-04
 
 **Wire Web Vitals into the GA4 property that already exists** before committing to
 another perf sprint. `useReportWebVitals` → `G-ME9V2DXWJX` is a small change and it
 is the precondition for ever closing an S10-shaped ticket on evidence rather than
-on a synthetic re-measure. Not filed as a ticket here — raise it with the owner.
+on a synthetic re-measure.
+
+**Done the same day** (`src/components/analytics/WebVitals.tsx`, mounted in the
+site layout): LCP, CLS, INP, FCP, TTFB and FID now report as a `web_vitals` GA4
+event through the existing `trackEvent` channel, tagged with rating, delta,
+`metric_id` for dedupe, and page path.
+
+**The gap this closes is a wait, not a switch.** GA4 needs real traffic to
+accumulate before the data means anything. Do not re-rank `S10` or `S11` off the
+first few days — give it the same 28 days this ticket originally asked for, from
+**2026-09-04**, then read the mobile LCP and INP distributions and decide.
 
 ---
 
