@@ -54,6 +54,23 @@ export function HeroSection({ campaign, content, facebookUrl }: HomepageHeroSect
     width: 1122,
     height: 1402,
   });
+
+  // The mobile counterpart of the preload above, and it is the one that matters
+  // most: the hero image is the LCP element, and on mobile it lives in a
+  // <source media="(max-width: 767px)"> inside <body>, so without this the
+  // browser cannot discover it until it has parsed past ~600 KB of scripts.
+  // Measured on production before this existed: the mobile hero started
+  // downloading at 754 ms and LCP landed at 792 ms, while desktop — which had
+  // the preload — reached LCP in about a quarter of the time.
+  // The two media queries are mutually exclusive, so exactly one preload is
+  // ever used and neither viewport fetches the other's image.
+  ReactDOM.preload(generatedImages.afterWorkClass, {
+    as: "image",
+    imageSrcSet: mobileHeroSrcSet,
+    imageSizes: "100vw",
+    fetchPriority: "high",
+    media: "(max-width: 767px)",
+  });
   const primaryCtaHref =
     campaign?.primaryCtaUrl ??
     (campaign?.linkedPageSlug ? `/${campaign.linkedPageSlug}/` : null) ??
