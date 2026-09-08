@@ -12,6 +12,49 @@ it is now the top remaining perf ticket.
 
 That is +50.9 KiB (+35 %) against a target that is now 2.4× away.
 
+### Update 2026-09-08 — option 3 shipped, target still not met
+
+Option 3 (dedupe location nodes to `@id` references) is implemented in
+`49b8607`. Measured on a production build against live production:
+
+| | Homepage decoded HTML |
+|---|---|
+| Production, 2026-09-04 | 194.7 KiB |
+| **Production build, 2026-09-08** | **187.1 KiB** |
+| Success criterion | < 80 KiB |
+
+−7,771 B (−3.9 %). `homepage-course-schema` went 17,411 → 13,291 B and
+`streetAddress` from 42 occurrences to 10. Four money pages that carry a Course
+schema each dropped ~2.0 KiB; `/gia-hoc-cau-long-tphcm/` — business block, no
+Course schema — gained 390 B, the `@id` strings with nothing to offset them.
+
+This is the size of win option 3 was estimated at, and it confirms the rest of
+the analysis below: **the ticket's own conclusion stands, the 80 KiB target is
+still unreachable without option 2.** The remaining decision is unchanged —
+re-set the target on evidence, or do the architectural work.
+
+### Measured non-actions, so nobody re-derives them
+
+Two adjacent ideas were evaluated on 2026-09-08 and deliberately **not** taken.
+
+**Deduping `courseSchedule` the same way — rejected.** It is the larger half:
+9,296 B across the 4 homepage Courses versus 5,084 B for locations, because each
+Course repeats all 14 `Schedule` nodes. But a `Schedule` has no defining block
+anywhere on the page, so referencing one by `@id` would mean defining it inside
+the first Course and pointing the other three at it. If Google evaluates a Course
+independently of its siblings, those three lose their schedule entirely. That is
+the same dangling-reference failure option 3 was carefully designed to avoid,
+traded for 4.6 % of the page. Not worth it.
+
+**`experimental.inlineCss` — rejected, and it would make this ticket worse.** The
+18.1 KiB stylesheet is render-blocking and PSI estimates 130–330 ms from
+inlining it. But the flag's own documentation states styles are then emitted
+"once within `<style>` tags for SSR and once in the RSC payload" — the exact
+doubling this ticket is about, so it would add roughly 36 KiB to every page. It
+is also global (no per-page opt-in), experimental, and aimed at atomic CSS like
+Tailwind, which this project does not use. Hand-extracted critical CSS for the
+hero and nav remains viable and is a separate piece of work.
+
 ### New evidence for the stated hypothesis
 
 The hypothesis in this ticket — that Sanity-backed sections serialize too much

@@ -66,6 +66,17 @@ type CourseSchemaOptions = {
   locations?: readonly SanityLocation[];
   pricingTiers?: readonly SanityPricingTier[];
   scheduleBlocks?: readonly SanityScheduleBlock[];
+  /**
+   * Emit `location` as bare `@id` references instead of repeating the full
+   * `SportsActivityLocation` node inside every `CourseInstance`.
+   *
+   * Only pass `true` from a page that also renders a schema block defining
+   * those same nodes — in practice `buildHomepageLocalBusinessSchema()` with
+   * the *same* `locations` array. A page that references an `@id` it never
+   * defines emits a dangling reference, which is worse for SEO than the
+   * duplication this saves. See tickets/S10-HOMEPAGE-HTML-SIZE.md, option 3.
+   */
+  locationsDefinedOnPage?: boolean;
 };
 
 type CourseListSchemaOptions = CourseSchemaOptions & {
@@ -130,14 +141,30 @@ function buildLocationMapUrl(location: SanityLocation): string | null {
   return null;
 }
 
+/**
+ * Stable document-wide identity for one venue, so the same node can be defined
+ * once and referenced everywhere else on the page instead of repeated in full.
+ * Keyed on the Sanity slug because it is stable across content edits and is
+ * already the identity used in URLs.
+ */
+function locationNodeId(location: SanityLocation): string {
+  return `${siteConfig.siteUrl}/#location-${location.slug}`;
+}
+
 function buildEmbeddedSportsLocation(location: SanityLocation) {
   return {
     "@type": "SportsActivityLocation",
+    "@id": locationNodeId(location),
     name: location.name,
     address: buildPostalAddress(location),
     geo: buildGeoCoordinates(location),
     ...(location.imageUrl ? { image: canonicalUrl(location.imageUrl) } : {}),
   };
+}
+
+/** The reference form of the node above. Valid only where that node is defined. */
+function buildSportsLocationReference(location: SanityLocation) {
+  return { "@id": locationNodeId(location) };
 }
 
 function normalizeTime(value: string): string {
@@ -356,7 +383,13 @@ function buildCourseInstances(pathOrUrl: string, options: CourseSchemaOptions) {
       ...(schedules.length > 0 ? { courseSchedule: schedules } : {}),
       ...(workload ? { courseWorkload: workload } : {}),
       ...(locations.length > 0
-        ? { location: locations.map(buildEmbeddedSportsLocation) }
+        ? {
+            location: locations.map(
+              options.locationsDefinedOnPage
+                ? buildSportsLocationReference
+                : buildEmbeddedSportsLocation,
+            ),
+          }
         : {}),
       ...(offers.length > 0 ? { offers } : {}),
     },

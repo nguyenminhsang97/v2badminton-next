@@ -78,6 +78,11 @@ export function MoneyPageStructuredData({
             locations,
             pricingTiers,
             scheduleBlocks: schemaScheduleBlocks,
+            // Safe: the <JsonLd id={businessId}> block above renders
+            // buildHomepageLocalBusinessSchema() with this same `locations`
+            // array, so the referenced @ids are defined on every page that
+            // renders this component.
+            locationsDefinedOnPage: true,
           })}
         />
       ) : null}
