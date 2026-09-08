@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { FloatingCta } from "@/components/layout/FloatingCta";
 import { Nav } from "@/components/layout/Nav";
 import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
+import { WebVitals } from "@/components/analytics/WebVitals";
 import { TrackingBootstrap } from "@/components/providers/TrackingBootstrap";
 import { getCoaches, getPublishedPosts } from "@/lib/sanity";
 
@@ -30,6 +31,7 @@ export default async function SiteLayout({
     <div className="app-shell">
       <GoogleAnalytics />
       <GoogleTagManager />
+      <WebVitals />
       <TrackingBootstrap />
       <Nav
         siteSettings={siteSettings}

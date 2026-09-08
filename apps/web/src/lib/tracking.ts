@@ -11,7 +11,12 @@ export type TrackingEvent =
   | "form_abandon"
   | "time_to_submit"
   | "cms_article_cta_click"
-  | "cms_court_cta_click";
+  | "cms_court_cta_click"
+  | "web_vitals";
+
+/** Core Web Vitals reported by `next/web-vitals`. */
+export type WebVitalName = "LCP" | "CLS" | "INP" | "FCP" | "TTFB" | "FID";
+export type WebVitalRating = "good" | "needs-improvement" | "poor";
 
 export type CtaName =
   | "dang_ky_ngay"
@@ -122,6 +127,23 @@ type EventParams = {
     court_hub: string;
     target_money_page: string;
     page_path?: string;
+  };
+  web_vitals: {
+    metric_name: WebVitalName;
+    /**
+     * GA4 only aggregates integers, so this is rounded: CLS is unitless and
+     * tiny, hence x1000; every other metric is milliseconds.
+     */
+    value: number;
+    metric_value: number;
+    metric_delta: number;
+    metric_rating: WebVitalRating;
+    /** Dedupe key — one page load can report the same metric more than once. */
+    metric_id: string;
+    navigation_type?: string;
+    page_path?: string;
+    /** Keeps these out of GA4's engagement/bounce calculations. */
+    non_interaction: true;
   };
 };
 
