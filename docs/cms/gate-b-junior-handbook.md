@@ -40,8 +40,8 @@ Record the baseline: `git log --oneline -1` → note the hash. You will need it 
 
 ## 1. Rules you must not break
 
-Read all seven before writing any code. R1–R4 are traps in the code, R6–R7 are traps in
-this machine's environment (both were hit and verified while writing this handbook), and
+Read all of them before writing any code. R1–R4 are traps in the code; R6, R6.1 and R7 are
+traps in the tooling and the machine, every one of them hit for real during the first run;
 R5 is the commit discipline.
 
 **R1 — `contentShared.ts` line 59 keeps `"/studio/"`. Do not change it.**
@@ -83,6 +83,26 @@ git grep -n "/studio" -- apps/web/src/sanity
 Every boundary check in this handbook is of the form "expect no output" or "expect exactly
 one line". Under Git Bash they would all appear to pass while proving nothing. Use
 PowerShell. If you must use Git Bash, prefix each one with `MSYS_NO_PATHCONV=1`.
+
+**R6.1 — an empty result is only evidence once you have proved the pattern still matches.**
+This follows directly from R6: a mangled pattern and a genuinely clean tree produce
+identical output. So before trusting any "expect no output" check, run it once as a
+**positive control** — same pattern, widened by one alternative you know is present.
+
+The control is only worth anything if that extra term is **verified present at the moment
+you run it**. Picking a term that happens to be absent too gives you a second empty result
+and a second false reassurance — the exact failure the control exists to catch. So:
+
+- Choose the term by *looking at a file*, not from memory of what the repo used to hold.
+- If the control prints nothing, stop. Your shell is eating the pattern, or your assumption
+  about the repo is wrong. Either way the original empty result proves nothing.
+- Re-run the control on the same shell, in the same directory, in the same session as the
+  real check. A control proved somewhere else proves nothing here.
+
+Worked example, for the G12 checks: widen `@sanity[/](icons|vision)` to
+`@sanity[/](icons|vision|client)`. `@sanity/client` is present after G10 — you edited those
+files yourself, so you can open them and confirm — and the control must print
+`apps/web/src/lib/sanity/client.ts` plus the migration script from G10c.
 
 **R7 — Never run `git checkout main` in this repo.** It fails with:
 
@@ -595,12 +615,9 @@ git grep -nE "from .sanity." -- apps/web
 
 Expected: **no output from any of the four.** If anything remains, G10 or G12 is incomplete.
 
-> **Prove the pattern before trusting an empty result.** Per R6, a mangled pattern returns
-> nothing and looks identical to a pass. For each check that uses `-E`, run it once with a
-> term you know is present — e.g. swap `@sanity[/](icons|vision)` for
-> `@sanity[/](icons|vision|client)`, which must print the `client.ts` and the migration
-> script. If the positive control prints nothing, your shell is eating the pattern: switch
-> to PowerShell and re-run everything.
+> **Run the positive control before trusting these four empty results — see R6.1**, which
+> also explains why the term you widen with must be one you have just confirmed is present
+> rather than one you assume is. R6.1's worked example is written for exactly these checks.
 
 ---
 
