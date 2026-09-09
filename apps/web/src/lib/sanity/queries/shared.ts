@@ -1,6 +1,6 @@
 import "server-only";
 
-import { defineQuery } from "next-sanity";
+import { defineQuery } from "groq";
 import { faqs as staticFaqs, type FaqItem } from "@/lib/faqs";
 import { courtLocationMap, courtLocations } from "@/lib/locations";
 import { pricingTiers as staticPricingTiers } from "@/lib/pricing";

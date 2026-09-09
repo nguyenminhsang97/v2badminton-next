@@ -16,7 +16,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import nextEnv from "@next/env";
-import { createClient } from "next-sanity";
+import { createClient } from "@sanity/client";
 import * as faqModule from "../src/lib/faqs";
 import * as locationModule from "../src/lib/locations";
 import type { FaqItem } from "../src/lib/faqs";

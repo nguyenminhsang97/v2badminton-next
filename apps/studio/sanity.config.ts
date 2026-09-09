@@ -36,7 +36,7 @@ const dataset = envDataset ?? "production";
 export default defineConfig({
   name: "default",
   title: "V2 Badminton CMS",
-  basePath: "/studio",
+  basePath: "/",
   projectId,
   dataset,
   plugins: [

@@ -6,11 +6,13 @@
   "scripts": {
     "dev": "npm run -w apps/web dev",
     "dev:web": "npm run -w apps/web dev",
-    "build": "npm run -w packages/schema-shared typecheck && npm run -w apps/web build",
+    "dev:studio": "npm run -w apps/studio dev",
+    "build": "npm run -w packages/schema-shared typecheck && npm run -w apps/web build && npm run -w apps/studio build",
     "build:web": "npm run -w apps/web build",
+    "build:studio": "npm run -w apps/studio build",
     "start": "npm run -w apps/web start",
-    "lint": "npm run -w apps/web lint",
-    "typecheck": "npm run -w packages/schema-shared typecheck && npm run -w apps/web typecheck",
+    "lint": "npm run -w apps/web lint && npm run -w apps/studio lint",
+    "typecheck": "npm run -w packages/schema-shared typecheck && npm run -w apps/web typecheck && npm run -w apps/studio typecheck",
     "test": "npm run -w apps/web test",
     "test:e2e": "npm run -w apps/web test:e2e",
     "verify:production-env": "npm run -w apps/web verify:production-env"

@@ -21,7 +21,7 @@ import { describe, expect, it } from "vitest";
  * plan (Studio draft test) covers in-Studio behavior.
  */
 
-const ROOT = resolve(__dirname, "../../../../");
+const ROOT = resolve(__dirname, "../../../../../");
 
 function read(rel: string): string {
   return readFileSync(resolve(ROOT, rel), "utf8");
@@ -29,23 +29,23 @@ function read(rel: string): string {
 
 describe("body-image discriminator alignment", () => {
   it("schema defines the array member with name 'bodyImage'", () => {
-    const schema = read("src/sanity/schemaTypes/contentShared.ts");
+    const schema = read("apps/studio/src/sanity/schemaTypes/contentShared.ts");
     expect(schema).toMatch(/contentBodyImage = defineArrayMember\(\{/);
     expect(schema).toMatch(/name:\s*"bodyImage"/);
   });
 
   it("article body widens its `of` to include contentBodyImage", () => {
-    const article = read("src/sanity/schemaTypes/contentArticle.ts");
+    const article = read("apps/studio/src/sanity/schemaTypes/contentArticle.ts");
     expect(article).toMatch(/of:\s*\[contentBodyBlock,\s*contentBodyImage\]/);
   });
 
   it("GROQ projection keys the conditional on _type == 'bodyImage'", () => {
-    const projection = read("src/lib/sanity/queries/shared.ts");
+    const projection = read("apps/web/src/lib/sanity/queries/shared.ts");
     expect(projection).toContain('_type == "bodyImage"');
   });
 
   it("GROQ projection emits asset url and dimension metadata", () => {
-    const projection = read("src/lib/sanity/queries/shared.ts");
+    const projection = read("apps/web/src/lib/sanity/queries/shared.ts");
     expect(projection).toContain('"url": asset->url');
     expect(projection).toContain('"width": asset->metadata.dimensions.width');
     expect(projection).toContain('"height": asset->metadata.dimensions.height');
@@ -53,24 +53,24 @@ describe("body-image discriminator alignment", () => {
   });
 
   it("GROQ projection coalesces alt, caption, and size", () => {
-    const projection = read("src/lib/sanity/queries/shared.ts");
+    const projection = read("apps/web/src/lib/sanity/queries/shared.ts");
     expect(projection).toContain('"alt": coalesce(alt, "")');
     expect(projection).toContain('"caption": coalesce(caption, null)');
     expect(projection).toContain('"size": coalesce(size, "inline")');
   });
 
   it("GROQ projection preserves text-block passthrough via spread", () => {
-    const projection = read("src/lib/sanity/queries/shared.ts");
+    const projection = read("apps/web/src/lib/sanity/queries/shared.ts");
     expect(projection).toMatch(/body\[\]\{\s*\.\.\.,/);
   });
 
   it("renderer keys PortableText `types` on bodyImage", () => {
-    const view = read("src/components/content/ArticleView.tsx");
+    const view = read("apps/web/src/components/content/ArticleView.tsx");
     expect(view).toMatch(/types:\s*\{\s*bodyImage:\s*ArticleBodyImage/);
   });
 
   it("renderer renders <figure> with data-size variant", () => {
-    const view = read("src/components/content/ArticleView.tsx");
+    const view = read("apps/web/src/components/content/ArticleView.tsx");
     expect(view).toContain('className="blog-post__body-figure"');
     expect(view).toContain("data-size={size}");
   });
