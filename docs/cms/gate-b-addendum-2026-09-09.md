@@ -267,11 +267,38 @@ so the pages are noindex regardless. Add as defence in depth:
   `connect-src`; a hand-written policy here will break the editor and buy nothing. Keep
   Vercel Password Protection (B.2) as the real access control.
 
-Also note: `apps/studio/next.config.ts` will **not** carry web's `env: { … }` fallback block
-(which hardcodes `NEXT_PUBLIC_SANITY_PROJECT_ID` = `w58s0f53`). The Studio therefore depends
-entirely on the three Vercel env vars from B.2 being present in all three environments —
-miss one and `isSanityStudioConfigured` renders the "Studio is unavailable" page instead of
-the editor. Verify on the first Preview deploy, before the DNS step.
+**Env fallback — this paragraph reverses the original guidance.** It first said
+`apps/studio/next.config.ts` should *not* carry web's `env: { … }` block, so that a missing
+Vercel variable would surface as the "Studio is unavailable" page. The first local run of
+the split (2026-09-09) showed why that was wrong:
+
+- There is no `apps/web/.env.local` on the dev machine — only a repo-root `.env.local`,
+  which `next dev` never loads because it runs with cwd = the workspace directory. The web
+  app works locally *only* because of that hardcoded `env` block. Omitting it from the
+  Studio made `npm run dev:studio` render a black page connecting to
+  `missing-project-id.api.sanity.io`, with no documented way to fix it.
+- The two values are public and already committed in `apps/web/next.config.ts`. Withholding
+  them from the sibling app buys no secrecy.
+
+So `apps/studio/next.config.ts` **does** mirror web's block for
+`NEXT_PUBLIC_SANITY_PROJECT_ID` and `NEXT_PUBLIC_SANITY_DATASET` (not `NEXT_PUBLIC_SITE_URL`,
+which varies per environment and already has a default in `@v2/schema-shared`). A value set
+in Vercel still wins — the config reads `process.env` first.
+
+**The cost, and how it is paid.** A fallback turns a forgotten Vercel variable from a loud
+failure into a silent one: instead of the "unavailable" page, the Studio quietly connects to
+the real `production` dataset. That is the correct target anyway, so the practical risk is
+narrow — it only bites if a preview was *meant* to point somewhere else. Two mitigations,
+both cheap:
+
+1. A build-time `console.warn` in `apps/studio/next.config.ts` when either variable is
+   absent, so a misconfigured Vercel project is visible in the build log.
+2. B.2 verification is explicit about it: after creating the project, confirm all three
+   variables are actually present in the Vercel dashboard rather than inferring it from a
+   working Studio.
+
+Credit: the silent-failure trade-off was raised by the implementer during the Phase 1 run,
+not caught in review.
 
 ---
 

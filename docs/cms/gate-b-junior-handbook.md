@@ -220,13 +220,39 @@ import type { NextConfig } from "next";
  *   Access control on this origin is Vercel Password Protection, not CSP.
  * - No Sentry. The public site owns error reporting.
  * - No images config. The Studio serves its own assets.
- * - No `env` fallback block. Unlike apps/web, this app hardcodes no Sanity
- *   project id: all three NEXT_PUBLIC_* vars must be set in Vercel or the
- *   Studio renders the "unavailable" page.
+ * - `env` mirrors apps/web/next.config.ts. These NEXT_PUBLIC_* values are
+ *   public (browser-bundle safe) and already committed next door, so the same
+ *   fallbacks cost nothing and make local dev and CI work with no .env file —
+ *   there is no apps/*/.env.local on the dev machine, only a repo-root one
+ *   that `next dev` never loads. A Vercel-set value still wins: the config
+ *   reads process.env first. NEXT_PUBLIC_SITE_URL is deliberately NOT here —
+ *   it varies per environment and @v2/schema-shared already defaults it.
+ *   The warn below keeps a misconfigured Vercel project visible in build logs.
  * - No `trailingSlash`. The web app sets it; the Studio must not, or Sanity's
  *   own routes (/structure/pages-group;content_article) stop resolving.
  */
+// A fallback keeps local dev working but would let a forgotten Vercel variable
+// pass unnoticed, silently pointing the Studio at the real production dataset.
+// Warn at build time so a misconfigured project shows up in the build log.
+for (const key of [
+  "NEXT_PUBLIC_SANITY_PROJECT_ID",
+  "NEXT_PUBLIC_SANITY_DATASET",
+] as const) {
+  if (!process.env[key]?.trim()) {
+    console.warn(
+      `[studio] ${key} is not set — falling back to the committed default. ` +
+        `On Vercel this means the environment variable is missing.`,
+    );
+  }
+}
+
 const nextConfig: NextConfig = {
+  env: {
+    NEXT_PUBLIC_SANITY_PROJECT_ID:
+      process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? "w58s0f53",
+    NEXT_PUBLIC_SANITY_DATASET:
+      process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production",
+  },
   transpilePackages: ["@v2/schema-shared"],
   poweredByHeader: false,
   async headers() {
@@ -467,7 +493,19 @@ untouched. See addendum §B-2.
 +import { defineQuery } from "groq";
 ```
 
-**Change nothing else in either file.** In particular leave the `next: { revalidate, tags }`
+**10c — `apps/web/scripts/sync-faqs-locations-to-sanity.mts` line 19:**
+
+```diff
+-import { createClient } from "next-sanity";
++import { createClient } from "@sanity/client";
+```
+
+This is a one-off migration script, not application code, but `apps/web/tsconfig.json`
+includes `**/*.mts` so it **is** typechecked. Its two `createClient` calls (lines 113 and
+123) use only plain `@sanity/client` options — `projectId`, `dataset`, `apiVersion`,
+`useCdn`, `perspective`, `token` — so the swap is a no-op. Leave them alone.
+
+**Change nothing else in any of the three files.** In particular leave the `next: { revalidate, tags }`
 options in `client.ts` exactly as they are — `@sanity/client@7` supports them natively, and
 they are what makes on-demand revalidation work.
 
@@ -485,9 +523,10 @@ they are what makes on-demand revalidation work.
 @sanity/icons  @sanity/vision  next-sanity  sanity  styled-components
 ```
 
-**Add** these five to `dependencies` (keep the block alphabetically sorted, as it is today):
+**Add** these six to `dependencies` (keep the block alphabetically sorted, as it is today):
 
 ```json
+"@next/env": "16.2.4",
 "@portabletext/react": "^6.0.3",
 "@portabletext/types": "^4.0.2",
 "@sanity/client": "^7.22.0",
@@ -495,16 +534,18 @@ they are what makes on-demand revalidation work.
 "groq": "^5.23.0",
 ```
 
-**Why the additions:** all five are already imported by `apps/web/src` today but were never
-declared — they only resolved because `next-sanity` happened to pull them in. `@sanity/webhook`
-is the signature check for the revalidation endpoint and has **no other provider**; removing
-`next-sanity` without declaring it breaks the build. See addendum §B-3.
+**Why the additions:** all six are already imported by `apps/web` today but were never
+declared — they only resolved because `next-sanity` (or `next`) happened to pull them in.
+`@sanity/webhook` is the signature check for the revalidation endpoint and has **no other
+provider**; removing `next-sanity` without declaring it breaks the build. `@next/env` is
+imported directly by the migration script you edited in G10c. See addendum §B-3.
 
 The resulting `dependencies` block must be **exactly** this — copy it verbatim, there is no
 `next-sanity`, `sanity`, `styled-components`, `@sanity/icons` or `@sanity/vision` line:
 
 ```json
 "dependencies": {
+  "@next/env": "16.2.4",
   "@portabletext/react": "^6.0.3",
   "@portabletext/types": "^4.0.2",
   "@sanity/client": "^7.22.0",
@@ -535,13 +576,31 @@ Also **delete** the now-dead script `"sanity:dev": "next dev"` from `apps/web/pa
 git rm -r "apps/web/src/app/studio"
 ```
 
-**Verify:**
+**Verify — four checks, all scoped to *all* of `apps/web`, not just `src/`.** The original
+version of this handbook checked only `next-sanity` and missed
+`apps/web/scripts/sync-faqs-locations-to-sanity.mts`, which is why G10c exists.
 
 ```bash
 git grep -n "next-sanity" -- apps/web
 ```
+```bash
+git grep -n "styled-components" -- apps/web
+```
+```bash
+git grep -nE "@sanity[/](icons|vision)" -- apps/web
+```
+```bash
+git grep -nE "from .sanity." -- apps/web
+```
 
-Expected: **no output**. If anything remains, G10 or G12 is incomplete.
+Expected: **no output from any of the four.** If anything remains, G10 or G12 is incomplete.
+
+> **Prove the pattern before trusting an empty result.** Per R6, a mangled pattern returns
+> nothing and looks identical to a pass. For each check that uses `-E`, run it once with a
+> term you know is present — e.g. swap `@sanity[/](icons|vision)` for
+> `@sanity[/](icons|vision|client)`, which must print the `client.ts` and the migration
+> script. If the positive control prints nothing, your shell is eating the pattern: switch
+> to PowerShell and re-run everything.
 
 ---
 
@@ -693,10 +752,9 @@ git grep -n "basePath" -- apps/studio/sanity.config.ts
 ```
 → `basePath: "/",`
 
-```bash
-git grep -n "next-sanity" -- apps/web
-```
-→ no output.
+Re-run all four G12 verify checks (`next-sanity`, `styled-components`,
+`@sanity[/](icons|vision)`, `from .sanity.`) against `apps/web`.
+→ no output from any of them.
 
 ```bash
 git grep -n "FILE_ROUTE_REDIRECTS" -- apps/web/next.config.ts
@@ -730,8 +788,15 @@ Then stop the dev server and check the web app still builds and serves without t
 npm run dev
 ```
 
-`http://localhost:3000/studio` must now 404. That is correct at this stage — the redirect
+`http://localhost:3000/studio/` must no longer serve the Studio. It renders the
+"Không tìm thấy trang" not-found page instead. That is correct at this stage — the redirect
 does not exist until Phase 3.
+
+**Expect HTTP 200, not 404.** This site answers *every* unknown path with 200 plus a
+not-found body — a pre-existing site-wide soft-404 from the content catch-all, unrelated to
+Gate B. Confirm with a control: request an invented path such as
+`http://localhost:3000/khong-ton-tai-abc/` and see the same 200. What G16d actually proves
+is that `/studio/` now behaves like any other non-existent path, i.e. the mount is gone.
 
 **16e — Commit.** Everything was staged in 16a.2. Re-stage in case the dev runs in 16d
 touched anything, then review:
@@ -808,9 +873,19 @@ alias and `http://localhost:3000` all stay.
   - `NEXT_PUBLIC_SITE_URL`
 - Turn on **Password Protection** for the bake window.
 
-> **Why all three env vars matter:** `apps/studio/next.config.ts` carries no fallback block,
-> unlike the web app. Miss one and the Studio renders "Sanity Studio is unavailable"
-> instead of the editor.
+> **Check the variables are really set — a working Studio does not prove it.**
+> `apps/studio/next.config.ts` falls back to the committed `w58s0f53` / `production`
+> defaults (G4), so a forgotten variable does **not** show up as a broken Studio. It shows
+> up as a Studio quietly pointing at the real production dataset, which is usually the right
+> target and therefore invisible. Two things to do:
+>
+> 1. Open the Vercel project's Environment Variables page and confirm all three are present
+>    in Production, Preview **and** Development. Read the list; do not infer it.
+> 2. Open the deployment's build log and search for `[studio]`. The build warns
+>    `NEXT_PUBLIC_… is not set — falling back to the committed default` for any missing
+>    variable. A clean build log means they were genuinely set.
+>
+> This matters most if a preview is ever meant to point at a non-production dataset.
 
 **P2.3 — Verify the Preview before merging Phase 1.**
 Vercel will build a Preview from the `chore/cms-studio-cutover` branch. Open that preview
@@ -983,7 +1058,8 @@ Gate B is complete when every line is true:
 - [ ] `git grep -n "studio/" -- apps/studio/src` returns exactly one line (`contentShared.ts:59`)
 - [ ] `git grep -n "basePath" -- apps/studio/sanity.config.ts` returns `basePath: "/",`
 - [ ] `git grep -nE "@[/](lib|components|app)" -- apps/studio` returns nothing
-- [ ] `git grep -n "next-sanity" -- apps/web` returns nothing
+- [ ] All four G12 checks return nothing against `apps/web` — `next-sanity`,
+      `styled-components`, `@sanity[/](icons|vision)`, `from .sanity.`
 - [ ] `npm ls sanity --workspace apps/web` lists no `sanity` entry under `@v2/web`
 - [ ] `apps/web/src/app/studio/` no longer exists
 - [ ] `apps/web/next.config.ts` still contains the `/blog` → `/tin-tuc` rules
