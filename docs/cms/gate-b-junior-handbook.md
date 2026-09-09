@@ -40,8 +40,9 @@ Record the baseline: `git log --oneline -1` → note the hash. You will need it 
 
 ## 1. Rules you must not break
 
-Read these five before writing any code. Four of them are traps that have already been
-identified; the fifth is the commit discipline.
+Read all seven before writing any code. R1–R4 are traps in the code, R6–R7 are traps in
+this machine's environment (both were hit and verified while writing this handbook), and
+R5 is the commit discipline.
 
 **R1 — `contentShared.ts` line 59 keeps `"/studio/"`. Do not change it.**
 In sub-task G9 you will replace `/studio/...` strings with `/...`. There is exactly one
@@ -82,6 +83,24 @@ git grep -n "/studio" -- apps/web/src/sanity
 Every boundary check in this handbook is of the form "expect no output" or "expect exactly
 one line". Under Git Bash they would all appear to pass while proving nothing. Use
 PowerShell. If you must use Git Bash, prefix each one with `MSYS_NO_PATHCONV=1`.
+
+**R7 — Never run `git checkout main` in this repo.** It fails with:
+
+```
+fatal: 'main' is already used by worktree at 'D:/V2/v2badminton-next-cta-fix'
+```
+
+`main` is checked out in a second worktree on this machine (`git worktree list` shows it).
+Always branch directly off the remote ref instead, which needs no local `main`:
+
+```bash
+git fetch origin
+git checkout -b <new-branch> origin/main
+```
+
+Both the Phase 1 pre-flight (0.3) and Phase 3 (G17) already use this form. If a command
+fails with the message above you used the wrong one — do **not** try to fix it by removing
+or moving the other worktree.
 
 ---
 
@@ -853,9 +872,11 @@ the revalidation webhook still works after the dependency change).
 ### G17 — Append the `/studio` rules to `FILE_ROUTE_REDIRECTS`
 
 ```bash
-git checkout main && git pull
-git checkout -b chore/cms-studio-redirect
+git fetch origin
+git checkout -b chore/cms-studio-redirect origin/main
 ```
+
+**Do not use `git checkout main`** — see R7. Branch straight off `origin/main` as above.
 
 **Edit** `apps/web/next.config.ts`. Find the `FILE_ROUTE_REDIRECTS` array (it currently holds
 the two `/blog` entries) and **append** these two entries inside it. Do **not** touch
