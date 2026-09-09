@@ -15,7 +15,7 @@
  * All fetches are read-only.  No mutations.  No links/actions added beyond PR 1.
  * PR 3 wires the static placeholder sections:
  *   - "Lối tắt sửa nhanh" → IntentLinkCard components pointing to Studio
- *     structure paths (e.g. /studio/structure/settings-group;site_settings)
+ *     structure paths (e.g. /structure/settings-group;site_settings)
  *   - "Nhóm nội dung" → same pattern for document-type list views
  *   - "Mở trang trực tiếp" → LivePageCard components opening production URLs
  * PR 4A adds "Bảng vận hành nội dung" — a sortable content-ops table rendered
@@ -241,7 +241,7 @@ const CARD_DESC_STYLE: React.CSSProperties = {
 
 /**
  * A clickable card that navigates to a Studio structure pane.
- * `href` should be a path like "/studio/structure/settings-group;site_settings".
+ * `href` should be a path like "/structure/settings-group;site_settings".
  * Uses a plain <a> tag; the Studio SPA intercepts same-origin clicks.
  */
 function IntentLinkCard({
@@ -499,22 +499,22 @@ export function DashboardTool(_props: { tool: Tool }) {
             <IntentLinkCard
               label="Nội dung trang chủ"
               description="Hero, stats bar, các section"
-              href="/studio/structure/settings-group;homepage_content"
+              href="/structure/settings-group;homepage_content"
             />
             <IntentLinkCard
               label="Cài đặt website"
               description="Liên hệ, nav, footer, microcopy"
-              href="/studio/structure/settings-group;site_settings"
+              href="/structure/settings-group;site_settings"
             />
             <IntentLinkCard
               label="Bài viết kỹ thuật"
               description="Hub kỹ thuật cầu lông"
-              href="/studio/structure/pages-group;content_article"
+              href="/structure/pages-group;content_article"
             />
             <IntentLinkCard
               label="Money pages"
               description="9 trang dịch vụ"
-              href="/studio/structure/pages-group;money_page"
+              href="/structure/pages-group;money_page"
             />
           </div>
         </div>
@@ -533,22 +533,22 @@ export function DashboardTool(_props: { tool: Tool }) {
           <IntentLinkCard
             label="Bài viết"
             description="content_article"
-            href="/studio/structure/pages-group;content_article"
+            href="/structure/pages-group;content_article"
           />
           <IntentLinkCard
             label="Money pages"
             description="money_page"
-            href="/studio/structure/pages-group;money_page"
+            href="/structure/pages-group;money_page"
           />
           <IntentLinkCard
             label="Trang tĩnh"
             description="static_page"
-            href="/studio/structure/pages-group;static_page"
+            href="/structure/pages-group;static_page"
           />
           <IntentLinkCard
             label="Cài đặt website"
             description="site_settings"
-            href="/studio/structure/settings-group;site_settings"
+            href="/structure/settings-group;site_settings"
           />
         </div>
       </div>

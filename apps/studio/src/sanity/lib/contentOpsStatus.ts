@@ -192,7 +192,7 @@ function deriveCoverStatus(args: {
 
 /** Build the Sanity Studio document-edit intent URL for a canonical doc ID. */
 export function buildEditIntent(baseId: string, type: string): string {
-  return `/studio/intent/edit/id=${baseId};type=${type}`;
+  return `/intent/edit/id=${baseId};type=${type}`;
 }
 
 /**

@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "sanity:dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -17,21 +16,22 @@
     "test:mobile:headed": "playwright test --project=mobile-chrome --project=mobile-safari --headed"
   },
   "dependencies": {
-    "@sanity/icons": "^3.7.4",
-    "@sanity/vision": "^5.28.0",
+    "@next/env": "16.2.4",
+    "@portabletext/react": "^6.0.3",
+    "@portabletext/types": "^4.0.2",
+    "@sanity/client": "^7.22.0",
+    "@sanity/webhook": "^4.0.4",
     "@sentry/nextjs": "^10.51.0",
     "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.37.0",
     "@v2/schema-shared": "*",
     "@vercel/postgres": "^0.10.0",
+    "groq": "^5.23.0",
     "jose": "^6.2.3",
     "next": "16.2.4",
-    "next-sanity": "^12.3.1",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "resend": "^6.12.2",
-    "sanity": "^5.23.0",
-    "styled-components": "^6.4.1"
+    "resend": "^6.12.2"
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",

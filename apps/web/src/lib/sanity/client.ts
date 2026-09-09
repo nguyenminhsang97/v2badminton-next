@@ -1,5 +1,5 @@
 import "server-only";
-import { createClient } from "next-sanity";
+import { createClient } from "@sanity/client";
 
 type SanityQueryParams = Record<string, unknown>;
 

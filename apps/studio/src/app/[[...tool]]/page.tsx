@@ -1,4 +1,4 @@
-import { isSanityStudioConfigured } from "../../../../sanity.config";
+import { isSanityStudioConfigured } from "../../../sanity.config";
 import { StudioClient } from "./StudioClient";
 
 export const dynamic = "force-static";

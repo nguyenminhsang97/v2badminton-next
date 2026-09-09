@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
-const ROOT = resolve(__dirname, "../../../../");
+const ROOT = resolve(__dirname, "../../../../../");
 
 function read(rel: string): string {
   return readFileSync(resolve(ROOT, rel), "utf8");
@@ -10,7 +10,7 @@ function read(rel: string): string {
 
 describe("fullPath route-change guardrails", () => {
   it("documents the URL rename flow for CMS and file-routed paths", () => {
-    const runbook = read("../../docs/cms/url-rename-runbook.md");
+    const runbook = read("docs/cms/url-rename-runbook.md");
 
     expect(runbook).toContain("Content-Platform URLs");
     expect(runbook).toContain("Create and publish a `route_redirect` document");
@@ -20,7 +20,7 @@ describe("fullPath route-change guardrails", () => {
   });
 
   it("locks the fullPath input after a published twin exists", () => {
-    const input = read("src/sanity/components/FullPathPreviewInput.tsx");
+    const input = read("apps/studio/src/sanity/components/FullPathPreviewInput.tsx");
 
     expect(input).toContain("PublishedState");
     expect(input).toContain('defined(*[_id == $id][0]._id)');
@@ -29,7 +29,7 @@ describe("fullPath route-change guardrails", () => {
   });
 
   it("blocks CMS paths that collide with file-routed pages", () => {
-    const shared = read("src/sanity/schemaTypes/contentShared.ts");
+    const shared = read("apps/studio/src/sanity/schemaTypes/contentShared.ts");
 
     expect(shared).toContain("FILE_ROUTED_PATHS");
     expect(shared).toContain('"/hoc-cau-long-cho-nguoi-moi/"');
@@ -41,7 +41,7 @@ describe("fullPath route-change guardrails", () => {
   });
 
   it("keeps file-route redirects in next.config instead of CMS redirects", () => {
-    const nextConfig = read("next.config.ts");
+    const nextConfig = read("apps/web/next.config.ts");
 
     expect(nextConfig).toContain("FILE_ROUTE_REDIRECTS");
     expect(nextConfig).toContain("async redirects()");
