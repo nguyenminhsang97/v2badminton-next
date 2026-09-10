@@ -12,6 +12,7 @@
   "dependencies": {
     "@next/env": "16.2.4",
     "@sanity/icons": "^3.7.4",
+    "@sanity/preview-url-secret": "^4.0.5",
     "@sanity/vision": "^5.28.0",
     "@v2/schema-shared": "*",
     "next": "16.2.4",
