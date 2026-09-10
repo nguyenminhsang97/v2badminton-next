@@ -2,6 +2,14 @@ import { NextResponse, type NextRequest } from "next/server";
 
 const PRIMARY_HOST = "v2badminton.com";
 
+/**
+ * Next sets this cookie when draft mode is enabled. Its presence is enough to
+ * mark the response uncacheable and unindexable — whether the preview session
+ * is actually valid is decided further in, but a page rendered for a
+ * cookie-bearing request must never reach a crawler or a shared cache.
+ */
+const DRAFT_MODE_COOKIE = "__prerender_bypass";
+
 export function proxy(request: NextRequest) {
   const host = request.headers.get("host") ?? "";
   if (host === "v2badminton-next.vercel.app") {
@@ -11,7 +19,15 @@ export function proxy(request: NextRequest) {
     );
     return NextResponse.redirect(url, 308);
   }
-  return NextResponse.next();
+
+  const response = NextResponse.next();
+
+  if (request.cookies.has(DRAFT_MODE_COOKIE)) {
+    response.headers.set("X-Robots-Tag", "noindex, nofollow");
+    response.headers.set("Cache-Control", "no-store, must-revalidate");
+  }
+
+  return response;
 }
 
 export const config = {

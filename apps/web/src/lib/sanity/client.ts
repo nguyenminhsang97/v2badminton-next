@@ -1,5 +1,6 @@
 import "server-only";
 import { createClient } from "@sanity/client";
+import { draftMode } from "next/headers";
 
 type SanityQueryParams = Record<string, unknown>;
 
@@ -46,8 +47,41 @@ const sanityReadClient =
       })
     : null;
 
+/**
+ * Draft-mode client. Separate from the read client on purpose.
+ *
+ * It uses its own token (SANITY_API_VIEWER_TOKEN) so the published path can
+ * never read an unpublished document even by mistake: the read client's token
+ * and perspective are untouched, and this one is only ever reached behind
+ * `draftMode().isEnabled`, which requires the __prerender_bypass cookie.
+ *
+ * Not configured means no preview — never a silent fall back to published data
+ * dressed up as a draft.
+ */
+const viewerToken = process.env.SANITY_API_VIEWER_TOKEN?.trim();
+
+const sanityDraftClient =
+  projectId && dataset && viewerToken
+    ? createClient({
+        projectId,
+        dataset,
+        apiVersion: SANITY_API_VERSION,
+        useCdn: false,
+        perspective: "drafts",
+        token: viewerToken,
+      })
+    : null;
+
 export function getSanityReadClient() {
   return sanityReadClient;
+}
+
+export function isSanityDraftConfigured() {
+  return Boolean(sanityDraftClient);
+}
+
+export function getSanityDraftClient() {
+  return sanityDraftClient;
 }
 
 export function isSanityReadConfigured() {
@@ -82,6 +116,31 @@ export async function sanityFetchWithStatus<TResult>({
     };
   }
 
+  // Draft mode is per-request: only a browser carrying the __prerender_bypass
+  // cookie gets here, so pages stay statically rendered for everyone else.
+  const isDraft = await isDraftRequest();
+
+  if (isDraft && sanityDraftClient) {
+    try {
+      const result = await sanityDraftClient.fetch<TResult | null>(
+        query,
+        params ?? {},
+        {
+          // Never cache a draft. It is unpublished content and must not be
+          // reachable through a cache entry after the session ends.
+          cache: "no-store",
+          perspective: "drafts",
+          useCdn: false,
+        },
+      );
+
+      return { data: result ?? fallback ?? null, state: "success" };
+    } catch (error) {
+      console.error("[sanity] Draft query failed.", { error });
+      return { data: fallback ?? null, state: "query_error" };
+    }
+  }
+
   try {
     const result = await sanityReadClient.fetch<TResult | null>(query, params ?? {}, {
       next: {
@@ -114,6 +173,20 @@ export async function sanityFetchOrFallback<TResult>(
 ): Promise<TResult | null> {
   const result = await sanityFetchWithStatus(options);
   return result.data;
+}
+
+/**
+ * `draftMode()` throws outside a request scope — during `generateStaticParams`,
+ * in scripts, in tests. Treat any of those as "not a draft" rather than letting
+ * it break the published path, which is by far the more important one.
+ */
+async function isDraftRequest(): Promise<boolean> {
+  try {
+    const { isEnabled } = await draftMode();
+    return isEnabled;
+  } catch {
+    return false;
+  }
 }
 
 function warnMissingSanityConfig() {

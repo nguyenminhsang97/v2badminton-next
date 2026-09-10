@@ -4,6 +4,7 @@ import { defineConfig, type DocumentBadgeComponent } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 import { DashboardIcon } from "@sanity/icons";
+import { OpenDraftPreviewAction } from "./src/sanity/actions/openDraftPreviewAction";
 import { openLivePageAction } from "./src/sanity/actions/openLivePageAction";
 import {
   draftStatusBadge,
@@ -67,7 +68,7 @@ export default defineConfig({
       const base = singletonTypes.has(context.schemaType)
         ? input.filter(({ action }) => action && singletonActions.has(action))
         : input;
-      return [...base, openLivePageAction];
+      return [...base, OpenDraftPreviewAction, openLivePageAction];
     },
     badges: (prev, context) => {
       const extra = BADGES_BY_TYPE[context.schemaType] ?? [];
