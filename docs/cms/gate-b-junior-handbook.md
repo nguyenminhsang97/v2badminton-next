@@ -1,5 +1,18 @@
 # Gate B — Junior Implementation Handbook
 
+> ## ⚠️ EXECUTED AND CLOSED — 2026-09-10. Do not run this again.
+>
+> Phase 1 and Phase 2 shipped; Phase 3 was cancelled by the owner. Following this handbook
+> top-to-bottom now would try to re-create things that already exist.
+>
+> **Read [`gate-b-completion-2026-09-10.md`](./gate-b-completion-2026-09-10.md) first.** It
+> records the live topology, five places where execution had to depart from these
+> instructions, and what is still open. Where this handbook and that record disagree, the
+> record wins — it describes reality.
+>
+> This document is kept for its rules (§1), its rollback table (§6), and G17, the redirect
+> that was never applied.
+
 > **Purpose:** Turn Gate B into self-contained sub-tasks that can be executed and verified
 > one at a time, top to bottom, without holding the whole design in your head.
 > Mirrors the shape of `v2badminton-cms-phase-1-junior-handbook.md`.
