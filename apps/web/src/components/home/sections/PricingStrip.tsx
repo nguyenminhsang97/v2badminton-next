@@ -65,6 +65,9 @@ function buildGroupSummary(
 export function PricingStrip({ tiers, content }: HomepagePricingStripProps) {
   const { groupTiers, privateTier } = getSortedPricingTiers(tiers);
   const groupSummary = buildGroupSummary(groupTiers);
+  // Pricing fails closed: when Sanity has no tiers the section keeps its CTA but
+  // quotes no number, rather than repeating a hardcoded price that may be stale.
+  const hasPricing = groupSummary !== null || privateTier !== null;
 
   const eyebrow = content?.eyebrow ?? "Chi tiết học phí";
   const title = content?.title ?? "Học phí chính hiện tại";
@@ -81,6 +84,17 @@ export function PricingStrip({ tiers, content }: HomepagePricingStripProps) {
           <p className="pricing-strip__desc">{secondary}</p>
         </div>
         <div className="pricing-strip__summary" aria-label="Tóm tắt học phí">
+          {!hasPricing ? (
+            <article className="pricing-strip__summary-item">
+              <span className="pricing-strip__summary-label">Học phí</span>
+              <strong className="pricing-strip__summary-price">
+                Liên hệ để nhận báo giá
+              </strong>
+              <span className="pricing-strip__summary-meta">
+                Mức phí tùy lớp nhóm hoặc 1 kèm 1
+              </span>
+            </article>
+          ) : null}
           {groupSummary ? (
             <article className="pricing-strip__summary-item pricing-strip__summary-item--group">
               <span className="pricing-strip__summary-label">Lớp nhóm</span>
