@@ -3,17 +3,12 @@ import "server-only";
 import { defineQuery } from "groq";
 import { faqs as staticFaqs, type FaqItem } from "@/lib/faqs";
 import { courtLocationMap, courtLocations } from "@/lib/locations";
-import { pricingTiers as staticPricingTiers } from "@/lib/pricing";
 import { scheduleItems as staticScheduleItems } from "@/lib/schedule";
 import type {
-  SanityEnterprisePricingTier,
   SanityFaq,
   SanityFaqPage,
-  SanityGroupPricingTier,
   SanityLocation,
   SanityPortableTextBlock,
-  SanityPricingTier,
-  SanityPrivatePricingTier,
   SanityScheduleBlock,
 } from "../types";
 
@@ -69,73 +64,6 @@ export function getFallbackLocations(): SanityLocation[] {
     geoLng: court.geo.lng,
     order: index + 1,
   }));
-}
-
-export function getFallbackPricingTiers(): SanityPricingTier[] {
-  return staticPricingTiers.map((tier, index) => {
-    switch (tier.kind) {
-      case "group":
-        return {
-          id: tier.id,
-          slug: tier.id,
-          name: tier.name,
-          shortLabel: tier.shortLabel,
-          kind: "group",
-          billingModel: "monthly_package",
-          description: tier.description,
-          groupSize: tier.groupSize,
-          pricePerMonth: tier.pricePerMonth,
-          pricePerHour: null,
-          displayPrice: tier.displayPrice,
-          sessionsPerWeek: tier.sessionsPerWeek,
-          sessionsPerMonth: tier.sessionsPerMonth,
-          features: [...tier.features],
-          ctaLabel: tier.cta.label,
-          ctaAction: tier.cta.ctaName,
-          order: index + 1,
-        } satisfies SanityGroupPricingTier;
-      case "private":
-        return {
-          id: tier.id,
-          slug: tier.id,
-          name: tier.name,
-          shortLabel: tier.shortLabel,
-          kind: "private",
-          billingModel: "per_hour",
-          description: tier.description,
-          groupSize: null,
-          pricePerMonth: null,
-          pricePerHour: tier.pricePerHour,
-          displayPrice: tier.displayPrice,
-          sessionsPerWeek: null,
-          sessionsPerMonth: null,
-          features: [...tier.features],
-          ctaLabel: tier.cta.label,
-          ctaAction: tier.cta.ctaName,
-          order: index + 1,
-        } satisfies SanityPrivatePricingTier;
-      case "enterprise":
-        return {
-          id: tier.id,
-          slug: tier.id,
-          name: tier.name,
-          shortLabel: tier.shortLabel,
-          kind: "enterprise",
-          billingModel: "quote",
-          description: tier.description,
-          groupSize: null,
-          pricePerMonth: null,
-          pricePerHour: null,
-          displayPrice: tier.displayPrice,
-          sessionsPerWeek: null,
-          sessionsPerMonth: null,
-          features: [...tier.features],
-          ctaLabel: tier.cta.label,
-          ctaAction: tier.cta.ctaName,
-          order: index + 1,
-        } satisfies SanityEnterprisePricingTier;
-    }
-  });
 }
 
 export function getFallbackScheduleBlocks(): SanityScheduleBlock[] {

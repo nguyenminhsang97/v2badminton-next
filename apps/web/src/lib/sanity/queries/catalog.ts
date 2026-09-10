@@ -1,6 +1,7 @@
 import "server-only";
 
 import { cache } from "react";
+import { reportMissingCatalogContent } from "@/lib/catalogFailSafe";
 import { sanityFetchOrFallback } from "../client";
 import type {
   SanityCoach,
@@ -16,7 +17,6 @@ import {
   FAQS_QUERY,
   getFallbackFaqs,
   getFallbackLocations,
-  getFallbackPricingTiers,
   getFallbackScheduleBlocks,
   LOCATIONS_QUERY,
   PRICING_TIERS_QUERY,
@@ -76,7 +76,16 @@ export const getPricingTiers = cache(async (): Promise<SanityPricingTier[]> => {
     return tiers;
   }
 
-  return getFallbackPricingTiers();
+  // Fail closed, and say so. src/lib/pricing.ts was emptied in #99 precisely so
+  // no unverified number could ever be served, which means losing the Sanity
+  // tiers already produced a blank pricing block — just silently. This reports
+  // it, and the empty list makes PricingStrip offer the quote line instead.
+  reportMissingCatalogContent({
+    contentSet: "pricing_tiers",
+    tags: ["sanity:pricing-tiers"],
+  });
+
+  return [];
 });
 
 export const getScheduleBlocks = cache(async (): Promise<SanityScheduleBlock[]> => {

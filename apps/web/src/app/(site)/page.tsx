@@ -16,7 +16,6 @@ import { StatsBar } from "@/components/home/sections/StatsBar";
 import { WhySection } from "@/components/home/sections/WhySection";
 import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
 import { JsonLd } from "@/components/ui/JsonLd";
-import { HOMEPAGE_TESTIMONIAL_FALLBACKS } from "@/content/homepage-testimonials.fallback";
 import {
   toHomepageCoaches,
   toHomepageFaqs,
@@ -88,9 +87,7 @@ export default async function Home() {
   const homepageFaqs = toHomepageFaqs(faqs);
   const homepageLocations = toHomepageLocations(locations);
   const homepageScheduleBlocks = toHomepageScheduleBlocks(scheduleBlocks);
-  const homepageTestimonials = toHomepageTestimonials(
-    testimonials.length > 0 ? testimonials : HOMEPAGE_TESTIMONIAL_FALLBACKS,
-  );
+  const homepageTestimonials = toHomepageTestimonials(testimonials);
 
   assertLegacyScheduleCompatibility(homepageLocations, homepageScheduleBlocks);
 
