@@ -1,5 +1,31 @@
+import path from "node:path";
 import type { NextConfig } from "next";
+import { loadEnvConfig } from "@next/env";
 import { withSentryConfig } from "@sentry/nextjs";
+
+/**
+ * Load the repo-root env files.
+ *
+ * Env lives at the repo root, but `next dev` reads `process.cwd()` — which is
+ * this workspace — so without this the local server starts with no
+ * SANITY_API_READ_TOKEN. That is not a loud failure: Sanity answers an
+ * unauthenticated read with a *subset* of the dataset, so the local site renders
+ * with no pricing tiers, no CMS locations, no schedule blocks and 45 of 67 FAQs,
+ * and looks plausible while differing from production. Checking UI against that
+ * is how you reach a confident wrong conclusion.
+ *
+ * `loadEnvConfig` never overwrites a variable that is already set, so on Vercel —
+ * where the platform provides them and no .env file exists — this is a no-op.
+ */
+loadEnvConfig(
+  path.resolve(import.meta.dirname, "../.."),
+  process.env.NODE_ENV !== "production",
+  console,
+  // forceReload. Next already called loadEnvConfig for this workspace, and the
+  // function memoises its result and returns early on the second call. Without
+  // this flag the repo-root files are never read.
+  true,
+);
 
 // W8-3 — Report-Only CSP. Intentionally broad to avoid false breakage during
 // the bake window; W8-4 will narrow before any enforcement. `'unsafe-inline'`
