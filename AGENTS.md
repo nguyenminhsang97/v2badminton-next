@@ -4,6 +4,37 @@
 This version has breaking changes - APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
 <!-- END:nextjs-agent-rules -->
 
+## Repo layout — read this before touching CMS or Studio code
+
+This is an npm-workspaces monorepo with **two deployed apps**, split in Gate B (2026-09-10):
+
+| Path | Vercel project | Serves |
+|---|---|---|
+| `apps/web` | `v2badminton-next` | `v2badminton.com` — the public site |
+| `apps/studio` | `v2badminton-studio` | `cms.v2badminton.com` — Sanity Studio |
+| `packages/schema-shared` | — | route/path helpers used by both; keep it Sanity-free |
+
+Rules that outlive Gate B:
+
+- **The Studio is not inside `apps/web` any more.** `v2badminton.com/studio` does not exist,
+  and there is no redirect. Studio work goes in `apps/studio`.
+- **`apps/studio` must never import `@/…` from the web app.** Its `@/*` alias points only at
+  `apps/studio/src/*`. Anything shared crosses through `@v2/schema-shared`.
+- **`apps/web` must not depend on `next-sanity`** — it drags the whole Studio in as a peer.
+  Use `@sanity/client` and `groq` directly.
+- **`apps/studio` must not set `trailingSlash`.** The web app does; the Studio must not, or
+  Sanity's own routes (`/structure/pages-group;content_article`) stop resolving.
+- **`CODE_RESERVED_PREFIXES` in `apps/studio/src/sanity/schemaTypes/contentShared.ts` keeps
+  `"/studio/"`.** That entry reserves a *website* URL prefix; it is not a Studio link.
+- **Env files live at the repo root**, not in the workspaces. Both apps hardcode
+  `NEXT_PUBLIC_SANITY_PROJECT_ID` / `NEXT_PUBLIC_SANITY_DATASET` fallbacks in their
+  `next.config.ts`, so they run with no `.env` file. To check a Studio deployment's env,
+  search its build log for `[studio]` — no matches means the variables arrived. Do not infer
+  it from the Studio loading, because the fallbacks make it load either way.
+
+Background: `docs/cms/gate-b-completion-2026-09-10.md` is the record of what shipped and what
+is still open. Read it before `docs/cms/gate-b-junior-handbook.md`, which is closed history.
+
 ## Codex Project Tooling
 
 - Use the project-scoped `.codex/config.toml` for MCP/features that belong to this repo.
