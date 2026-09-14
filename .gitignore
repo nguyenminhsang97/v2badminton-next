@@ -68,4 +68,5 @@ client_secret_*.json
 next-env.d.ts
 
 .vercel
-.claude/
+.claude/*
+!.claude/skills/
