@@ -56,9 +56,13 @@ yarn-error.log*
 .env*
 !apps/web/.env.example
 
-# downloaded credential files (Google OAuth client secrets, service accounts)
+# downloaded credential files (Google OAuth client secrets, service accounts,
+# application default credentials, and the API tokens kept as loose text files)
 client_secret_*.json
 *service-account*.json
+google_adc.json
+*token*.txt
+*.key
 
 # vercel
 .vercel
@@ -68,5 +72,14 @@ client_secret_*.json
 next-env.d.ts
 
 .vercel
+
+# .claude is local agent state and it sits right next to real credentials:
+# OAuth client secrets, google_adc.json, Cloudflare and Vercel tokens.
+# Ignore the whole thing, then re-allow only Markdown under .claude/skills/ —
+# those are the skill pointer files. Nothing else in there can become tracked,
+# so a key, token or JSON dropped into a skill folder stays ignored by default.
 .claude/*
 !.claude/skills/
+.claude/skills/**
+!.claude/skills/**/
+!.claude/skills/**/*.md
