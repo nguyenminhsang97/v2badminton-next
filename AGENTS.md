@@ -35,6 +35,10 @@ Rules that outlive Gate B:
 Background: `docs/cms/gate-b-completion-2026-09-10.md` is the record of what shipped and what
 is still open. Read it before `docs/cms/gate-b-junior-handbook.md`, which is closed history.
 
+Open work is tracked in `docs/tasks-in-progress.md`, with the evidence and the owner's decisions
+for each task. Check it, and `gh pr list`, before starting something that might already be
+in progress; the file explains how to claim a task and mark it done.
+
 ## Codex Project Tooling
 
 - Use the project-scoped `.codex/config.toml` for MCP/features that belong to this repo.
