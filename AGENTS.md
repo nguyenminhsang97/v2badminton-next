@@ -50,4 +50,5 @@ is still open. Read it before `docs/cms/gate-b-junior-handbook.md`, which is clo
 - `skills/sanity-cms/SKILL.md` — schemas, GROQ and cache tags, webhook revalidation, draft preview, and safe use of the live production dataset.
 - `skills/noi-dung-vi/SKILL.md` — Vietnamese copy: the coach-confirmed badminton glossary, where business facts come from, honest authorship, and Studio field limits.
 - `skills/analytics-report/SKILL.md` — Search Console, GA4 and PageSpeed numbers, and how to read them without over-claiming.
+- `skills/_evals/` is the test set for these skills, not a skill. Do not read it during ordinary work: it holds the expected answers, and reading it spoils any evaluation run. Work on the skills themselves starts from its README.
 - Preferred plugin capabilities for this repo: Browser Use for local browser checks, Vercel for deployment/env questions, Sentry for monitoring, Cloudflare for Workers/OpenNext/Wrangler, GitHub for PR/CI work, and Figma only for design/design-system tasks.

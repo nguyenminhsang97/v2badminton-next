@@ -1,0 +1,199 @@
+{
+  "skill_name": "v2badminton-project-skills",
+  "skills_under_test": [
+    "v2badminton-next",
+    "seo",
+    "sanity-cms",
+    "noi-dung-vi",
+    "analytics-report"
+  ],
+  "changes_from_iteration_1": [
+    "Same 8 prompts, so results compare with iteration-1.",
+    "Assertions that graders flagged as over-specified were rewritten: E3#1 (index status), E5#3 (webhook), E5#6 (read-only production), E6#5 (URL protection).",
+    "Discriminating assertions added: E1#7 hardcoded courts, E3#8 no noindex/404 window during the slug move, E7#10 body terminology, E8#9 contradiction handling.",
+    "Both configurations are now told not to read Claude Code memory files or .codex/skills; the baseline also excludes .claude/skills from searches."
+  ],
+  "changes_after_iteration_2": [
+    "Moved into the repository at skills/_evals/ (2026-09-17) so any session can re-run it; run outputs still go to the gitignored .claude/skill-evals/.",
+    "Skills now live in skills/ with pointer files in .claude/skills/. Isolation for without_skill runs must exclude both.",
+    "E9 added for analytics-report. It has not been run yet, so there is no baseline for it."
+  ],
+  "ground_truth_notes": {
+    "READ_FIRST": "Captured 2026-09-15 unless an entry says otherwise. Business data and code move — re-capture every entry before the next iteration instead of grading against stale truth.",
+    "captured": "2026-09-15, authenticated Sanity read (published perspective) + repo on feat/cms-p16-draft-preview",
+    "pricing_tier": "group-basic-2x 1.000.000 VNĐ/tháng (2 buổi/tuần, 8 buổi); group-basic-3x 1.300.000 VNĐ/tháng (3 buổi/tuần cơ bản, 12 buổi); group-advanced-3x 1.500.000 VNĐ/tháng (3 buổi/tuần nâng cao); private-1-1 400.000 VNĐ/giờ/học viên, description 'Học viên tự lo sân tập'; enterprise Giá thương lượng. groupSize '4-8 người'.",
+    "location": "Sân Green 154/9 Nguyễn Xí, P.26, Bình Thạnh (binh_thanh); Sân Huệ Thiên 520 QL13, Hiệp Bình (thu_duc); Sân Khang Sport (Bình Triệu) 8 Đường số 20, Hiệp Bình (thu_duc); Sân Phúc Lộc 103/11B Đường số 20, Hiệp Bình (thu_duc). No Quận 7 location.",
+    "schedule_block": "Green: T3-T5-T7 14:00-15:30; T7-CN 08:00-10:00; T3-T5 18:00-20:00 (co_ban, nang_cao); T3-T5 20:00-22:00. Huệ Thiên: T7-CN 17:00-18:00; T7-CN 07:00-09:00; T7-CN 09:00-11:00; T2-T4-T6 18:00-20:00 (co_ban, nang_cao); T3-T5-T7 18:00-20:00 (co_ban); T2-T4-T6 20:00-22:00 (co_ban, nang_cao). Khang Sport: Thứ 7 11:30-13:00; T7-CN 12:00-14:00. Phúc Lộc: T2-T4-T6 14:00-15:30; T2-T4-T6 18:00-20:00; T2-T4-T6 20:00-22:00.",
+    "published FAQ policies": "Group fee includes court, coach and shuttles (live pricing page + FAQ 9ea4ed6a). All 4 courts indoor (FAQ 64e578a4). Weekend booking 5-7 days ahead (FAQ afb3bc83). Group fee same at all courts (FAQ 5aefa362). 1-on-1 'chưa gồm phí thuê sân — V2 sẽ hỗ trợ đặt sân' (FAQ d448f416, faq.home-pricing) — CONTRADICTS pricing tier 'Học viên tự lo sân tập'. Group size '2-6' in live pricing prose vs '4-8' on pricing cards — CONTRADICTION. Session length '60-90 phút' (FAQ 4021af86) vs '90-120 phút' (FAQ 17d14303) vs per-slot 120/90/60 (FAQ c539e0c4, matching schedule_block) — CONTRADICTION; see owner rulings.",
+    "money_page lop-cau-long-cho-nguoi-di-lam": "relatedPricing: group-basic-2x, group-basic-3x, private-1-1; relatedLocations: all 4; relatedFaqs (4, borrowed from other pages): 'Học phí và lịch học như thế nào?', 'Người đi làm ở Bình Thạnh nên chọn khung giờ nào?', 'Có lớp buổi tối ở Thủ Đức không?', 'Cuối tuần có lớp ở Thủ Đức không?'. 10 FAQs tagged nguoi_di_lam are not linked.",
+    "money pages general": "Live body length 116-289 words; most link 5 FAQs (nguoi-di-lam 4, doanh-nghiep 1, tre-em 0, nguoi-moi 6).",
+    "coach": "1 published coach document, 0 published with isActive true, 12 drafts. /huan-luyen-vien/ already emits Person JSON-LD via buildPersonSchema filtered by hasRealCoachName, and is noindex when there are no usable coaches. No AggregateRating anywhere in apps/web; coach.showStars is a UI flag only.",
+    "lop-cau-long-buoi-toi references": "apps/web/src/app/(site)/lop-cau-long-buoi-toi/page.tsx (path + slug), src/lib/routes.ts (CoreRoutePath + coreRoutes), src/lib/generatedImages.ts, src/lib/moneyPageFallback.ts (type + entry), src/lib/site.ts (moneyPages), apps/studio/src/sanity/schemaTypes/contentShared.ts (FILE_ROUTED_PATHS); Sanity money_page slug lop-cau-long-buoi-toi. Sitemap builds money-page paths from the Sanity slug. Search Console (per iteration-1 runs): crawled, not indexed, 0 impressions in 90 days.",
+    "district pages": "lop-cau-long-binh-thanh/page.tsx uses getMoneyPage(SLUG) + notFoundForMissingMoneyPage and filters relatedLocations by district === 'binh_thanh'. DISTRICT_OPTIONS in packages/schema-shared/src/options.ts has only binh_thanh and thu_duc.",
+    "hardcoded courts": "apps/web/src/lib/locations.ts: CourtId = green | hue_thien | khang_sport | phuc_loc, courtLocations; used by lib/validation/lead.ts and components/home/compat/legacyScheduleCompatibility.ts (LEGACY_COURT_TAB_ORDER, LEGACY_COURT_ALIAS_MAP). assertLegacyScheduleCompatibility, called from app/(site)/page.tsx, throws when CI === 'true' or NEXT_STRICT_SCHEDULE_COMPAT === 'true'.",
+    "binh-thanh pricing path": "Prices render from money_page.relatedPricing, dereferenced inside the money-page GROQ query tagged sanity:money-pages + sanity:money-page:<slug>. revalidationMap maps pricing_tier -> sanity:pricing-tiers + sanity:money-pages. Newest pricing_tier edit 2026-07-24; no dataset writes since 2026-09-10.",
+    "content platform": "ROUTE_RESOLUTION_QUERY and CONTENT_ARTICLE_BY_ID_QUERY require status == 'published' for content_article/court. ContentStructuredData always emits Article JSON-LD. moneyPage.beginner exists (slug hoc-cau-long-cho-nguoi-moi).",
+    "root env": "Repo-root .env.local contains a SANITY_API_READ_TOKEN line; apps/web/next.config.ts loads the repo root with loadEnvConfig(forceReload). Anonymous reads hide documents whose _id contains a dot.",
+    "owner rulings 2026-09-17": "Confirmed by the owner after iteration 2: group classes are always 4-8 people ('2-6' is obsolete); the cheapest package is 1.000.000 VNĐ/tháng; for 1-on-1 either the customer or V2 may book the court, the court cost is always the customer's, and V2 supplies only coach and shuttles. A group session is 120 minutes: 15-20 minutes warm-up, the last 15 minutes free play between students, training in between; the trial session is also 120 minutes. STILL OPEN at time of writing: 4 of the 15 published schedule_block entries are not 120 minutes (Green 14:00-15:30 T3-T5-T7, Phúc Lộc 14:00-15:30 T2-T4-T6 and Khang Sport 11:30-13:00 T7 are 90; Huệ Thiên 17:00-18:00 T7-CN is 60), and FAQ c539e0c4 describes those durations. Whether the schedule or the 120-minute rule wins is not decided — a run that states either as settled fact is stating a contested claim.",
+    "analytics 2026-09-17": "GA4 property 530684211 (account 389465540). Map links render from Sanity location.mapsUrl: Green https://maps.app.goo.gl/UDemAGhNE2hiYHPq7, Huệ Thiên https://maps.app.goo.gl/ZPetLoVBnimhjaEG6, Khang Sport https://maps.app.goo.gl/WK1JB7CCEhLQ8YN69, Phúc Lộc https://share.google/5w1gPPvDQbyTm3CxB (the hardcoded apps/web/src/lib/locations.ts value for Phúc Lộc differs). On 2026-09-17 all four had outbound clicks in the previous 28 days. Counts change daily — the grader re-fetches them rather than using any number written here. map_click has no call site."
+  },
+  "evals": [
+    {
+      "id": 1,
+      "name": "add-district-page",
+      "primary_skill": "v2badminton-next",
+      "prompt": "Thêm trang mới /lop-cau-long-quan-7/ cho lớp sắp mở ở Quận 7. Làm giống các trang lớp theo khu vực đang có (Bình Thạnh, Thủ Đức).",
+      "expected_output": "A file-routed page modelled on the existing district pages, wired into coreRoutes, reserved in the Studio's FILE_ROUTED_PATHS, kept out of the sitemap until content exists, with no invented address/price/schedule for Quận 7, and aware that courts are still hardcoded in code.",
+      "files": [],
+      "expectations": [
+        "Proposes apps/web/src/app/(site)/lop-cau-long-quan-7/page.tsx following the existing district-page pattern (getMoneyPage + notFoundForMissingMoneyPage), not hardcoded page content",
+        "Adds '/lop-cau-long-quan-7/' to both the CoreRoutePath union and the coreRoutes array in apps/web/src/lib/routes.ts",
+        "Adds '/lop-cau-long-quan-7/' to FILE_ROUTED_PATHS in apps/studio/src/sanity/schemaTypes/contentShared.ts",
+        "Recognises that no Quận 7 district exists yet (DISTRICT_OPTIONS only has binh_thanh and thu_duc, and Sanity has no Quận 7 location) and adds or requests one instead of filtering by an existing district",
+        "Does not invent a Quận 7 court name, address, price or class schedule; missing facts are explicitly left for the owner",
+        "Does not add the new path to ALWAYS_INDEX_PATHS; sitemap inclusion stays gated on a published money_page document",
+        "Warns that the four courts are also hardcoded in code (lib/locations.ts CourtId / lead validation / legacyScheduleCompatibility), so a Quận 7 court needs a code change before it is activated in Sanity"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "local-pricing-empty",
+      "primary_skill": "v2badminton-next",
+      "prompt": "Tôi chạy npm run dev thì bảng giá ở /gia-hoc-cau-long-tphcm/ trống trơn, trong khi trên v2badminton.com vẫn hiện đủ. Có phải dữ liệu Sanity bị mất rồi không? Kiểm tra giúp tôi.",
+      "expected_output": "Does not conclude data loss; explains that a missing SANITY_API_READ_TOKEN makes anonymous reads return a subset; points at the repo-root env loading; verifies with an authenticated read rather than an anonymous one.",
+      "files": [],
+      "expectations": [
+        "Does not conclude that the Sanity data was lost, and says so clearly to the owner",
+        "Identifies a read without SANITY_API_READ_TOKEN as the likely cause, and explains that anonymous reads return a subset of the dataset (e.g. no pricing tiers) rather than an error",
+        "Points to env files at the repo root being loaded by loadEnvConfig in apps/web/next.config.ts, not to an env file inside apps/web",
+        "Any check of production data it reports was made with an authenticated read (Sanity MCP or a token-bearing request); it does not present an anonymous query result as evidence",
+        "Never prints or copies a token value into response.md, user_notes.md or any other output",
+        "Gives the owner concrete local steps to confirm the fix (e.g. confirm the token line in the repo-root .env.local, restart npm run dev, reload the page)"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "rename-money-page-url",
+      "primary_skill": "seo",
+      "prompt": "Đổi URL /lop-cau-long-buoi-toi/ thành /lop-cau-long-toi/ cho ngắn gọn, làm luôn giúp tôi.",
+      "expected_output": "Checks the URL's real standing before judging the SEO cost; uses FILE_ROUTE_REDIRECTS; updates all code references and FILE_ROUTED_PATHS; handles the money_page Sanity slug with no window where the live page is 404, noindex or out of the sitemap.",
+      "files": [],
+      "expectations": [
+        "Checks the old URL's actual index/traffic status (e.g. Search Console) before judging the SEO cost, and states the trade-off with that evidence",
+        "Redirects the old URL with a permanent entry in FILE_ROUTE_REDIRECTS in apps/web/next.config.ts, and does not rely on a CMS route_redirect document",
+        "The proposed redirect resolves in a single hop to the trailing-slash URL /lop-cau-long-toi/",
+        "Updates the code references in all of routes.ts (CoreRoutePath and coreRoutes), generatedImages.ts, moneyPageFallback.ts and site.ts, plus the page folder",
+        "In the Studio's FILE_ROUTED_PATHS, adds /lop-cau-long-toi/ and keeps /lop-cau-long-buoi-toi/ reserved because it is now a redirect source",
+        "Addresses the money_page Sanity document slug 'lop-cau-long-buoi-toi' that the page fetches by, without mutating Sanity itself",
+        "Includes a post-change verification list covering old URL permanent redirect, new URL 200, canonical, sitemap, and Search Console",
+        "The rollout has no window where the live page is 404, noindex or missing from the sitemap between the code deploy and the Sanity slug change (e.g. a fallback that reads the old slug during the transition)"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "coach-schema-stars",
+      "primary_skill": "seo",
+      "prompt": "Trang /huan-luyen-vien/ thêm JSON-LD cho đầy đủ để Google hiện rich result, thêm cả đánh giá 5 sao cho nổi bật.",
+      "expected_output": "Declines fabricated AggregateRating/review stars; builds any schema through src/lib/schema.ts builders (buildPersonSchema, hasRealCoachName) only for real active coaches; checks what the page already emits.",
+      "files": [],
+      "expectations": [
+        "Declines to add AggregateRating or review-star markup without a real, verifiable review source, and explains the risk to the owner",
+        "Notices that the page already emits Person JSON-LD through buildPersonSchema filtered by hasRealCoachName",
+        "Checks real coach data (authenticated) and reports that there are currently no published active coaches, so Person schema is empty and the page is noindex",
+        "Any proposed new schema is added as a builder in apps/web/src/lib/schema.ts, not as an inline object in the page file",
+        "Does not use the coach showStars UI flag as a basis for rating markup",
+        "The deliverable contains no fabricated coach names, credentials, review counts or rating values"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "publish-not-updating",
+      "primary_skill": "sanity-cms",
+      "prompt": "Tôi vừa sửa giá gói học nhóm trong Studio, publish được 10 phút rồi mà trang /lop-cau-long-binh-thanh/ vẫn hiện giá cũ. Tìm nguyên nhân giúp tôi.",
+      "expected_output": "First establishes whether the edit reached the published dataset, then traces the page's data path, tags and webhook; explains the 24h fallback; sends only read requests to production.",
+      "files": [],
+      "expectations": [
+        "Traces that /lop-cau-long-binh-thanh/ renders prices from money_page.relatedPricing, dereferenced inside the money-page query tagged sanity:money-pages",
+        "Checks revalidationMap.ts and states that pricing_tier already purges sanity:money-pages, so the tag mapping covers this page",
+        "Rules the webhook in or out with evidence (for example, whether the edit ever reached the published dataset) before recommending webhook-side checks",
+        "Explains that if the webhook did not fire, the old price persists until the 24h ISR safety net (SANITY_REVALIDATE_SECONDS)",
+        "Considers that the edited tier may not be one linked to this page, or was left as a draft, and proposes an authenticated read-only check of the published document",
+        "Sends only read requests to production: no POST (or other non-GET) to /api/revalidate/sanity/ or any other API route, and no Sanity mutations"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "new-event-doc-type",
+      "primary_skill": "sanity-cms",
+      "prompt": "Thêm loại tài liệu 'Sự kiện' vào CMS để đăng các giải đấu nội bộ của CLB, mỗi sự kiện có một trang riêng trên web.",
+      "expected_output": "A plan/diff that registers the schema and desk bucket, adds a hand-written type + tagged fetch helper, a revalidationMap entry, resolvePath/ROUTABLE_TYPES in schema-shared, a web route + sitemap handling, protects the event URLs, respects the web/studio import boundaries, and uses Vietnamese Studio labels.",
+      "files": [],
+      "expectations": [
+        "Registers the schema in apps/studio/src/sanity/schemaTypes/index.ts and places the type in a desk bucket in apps/studio/src/sanity/structure.ts",
+        "Adds a hand-written result type in apps/web/src/lib/sanity/types.ts and a fetch helper with cache tags exported from apps/web/src/lib/sanity/index.ts",
+        "Adds a revalidationMap.ts entry for the new type whose tags match the fetch helper's tags",
+        "Updates resolvePath and ROUTABLE_TYPES in packages/schema-shared/src/resolvePath.ts so the Studio live-page and draft-preview actions work for events",
+        "Ensures no other document or route can claim the event URLs: a reserved prefix in contentShared.ts for a file-routed design, or hub ownership plus ROUTABLE_TYPES path uniqueness for a CMS-routed design",
+        "Handles event pages in the sitemap, or explicitly decides not to with a stated reason",
+        "Respects the boundaries: no next-sanity import in apps/web, and no '@/' import of web code inside apps/studio",
+        "Studio field titles and descriptions are written in Vietnamese"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "clear-technique-article",
+      "primary_skill": "noi-dung-vi",
+      "prompt": "Viết bài 'Kỹ thuật clear cơ bản cho người mới' để tôi đăng lên Studio, điền luôn các trường SEO.",
+      "expected_output": "A content_article draft using 'Phông cầu', answer-first structure with question H2s, quickAnswer 40-70 words starting with the subject, seoTitle ~60 chars without brand suffix, seoDescription <=160, honest authorKind/reviewer, a contentFormat, a relatedMoneyPage suggestion, and no standalone English technique terms in body text.",
+      "files": [],
+      "expectations": [
+        "Uses 'Phông cầu' as the primary term; 'clear' appears only in parentheses or in the slug (check-terms.mjs on the article text reports 0 errors and no standalone 'clear' warning)",
+        "quickAnswer is 40-70 words and starts with the subject",
+        "seoTitle is at most 60 characters and does not contain 'V2 Badminton'",
+        "seoDescription is at most 160 characters",
+        "authorKind is 'organization' (unless a real, confirmed coach) and reviewer/lastReviewed are left empty rather than fabricated",
+        "contentFormat is one of guide, how_to or explainer",
+        "Suggests a relatedMoneyPage that exists, such as /hoc-cau-long-cho-nguoi-moi/",
+        "The opening paragraph answers directly, and most H2s are phrased as questions",
+        "Contains no invented facts about the academy (prices, student counts, coach names or credentials)",
+        "Reader-visible article text (body, FAQ, headings, link text) has no standalone English technique terms: check-terms.mjs reports 0 technique-term warnings on the article deliverable"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "faq-working-adults",
+      "primary_skill": "noi-dung-vi",
+      "prompt": "Viết 5 câu hỏi thường gặp cho trang /lop-cau-long-cho-nguoi-di-lam/ về học phí, lịch học và sân tập.",
+      "expected_output": "Five FAQs whose prices, times, courts and policies come from authenticated Sanity data or the live site, question-style wording, answer-first answers, correct faq fields, and explicit flagging of contradictions in the source data.",
+      "files": [],
+      "expectations": [
+        "Every price stated matches published pricing_tier data (1.000.000 / 1.300.000 / 1.500.000 VNĐ per month, 400.000 VNĐ per hour per student) or is explicitly marked as needing confirmation",
+        "Every class day group and time stated matches published schedule_block data or is explicitly marked as needing confirmation",
+        "Every court name and address stated matches published location data (Green in Bình Thạnh; Huệ Thiên, Khang Sport, Phúc Lộc in Hiệp Bình/Thủ Đức)",
+        "The facts were obtained from Sanity with authentication (or from the live site), and the output says where they came from",
+        "Avoids duplicating FAQs already linked to the page or tagged nguoi_di_lam, or explicitly flags the overlap",
+        "Each FAQ specifies pages including 'nguoi_di_lam' and sets includeInSchema",
+        "Questions are phrased the way a visitor would ask, and each answer opens with the direct answer",
+        "check-terms.mjs reports 0 errors on the FAQ text",
+        "Flags contradictions it relies on or finds in the source data (e.g. 1-on-1 'học viên tự lo sân' vs 'V2 hỗ trợ đặt sân', group size 4-8 vs 2-6) and does not state a contested claim as fact in the FAQ text"
+      ]
+    },
+    {
+      "id": 9,
+      "name": "map-clicks-report",
+      "primary_skill": "analytics-report",
+      "prompt": "Tháng qua có ai bấm xem bản đồ các sân không? Sân nào được bấm nhiều nhất?",
+      "expected_output": "A short Vietnamese report built from GA4 numbers fetched in the run: outbound click events matched to each court by URL, all four courts accounted for, the window and property stated, with the small-numbers caveat — and no claim that map clicks are unmeasured.",
+      "files": [],
+      "expectations": [
+        "Gets the GA4 property from get_account_summaries (or states the property it queried) rather than using an id it did not fetch",
+        "Does not conclude that map clicks are unmeasured or zero because the custom map_click event has no data",
+        "Counts map clicks from GA4's automatic outbound click event broken down by linkUrl (or linkDomain plus linkUrl)",
+        "Matches click URLs to courts using the mapsUrl values stored in Sanity, and accounts for all four courts — including Phúc Lộc, whose link is a share.google URL rather than maps.app.goo.gl",
+        "Every number reported was fetched in the run and is quoted with its date window and property",
+        "Notes that the counts are small and that GA4 does not exclude the owner's own visits, and does not turn single-digit counts into percentages or trends",
+        "If GA4 fails with invalid_grant, says the token is dead and stops, instead of substituting Search Console numbers"
+      ]
+    }
+  ]
+}
