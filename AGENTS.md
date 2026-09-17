@@ -44,6 +44,10 @@ is still open. Read it before `docs/cms/gate-b-junior-handbook.md`, which is clo
 - Subagents are available for this project, but only spawn them when the user explicitly asks for multi-agent or parallel-agent work.
 - Memories are enabled for useful local recall, but durable project rules must stay in `AGENTS.md` or checked-in docs.
 - On this Windows workspace, prefer Browser Use, Playwright MCP, shell, and file inspection for GUI/browser work. Codex Computer Use is a macOS-only app capability in the current official docs.
-- Use the project-local `v2badminton-next` skill from `.codex/skills/v2badminton-next` for repo-specific UI, routing, data, styling, verification, and launch-readiness work.
-- Use the project-local `seo` skill from `.codex/skills/seo` for any SEO task: metadata, structured data (JSON-LD), sitemap, robots, canonical URLs, Open Graph, Twitter cards, indexing control, or Core Web Vitals that affect crawling and ranking.
+- **Project skills live in `skills/`, one shared copy per skill.** Read the one that fits the task before starting, whichever agent or model you are. Claude Code discovers them through pointer files in `.claude/skills/`, Codex through `.codex/config.toml`, and every other agent reads them straight from here.
+- `skills/v2badminton-next/SKILL.md` — repo map, the Next 16 differences this codebase relies on, styling and env rules, and the commands that verify a change.
+- `skills/seo/SKILL.md` — metadata, canonical URLs, sitemap and robots, JSON-LD, URL moves, and the AEO rules behind them.
+- `skills/sanity-cms/SKILL.md` — schemas, GROQ and cache tags, webhook revalidation, draft preview, and safe use of the live production dataset.
+- `skills/noi-dung-vi/SKILL.md` — Vietnamese copy: the coach-confirmed badminton glossary, where business facts come from, honest authorship, and Studio field limits.
+- `skills/analytics-report/SKILL.md` — Search Console, GA4 and PageSpeed numbers, and how to read them without over-claiming.
 - Preferred plugin capabilities for this repo: Browser Use for local browser checks, Vercel for deployment/env questions, Sentry for monitoring, Cloudflare for Workers/OpenNext/Wrangler, GitHub for PR/CI work, and Figma only for design/design-system tasks.
