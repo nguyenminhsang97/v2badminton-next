@@ -68,7 +68,7 @@ Bảng dưới do HLV Sang xác nhận. Dùng ở mọi nơi: bài viết, money
 - trong ngoặc ở lần nhắc đầu, khi nó giúp người đọc hoặc tìm kiếm — "Đập cầu (smash)";
 - trong slug, khi người tìm hay gõ từ đó — như `ky-thuat-dap-cau-smash`.
 
-Không để tiếng Anh đứng thay thuật ngữ Việt trong câu.
+Không để tiếng Anh đứng thay thuật ngữ Việt trong câu. Chữ hiển thị của link cũng vậy: viết "kỹ thuật đập cầu", không viết "kỹ thuật đập cầu smash" — chỉ đường dẫn của link được giữ nguyên slug.
 
 Soát trước khi bàn giao (chạy từ gốc repo):
 
@@ -81,7 +81,7 @@ Hoặc truyền đoạn văn qua stdin. Tệp JSON (bản xuất Sanity, Portabl
 Kết quả có hai mức:
 
 - **LỖI** (mã thoát 1): từ tự dịch không chuẩn.
-- **CẢNH BÁO**: thuật ngữ tiếng Anh đứng một mình. Xem lại từng dòng, vì "block", "drive", "clear" đôi khi mang nghĩa thường.
+- **CẢNH BÁO**: thuật ngữ tiếng Anh đứng một mình. Sửa hết cảnh báo trong phần người đọc thấy (thân bài, FAQ, tiêu đề, chữ của link). Chỉ bỏ qua khi từ đó mang nghĩa thường, không phải tên kỹ thuật — "block", "drive", "clear" đôi khi là vậy.
 
 ## 2. Không bịa dữ kiện
 
@@ -94,11 +94,16 @@ Không bao giờ tự nghĩ ra: học phí, lịch học, địa chỉ sân, sĩ
 | Sân, quận, địa chỉ | Sanity `location` |
 | HLV, vai trò, chứng chỉ | Sanity `coach` (chỉ HLV có `isActive`) |
 | Điện thoại, Zalo, Facebook | Sanity `site_settings`; giá trị mặc định ở `apps/web/src/lib/site.ts` |
+| Chính sách đã công bố (học phí gồm gì, sân trong nhà, đặt chỗ, đổi lịch) | FAQ đã publish trong Sanity và trang `/gia-hoc-cau-long-tphcm/` đang chạy |
 | Lịch sử học viện, đội ngũ biên soạn | Trang `/gioi-thieu/` và `/chinh-sach-bien-tap/` đang chạy |
 
 - Đọc Sanity phải kèm token. Đọc ẩn danh chỉ trả về **một phần** dữ liệu mà không báo lỗi (xem `sanity-cms`).
 - Thiếu dữ kiện thì để chỗ trống ghi rõ `[CẦN HLV XÁC NHẬN: …]` và nêu ra khi bàn giao. Không điền một con số "nghe hợp lý".
-- Hai nguồn mâu thuẫn (ví dụ "5 năm kinh nghiệm" với "thành lập 2012") thì báo chủ repo, đừng tự chọn.
+- **Hai nguồn mâu thuẫn thì không tự chọn, kể cả khi cả hai đều đã publish.** Mâu thuẫn kiểu này có thật trong dữ liệu: bảng giá và FAQ nói khác nhau về việc ai lo sân, một trang ghi hai sĩ số lớp khác nhau, hai FAQ ghi hai thời lượng buổi học. Khi gặp:
+  - chỉ viết phần mà các nguồn khớp nhau;
+  - không lặp lại vế nào đang bị nguồn khác phủ nhận;
+  - nêu rõ mâu thuẫn (nguồn nào nói gì) trong phần bàn giao để chủ repo chốt.
+- Một dữ kiện có thể nằm ở nhiều chỗ. Mỗi gói học phí lưu giá hai lần (`displayPrice` dạng chữ, `pricePerMonth`/`pricePerHour` dạng số), và một số câu trả lời FAQ ghi lại giá bằng chữ. Khi viết về thay đổi giá, liệt kê mọi chỗ cần sửa theo.
 - Cách viết số tiền, khung giờ: theo đúng định dạng đang dùng trên site (xem bảng giá ở `/gia-hoc-cau-long-tphcm/`), không tự đặt định dạng mới.
 
 ## 3. Tác giả và review: chỉ ghi điều có thật
@@ -120,11 +125,16 @@ Người đọc và công cụ AI cần câu trả lời ngay ở đoạn đầu
 - **Đoạn mở đầu** trả lời thẳng: trang nói về gì, dành cho ai, ở đâu, và (với money page) giá bao nhiêu.
 - **H2 là câu hỏi** người đọc thật sự gõ: "Học 1 kèm 1 phù hợp với ai?" thay vì "Đối tượng phù hợp".
 - **Mỗi phần có dữ kiện cụ thể**: tên sân, quận, số tiền, khung giờ.
-- **Money page**: nội dung chính từ 400 từ trở lên, ít nhất 5 FAQ bật `includeInSchema`. Thêm khối so sánh khi người đọc đang phải chọn (học nhóm hay 1 kèm 1, các hình thức học phí).
-- **Bài kỹ thuật**: chọn đúng `contentFormat`, vì trường này quyết định JSON-LD.
+- **Money page**:
+  - độ dài theo các trang cùng loại đang chạy (thân bài hiện khoảng 120–290 từ). Viết đủ ý để trả lời, không độn cho dài;
+  - nhắm 5 FAQ bật `includeInSchema`, như phần lớn money page đang có. Xem `relatedFaqs` hiện tại trước: có trang đang gắn ít hơn, có trang mượn FAQ của trang khác;
+  - thêm khối so sánh khi người đọc đang phải chọn (học nhóm hay 1 kèm 1, các hình thức học phí).
+- **Bài kỹ thuật**: chọn `contentFormat` theo cách trình bày bài.
   - `guide`: hướng dẫn tổng quát.
   - `how_to`: các bước có thứ tự.
   - `explainer`: giải thích một khái niệm.
+
+  Trường này ảnh hưởng cách trình bày trên trang. JSON-LD hiện luôn là Article cho mọi định dạng, nên đừng hứa `how_to` sẽ ra rich result HowTo.
 - Gắn **`relatedMoneyPage`** khi có lớp học liên quan, để bài kỹ thuật dẫn người đọc về trang đăng ký.
 
 Mẫu cấu trúc tham khảo: `docs/sanity-content/*.json` (9 money page). Chỉ học bố cục; không dùng lại con số trong đó, vì có thể đã cũ.
@@ -134,7 +144,8 @@ Mẫu cấu trúc tham khảo: `docs/sanity-content/*.json` (9 money page). Ch�
 | Trường | Quy tắc |
 |---|---|
 | `h1` (money page), `title` (bài viết) | Duy nhất trên toàn site, chứa từ khóa chính |
-| `metaTitle`, `seoTitle` | Khoảng 60 ký tự. **Không** thêm "\| V2 Badminton" hay "— V2 Badminton": layout tự gắn thương hiệu |
+| `seoTitle` (bài viết, hub, nhánh, sân) | Khoảng 60 ký tự. **Không** thêm "\| V2 Badminton" hay "— V2 Badminton": layout tự gắn thương hiệu |
+| `metaTitle` (money page) | Khoảng 60 ký tự **tính cả** đuôi "\| V2 Badminton". Money page dùng `title.absolute`, layout không tự gắn, nên tự viết đuôi như các money page đang chạy |
 | `metaDescription`, `seoDescription` | Tối đa 160 ký tự (Studio chặn khi vượt). Một câu trả lời cộng lý do để bấm vào |
 | `quickAnswer` | 40–70 từ, bắt đầu bằng chủ thể ("Phông cầu là…"). Studio đếm số từ |
 | `excerpt` | 1–2 câu, dùng cho danh sách bài và khi chia sẻ mạng xã hội |
@@ -154,9 +165,9 @@ Mẫu cấu trúc tham khảo: `docs/sanity-content/*.json` (9 money page). Ch�
 ## 7. Quy trình
 
 1. Xác định loại trang (money page, bài kỹ thuật, FAQ, trang tĩnh) và câu hỏi chính người đọc mang tới.
-2. Thu thập dữ kiện thật (mục 2) và ghi lại chỗ còn thiếu.
+2. Thu thập dữ kiện thật (mục 2), ghi lại chỗ còn thiếu và mọi mâu thuẫn giữa các nguồn.
 3. Viết theo cấu trúc trả lời trước (mục 4), đúng thuật ngữ (mục 1).
-4. Chạy `check-terms.mjs`: sửa hết LỖI, xem lại từng CẢNH BÁO.
+4. Chạy `check-terms.mjs`: sửa hết LỖI và mọi CẢNH BÁO trong phần người đọc thấy.
 5. Điền các trường theo giới hạn (mục 5), với tác giả và review trung thực (mục 3).
 6. Nếu đưa lên Sanity: tạo hoặc sửa **bản nháp**, không publish. Mọi thao tác ghi cần chủ repo đồng ý trước (xem `sanity-cms`). Chủ repo xem bằng "Xem bản nháp" rồi tự publish.
 7. Khi bàn giao: liệt kê mọi chỗ `[CẦN HLV XÁC NHẬN]` và mọi mâu thuẫn dữ kiện đã phát hiện.

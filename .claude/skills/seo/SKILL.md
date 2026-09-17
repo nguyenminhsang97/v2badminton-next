@@ -45,7 +45,13 @@ export const metadata = buildMetadata("/gia-hoc-cau-long-tphcm/", {
 
 **Pages with their own `generateMetadata`** (CMS static pages, the content platform) must set `alternates: { canonical: canonicalUrl(PATH) }` themselves, because nothing adds it for them.
 
-**Titles and the brand suffix.** The root layout appends ` | V2 Badminton` to any non-absolute title. A CMS `seoTitle` that already ends in "— V2 Badminton" would print the brand twice. The catch-all strips it with `stripBrandSuffix`, but the cleaner fix is not to author the suffix at all. `title.absolute` bypasses the template; use it only when the full string is deliberate.
+**Titles and the brand suffix.** The root layout appends ` | V2 Badminton` to any non-absolute title, and `title.absolute` bypasses it. Which one a page uses decides who writes the brand:
+
+| Where the title comes from | Uses | So the stored title… |
+|---|---|---|
+| CMS content (`content_hub`, `content_node`, `content_article`, `court`) `seoTitle` | the layout template | must **not** end in "— V2 Badminton" / "\| V2 Badminton"; the catch-all strips it with `stripBrandSuffix` if it does |
+| `money_page.metaTitle` via `buildMoneyPageMetadata` | `title.absolute` | **must** include "\| V2 Badminton" itself, like the live money pages |
+| `coreRoutes` titles via `buildMetadata` | `title.absolute` | already include the brand |
 
 **Content platform** (`[...slug]`):
 
@@ -64,9 +70,12 @@ export const metadata = buildMetadata("/gia-hoc-cau-long-tphcm/", {
 
 Follow `docs/cms/url-rename-runbook.md`. In short:
 
+- **Measure before judging the cost.** Check the URL in Search Console first (indexed or not, impressions, clicks) and state the trade-off with those numbers, not with a generic warning.
 - **CMS content** (hub, node, article, court): publish a `route_redirect` (`fromPath` → `toPath`, permanent) *before* renaming `fullPath`.
 - **File-routed pages**: add an entry to `FILE_ROUTE_REDIRECTS` in `next.config.ts`. CMS redirects can't catch these, because filesystem routes match first.
+- **Money pages are file-routed and also fetch their `money_page` by slug**, and the sitemap builds their paths from that slug. So the Sanity slug has to move too, and the two changes can't land at the same instant. Design the transition so the live page is never 404, noindex or missing from the sitemap in between — for example let the new route read the old slug as a fallback until the slug change is published, then remove the fallback.
 - Under `trailingSlash`, one wildcard rule (`/:slug*`) produces a two-hop redirect chain. Use one rule for the index and a second with `:slug+` for children, as the `/blog/` → `/tin-tuc/` entries do.
+- Keep the old path in `FILE_ROUTED_PATHS` once it becomes a redirect source, so no CMS document can claim it.
 - Then verify: the old URL returns 308, the new URL 200, the canonical and sitemap show only the new URL, and internal links are updated.
 
 ## Adding a public page
@@ -111,8 +120,9 @@ Structured data must describe what is actually on the page. Fabricated trust sig
 
 - FAQPage only for FAQs rendered on that page. FAQ documents carry an `includeInSchema` flag.
 - Person only for a real, active coach with a real name — `hasRealCoachName` exists to keep placeholders out.
-- No `AggregateRating` or review stars without a real, verifiable review source.
+- No `AggregateRating` or review stars without a real, verifiable review source. A decorative star strip in the UI (`coach.showStars`) or a default testimonial rating is not a review source.
 - An article's `author` is the organisation ("Đội ngũ V2 Badminton") unless a specific coach actually wrote it. `reviewedBy` / `dateReviewed` appear only when a real review happened.
+- Content articles emit **Article** JSON-LD whatever their `contentFormat` (`components/content/ContentStructuredData.tsx`). There is no HowTo markup, because the body has no structured steps — don't promise a HowTo rich result.
 - Don't emit the same schema type twice on one page (for example, both a layout and a page adding Organization).
 
 ## AEO — being the quoted answer
@@ -121,7 +131,7 @@ Structured data must describe what is actually on the page. Fabricated trust sig
 - **H2s are questions** ("Học 1 kèm 1 phù hợp với ai?"), matching how people ask.
 - **Concrete entities in every section**: court name, district, VND amount, time window.
 - `quickAnswer` (hub, node, article) is 40–70 words and starts with the subject. The Studio input counts the words.
-- Money pages carry at least 5 schema-eligible FAQs.
+- Aim for 5 schema-eligible FAQs on a money page, as most live money pages have. Check the page's current `relatedFaqs` first: some pages link fewer, and some link FAQs borrowed from other pages.
 
 ## Measuring
 

@@ -51,6 +51,7 @@ Boundaries that break the build or the Studio when crossed (details in `sanity-c
 | SEO helpers | `lib/routes.ts`, `lib/site.ts`, `lib/schema.ts`, `lib/moneyPageMetadata.ts` → see `seo` |
 | Lead pipeline | `lib/leadSubmission.ts`, `lib/leadPipeline.ts`, `lib/validation/lead.ts`, `lib/antispam.ts`, `lib/dedupe.ts`, `lib/rateLimit.ts`, `lib/db/`, `lib/notify/{email,telegram,ops}.ts` |
 | Behaviour when Sanity data is missing | `lib/moneyPageFailSafe.ts`, `lib/moneyPageFallback.ts`, `lib/catalogFailSafe.ts` |
+| Court list still in code | `lib/locations.ts`, `components/home/compat/legacyScheduleCompatibility.ts` |
 | Env validation | `lib/env.ts` (`REQUIRED_PRODUCTION_VARS` + optional warning groups) |
 | Styles | `app/globals.css` → `styles/**`; tokens in `styles/tokens.css` |
 
@@ -70,6 +71,8 @@ House rules are in `docs/ui-conventions.md`. The ones that matter most:
 - Sanity reads go through the `lib/sanity` helpers, with cache tags, so the publish webhook can purge them.
 - Lead handling (validation → anti-spam → dedupe → DB write → notifications) stays in the existing service path. Don't shortcut it from a component.
 - Construct new external clients (DB, Redis, email) lazily, not at module scope, so builds and tests run without credentials.
+- **The four courts are not only Sanity data.** `CourtId` and `courtLocations` in `lib/locations.ts` are also used by lead validation and by the homepage schedule bridge in `components/home/compat/legacyScheduleCompatibility.ts`. A new court or schedule block activated in Sanity needs a matching code change first: `assertLegacyScheduleCompatibility` (called from the homepage) throws when `CI=true` — as on GitHub Actions — or `NEXT_STRICT_SCHEDULE_COMPAT=true`. Plan the code change before telling the owner to switch a new location on.
+- **Production gets read-only requests.** While investigating, send only GETs to v2badminton.com and cms.v2badminton.com and only read queries to Sanity. Never POST to an API route such as `/api/revalidate/sanity/` or `/api/form-token`, even as a probe you expect to fail.
 
 ## Env
 

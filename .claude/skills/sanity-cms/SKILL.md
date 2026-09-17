@@ -68,7 +68,18 @@ On publish, Sanity calls `POST https://v2badminton.com/api/revalidate/sanity/`. 
 3. maps `_type` to tags in `lib/sanity/revalidationMap.ts`;
 4. calls `revalidateTag(tag, { expire: 0 })` for each.
 
-If a fetch helper's tags aren't covered by that map, published edits stay invisible until the 24h timer. That is the first thing to check for "tôi đã publish mà web không đổi". Watch for embedding: `location`, `pricing_tier` and `faq` are dereferenced inside money-page queries, so they also purge `sanity:money-pages`. An unmapped `_type` is a 200 no-op with a warning in the runtime log.
+If a fetch helper's tags aren't covered by that map, published edits stay invisible until the 24h timer. Watch for embedding: `location`, `pricing_tier` and `faq` are dereferenced inside money-page queries, so they also purge `sanity:money-pages`. Any new type that dereferences another type needs the same treatment. An unmapped `_type` is a 200 no-op with a warning in the runtime log.
+
+## Diagnosing "đã publish mà web không đổi"
+
+Work through these in order and stop at the first step that explains the symptom. Don't jump to the webhook: most "stale" reports turn out to be edits that never published.
+
+1. **Did the edit reach the published dataset?** Authenticated read of the document: its `_updatedAt`, whether a `drafts.` copy or a release version is still pending, and whether the value the live page shows equals the published value. If the page already matches published data, nothing is cached wrongly — the edit never published (blocked by validation, made in another Studio tab or preview URL, or discarded).
+2. **Is the edited document actually on that page?** Follow the page's references (for example `money_page.relatedPricing`). Editing a document the page doesn't reference changes nothing there.
+3. **Are the page's fetch tags purged?** Compare the helper's `tags` with `revalidationMap.ts`, including embedded types.
+4. **Did the webhook fire and pass?** Read the attempt log in Sanity manage (API → Webhooks; expect 200), the Vercel runtime logs for `[revalidate/sanity]`, and confirm `SANITY_REVALIDATE_SECRET` is set on the web project.
+5. **If the webhook missed**, the old value stays until the 24h ISR safety net (`SANITY_REVALIDATE_SECONDS`, default 86400). Tell the owner that — don't promise "a few minutes".
+6. **Is the same fact stored twice?** A `pricing_tier` keeps its price as text (`displayPrice`) and as numbers (`pricePerMonth` / `pricePerHour`); some FAQ answers repeat prices in plain text. An edit to one copy leaves the others old.
 
 ## Adding or changing a document type
 
@@ -79,9 +90,10 @@ If a fetch helper's tags aren't covered by that map, published edits stay invisi
 5. A fetch helper with tags, exported from `lib/sanity/index.ts`.
 6. A `revalidationMap.ts` entry covering the tags of every query that embeds this type.
 7. If it's routable: `resolvePath` + `ROUTABLE_TYPES` in `packages/schema-shared/src/resolvePath.ts` (these drive "Mở trang trực tiếp" and "Xem bản nháp"), and the sitemap. Content-platform types also go in `ROUTABLE_TYPES` in `contentShared.ts` for path uniqueness.
-8. Option lists that web also renders (districts, audiences, CTA actions) belong in `packages/schema-shared/src/options.ts`.
-9. Readiness badges, if editors need a nudge: `BADGES_BY_TYPE` in `apps/studio/sanity.config.ts`.
-10. Existing documents don't migrate themselves. A renamed or newly required field needs a backfill plan, agreed with the owner, before it deploys.
+8. Make sure nothing else can claim its URLs: a file-routed type reserves its prefix in `CODE_RESERVED_PREFIXES` / `FILE_ROUTED_PATHS`; a type routed through a hub relies on `fullPath` uniqueness.
+9. Option lists that web also renders (districts, audiences, CTA actions) belong in `packages/schema-shared/src/options.ts`.
+10. Readiness badges, if editors need a nudge: `BADGES_BY_TYPE` in `apps/studio/sanity.config.ts`.
+11. Existing documents don't migrate themselves. A renamed or newly required field needs a backfill plan, agreed with the owner, before it deploys.
 
 ## Content-platform routing
 
@@ -112,12 +124,15 @@ Each invariant below exists for a reason — keep it:
 
 "Mở trang trực tiếp" (`openLivePageAction`) always opens the *published* URL. The two actions answer different questions: "what does the world see" versus "what am I about to publish".
 
+**Known limitation — check before relying on it.** `content_article` and `court` queries (`ROUTE_RESOLUTION_QUERY` and the by-id queries in `lib/sanity/queries/shared.ts`) also require their own `status` field to be `"published"`, which is independent of Sanity publishing. So a new article still marked "Nháp" previews as not-found until the editor sets Trạng thái = Đã đăng inside the draft. Read the current queries before telling an editor this; it may have been fixed.
+
 ## Working with live data (MCP, CLI, scripts)
 
-- **Authenticate every read.** Anonymous reads of `production` silently return a *subset* — for example 0 pricing tiers instead of 5, or 45 of 67 FAQs. An empty result from an unauthenticated query proves nothing.
-- Call `get_schema` before querying or writing through the Sanity MCP. Document ids don't always follow the type name (e.g. `pricingTier.group-basic-2x`).
+- **Authenticate every read.** Anonymous reads of `production` silently return a *subset*: documents whose `_id` contains a dot (such as `pricingTier.group-basic-2x` or `location.green`) are hidden, so pricing tiers and locations come back empty and FAQs come back partial. An empty result from an unauthenticated query proves nothing.
+- Call `get_schema` before querying or writing through the Sanity MCP. Document ids don't always follow the type name.
 - The Sanity MCP's credentials come from the `env` block in `~/.claude/settings.json`, not from `.env.local`.
 - **Confirm with the owner before any mutation**: create, patch, publish, unpublish, discard drafts, delete, `deploy_schema`, `deploy_studio`, CORS or dataset changes. Name the document ids and the exact change. By default, create or edit content as a draft and let the owner publish after checking it with "Xem bản nháp".
+- **Production HTTP endpoints get read-only requests.** While investigating, send only GETs to v2badminton.com and cms.v2badminton.com. Never POST to an API route — not even an unsigned probe of `/api/revalidate/sanity/` that you expect to be rejected. Webhook health is read from Sanity's attempt log and Vercel's runtime logs, not tested by calling the endpoint.
 - Schema changes reach editors by deploying `apps/studio` on Vercel (push → build). Gate B removed the Sanity-hosted Studio registrations, so don't run `deploy_studio` as well.
 
 ## Local dev
