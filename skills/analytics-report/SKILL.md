@@ -14,7 +14,7 @@ Two rules sit above everything else:
 
 ## What is actually wired
 
-Verified against the code and the local analytics status note; re-check the code if the answer matters.
+Verified against the code, the local analytics status note and live GA4 (2026-09-17); re-check the code if the answer matters.
 
 | Path | State | Detail |
 |---|---|---|
@@ -27,20 +27,27 @@ Verified against the code and the local analytics status note; re-check the code
 ## Where the numbers come from
 
 - **Search Console** — MCP tools `mcp__google-search-console__*`. The only property is **`sc-domain:v2badminton.com`** (siteOwner). Use `list_properties` first if a tool needs the exact string. Useful: `get_search_analytics` / `get_search_by_page_query` for queries and pages, `inspect_url_enhanced` for one URL's index state, `check_indexing_issues`, `compare_search_periods` for before/after. Search Console data lags a couple of days — never read the last 48 hours as a trend.
-- **GA4** — MCP tools `mcp__google-analytics__*`. Call `get_account_summaries` to get the property before any report; do not hardcode a property id. **This connection expires**: a `503 … invalid_grant: Token has been expired or revoked` means the Google account needs re-authorising (claude.ai connector settings, or `/mcp` in an interactive session). Say so plainly and stop — do not substitute GSC numbers for GA4 ones, they measure different things.
+- **GA4** — MCP tools `mcp__google-analytics__*`. Call `get_account_summaries` to get the property before any report; do not hardcode a property id. **This connection expires.** A `503 … invalid_grant: Token has been expired or revoked` means the refresh token inside the credentials file is dead. It does not mean the MCP configuration is wrong, so re-adding or reconnecting the server does not help. Say so plainly and stop — do not substitute GSC numbers for GA4 ones, they measure different things. What the owner has to do:
+  - The server reads an `authorized_user` credentials file named by `GOOGLE_APPLICATION_CREDENTIALS` in its MCP config (on the owner's machine, `.claude/google_adc.json`, untracked).
+  - To prove the token is dead without the MCP, POST its `refresh_token` to `https://oauth2.googleapis.com/token` with `grant_type=refresh_token`: 400 `invalid_grant` is dead, 200 is alive. Report the status only — never print the secret, the refresh token or an access token.
+  - The owner signs in again with the local script `.claude/refresh_ga_token.py`. Prefer it over `refresh_ga_auth.py`, which can silently write a `null` refresh token.
+  - Then **restart the agent**. A running MCP process keeps the dead token in memory and keeps failing after the file is fixed.
 - **PageSpeed Insights** — `PAGESPEED_API_KEY` in the repo-root `.env.local`. Keyless calls are rate-limited into uselessness, so always send the key. The site has **no CrUX field data** (too little traffic), so only lab numbers exist; report them as lab, not as what users experience. Lab TBT swings a lot — take the **median of at least 3 runs** before quoting it or comparing two deploys.
 - **Vercel / Sentry MCP** need authorisation before use; if they are unauthenticated this session, say the capability is unavailable rather than guessing at deploys or error rates.
 
 ## Events you can actually report on
 
-All events go through `trackEvent()` in `apps/web/src/lib/tracking.ts`, which pushes to `window.dataLayer` *and* calls `window.gtag` directly. The union of valid events is `TrackingEvent` in that file — read it rather than assuming an event exists.
+Custom events go through `trackEvent()` in `apps/web/src/lib/tracking.ts`, which pushes to `window.dataLayer` *and* calls `window.gtag` directly. The union of valid events is `TrackingEvent` in that file — read it rather than assuming an event exists.
 
-Currently fired: `cta_click`, `contact_click`, `form_start`, `form_field_focus`, `form_abandon`, `form_error`, `time_to_submit`, `generate_lead`, `cms_article_cta_click`. `generate_lead` is the GA4 Key Event (a submitted contact form).
+Custom events with at least one call site: `cta_click`, `contact_click`, `form_start`, `form_field_focus`, `form_abandon`, `form_error`, `time_to_submit`, `generate_lead`, `cms_article_cta_click`, `cms_court_cta_click`, `web_vitals`. `generate_lead` is the GA4 Key Event (a submitted contact form). `web_vitals` comes from `apps/web/src/components/analytics/WebVitals.tsx`, one event per measured metric, so it is usually the largest event by count — leave it out before comparing event totals or naming the "most common" event.
 
-**Known blind spots — check these before reading a zero as a real zero:**
+GA4 also records events by itself, with no code in this repo: `page_view`, `session_start`, `first_visit`, `user_engagement`, `scroll`, and `click`. In GA4, `click` means an **outbound link click** — a link to another domain — not every click. Break it down with the `linkUrl` or `linkDomain` dimension.
 
-- `map_click` exists as an event type but is **not wired** to the map links in `LocationsGrid.tsx`.
-- The bottom CTA buttons in `MoneyPageTemplate.tsx` are **not tracked**, so bottom-of-page intent is invisible.
+**Known blind spots — check these before reading a zero as a real zero, and check the automatic events before calling something unmeasured:**
+
+- **Map-link clicks are measured, just not by `map_click`.** `map_click` is declared in `tracking.ts` and never called. The map links in `apps/web/src/components/blocks/LocationsGrid.tsx` and `apps/web/src/components/content/CourtView.tsx` are external `<a target="_blank">` links, so GA4 records them as outbound `click`. Count them by filtering `click` on `linkUrl` against each court's `mapsUrl` **as stored in Sanity** (`location.mapsUrl`). Do not filter on `linkDomain = maps.app.goo.gl`: Phúc Lộc's link is a `share.google` URL, and the hardcoded `mapsUrl` values in `apps/web/src/lib/locations.ts` do not all match Sanity. What `map_click` would add is the `map_location` dimension; without it, the court comes from matching the URL.
+- **One tap on the floating Zalo button is three events**: `cta_click`, `contact_click`, and an outbound `click` to `zalo.me` (`apps/web/src/components/layout/FloatingCta.tsx`). Other Zalo and Facebook links also produce an outbound `click`. Never add these together as if they were separate people or separate intents.
+- The bottom CTA buttons in `MoneyPageTemplate.tsx` are **not tracked**: they are internal `<Link>`s with no `trackEvent`, and internal links are not outbound clicks, so bottom-of-page intent is invisible.
 - `contact_click` may still not be marked as a GA4 Key Event, so it will not appear in conversion reports even when it fires.
 - Event names are closed sets in TypeScript (`CtaName`, `CtaLocation`, `ContactMethod`, `MapLocation`, `FormFieldName`). Adding a new CTA or court to tracking is a **code change**, not a GA4 setting.
 
