@@ -14,7 +14,23 @@ use_memories = true
 disable_on_external_context = false
 
 [[skills.config]]
-path = "D:\\V2\\v2badminton-next\\.codex\\skills\\v2badminton-next"
+path = "D:\\V2\\v2badminton-next\\skills\\v2badminton-next"
+enabled = true
+
+[[skills.config]]
+path = "D:\\V2\\v2badminton-next\\skills\\seo"
+enabled = true
+
+[[skills.config]]
+path = "D:\\V2\\v2badminton-next\\skills\\sanity-cms"
+enabled = true
+
+[[skills.config]]
+path = "D:\\V2\\v2badminton-next\\skills\\noi-dung-vi"
+enabled = true
+
+[[skills.config]]
+path = "D:\\V2\\v2badminton-next\\skills\\analytics-report"
 enabled = true
 
 [mcp_servers.openaiDeveloperDocs]
