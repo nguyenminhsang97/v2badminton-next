@@ -158,12 +158,9 @@ Dữ liệu cấu trúc:
    - Cập nhật hoặc thêm test trong `apps/web/src/lib/__tests__/`.
    - Kiểm JSON-LD đã render trên một money page có lịch.
    - Giữ nguyên `courseSchedule`: nó liệt kê giờ các lớp đang diễn ra, và các khung đó có thật. Nếu thấy nó trái với quyết định của chủ thì ghi vào mô tả PR, không tự sửa.
-3. **Dữ liệu gốc của bộ eval** (cùng PR với bước 2): trong `skills/_evals/evals.json` → `ground_truth_notes`:
-   - Mục `"owner rulings 2026-09-17"` vẫn ghi xung đột thời lượng là "STILL OPEN". Thay câu đó bằng các quyết định ở trên.
-   - Sửa mục `"published FAQ policies"` cho khớp nội dung FAQ sau khi publish.
-   - Không đọc phần còn lại của `skills/_evals/`.
+3. **Dữ liệu gốc của bộ eval** (cùng PR với bước 2): trong `skills/_evals/evals.json` → `ground_truth_notes`, sửa mục `"published FAQ policies"` cho khớp nội dung FAQ sau khi publish. Mục `"owner rulings 2026-09-17"` đã ghi đủ quyết định, không cần đụng. Không đọc phần còn lại của `skills/_evals/`.
 
-**Xong khi:** mọi câu nói về thời lượng buổi học nhóm ghi 120 phút; JSON-LD báo buổi chuẩn; bộ eval không còn ghi "STILL OPEN".
+**Xong khi:** mọi câu nói về thời lượng buổi học nhóm ghi 120 phút; JSON-LD báo buổi chuẩn; mục `"published FAQ policies"` trong bộ eval khớp nội dung đã publish.
 
 ---
 
