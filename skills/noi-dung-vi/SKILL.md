@@ -103,6 +103,28 @@ Không bao giờ tự nghĩ ra: học phí, lịch học, địa chỉ sân, sĩ
   - chỉ viết phần mà các nguồn khớp nhau;
   - không lặp lại vế nào đang bị nguồn khác phủ nhận;
   - nêu rõ mâu thuẫn (nguồn nào nói gì) trong phần bàn giao để chủ repo chốt.
+- **Đừng trông vào việc tự nhận ra mâu thuẫn — chạy script.** Đọc từng tài liệu thì mâu thuẫn không lộ ra: mỗi nguồn đều trông hợp lý khi đứng một mình. Lần đo trước, bản viết có đọc quy tắc trên vẫn chọn một vế, vì không thấy vế kia. Xem mục "Kiểm mâu thuẫn" ngay dưới.
+
+### Kiểm mâu thuẫn: `check-facts.mjs`
+
+```bash
+node skills/noi-dung-vi/scripts/check-facts.mjs                  # mọi chủ đề
+node skills/noi-dung-vi/scripts/check-facts.mjs si-so thoi-luong # chỉ vài chủ đề
+```
+
+Script đọc **mọi tài liệu đã publish** trên Sanity, quét **mọi trường chữ** (cả Portable Text lẫn `description`, `features`, `quickAnswer`… — mâu thuẫn hay nằm ở chỗ ít ai đọc), rồi đặt mọi câu nói về cùng một dữ kiện cạnh nhau:
+
+| Chủ đề | Kiểm gì |
+|---|---|
+| `hoc-phi` | Câu "từ X" / "rẻ nhất" có khớp gói tháng rẻ nhất trong `pricing_tier` không; `displayPrice` có khớp giá lưu dạng số không; số tiền trong câu về học phí mà không khớp gói nào (ví dụ phí học thử) |
+| `si-so` | Sĩ số lớp nhóm ở mọi nơi |
+| `thoi-luong` | Thời lượng buổi học nhóm (không tính 1 kèm 1 và team building) |
+| `san-1-kem-1` | Ai đặt sân, và tiền sân đã gồm trong học phí chưa, với 1 kèm 1 |
+
+- **MÂU THUẪN** (mã thoát 1): làm đúng như quy tắc trên. Không viết vế nào như sự thật; ghi `[CẦN HLV XÁC NHẬN: …]`; chép danh sách nguồn mà script in ra vào phần bàn giao.
+- **CẦN XEM**: không hẳn sai, nhưng phải biết con số đó đến từ đâu trước khi dùng lại.
+- Script chỉ gửi GET. Cần `SANITY_API_READ_TOKEN` (biến môi trường, hoặc `.env.local` ở gốc repo — script tự dò lên các thư mục cha). Không có token thì nó từ chối chạy (mã thoát 2) thay vì đọc ẩn danh ra kết quả thiếu. Khi đó: `--print-query` in truy vấn, chạy bằng Sanity MCP, lưu mảng kết quả ra file, rồi chạy lại với `--input <file>`.
+- Script dò bằng mẫu câu, nên chỉ phủ bốn chủ đề trên. Dữ kiện khác (lịch, địa chỉ, HLV) vẫn phải tự đối chiếu các nguồn trong bảng ở đầu mục này.
 - Một dữ kiện có thể nằm ở nhiều chỗ. Mỗi gói học phí lưu giá hai lần (`displayPrice` dạng chữ, `pricePerMonth`/`pricePerHour` dạng số), và một số câu trả lời FAQ ghi lại giá bằng chữ. Khi viết về thay đổi giá, liệt kê mọi chỗ cần sửa theo.
 - Cách viết số tiền, khung giờ: theo đúng định dạng đang dùng trên site (xem bảng giá ở `/gia-hoc-cau-long-tphcm/`), không tự đặt định dạng mới.
 
@@ -165,9 +187,10 @@ Mẫu cấu trúc tham khảo: `docs/sanity-content/*.json` (9 money page). Ch�
 ## 7. Quy trình
 
 1. Xác định loại trang (money page, bài kỹ thuật, FAQ, trang tĩnh) và câu hỏi chính người đọc mang tới.
-2. Thu thập dữ kiện thật (mục 2), ghi lại chỗ còn thiếu và mọi mâu thuẫn giữa các nguồn.
-3. Viết theo cấu trúc trả lời trước (mục 4), đúng thuật ngữ (mục 1).
-4. Chạy `check-terms.mjs`: sửa hết LỖI và mọi CẢNH BÁO trong phần người đọc thấy.
-5. Điền các trường theo giới hạn (mục 5), với tác giả và review trung thực (mục 3).
-6. Nếu đưa lên Sanity: tạo hoặc sửa **bản nháp**, không publish. Mọi thao tác ghi cần chủ repo đồng ý trước (xem `sanity-cms`). Chủ repo xem bằng "Xem bản nháp" rồi tự publish. (Nút "Xem bản nháp" có từ PR #119; trước khi PR đó merge, chủ repo xem bản nháp ngay trong Studio.)
-7. Khi bàn giao: liệt kê mọi chỗ `[CẦN HLV XÁC NHẬN]` và mọi mâu thuẫn dữ kiện đã phát hiện.
+2. Thu thập dữ kiện thật (mục 2), ghi lại chỗ còn thiếu.
+3. **Nếu văn bản sẽ nhắc tới học phí, sĩ số, thời lượng buổi học hay chuyện ai lo sân: chạy `check-facts.mjs` trước khi viết câu nào** (mục 2). Chủ đề nào báo MÂU THUẪN thì dữ kiện đó chưa được viết như sự thật.
+4. Viết theo cấu trúc trả lời trước (mục 4), đúng thuật ngữ (mục 1).
+5. Chạy `check-terms.mjs`: sửa hết LỖI và mọi CẢNH BÁO trong phần người đọc thấy.
+6. Điền các trường theo giới hạn (mục 5), với tác giả và review trung thực (mục 3).
+7. Nếu đưa lên Sanity: tạo hoặc sửa **bản nháp**, không publish. Mọi thao tác ghi cần chủ repo đồng ý trước (xem `sanity-cms`). Chủ repo xem bằng "Xem bản nháp" rồi tự publish. (Nút "Xem bản nháp" có từ PR #119; trước khi PR đó merge, chủ repo xem bản nháp ngay trong Studio.)
+8. Khi bàn giao: liệt kê mọi chỗ `[CẦN HLV XÁC NHẬN]` và mọi mâu thuẫn dữ kiện, kèm nguồn mà `check-facts.mjs` đã in ra.
