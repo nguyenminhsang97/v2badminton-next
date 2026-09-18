@@ -43,9 +43,9 @@ Boundaries that break the build or the Studio when crossed (details in `sanity-c
 | CMS content platform (hub / node / article / court) | `app/(site)/[...slug]/page.tsx` — required catch-all, resolved by `fullPath` |
 | News feed | `app/(site)/tin-tuc/` (`/blog/` 308-redirects here) |
 | Root + site shell | `app/layout.tsx`, `app/(site)/layout.tsx` |
-| API routes | `app/api/{draft-mode,form-token,health,monitoring-test,revalidate/sanity}` |
+| API routes | `app/api/{draft-mode,form-token,health,monitoring-test,revalidate/sanity}` — `draft-mode` arrives with PR #119 |
 | Lead form server action | `app/actions/submitLead.ts` |
-| Proxy | `proxy.ts` — 308s `v2badminton-next.vercel.app` to the primary domain; marks draft-mode requests `noindex` + `no-store` |
+| Proxy | `proxy.ts` — 308s `v2badminton-next.vercel.app` to the primary domain; marks draft-mode requests `noindex` + `no-store` (that part with PR #119) |
 | Components | `components/{home,money-page,content,blocks,layout,coaches,ui,analytics,providers}` |
 | Sanity reads | `lib/sanity/` → see `sanity-cms` |
 | SEO helpers | `lib/routes.ts`, `lib/site.ts`, `lib/schema.ts`, `lib/moneyPageMetadata.ts` → see `seo` |

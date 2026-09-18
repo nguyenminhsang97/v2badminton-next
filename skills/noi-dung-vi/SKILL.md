@@ -169,5 +169,5 @@ Mẫu cấu trúc tham khảo: `docs/sanity-content/*.json` (9 money page). Ch�
 3. Viết theo cấu trúc trả lời trước (mục 4), đúng thuật ngữ (mục 1).
 4. Chạy `check-terms.mjs`: sửa hết LỖI và mọi CẢNH BÁO trong phần người đọc thấy.
 5. Điền các trường theo giới hạn (mục 5), với tác giả và review trung thực (mục 3).
-6. Nếu đưa lên Sanity: tạo hoặc sửa **bản nháp**, không publish. Mọi thao tác ghi cần chủ repo đồng ý trước (xem `sanity-cms`). Chủ repo xem bằng "Xem bản nháp" rồi tự publish.
+6. Nếu đưa lên Sanity: tạo hoặc sửa **bản nháp**, không publish. Mọi thao tác ghi cần chủ repo đồng ý trước (xem `sanity-cms`). Chủ repo xem bằng "Xem bản nháp" rồi tự publish. (Nút "Xem bản nháp" có từ PR #119; trước khi PR đó merge, chủ repo xem bản nháp ngay trong Studio.)
 7. Khi bàn giao: liệt kê mọi chỗ `[CẦN HLV XÁC NHẬN]` và mọi mâu thuẫn dữ kiện đã phát hiện.
