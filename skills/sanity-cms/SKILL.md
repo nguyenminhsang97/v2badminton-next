@@ -12,7 +12,7 @@ Project `w58s0f53`, dataset `production`. It is the only dataset: **every write 
 | Studio: schemas, desk structure, actions, badges | `apps/studio` | cms.v2badminton.com |
 | Read client, GROQ, result types, fetch helpers | `apps/web/src/lib/sanity/` | v2badminton.com |
 | Publish webhook → cache purge | `apps/web/src/app/api/revalidate/sanity/route.ts` | v2badminton.com |
-| Draft preview | `apps/web/src/app/api/draft-mode/{enable,disable}` + `apps/studio/src/sanity/actions/openDraftPreviewAction.tsx` | both |
+| Draft preview (PR #119, not on `main` yet) | `apps/web/src/app/api/draft-mode/{enable,disable}` + `apps/studio/src/sanity/actions/openDraftPreviewAction.tsx` | both |
 | Route helpers and option lists shared by both apps | `packages/schema-shared/src/{resolvePath,options}.ts` | both |
 
 ## Boundaries, and why they exist
@@ -108,6 +108,8 @@ Work through these in order and stop at the first step that explains the symptom
 
 ## Draft preview
 
+> **Arrives with PR #119, which is still open.** Until it merges, `main` has none of this section: no `/api/draft-mode/` routes, no "Xem bản nháp" Studio action, no draft client and no draft handling in `proxy.ts`. Check `git log` or the files before relying on it.
+
 How an editor sees unpublished changes:
 
 1. The Studio action **"Xem bản nháp"** calls `createPreviewSecret`, which stores a short-lived, single-use secret in the dataset. It then opens `https://v2badminton.com/api/draft-mode/enable?sanity-preview-secret=…&sanity-preview-pathname=<path>`.
@@ -131,7 +133,7 @@ Each invariant below exists for a reason — keep it:
 - **Authenticate every read.** Anonymous reads of `production` silently return a *subset*: documents whose `_id` contains a dot (such as `pricingTier.group-basic-2x` or `location.green`) are hidden, so pricing tiers and locations come back empty and FAQs come back partial. An empty result from an unauthenticated query proves nothing.
 - Call `get_schema` before querying or writing through the Sanity MCP. Document ids don't always follow the type name.
 - The Sanity MCP's credentials come from the `env` block in `~/.claude/settings.json`, not from `.env.local`.
-- **Confirm with the owner before any mutation**: create, patch, publish, unpublish, discard drafts, delete, `deploy_schema`, `deploy_studio`, CORS or dataset changes. Name the document ids and the exact change. By default, create or edit content as a draft and let the owner publish after checking it with "Xem bản nháp".
+- **Confirm with the owner before any mutation**: create, patch, publish, unpublish, discard drafts, delete, `deploy_schema`, `deploy_studio`, CORS or dataset changes. Name the document ids and the exact change. By default, create or edit content as a draft and let the owner publish after checking it with "Xem bản nháp" (PR #119; before it merges, the owner checks the draft in the Studio itself).
 - **Production HTTP endpoints get read-only requests.** While investigating, send only GETs to v2badminton.com and cms.v2badminton.com. Never POST to an API route — not even an unsigned probe of `/api/revalidate/sanity/` that you expect to be rejected. Webhook health is read from Sanity's attempt log and Vercel's runtime logs, not tested by calling the endpoint.
 - Schema changes reach editors by deploying `apps/studio` on Vercel (push → build). Gate B removed the Sanity-hosted Studio registrations, so don't run `deploy_studio` as well.
 
@@ -142,10 +144,10 @@ npm run dev:web                            # http://localhost:3000
 npm run -w apps/studio dev -- -p 3333      # CORS allows localhost:3000 and :3333
 ```
 
-Tests (run with `npm test`): `apps/web/src/app/api/draft-mode/__tests__`, `apps/web/src/app/api/revalidate/sanity/__tests__`, `apps/web/src/lib/sanity/__tests__`.
+Tests (run with `npm test`): `apps/web/src/app/api/draft-mode/__tests__` (PR #119), `apps/web/src/app/api/revalidate/sanity/__tests__`, `apps/web/src/lib/sanity/__tests__`.
 
 ## Background reading
 
 - `docs/cms/gate-b-completion-2026-09-10.md` — topology, CORS, webhook, Vercel projects, open items. Read it before `gate-b-junior-handbook.md`, which is history.
 - `docs/cms/url-rename-runbook.md`.
-- `.claude/CMS/v2badminton-cms-phase-1-locked-spec.md`, `v2badminton-cms-phase-2-locked-spec.md`, `v2badminton-cms-cache-revalidation-plan.md` — local only, gitignored.
+- `.claude/CMS/v2badminton-cms-phase-1-locked-spec.md`, `.claude/CMS/v2badminton-cms-phase-2-locked-spec.md`, `.claude/CMS/v2badminton-cms-cache-revalidation-plan.md` — local only, gitignored: they exist on the owner's machine, not in a fresh clone or worktree.

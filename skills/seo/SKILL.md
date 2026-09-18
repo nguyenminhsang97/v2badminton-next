@@ -108,7 +108,7 @@ The sitemap lists only pages that have real content, so most groups are conditio
 - `robots.ts` disallows only `/api/`. It **explicitly allows** GPTBot, ChatGPT-User, ClaudeBot and PerplexityBot, because being cited in AI answers is a goal. Don't block them "to be safe".
 - Site-wide indexing is `NEXT_PUBLIC_ALLOW_INDEXING === "true"` (read in `app/layout.tsx`); `lib/env.ts` flags any other value in production. Before investigating "Google isn't indexing", check the Vercel production env, not a local file.
 - Per-page `noindex` is for pages that genuinely shouldn't be found (not-found, test routes) and CMS documents with `isIndexed: false`. Never put it on a money page.
-- Draft-preview responses carry `X-Robots-Tag: noindex, nofollow` and `no-store`, set by both `proxy.ts` and the draft-mode route. Keep both if you touch that flow.
+- Draft-preview responses carry `X-Robots-Tag: noindex, nofollow` and `no-store`, set by both `proxy.ts` and the draft-mode route. Keep both if you touch that flow. (Draft preview arrives with PR #119; before it merges there is no such flow on `main`.)
 
 ## JSON-LD
 
