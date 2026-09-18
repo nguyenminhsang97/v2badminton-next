@@ -22,8 +22,9 @@ Danh sách việc còn mở sau đợt làm skill ngày 2026-09-17. Mỗi việc
 | T5 | Gỡ trang nháp `preview-version-c.html` | Code | Trung bình |
 | T6 | Guard CI cho đường dẫn trong skill | Skill | Thấp |
 | T7 | Quy tắc mâu thuẫn kiểm bằng máy, chạy E9 | Skill | Thấp |
+| T8 | Link bản đồ và tọa độ hai sân Thủ Đức sai | Sanity + code | Trung bình |
 
-T1–T5 đang sai trước mặt khách. T6–T7 là gia cố bộ skill: skill hiện dùng được và đã kiểm, hai việc này giữ cho nó không hỏng dần và vá một điểm yếu đã đo được.
+T1–T5 và T8 đang sai trước mặt khách. T6–T7 là gia cố bộ skill: skill hiện dùng được và đã kiểm, hai việc này giữ cho nó không hỏng dần và vá một điểm yếu đã đo được.
 
 ## Quyết định của chủ (2026-09-17)
 
@@ -158,12 +159,9 @@ Dữ liệu cấu trúc:
    - Cập nhật hoặc thêm test trong `apps/web/src/lib/__tests__/`.
    - Kiểm JSON-LD đã render trên một money page có lịch.
    - Giữ nguyên `courseSchedule`: nó liệt kê giờ các lớp đang diễn ra, và các khung đó có thật. Nếu thấy nó trái với quyết định của chủ thì ghi vào mô tả PR, không tự sửa.
-3. **Dữ liệu gốc của bộ eval** (cùng PR với bước 2): trong `skills/_evals/evals.json` → `ground_truth_notes`:
-   - Mục `"owner rulings 2026-09-17"` vẫn ghi xung đột thời lượng là "STILL OPEN". Thay câu đó bằng các quyết định ở trên.
-   - Sửa mục `"published FAQ policies"` cho khớp nội dung FAQ sau khi publish.
-   - Không đọc phần còn lại của `skills/_evals/`.
+3. **Dữ liệu gốc của bộ eval** (cùng PR với bước 2): trong `skills/_evals/evals.json` → `ground_truth_notes`, sửa mục `"published FAQ policies"` cho khớp nội dung FAQ sau khi publish. Mục `"owner rulings 2026-09-17"` đã ghi đủ quyết định, không cần đụng. Không đọc phần còn lại của `skills/_evals/`.
 
-**Xong khi:** mọi câu nói về thời lượng buổi học nhóm ghi 120 phút; JSON-LD báo buổi chuẩn; bộ eval không còn ghi "STILL OPEN".
+**Xong khi:** mọi câu nói về thời lượng buổi học nhóm ghi 120 phút; JSON-LD báo buổi chuẩn; mục `"published FAQ policies"` trong bộ eval khớp nội dung đã publish.
 
 ---
 
@@ -189,7 +187,7 @@ Dữ liệu cấu trúc:
 
 ## T6 — Guard CI cho đường dẫn trong skill
 
-**Trạng thái:** chưa nhận
+**Trạng thái:** xong — #123. `scripts/check-skill-paths.mjs`, job CI "Skill paths". Lần chạy đầu bắt được skill mô tả draft preview trước khi PR #119 merge.
 **Đọc trước:** `skills/v2badminton-next/SKILL.md`
 
 **Vì sao.** Hiện không có gì hỏng: mọi đường dẫn trong các skill đều tồn tại (đã kiểm ngày 2026-09-17). Nhưng khi code dời chỗ, đường dẫn trong skill âm thầm sai mà không ai biết. Bản tiền nhiệm `.codex/skills` chết đúng kiểu này: 25/26 đường dẫn vẫn trỏ vào layout `src/` cũ, chỉ lộ ra khi nó làm một lượt eval cho ra đáp án sai.
@@ -209,7 +207,7 @@ Dữ liệu cấu trúc:
 
 ## T7 — Quy tắc mâu thuẫn kiểm bằng máy, và chạy E9
 
-**Trạng thái:** chưa nhận
+**Trạng thái:** xong — #123. `skills/noi-dung-vi/scripts/check-facts.mjs`, thành một bước riêng trong quy trình của skill. Vòng eval 3: E8 có skill 9/9, không có skill 7/9 (vòng 2 là 7/9 cả hai); E9 7/7 so với 5/7. Phần tuỳ chọn, siết lại E2/E4/E6, chưa làm; đã ghi trong `skills/_evals/README.md`.
 **Đọc trước:** `skills/noi-dung-vi/SKILL.md`, `skills/_evals/README.md`
 
 **Vì sao.** Đây là điểm yếu thật của bộ skill, đã đo được.
@@ -233,6 +231,31 @@ Dữ liệu cấu trúc:
 - **Làm T2, T3, T4 trước:** chúng sửa chính những mâu thuẫn mà E8 chấm. Trước khi chạy lại phải thu thập lại `ground_truth_notes`, như README yêu cầu.
 
 **Xong khi:** E8 chạy lại cho thấy agent có skill không còn tự chọn giữa hai nguồn mâu thuẫn, và E9 có kết quả cả hai cấu hình.
+
+---
+
+## T8 — Link bản đồ và tọa độ của hai sân ở Thủ Đức sai
+
+**Trạng thái:** chưa nhận — **cần chủ xác nhận vị trí đúng trước**
+**Đọc trước:** `skills/sanity-cms/SKILL.md`, `skills/seo/SKILL.md`
+
+**Hiện trạng** (tìm ra trong lượt eval E9 ngày 2026-09-18, đã kiểm lại bằng cách mở từng link):
+- `location.phuc_loc` có `mapsUrl` là `https://share.google/5w1gPPvDQbyTm3CxB`. Link này mở **trang tìm kiếm Google**, không phải Google Maps. Khách bấm "Xem bản đồ" không thấy bản đồ.
+- `apps/web/src/lib/locations.ts` có một link khác cho Phúc Lộc, `https://maps.app.goo.gl/pU2Zr72N1s612v5b7`. Link này mở đúng ghim "Sân Cầu Lông Phúc Lộc" trên Google Maps, tại 10.82406, 106.72472.
+- Tọa độ lưu trong Sanity (`geoLat`/`geoLng`) lệch xa ghim Google Maps của chính sân đó:
+  - Phúc Lộc: Sanity ghi 10.84495, 106.70385, cách ghim **khoảng 3,3 km**.
+  - Khang Sport: Sanity ghi 10.8443035, 106.703096, cách ghim "KHANG Sport Center" mà `mapsUrl` của sân trỏ tới (10.82684, 106.72270) **khoảng 2,9 km**.
+  - Green và Huệ Thiên chỉ lệch 160 m và 86 m, bình thường.
+- Tọa độ này đi vào JSON-LD (`apps/web/src/lib/schema.ts`: `latitude`/`longitude`, và link bản đồ dự phòng khi không có `mapsUrl`). Google và các công cụ AI đang nhận sai vị trí hai sân.
+
+**Chưa biết:** vị trí nào đúng. Nhiều khả năng ghim Google Maps đúng, vì đó là trang địa điểm mang đúng tên sân, và tọa độ trong Sanity bị nhập sai. Nhưng đây là dữ kiện kinh doanh: **hỏi chủ trước khi sửa**.
+
+**Làm** (sau khi chủ xác nhận):
+- Đổi `mapsUrl` của Phúc Lộc trong Sanity sang link Google Maps đúng.
+- Sửa `geoLat`/`geoLng` của hai sân theo vị trí chủ xác nhận.
+- Đồng bộ `apps/web/src/lib/locations.ts` với Sanity, hoặc ghi rõ nguồn nào là chuẩn. Các giá trị viết cứng ở đây đang lệch với Sanity (xem thêm cảnh báo về sân viết cứng trong `skills/v2badminton-next/SKILL.md`).
+
+**Xong khi:** mọi link bản đồ mở đúng ghim trên Google Maps, và tọa độ trong Sanity cách ghim dưới 200 m.
 
 ---
 
