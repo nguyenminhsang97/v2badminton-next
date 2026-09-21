@@ -51,7 +51,7 @@ Dùng chung cho các việc bên dưới. Đây là dữ kiện đã chốt, kh�
 
 ## T1 — Giá "từ" trên 10 money page sai
 
-**Trạng thái:** chưa nhận
+**Trạng thái:** xong — #125
 **Đọc trước:** `skills/v2badminton-next/SKILL.md`, `skills/sanity-cms/SKILL.md`
 
 **Hiện trạng.** Khối tóm tắt nhanh (QuickAnswer) ghi **"Học phí từ 1.300.000 VNĐ / tháng."** trên cả 10 money page có lớp nhóm. Đã kiểm từng trang trên web thật: `gia-hoc-cau-long-tphcm`, `hoc-cau-long-1-kem-1`, `hoc-cau-long-cho-nguoi-moi`, `lop-cau-long-binh-thanh`, `lop-cau-long-buoi-toi`, `lop-cau-long-cho-nguoi-di-lam`, `lop-cau-long-cuoi-tuan`, `lop-cau-long-thu-duc`, `lop-cau-long-tre-em`, `lop-he-cau-long-tphcm`. Gói rẻ nhất là 1.000.000, nên khách thấy giá **cao hơn** thực tế. Trên trang bảng giá, bảng so sánh và FAQ `4021af86-64ac-401e-9129-e083c505b675` ngay cạnh đó đều ghi 1.000.000, nên trang tự mâu thuẫn.

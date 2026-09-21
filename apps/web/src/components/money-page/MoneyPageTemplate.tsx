@@ -8,8 +8,9 @@ import { PricingCards } from "@/components/blocks/PricingCards";
 import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
 import { HOME_SECTION_IDS, toHash, toHomepageHash } from "@/lib/anchors";
 import { getGeneratedRouteImage } from "@/lib/generatedImages";
+import { getCheapestGroupTier } from "@/lib/moneyPagePricing";
 import { coreRoutes, getRouteMetadata, type CoreRoutePath } from "@/lib/routes";
-import { getArticlesForMoneyPage, type SanityGroupPricingTier, type SanityMoneyPage } from "@/lib/sanity";
+import { getArticlesForMoneyPage, type SanityMoneyPage } from "@/lib/sanity";
 import { sanityImageLoader } from "@/lib/sanity/image";
 import { Breadcrumb } from "./Breadcrumb";
 import { QuickAnswer } from "./QuickAnswer";
@@ -48,13 +49,8 @@ function buildMoneyPageFacts(page: SanityMoneyPage): string[] {
   }
 
   if (page.relatedPricing.length > 0) {
-    const groupTiers = page.relatedPricing.filter(
-      (t): t is SanityGroupPricingTier => t.kind === "group",
-    );
-    if (groupTiers.length > 0) {
-      const cheapest = groupTiers.reduce((a, b) =>
-        a.pricePerMonth <= b.pricePerMonth ? a : b,
-      );
+    const cheapest = getCheapestGroupTier(page.relatedPricing);
+    if (cheapest) {
       const formatted = cheapest.pricePerMonth
         .toString()
         .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
