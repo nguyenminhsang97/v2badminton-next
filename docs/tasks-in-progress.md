@@ -23,8 +23,9 @@ Danh sách việc còn mở sau đợt làm skill ngày 2026-09-17. Mỗi việc
 | T6 | Guard CI cho đường dẫn trong skill | Skill | Thấp |
 | T7 | Quy tắc mâu thuẫn kiểm bằng máy, chạy E9 | Skill | Thấp |
 | T8 | Link bản đồ và tọa độ hai sân Thủ Đức sai | Sanity + code | Trung bình |
+| T9 | Việc lặt vặt còn lại của bộ skill | Skill | Thấp |
 
-T1–T5 và T8 đang sai trước mặt khách. T6–T7 là gia cố bộ skill: skill hiện dùng được và đã kiểm, hai việc này giữ cho nó không hỏng dần và vá một điểm yếu đã đo được.
+T1–T5 và T8 đang sai trước mặt khách. T6, T7 và T9 là gia cố bộ skill: skill hiện dùng được và đã được đo; các việc này giữ cho nó không hỏng dần và vá những điểm yếu đã đo được.
 
 ## Quyết định của chủ (2026-09-17)
 
@@ -256,6 +257,35 @@ Dữ liệu cấu trúc:
 - Đồng bộ `apps/web/src/lib/locations.ts` với Sanity, hoặc ghi rõ nguồn nào là chuẩn. Các giá trị viết cứng ở đây đang lệch với Sanity (xem thêm cảnh báo về sân viết cứng trong `skills/v2badminton-next/SKILL.md`).
 
 **Xong khi:** mọi link bản đồ mở đúng ghim trên Google Maps, và tọa độ trong Sanity cách ghim dưới 200 m.
+
+---
+
+## T9 — Việc lặt vặt còn lại của bộ skill
+
+**Trạng thái:** chưa nhận
+**Đọc trước:** `skills/_evals/README.md`, `skills/v2badminton-next/SKILL.md`
+
+Bộ skill đang dùng được và đã được đo (#120–#123). Các việc dưới đây là dọn dẹp và gia cố, không chặn gì, làm lúc nào cũng được.
+
+1. **Khi PR #119 merge, gỡ ghi chú "PR #119".** Làm ngay trong PR #119 hoặc ngay sau khi nó merge. CI job "Skill paths" sẽ cảnh báo để nhắc.
+   - Xoá 2 mục trong `PENDING` của `scripts/check-skill-paths.mjs`.
+   - Xoá các ghi chú "PR #119" trong 4 skill: `grep -rn "PR #119" skills/`.
+   - Sửa luôn câu cảnh báo của script. Hiện nó ghi "PR #119 đã merge" ngay khi file xuất hiện, kể cả trên chính nhánh của PR #119, lúc PR chưa merge. Nên ghi "đã có trên nhánh này".
+2. **Siết bộ eval.** Chi tiết ở mục "Known weaknesses" trong `skills/_evals/README.md`:
+   - E2, E4, E6 không phân biệt được có skill hay không có skill: siết lại hoặc bỏ.
+   - Kỳ vọng 3, 4, 7 của E9 cũng chưa phân biệt được.
+   - Thêm cho E8 một kỳ vọng về quyết định "chỉ báo buổi chuẩn 120 phút". Làm sau T4.
+   - Chạy eval từ một session không nạp bộ nhớ dự án: ở vòng 3, bộ nhớ của chủ đã lọt vào cả hai cấu hình.
+3. **Ghi quy ước làm PR vào `skills/v2badminton-next/SKILL.md`**, khoảng 10 dòng:
+   - squash merge, tiêu đề có `(#số PR)`;
+   - commit message giải thích *vì sao*, không chỉ *cái gì*;
+   - merge đúng commit đã qua CI (`gh pr merge --match-head-commit <sha>`);
+   - xoá nhánh sau khi merge;
+   - nhánh đang làm dở thì merge `main` vào khi cần.
+
+   Hiện các quy ước này chỉ nằm trong lịch sử git, nên Codex và các model khác không thấy.
+
+**Xong khi:** CI không còn cảnh báo "PR #119"; từng mục yếu trong README của bộ eval đã được xử lý, hoặc có ghi lý do giữ nguyên; skill `v2badminton-next` có mục quy ước PR.
 
 ---
 
