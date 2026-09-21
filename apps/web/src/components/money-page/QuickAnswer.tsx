@@ -1,4 +1,23 @@
+import { getCheapestGroupTier } from "@/lib/moneyPagePricing";
 import type { SanityMoneyPage } from "@/lib/sanity";
+
+/**
+ * "Học phí từ X" only when X really is the floor: the cheapest monthly group
+ * tier, quoted with the wording the editor set in `displayPrice`. A page with
+ * no group tier gets its price without "từ" — a per-hour or quoted price is
+ * not a starting point for anything else on the page.
+ */
+function buildPricingText(page: SanityMoneyPage): string | null {
+  const cheapestGroup = getCheapestGroupTier(page.relatedPricing);
+
+  if (cheapestGroup?.displayPrice) {
+    return `Học phí từ ${cheapestGroup.displayPrice}.`;
+  }
+
+  const onlyPrice = page.relatedPricing[0]?.displayPrice;
+
+  return onlyPrice ? `Học phí: ${onlyPrice}.` : null;
+}
 
 type QuickAnswerProps = {
   page: SanityMoneyPage;
@@ -19,10 +38,7 @@ export function QuickAnswer({ page, quickAnswerLabel = "Tóm tắt nhanh" }: Qui
     ? `Địa điểm: ${districtLabels}, TP.HCM.`
     : null;
 
-  const firstPrice = page.relatedPricing[0];
-  const pricingText = firstPrice?.displayPrice
-    ? `Học phí từ ${firstPrice.displayPrice}.`
-    : null;
+  const pricingText = buildPricingText(page);
 
   return (
     <div className="quick-answer">
