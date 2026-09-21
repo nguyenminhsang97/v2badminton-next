@@ -148,8 +148,9 @@ These cost real time. They are environmental, not repo problems.
 Per [`gate-b-addendum-2026-09-09.md`](./gate-b-addendum-2026-09-09.md) §7, Gate B delivered no
 editor-facing capability. These remain:
 
-- **P1.6 — draft preview.** Editors cannot see unpublished content on the site. The
-  "Mở trang trực tiếp" action always opens the *published* URL.
+- ~~**P1.6 — draft preview.**~~ Shipped in #119: the Studio's "Xem bản nháp" action opens
+  the page with unpublished content. It needs `SANITY_API_VIEWER_TOKEN` on the web project;
+  how to check it is in `skills/sanity-cms/SKILL.md`.
 - **P1.7 — fail-closed fallbacks.** Content rendering still falls back to hardcoded JSX rather
   than failing closed when Sanity is unreachable.
 - **CSP on the Studio origin.** `apps/studio/next.config.ts` deliberately ships no CSP — see

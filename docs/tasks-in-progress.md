@@ -262,7 +262,7 @@ Dữ liệu cấu trúc:
 
 ## T9 — Việc lặt vặt còn lại của bộ skill
 
-**Trạng thái:** chưa nhận
+**Trạng thái:** mục 1 xong — #119; mục 2 và 3 chưa nhận
 **Đọc trước:** `skills/_evals/README.md`, `skills/v2badminton-next/SKILL.md`
 
 Bộ skill đang dùng được và đã được đo (#120–#123). Các việc dưới đây là dọn dẹp và gia cố, không chặn gì, làm lúc nào cũng được.
