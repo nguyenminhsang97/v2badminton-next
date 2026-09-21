@@ -105,7 +105,7 @@ Không hiển thị trên web nhưng có thể bị nạp lại vào Sanity: `ti
 
 ## T3 — Quy mô lớp nhóm 2-6 → 4-8
 
-**Trạng thái:** đang làm — phần code và file mẫu ở nhánh fix/t3-t4-code; nội dung Sanity chờ chủ duyệt câu chữ
+**Trạng thái:** đang làm — phần code và file mẫu: #126; nội dung Sanity chờ chủ duyệt câu chữ
 **Đọc trước:** `skills/sanity-cms/SKILL.md`, `skills/noi-dung-vi/SKILL.md`
 
 **Hiện trạng.** Trường `groupSize` của cả ba gói nhóm trong Sanity đã đúng là "4-8 người". Số cũ "2-6" còn sót lại ở:
@@ -131,7 +131,7 @@ File mẫu, không hiển thị trên web: `docs/sanity-content/01-hoc-cau-long-
 
 ## T4 — Thời lượng buổi học: chỉ báo 120 phút
 
-**Trạng thái:** đang làm — dữ liệu cấu trúc ở nhánh fix/t3-t4-code; nội dung Sanity và mục eval chờ chủ duyệt, publish
+**Trạng thái:** đang làm — dữ liệu cấu trúc: #126; nội dung Sanity và mục eval chờ chủ duyệt, publish
 **Đọc trước:** `skills/noi-dung-vi/SKILL.md`, `skills/sanity-cms/SKILL.md`, `skills/seo/SKILL.md`
 
 **Hiện trạng.**
