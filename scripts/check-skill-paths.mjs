@@ -45,10 +45,8 @@ const NOT_REPO_FILES = new Map([
 // them is still open — the skill marks those passages with the same "PR #N".
 // Reported as warnings until the path exists; after that, the entry is reported
 // as obsolete so it and the skill's notes get removed instead of rotting.
-const PENDING = new Map([
-  ["apps/studio/src/sanity/actions/openDraftPreviewAction.tsx", "PR #119"],
-  ["apps/web/src/app/api/draft-mode/__tests__", "PR #119"],
-]);
+// Entry shape: ["apps/web/src/some/new/file.ts", "PR #N"].
+const PENDING = new Map([]);
 
 function walk(dir, out = []) {
   for (const name of readdirSync(dir)) {
@@ -111,7 +109,9 @@ for (const name of skillNames) {
       checked++;
       const pending = PENDING.get(found.path);
       if (resolves(found)) {
-        if (pending) warn(file, index + 1, `"${found.path}" đã có — ${pending} đã merge. Gỡ mục này khỏi PENDING trong scripts/check-skill-paths.mjs và gỡ các ghi chú (grep -rn "${pending}" skills/)`);
+        // "đã có trên nhánh này", not "đã merge": this also fires on the pending
+        // PR's own branch, where the path exists but nothing has merged yet.
+        if (pending) warn(file, index + 1, `"${found.path}" đã có trên nhánh này — gỡ mục ${pending} khỏi PENDING trong scripts/check-skill-paths.mjs và gỡ các ghi chú (grep -rn "${pending}" skills/), trong chính ${pending} hoặc ngay sau khi nó merge`);
       } else if (pending) {
         warn(file, index + 1, `"${found.path}" chưa có trên nhánh này — chờ ${pending}`);
       } else {
