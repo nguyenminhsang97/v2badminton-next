@@ -93,7 +93,7 @@ export const pricingTier = defineType({
       type: "string",
       group: "overview",
       description:
-        "Nhóm: lớp 2–6 người. Kèm riêng: 1:1. Doanh nghiệp: báo giá theo yêu cầu.",
+        "Nhóm: lớp 4–8 người. Kèm riêng: 1:1. Doanh nghiệp: báo giá theo yêu cầu.",
       options: {
         list: [...PRICING_KIND_OPTIONS],
       },

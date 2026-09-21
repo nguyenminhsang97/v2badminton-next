@@ -221,7 +221,7 @@
         "markDefs": [],
         "children": [
           { "_type": "span", "_key": "livs2-a", "text": "Quy mô.", "marks": ["strong"] },
-          { "_type": "span", "_key": "livs2-b", "text": " Lớp nhóm: 2-6 học viên. 1 kèm 1: một thầy – một trò.", "marks": [] }
+          { "_type": "span", "_key": "livs2-b", "text": " Lớp nhóm: 4-8 học viên. 1 kèm 1: một thầy – một trò.", "marks": [] }
         ]
       },
       {

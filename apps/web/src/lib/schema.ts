@@ -295,25 +295,40 @@ function buildCourseSchedules(scheduleBlocks: readonly SanityScheduleBlock[] = [
   });
 }
 
+/**
+ * A group class is 120 minutes: 15–20 of warm-up, the practice, then 15 of
+ * free play at the end. Owner ruling 2026-09-17, T4 in docs/tasks-in-progress.md.
+ *
+ * The schedule also holds four real, shorter custom slots (90 and 60 minutes).
+ * Deriving the workload from schedule_block times folded those in, and every
+ * Course node said "1 hour to 2 hours per session". The ruling is that
+ * outward-facing content — structured data included — states only the
+ * standard session, so this is a constant rather than a computation.
+ */
+const STANDARD_GROUP_SESSION_MINUTES = 120;
+
+/**
+ * Course pages that are not group classes. 1 kèm 1 is billed by the hour and
+ * enterprise sessions are scoped per client, and neither has a confirmed
+ * standard length, so their Course nodes carry no `courseWorkload`. Leaving
+ * the field out claims nothing; "2 hours per session" would be wrong.
+ */
+const NON_GROUP_COURSE_PATHS: ReadonlySet<string> = new Set([
+  "/hoc-cau-long-1-kem-1/",
+  "/cau-long-doanh-nghiep/",
+]);
+
+/**
+ * Stated only for a group course that lists sessions — the same condition as
+ * before, when a workload existed only if schedule times could be parsed.
+ */
 function buildCourseWorkload(
-  scheduleBlocks: readonly SanityScheduleBlock[] = [],
+  isGroupCourse: boolean,
+  hasSchedules: boolean,
 ): string | null {
-  const durations = scheduleBlocks
-    .map(parseScheduleTimeRange)
-    .filter((range): range is TimeRange => range !== null)
-    .map((range) => timeToMinutes(range.closes) - timeToMinutes(range.opens))
-    .filter((duration) => duration > 0);
-
-  if (durations.length === 0) {
-    return null;
-  }
-
-  const min = Math.min(...durations);
-  const max = Math.max(...durations);
-
-  return min === max
-    ? `${formatDuration(min)} per session`
-    : `${formatDuration(min)} to ${formatDuration(max)} per session`;
+  return isGroupCourse && hasSchedules
+    ? `${formatDuration(STANDARD_GROUP_SESSION_MINUTES)} per session`
+    : null;
 }
 
 function buildSchemaImages(locations: readonly SanityLocation[]): string[] {
@@ -356,14 +371,18 @@ function buildOfferSchemas(
   });
 }
 
-function buildCourseInstances(pathOrUrl: string, options: CourseSchemaOptions) {
+function buildCourseInstances(
+  pathOrUrl: string,
+  options: CourseSchemaOptions,
+  isGroupCourse: boolean,
+) {
   const locations = options.locations ?? [];
   const scheduleBlocks =
     locations.length > 0
       ? filterScheduleBlocksForLocations(options.scheduleBlocks ?? [], locations)
       : (options.scheduleBlocks ?? []);
   const schedules = buildCourseSchedules(scheduleBlocks);
-  const workload = buildCourseWorkload(scheduleBlocks);
+  const workload = buildCourseWorkload(isGroupCourse, schedules.length > 0);
   const offers = buildOfferSchemas(options.pricingTiers, canonicalUrl(pathOrUrl));
 
   if (
@@ -623,10 +642,14 @@ export function buildCourseSchemas(
   const url = options.url ?? "/";
 
   return courseTiers.map((tier) => {
-    const hasCourseInstance = buildCourseInstances(url, {
-      ...options,
-      pricingTiers: [tier],
-    });
+    const hasCourseInstance = buildCourseInstances(
+      url,
+      {
+        ...options,
+        pricingTiers: [tier],
+      },
+      tier.kind === "group",
+    );
 
     return {
       "@context": "https://schema.org",
@@ -651,7 +674,11 @@ export function buildCoursePageSchema(
   description: string,
   options: CourseSchemaOptions = {},
 ): JsonLdNode {
-  const hasCourseInstance = buildCourseInstances(path, options);
+  const hasCourseInstance = buildCourseInstances(
+    path,
+    options,
+    !NON_GROUP_COURSE_PATHS.has(path),
+  );
 
   return {
     "@context": "https://schema.org",
