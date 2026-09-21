@@ -53,7 +53,10 @@ export const OpenDraftPreviewAction: DocumentActionComponent = (props) => {
         currentUser?.id,
       );
 
-      const url = new URL("/api/draft-mode/enable", SITE_URL);
+      // Trailing slash on purpose: the web app sets `trailingSlash: true`, so
+      // the bare path answers with a 308 before reaching the route. The query
+      // survives that hop, but there is no reason to take it.
+      const url = new URL("/api/draft-mode/enable/", SITE_URL);
       url.searchParams.set("sanity-preview-secret", secret);
       url.searchParams.set("sanity-preview-pathname", path);
 
