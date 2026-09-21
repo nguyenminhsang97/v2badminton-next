@@ -159,7 +159,7 @@ Comparison tables are the most-extracted format on Perplexity. Add a `<table>` (
 
 | | Lớp nhóm | 1 kèm 1 |
 |---|---|---|
-| Quy mô | 2-6 học viên | 1 HLV / 1 học viên |
+| Quy mô | 4-8 học viên | 1 HLV / 1 học viên |
 | Học phí | từ X VNĐ/tháng | từ Y VNĐ/buổi |
 | Phù hợp với | người mới, học theo lịch cố định | người cần sửa kỹ thuật, lịch riêng |
 | Tốc độ tiến bộ | đều đặn | nhanh hơn |

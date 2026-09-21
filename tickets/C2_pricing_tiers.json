@@ -8,13 +8,13 @@
     "kind": "group",
     "billingModel": "monthly_package",
     "description": "Lớp cơ bản dành cho người mới bắt đầu hoặc cần nền tảng chắc từ đầu.",
-    "groupSize": "2-6 người",
+    "groupSize": "4-8 người",
     "pricePerMonth": 1300000,
     "displayPrice": "1.300.000 VNĐ / tháng",
     "sessionsPerWeek": 3,
     "sessionsPerMonth": 12,
     "features": [
-      "Lớp nhóm nhỏ 2-6 người",
+      "Lớp nhóm nhỏ 4-8 người",
       "Học 3 buổi mỗi tuần",
       "Phù hợp người mới bắt đầu"
     ],
@@ -32,13 +32,13 @@
     "kind": "group",
     "billingModel": "monthly_package",
     "description": "Dành cho học viên đã có nền tảng và muốn tập đều để nâng kỹ thuật nhanh hơn.",
-    "groupSize": "2-6 người",
+    "groupSize": "4-8 người",
     "pricePerMonth": 1500000,
     "displayPrice": "1.500.000 VNĐ / tháng",
     "sessionsPerWeek": 3,
     "sessionsPerMonth": 12,
     "features": [
-      "Lớp nhóm nhỏ 2-6 người",
+      "Lớp nhóm nhỏ 4-8 người",
       "Học 3 buổi mỗi tuần",
       "Phù hợp học viên đã có nền tảng"
     ],
@@ -56,13 +56,13 @@
     "kind": "group",
     "billingModel": "monthly_package",
     "description": "Phù hợp lịch làm việc bận nhưng vẫn muốn duy trì đều.",
-    "groupSize": "2-6 người",
+    "groupSize": "4-8 người",
     "pricePerMonth": 1000000,
     "displayPrice": "1.000.000 VNĐ / tháng",
     "sessionsPerWeek": 2,
     "sessionsPerMonth": 8,
     "features": [
-      "Lớp nhóm nhỏ 2-6 người",
+      "Lớp nhóm nhỏ 4-8 người",
       "Học 2 buổi mỗi tuần",
       "Phù hợp người bận lịch làm việc"
     ],
