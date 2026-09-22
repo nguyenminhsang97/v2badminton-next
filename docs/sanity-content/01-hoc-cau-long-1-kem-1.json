@@ -347,7 +347,7 @@
           "markDefs": [],
           "children": [
             { "_type": "span", "_key": "faq1-a-s1", "text": "400.000 VNĐ/giờ/học viên", "marks": ["strong"] },
-            { "_type": "span", "_key": "faq1-a-s2", "text": ". Học phí chưa gồm phí thuê sân — V2 sẽ hỗ trợ học viên đặt sân thuận tiện tại Bình Thạnh (Green) hoặc Thủ Đức (Huệ Thiên, Khang Sport, Phúc Lộc).", "marks": [] }
+            { "_type": "span", "_key": "faq1-a-s2", "text": ", gồm HLV và cầu, chưa gồm phí thuê sân. Bạn có thể tự đặt sân hoặc để V2 đặt giúp tại Bình Thạnh (Green) hoặc Thủ Đức (Huệ Thiên, Khang Sport, Phúc Lộc). Dù ai đặt, tiền sân do bạn trả.", "marks": [] }
           ]
         }
       ],

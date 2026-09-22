@@ -57,7 +57,7 @@
       { "_type": "block", "_key": "pprivate", "style": "normal", "markDefs": [], "children": [
         { "_type": "span", "_key": "a", "text": "1 kèm 1 có giá ", "marks": [] },
         { "_type": "span", "_key": "b", "text": "400.000 VNĐ/giờ/học viên", "marks": ["strong"] },
-        { "_type": "span", "_key": "c", "text": " — chưa gồm phí thuê sân, V2 sẽ hỗ trợ đặt sân thuận tiện. Mô hình này phù hợp khi học viên cần HLV theo sát, có yêu cầu kỹ thuật cụ thể, hoặc lịch không khớp với khung lớp nhóm. Buổi học 60 phút theo lịch riêng do học viên và HLV thống nhất.", "marks": [] }
+        { "_type": "span", "_key": "c", "text": " — chưa gồm phí thuê sân, bạn tự đặt sân hoặc để V2 đặt giúp. Mô hình này phù hợp khi học viên cần HLV theo sát, có yêu cầu kỹ thuật cụ thể, hoặc lịch không khớp với khung lớp nhóm. Buổi học 60 phút theo lịch riêng do học viên và HLV thống nhất.", "marks": [] }
       ]},
 
       { "_type": "block", "_key": "h2biz", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Cầu lông doanh nghiệp tính giá thế nào?", "marks": [] }] },
@@ -95,7 +95,7 @@
       { "_type": "block", "_key": "pincl2", "style": "normal", "markDefs": [], "children": [
         { "_type": "span", "_key": "a", "text": "Gói 1 kèm 1 ", "marks": [] },
         { "_type": "span", "_key": "b", "text": "không bao gồm", "marks": ["strong"] },
-        { "_type": "span", "_key": "c", "text": " phí thuê sân — V2 hỗ trợ đặt sân nhưng học viên trả riêng theo giá sân đang áp dụng.", "marks": [] }
+        { "_type": "span", "_key": "c", "text": " phí thuê sân — bạn tự đặt sân hoặc để V2 đặt giúp, tiền sân trả riêng theo giá sân đang áp dụng.", "marks": [] }
       ]}
     ]
   },

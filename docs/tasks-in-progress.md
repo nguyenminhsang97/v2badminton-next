@@ -44,7 +44,7 @@ Dùng chung cho các việc bên dưới. Đây là dữ kiện đã chốt, kh�
 - Sanity: project `w58s0f53`, dataset `production`. **Sửa nội dung qua Studio** tại cms.v2badminton.com, không sửa bằng script.
 - **Đọc Sanity phải có xác thực.** Đọc ẩn danh trả về một tập con mà trông như dữ liệu đầy đủ.
 - **Quét nội dung phải gồm cả trường chữ thường** (`description`, `features`, `quickAnswer`, `excerpt`, `metaDescription`, `seoDescription`), không chỉ Portable Text (`answer`, `body`). Một lần quét chỉ xem `answer`/`body` đã bỏ sót câu sai trong `pricing_tier.description`.
-- Money page `gia-hoc-cau-long-tphcm` đang có **bản nháp chưa publish** (`drafts.f4d5515c-e70b-4aa4-b45f-3e4784caf714`). Hỏi chủ trước khi publish đè lên nó.
+- Bản nháp cũ của money page `gia-hoc-cau-long-tphcm` đã được chủ publish ngày 2026-09-21, không còn treo. Quy tắc vẫn giữ: tài liệu nào đang có bản nháp thì hỏi chủ trước, đừng publish đè.
 - Nội dung tiếng Việt người đọc thấy: đọc `skills/noi-dung-vi/SKILL.md`. Làm việc với Sanity: đọc `skills/sanity-cms/SKILL.md`.
 
 ---
@@ -74,7 +74,7 @@ Dùng chung cho các việc bên dưới. Đây là dữ kiện đã chốt, kh�
 
 ## T2 — Gói 1 kèm 1 ghi "Học viên tự lo sân"
 
-**Trạng thái:** chưa nhận
+**Trạng thái:** xong — nội dung Sanity chủ publish 2026-09-22; file mẫu trong repo và `check-facts.mjs`: #PRNUM
 **Đọc trước:** `skills/noi-dung-vi/SKILL.md`, `skills/sanity-cms/SKILL.md`
 
 **Hiện trạng.** Web tự mâu thuẫn về chuyện ai đặt sân cho 1 kèm 1.
@@ -105,7 +105,7 @@ Không hiển thị trên web nhưng có thể bị nạp lại vào Sanity: `ti
 
 ## T3 — Quy mô lớp nhóm 2-6 → 4-8
 
-**Trạng thái:** đang làm — phần code và file mẫu: #126; nội dung Sanity chờ chủ duyệt câu chữ
+**Trạng thái:** xong — code và file mẫu: #126; nội dung Sanity chủ publish 2026-09-22
 **Đọc trước:** `skills/sanity-cms/SKILL.md`, `skills/noi-dung-vi/SKILL.md`
 
 **Hiện trạng.** Trường `groupSize` của cả ba gói nhóm trong Sanity đã đúng là "4-8 người". Số cũ "2-6" còn sót lại ở:
@@ -131,7 +131,7 @@ File mẫu, không hiển thị trên web: `docs/sanity-content/01-hoc-cau-long-
 
 ## T4 — Thời lượng buổi học: chỉ báo 120 phút
 
-**Trạng thái:** đang làm — dữ liệu cấu trúc: #126; nội dung Sanity và mục eval chờ chủ duyệt, publish
+**Trạng thái:** xong — dữ liệu cấu trúc: #126; nội dung Sanity chủ publish 2026-09-22; mục eval: #PRNUM
 **Đọc trước:** `skills/noi-dung-vi/SKILL.md`, `skills/sanity-cms/SKILL.md`, `skills/seo/SKILL.md`
 
 **Hiện trạng.**

@@ -299,7 +299,7 @@ Phải trả về (đúng thứ tự):
 4. `Tôi cần chuẩn bị gì khi đến học?`
 5. `Công ty tôi muốn tổ chức team building, liên hệ thế nào?`
 
-Mở Q3 → câu trả lời phải có cụm `1.000.000 đ/tháng`, `1.500.000 đ/tháng (nâng cao)`, `chưa gồm phí thuê sân — V2 sẽ hỗ trợ đặt sân`.
+Mở Q3 → câu trả lời phải có cụm `1.000.000 đ/tháng`, `1.500.000 đ/tháng (nâng cao)`, `chưa gồm phí thuê sân — bạn tự đặt sân hoặc để V2 đặt giúp`.
 
 Mở Q5 → có cụm `xem trang Cầu lông doanh nghiệp`.
 
