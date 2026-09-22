@@ -168,7 +168,7 @@ Dữ liệu cấu trúc:
 
 ## T5 — Gỡ trang nháp `preview-version-c.html`
 
-**Trạng thái:** chưa nhận
+**Trạng thái:** xong — #131. Search Console ngày 2026-09-22: "URL is unknown to Google", 90 ngày không có lượt hiển thị nào, nên xoá thẳng, không cần redirect hay 410
 **Đọc trước:** `skills/seo/SKILL.md`
 
 **Hiện trạng.**
