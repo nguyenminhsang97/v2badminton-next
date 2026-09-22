@@ -264,7 +264,7 @@ Hai chỗ trong phần trên cần đính chính, đo lại ngày 2026-09-22: Sa
 
 ## T9 — Việc lặt vặt còn lại của bộ skill
 
-**Trạng thái:** xong — mục 1: #119; mục 2 và 3: #130; vòng eval 4 chạy ngày 2026-09-22: #PRNUM. Cách ly bộ nhớ vẫn chưa giải được, xem "Known weaknesses" trong `skills/_evals/README.md`
+**Trạng thái:** xong — mục 1: #119; mục 2 và 3: #130; vòng eval 4 chạy ngày 2026-09-22: #135. Cách ly bộ nhớ vẫn chưa giải được, xem "Known weaknesses" trong `skills/_evals/README.md`
 **Đọc trước:** `skills/_evals/README.md`, `skills/v2badminton-next/SKILL.md`
 
 Bộ skill đang dùng được và đã được đo (#120–#123). Các việc dưới đây là dọn dẹp và gia cố, không chặn gì, làm lúc nào cũng được.
