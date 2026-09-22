@@ -35,8 +35,13 @@ Outputs go to `.claude/skill-evals/`, which is gitignored. Runs contain full age
    - **with_skill** — the relevant `skills/<name>/SKILL.md` available;
    - **without_skill** — told not to read `skills/`, `.claude/skills/`, `.codex/`, `skills/_evals/` or any agent memory files.
 
-   Isolation matters more than it looks. In iteration 1 the baseline scored *higher* than the skills, because repo docs, an old skill copy and the owner's agent memory leaked the same knowledge in.
-4. Grade each run with a separate agent following `grader-instructions.md`.
+   Isolation matters more than it looks. In iteration 1 the baseline scored *higher* than the skills, because repo docs, an old skill copy and the owner's agent memory leaked the same knowledge in. See "Known weaknesses" for what still leaks.
+
+   Mechanics that cost iteration 4 two of its eight outputs, and how to avoid them:
+   - A Claude Code subagent with `isolation: "worktree"` **cannot write outside its worktree**, and its worktree is **deleted when it finishes** unless tracked files changed — files under the gitignored `.claude/` go with it. Have every run return `response.md`, `user_notes.md` and `metrics.json` in its final message between `=====FILE: <name>=====` markers, and save them from there. Code-writing runs keep their worktree; copy `git diff` and the new files into `outputs/files/`.
+   - Eight Opus runs plus graders hit the plan's usage limit twice. Run in batches of about four; an interrupted agent resumes from its transcript with a message, it does not need restarting.
+   - Concurrent runs **share the Browser pane**, so they can see each other's dev-server tabs. Run evals that start a dev server one at a time, or tell each run its own port and tab.
+4. Grade each run with a separate agent following `grader-instructions.md`. Graders need no worktree: they write `grading.json` into the run directory.
 5. Aggregate with skill-creator's `aggregate_benchmark.py`, and review with its `generate_review.py`.
 
 Never send non-GET requests to production or mutate Sanity during a run or while grading.
@@ -48,11 +53,23 @@ Never send non-GET requests to production or mutate Sanity during a run or while
 | 1 | 1–8 | 93.8% | 96.4% | The skills lost. Isolation was leaky, and four statements in the skills were wrong. Both fixed |
 | 2 | 1–8 | **93.9%** | **85.6%** | Each fix turned into a measured win on the eval it was written for; E7 content was 9/10 vs 5/10 |
 | 3 (2026-09-18) | 8, 9 | **16/16** | **12/16** | E8 9/9 vs 7/9, E9 7/7 vs 5/7. See below |
+| 4 (2026-09-22) | 4, 6, 8, 9 | **31/33** (93.9%) | **30/33** (90.9%) | Sharpening worked on E9 only. E4 and E6 still tie; E8 went to the baseline by one. See below |
 
 **Iteration 3** re-ran only the two evals that had something to prove.
 
 - **E8 — the contradiction rule now works.** In iteration 2 the with_skill run read "do not pick between contradicting sources" and picked anyway (7/9, the same as without). This time `noi-dung-vi` runs `scripts/check-facts.mjs` as its own workflow step. The run used it, cited the documents on each side of each conflict, and put `[CẦN HLV XÁC NHẬN]` where the sources disagree. The without_skill run found the same conflicts but settled the 1-on-1 court question itself and wrote the result as fact. Its merged answer happens to match the owner's ruling, which it could not see — see the memory leak below.
 - **E9 — first measurement of `analytics-report`.** Both runs found the map clicks through GA4's outbound `click` and matched all four courts, so that part does not discriminate. The difference was reporting discipline. The without_skill run did not name the property, turned 8 of 90 users into a rate, and drew a trend from single digits — all of which the skill forbids.
+
+**Iteration 4** re-ran the four evals sharpened after iteration 3, against ground truth re-captured the same day.
+
+| Eval | With | Without | What decided it |
+|---|---|---|---|
+| E4 coach stars | 7/7 | 7/7 | Still ties. The rule is in the repo twice — docs and the `seoRegression` test — so the environment teaches it. The one unscored difference favoured the **baseline**: it saw that the five real coach drafts lack a photo and a required field, while the with_skill run told the owner he could publish them "in 5 minutes" |
+| E6 event type | 8/9 | 8/9 | Both failed the new expectation 9 and passed the other eight with the same design. The unscored difference favoured the **skill**: that run read Google's Event guidelines and emits `SportsEvent` only for events the public can join; the baseline emits it for internal tournaments too |
+| E8 working-adults FAQs | 9/10 | 10/10 | Both had every fact right and both noticed the Khang Sport 11:30 block had vanished from Sanity. with_skill failed answer-first on one FAQ |
+| E9 map clicks | 7/7 | 5/7 | Same numbers, re-verified by the grader. The baseline turned 10 of 94 visitors into a ratio, drew an August-vs-September trend, and named the property only in its notes — the reporting discipline `analytics-report` exists for, as in iteration 3 |
+
+Read honestly: over four evals the skills are one expectation ahead, all of it on E9. That is not "the skills stopped helping" so much as "the repository caught up". Since iteration 3, `docs/tasks-in-progress.md` records the owner's rulings, test files encode the rating rule, and every run — with or without skills — gets the memory index and the skill descriptions in context (below). Knowledge that reaches every agent is good for the project; it just leaves these evals less to measure.
 
 ## What changed after iteration 3 (2026-09-22)
 
@@ -64,10 +81,27 @@ Each decision below comes from the grader's own `eval_feedback` on the runs, not
 - **E8 expectation 9 was stale and is rewritten.** It sampled contradictions that the owner resolved on 2026-09-22, so it could no longer fail. It now asks for the cross-check itself (`check-facts.mjs`) and its result. New expectation 10 covers the 120-minute ruling, which `noi-dung-vi` now states: `schedule_block` still holds the 90- and 60-minute custom slots, so the temptation is still in the data.
 - **E9 expectation 7 (dead GA4 token) is conditional now**, in `conditional_expectations`. While the token is healthy it passed vacuously and inflated the rate; graders record it as not applicable instead. Expectation 1 now requires the property **id**, which is the only part that separated the two runs, and `analytics-report` now tells the writer to quote it. Expectation 6 says outright that ratios and hedged trends fail. New expectation 8 covers the mistake neither run made but a naive report would: summing per-court user counts (6+5+3+2) into a total that de-duplicates to 8.
 
+## What changed after iteration 4 (2026-09-22)
+
+Only wording that was wrong; nothing tuned toward the configuration that won.
+
+- **E4 is now a regression check** like E2. Sharpened once, it still ties, for a reason no prompt change fixes: the rule is encoded in the repo.
+- **E8 expectation 10 said "does not publish the 90- or 60-minute custom slots"**, which read as "never mention those classes". The owner's ruling and `noi-dung-vi` forbid stating their **durations**; their times may be stated. The with_skill run followed the skill and was nearly failed for it. Reworded to the ruling.
+- **E9 expectation 7 quoted example counts (6+5+3+2 → 8)** from an older window. It now states the rule without numbers that go stale.
+
+Candidates, not added — each rests on a single run and would be written after seeing which configuration won it:
+- E4: treats an unfinished draft as publishable as-is (the with_skill miss above).
+- E6: emits Event structured data for an event the public cannot join (the baseline miss above).
+- E9 expectation 4 no longer discriminates: T8 in `docs/tasks-in-progress.md` names the `share.google` link as Phúc Lộc's, so any run can find it.
+
 ## Known weaknesses
 
-- **Agent memory leaks into both configurations.** Runs spawned from Claude Code in this repository get the owner's memory index in context, and it summarises business rulings such as who books the 1-on-1 court. Isolation that works: run the eval agents from a **git worktree at a different path** (`git worktree add ../v2badminton-eval origin/main`), because the memory directory is keyed on the project path, and have each run state in `user_notes.md` whether a memory file was in its context. A without_skill run that produces a correct business fact without that statement is evidence of a leak, not of baseline knowledge.
-- **E3, E5 and E7 have never been re-measured** since iteration 2. The measured wins there are two iterations old.
-- One run per configuration, so a one-expectation difference on a single eval is within noise. Read the pattern across evals, not one score.
+- **Isolation leaks, and `isolation: "worktree"` does not fix it.** Iteration 3's recipe said a worktree at another path keeps the memory out. It does not: Claude Code puts subagent worktrees under `.claude/worktrees/`, and all eight iteration-4 runs reported the owner's `MEMORY.md` index in their context. Channels measured in iteration 4:
+  - the memory index, which summarises business rulings (who books the 1-on-1 court, the 120-minute session);
+  - the list of skill names and one-line descriptions, injected into without_skill runs too;
+  - `docs/tasks-in-progress.md`, which now records the rulings and even names eval paths;
+  - the shared Browser pane between concurrent runs.
 
-Iteration 4 should re-run 4, 6, 8 and 9 — the four that were sharpened — from an isolated worktree, and re-capture `ground_truth_notes` first: T2–T4 and T8 changed the published facts on 2026-09-22.
+  Untested next step: run each configuration as a fresh top-level Claude Code session in a **separate clone outside this directory** (a plain `git clone`, not a worktree under `.claude/`), and confirm from its first reply whether a memory index is present. Until then, read a without_skill run's correct business fact as possibly leaked.
+- **E3, E5 and E7 have never been re-measured** since iteration 2.
+- One run per configuration, so a one-expectation difference on a single eval is within noise. Read the pattern across evals, not one score.
