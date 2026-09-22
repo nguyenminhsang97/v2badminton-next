@@ -15,6 +15,7 @@ import { HubPortal } from "@/components/content/HubPortal";
 import { NodePortal } from "@/components/content/NodePortal";
 import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
 import { normalizeContentPath } from "@/lib/content/path";
+import { NOT_FOUND_METADATA } from "@/lib/notFoundMetadata";
 import { canonicalUrl, reservedRoutePrefixes } from "@/lib/routes";
 import {
   getContentArticle,
@@ -92,10 +93,7 @@ export async function generateMetadata({
   // load-bearing — do not drop it. The title stops browser tabs and history
   // entries for missing pages from reading as the generic site name.
   if (route == null) {
-    return {
-      title: "Không tìm thấy trang",
-      robots: { index: false, follow: true },
-    };
+    return NOT_FOUND_METADATA;
   }
 
   // Prefer CMS-managed site-wide default OG image; fall back to the static file.
