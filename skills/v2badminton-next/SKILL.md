@@ -104,6 +104,19 @@ document.documentElement.scrollWidth > window.innerWidth;
 
 Unknown URLs return the not-found page with **HTTP 200 + noindex**, not a 404 status, because streaming has already begun. Before concluding anything from a "should 404" check, compare it with a made-up path.
 
+## Shipping a change
+
+These conventions only existed in git history, so agents kept re-deriving them. Read `docs/tasks-in-progress.md` first — it also says how to claim a task.
+
+- **Branch from `origin/main`, never `git checkout main`.** Another worktree holds `main`, so checking it out here fails or moves theirs.
+- **Claim the task in the first commit** on the branch: set its `Trạng thái` line in `docs/tasks-in-progress.md` to `đang làm — <branch>`, and to `xong — #<PR>` in the same PR when it lands. Never delete a task entry.
+- **Write the commit message about *why*.** What changed is in the diff; the reason, the measurement behind it, and what you deliberately left alone are not. Same for the PR body: lead with the evidence you measured, not a file list.
+- **Squash merge, and title the merge with `(#<PR>)`**: `gh pr merge <n> --squash --match-head-commit <sha> --delete-branch`. `--match-head-commit` is the point — it refuses if anything landed after the commit CI passed on.
+- **Merge `main` into a long-running branch, don't rebase it.** Rebasing a pushed branch breaks the `--match-head-commit` sha and anyone reading the PR.
+- **Wait for CI**, all of it: lint/typecheck/build, tests, Lighthouse, the skill-path guard, and both Vercel deploys. A Vercel check reading "Skipped - Not affected" means that project had no relevant changes, not that it built.
+- **An empty commit will not rebuild a Vercel preview** — the monorepo skips unaffected projects. To pick up a changed environment variable, redeploy the existing preview from the Vercel UI instead.
+- **Content lives in Sanity, not in the PR.** A change that needs both ships the code and leaves the wording to the owner; see `sanity-cms`, "Writing content".
+
 ## Windows workspace traps
 
 - The Bash tool is Git Bash, and **`cd` persists between calls**. Use absolute paths (`/d/V2/v2badminton-next/...`).

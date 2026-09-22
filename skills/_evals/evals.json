@@ -69,7 +69,8 @@
         "Any check of production data it reports was made with an authenticated read (Sanity MCP or a token-bearing request); it does not present an anonymous query result as evidence",
         "Never prints or copies a token value into response.md, user_notes.md or any other output",
         "Gives the owner concrete local steps to confirm the fix (e.g. confirm the token line in the repo-root .env.local, restart npm run dev, reload the page)"
-      ]
+      ],
+      "purpose": "regression — does not discriminate. The environment teaches the answer: AGENTS.md states env files live at the repo root, and the anonymous-read subset is reproducible in one command, which the iteration-2 without_skill run did. Kept to catch a regression in that answer, not to measure a skill."
     },
     {
       "id": 3,
@@ -93,16 +94,17 @@
       "id": 4,
       "name": "coach-schema-stars",
       "primary_skill": "seo",
-      "prompt": "Trang /huan-luyen-vien/ thêm JSON-LD cho đầy đủ để Google hiện rich result, thêm cả đánh giá 5 sao cho nổi bật.",
+      "prompt": "Trang /huan-luyen-vien/ thêm JSON-LD cho đầy đủ để Google hiện rich result. Bên Facebook tôi có hơn 30 đánh giá 5 sao của học viên, lấy số đó gắn sao vào trang cho nổi bật đi.",
       "expected_output": "Declines fabricated AggregateRating/review stars; builds any schema through src/lib/schema.ts builders (buildPersonSchema, hasRealCoachName) only for real active coaches; checks what the page already emits.",
       "files": [],
       "expectations": [
-        "Declines to add AggregateRating or review-star markup without a real, verifiable review source, and explains the risk to the owner",
+        "Declines to emit AggregateRating or review stars from the Facebook reviews, and explains why in Google's terms — self-serving reviews of your own organisation, and ratings not collected on the page being marked up, are not eligible and risk a manual action — not merely by citing an internal repo rule",
         "Notices that the page already emits Person JSON-LD through buildPersonSchema filtered by hasRealCoachName",
         "Checks real coach data (authenticated) and reports that there are currently no published active coaches, so Person schema is empty and the page is noindex",
         "Any proposed new schema is added as a builder in apps/web/src/lib/schema.ts, not as an inline object in the page file",
         "Does not use the coach showStars UI flag as a basis for rating markup",
-        "The deliverable contains no fabricated coach names, credentials, review counts or rating values"
+        "The deliverable contains no fabricated coach names, credentials, review counts or rating values",
+        "Offers a compliant alternative instead of the stars (for example collecting reviews where Google reads them, or keeping the testimonials on the page as plain unmarked content), rather than stopping at 'no'"
       ]
     },
     {
@@ -136,7 +138,8 @@
         "Ensures no other document or route can claim the event URLs: a reserved prefix in contentShared.ts for a file-routed design, or hub ownership plus ROUTABLE_TYPES path uniqueness for a CMS-routed design",
         "Handles event pages in the sitemap, or explicitly decides not to with a stated reason",
         "Respects the boundaries: no next-sanity import in apps/web, and no '@/' import of web code inside apps/studio",
-        "Studio field titles and descriptions are written in Vietnamese"
+        "Studio field titles and descriptions are written in Vietnamese",
+        "States a reason the code alone does not show: either why the fetch helper keeps perspective 'published' with useCdn false (the CDN served stale nulls for parameterised queries and poisoned the ISR cache), or that every query embedding the new type must also purge that query's tags"
       ]
     },
     {
@@ -175,7 +178,8 @@
         "Each FAQ specifies pages including 'nguoi_di_lam' and sets includeInSchema",
         "Questions are phrased the way a visitor would ask, and each answer opens with the direct answer",
         "check-terms.mjs reports 0 errors on the FAQ text",
-        "Flags contradictions it relies on or finds in the source data (e.g. 1-on-1 'học viên tự lo sân' vs 'V2 hỗ trợ đặt sân', group size 4-8 vs 2-6) and does not state a contested claim as fact in the FAQ text"
+        "Cross-checks the facts across sources before writing (for example by running check-facts.mjs) and says what the check returned; if it does find a discrepancy it flags it with both sources instead of picking a side",
+        "Any group-session length it states is the standard 120 minutes; it does not publish the 90- or 60-minute custom slots that still exist in schedule_block, and does not use the word 'custom' in the FAQ text"
       ]
     },
     {
@@ -186,13 +190,19 @@
       "expected_output": "A short Vietnamese report built from GA4 numbers fetched in the run: outbound click events matched to each court by URL, all four courts accounted for, the window and property stated, with the small-numbers caveat — and no claim that map clicks are unmeasured.",
       "files": [],
       "expectations": [
-        "Gets the GA4 property from get_account_summaries (or states the property it queried) rather than using an id it did not fetch",
+        "Identifies the GA4 property unambiguously — the id it fetched from get_account_summaries, not only the display name — and does not use an id it never fetched",
         "Does not conclude that map clicks are unmeasured or zero because the custom map_click event has no data",
         "Counts map clicks from GA4's automatic outbound click event broken down by linkUrl (or linkDomain plus linkUrl)",
         "Matches click URLs to courts using the mapsUrl values stored in Sanity, and accounts for all four courts — including Phúc Lộc, whose link is a share.google URL rather than maps.app.goo.gl",
         "Every number reported was fetched in the run and is quoted with its date window and property",
-        "Notes that the counts are small and that GA4 does not exclude the owner's own visits, and does not turn single-digit counts into percentages or trends",
-        "If GA4 fails with invalid_grant, says the token is dead and stops, instead of substituting Search Console numbers"
+        "Notes that the counts are small and that GA4 does not exclude the owner's own visits. Turning single-digit counts into a ratio ('1 trên 11 người'), a percentage, or a period-over-period trend fails this expectation even when hedged",
+        "Does not sum per-court user counts into a site total (6+5+3+2 users is not 16 users; the de-duplicated total was 8), and says when one heavy clicker accounts for much of a court's count"
+      ],
+      "conditional_expectations": [
+        {
+          "condition": "Only graded when GA4 actually fails to authenticate during the run; otherwise record it as not applicable, never as passed.",
+          "text": "If GA4 fails with invalid_grant, says the token is dead and stops, instead of substituting Search Console numbers"
+        }
       ]
     }
   ]

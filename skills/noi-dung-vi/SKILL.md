@@ -98,6 +98,7 @@ Không bao giờ tự nghĩ ra: học phí, lịch học, địa chỉ sân, sĩ
 | Lịch sử học viện, đội ngũ biên soạn | Trang `/gioi-thieu/` và `/chinh-sach-bien-tap/` đang chạy |
 
 - Đọc Sanity phải kèm token. Đọc ẩn danh chỉ trả về **một phần** dữ liệu mà không báo lỗi (xem `sanity-cms`).
+- **Buổi học nhóm: ra ngoài chỉ nói buổi chuẩn 120 phút.** Quyết định của chủ ngày 2026-09-17: buổi nhóm chuẩn dài 120 phút — 15-20 phút khởi động, phần giữa là tập, 15 phút cuối học viên đánh tự do với nhau. Trong `schedule_block` vẫn còn bốn khung 90 và 60 phút: đó là lớp custom có thật, **lịch không sai**, nhưng nội dung cho người đọc và dữ liệu cấu trúc **không liệt kê thời lượng của chúng** và không dùng chữ "custom". Giờ của các khung đó thì cứ nêu bình thường.
 - Thiếu dữ kiện thì để chỗ trống ghi rõ `[CẦN HLV XÁC NHẬN: …]` và nêu ra khi bàn giao. Không điền một con số "nghe hợp lý".
 - **Hai nguồn mâu thuẫn thì không tự chọn, kể cả khi cả hai đều đã publish.** Mâu thuẫn kiểu này có thật trong dữ liệu: bảng giá và FAQ nói khác nhau về việc ai lo sân, một trang ghi hai sĩ số lớp khác nhau, hai FAQ ghi hai thời lượng buổi học. Khi gặp:
   - chỉ viết phần mà các nguồn khớp nhau;
