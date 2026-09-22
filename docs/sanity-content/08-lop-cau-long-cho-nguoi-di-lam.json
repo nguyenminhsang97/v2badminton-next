@@ -66,7 +66,7 @@
 
       { "_type": "block", "_key": "h2where", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Sân V2 có ở gần khu văn phòng không?", "marks": [] }] },
       { "_type": "block", "_key": "liwh1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
-        { "_type": "span", "_key": "a", "text": "Bình Thạnh — Sân Green (154/9 Nguyễn Xí, P.26).", "marks": ["strong"] },
+        { "_type": "span", "_key": "a", "text": "Bình Thạnh — Sân Green (154/9 Nguyễn Xí, phường Bình Thạnh).", "marks": ["strong"] },
         { "_type": "span", "_key": "b", "text": " Gần khu văn phòng Bình Thạnh, Phú Nhuận và trung tâm Q.1.", "marks": [] }
       ]},
       { "_type": "block", "_key": "liwh2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [

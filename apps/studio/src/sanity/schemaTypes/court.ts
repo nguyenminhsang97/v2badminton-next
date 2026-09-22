@@ -218,7 +218,7 @@ export const court = defineType({
       group: "facts",
       rows: 3,
       description:
-        "Địa chỉ đầy đủ của sân. VD: 123 Nguyễn Xí, Phường 26, Bình Thạnh, TP.HCM.",
+        "Địa chỉ đầy đủ của sân. VD: 123 Nguyễn Xí, phường Bình Thạnh, TP.HCM.",
       validation: (Rule) => Rule.required(),
     }),
     defineField({

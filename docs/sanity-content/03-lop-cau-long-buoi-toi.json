@@ -80,7 +80,7 @@
       { "_type": "block", "_key": "h2where", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Sân nào của V2 mở lớp buổi tối?", "marks": [] }] },
       { "_type": "block", "_key": "liw1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
         { "_type": "span", "_key": "a", "text": "Sân Green (Bình Thạnh).", "marks": ["strong"] },
-        { "_type": "span", "_key": "b", "text": " 154/9 đường Nguyễn Xí, P.26. Khung T3-T5 tối 18:00-20:00 và 20:00-22:00.", "marks": [] }
+        { "_type": "span", "_key": "b", "text": " 154/9 đường Nguyễn Xí, phường Bình Thạnh. Khung T3-T5 tối 18:00-20:00 và 20:00-22:00.", "marks": [] }
       ]},
       { "_type": "block", "_key": "liw2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
         { "_type": "span", "_key": "a", "text": "Sân Huệ Thiên (Thủ Đức).", "marks": ["strong"] },

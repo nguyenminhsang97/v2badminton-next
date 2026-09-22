@@ -84,7 +84,7 @@
       { "_type": "block", "_key": "h2where", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Sân nào của V2 mở lớp T7-CN?", "marks": [] }] },
       { "_type": "block", "_key": "liwhere1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
         { "_type": "span", "_key": "a", "text": "Sân Green (Bình Thạnh).", "marks": ["strong"] },
-        { "_type": "span", "_key": "b", "text": " 154/9 Nguyễn Xí, P.26. Khung sáng 08:00-10:00 T7-CN.", "marks": [] }
+        { "_type": "span", "_key": "b", "text": " 154/9 Nguyễn Xí, phường Bình Thạnh. Khung sáng 08:00-10:00 T7-CN.", "marks": [] }
       ]},
       { "_type": "block", "_key": "liwhere2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
         { "_type": "span", "_key": "a", "text": "Sân Huệ Thiên (Thủ Đức).", "marks": ["strong"] },
