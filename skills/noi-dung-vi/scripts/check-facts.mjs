@@ -217,8 +217,13 @@ const TOPIC_CHECKS = {
       const text = lower(row.sentence);
       if (!/sân/.test(text) || !(ONE_ON_ONE.test(text) || ONE_ON_ONE.test(row.context))) return [];
       const found = [];
-      if (/tự lo sân|tự đặt sân|tự chuẩn bị sân|tự thuê sân/.test(text)) found.push("người đặt sân: học viên tự lo");
-      if (/hỗ trợ (?:học viên )?đặt sân|đặt sân giúp|v2 (?:sẽ )?đặt sân/.test(text)) found.push("người đặt sân: V2 hỗ trợ đặt");
+      // Quyết định của chủ 2026-09-17: khách hoặc V2 đặt sân đều được. Câu nói đúng
+      // điều đó chứa cả hai vế, nên phải nhận ra trước, không thì bị xếp thành "học
+      // viên tự lo" rồi báo mâu thuẫn với chính những câu cùng nội dung.
+      const eitherBooks = /(?:tự (?:đặt|lo|thuê) sân[^.]{0,40}(?:hoặc|hay)[^.]{0,40}v2|v2[^.]{0,40}(?:hoặc|hay)[^.]{0,40}tự (?:đặt|lo|thuê) sân)/.test(text);
+      if (eitherBooks) found.push("người đặt sân: học viên hoặc V2 đều được");
+      if (!eitherBooks && /tự lo sân|tự đặt sân|tự chuẩn bị sân|tự thuê sân/.test(text)) found.push("người đặt sân: học viên tự lo");
+      if (!eitherBooks && /hỗ trợ (?:học viên )?đặt sân|đặt sân giúp|v2 (?:sẽ )?đặt sân/.test(text)) found.push("người đặt sân: V2 hỗ trợ đặt");
       if (/(?:chưa|không) (?:bao )?gồm (?:phí )?(?:thuê )?sân/.test(text)) found.push("tiền sân: chưa gồm trong học phí");
       if (/đã (?:bao )?gồm (?:phí )?(?:thuê )?sân/.test(text) && ONE_ON_ONE.test(text)) found.push("tiền sân: đã gồm trong học phí");
       return found;

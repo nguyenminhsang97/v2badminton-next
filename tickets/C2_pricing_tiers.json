@@ -79,13 +79,13 @@
     "shortLabel": "1 kèm 1",
     "kind": "private",
     "billingModel": "per_hour",
-    "description": "Học viên tự lo sân, phù hợp khi cần lịch riêng và theo sát.",
+    "description": "Phù hợp khi cần lịch riêng và HLV theo sát. Học phí gồm HLV và cầu, chưa gồm phí thuê sân.",
     "pricePerHour": 400000,
     "displayPrice": "400.000 VNĐ / giờ / học viên",
     "features": [
       "Lịch học riêng theo nhu cầu",
       "HLV theo sát từng buổi",
-      "Học viên tự lo sân tập"
+      "Tự đặt sân hoặc để V2 đặt giúp"
     ],
     "ctaLabel": "Đăng ký học thử",
     "ctaAction": "dang_ky_hoc_thu",
