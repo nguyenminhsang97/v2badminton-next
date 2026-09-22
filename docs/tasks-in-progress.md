@@ -74,7 +74,7 @@ Dùng chung cho các việc bên dưới. Đây là dữ kiện đã chốt, kh�
 
 ## T2 — Gói 1 kèm 1 ghi "Học viên tự lo sân"
 
-**Trạng thái:** xong — nội dung Sanity chủ publish 2026-09-22; file mẫu trong repo và `check-facts.mjs`: #PRNUM
+**Trạng thái:** xong — nội dung Sanity chủ publish 2026-09-22; file mẫu trong repo và `check-facts.mjs`: #127
 **Đọc trước:** `skills/noi-dung-vi/SKILL.md`, `skills/sanity-cms/SKILL.md`
 
 **Hiện trạng.** Web tự mâu thuẫn về chuyện ai đặt sân cho 1 kèm 1.
@@ -131,7 +131,7 @@ File mẫu, không hiển thị trên web: `docs/sanity-content/01-hoc-cau-long-
 
 ## T4 — Thời lượng buổi học: chỉ báo 120 phút
 
-**Trạng thái:** xong — dữ liệu cấu trúc: #126; nội dung Sanity chủ publish 2026-09-22; mục eval: #PRNUM
+**Trạng thái:** xong — dữ liệu cấu trúc: #126; nội dung Sanity chủ publish 2026-09-22; mục eval: #127
 **Đọc trước:** `skills/noi-dung-vi/SKILL.md`, `skills/sanity-cms/SKILL.md`, `skills/seo/SKILL.md`
 
 **Hiện trạng.**
