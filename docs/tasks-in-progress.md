@@ -237,7 +237,7 @@ Dữ liệu cấu trúc:
 
 ## T8 — Link bản đồ và tọa độ của hai sân ở Thủ Đức sai
 
-**Trạng thái:** chưa nhận — **cần chủ xác nhận vị trí đúng trước**
+**Trạng thái:** đang làm — chủ đã xác nhận vị trí 2026-09-22; toạ độ trong code và file mẫu: `fix/t8-court-coordinates`; nội dung Sanity chờ chủ chạy lệnh tạo nháp rồi publish
 **Đọc trước:** `skills/sanity-cms/SKILL.md`, `skills/seo/SKILL.md`
 
 **Hiện trạng** (tìm ra trong lượt eval E9 ngày 2026-09-18, đã kiểm lại bằng cách mở từng link):
@@ -249,7 +249,9 @@ Dữ liệu cấu trúc:
   - Green và Huệ Thiên chỉ lệch 160 m và 86 m, bình thường.
 - Tọa độ này đi vào JSON-LD (`apps/web/src/lib/schema.ts`: `latitude`/`longitude`, và link bản đồ dự phòng khi không có `mapsUrl`). Google và các công cụ AI đang nhận sai vị trí hai sân.
 
-**Chưa biết:** vị trí nào đúng. Nhiều khả năng ghim Google Maps đúng, vì đó là trang địa điểm mang đúng tên sân, và tọa độ trong Sanity bị nhập sai. Nhưng đây là dữ kiện kinh doanh: **hỏi chủ trước khi sửa**.
+**Chủ đã chốt 2026-09-22: ghim Google Maps đúng cho cả hai sân.** Tọa độ trong Sanity lẫn trong code đều sai và phải sửa theo ghim: Khang Sport `10.8268392, 106.7227008`, Phúc Lộc `10.8240557, 106.7247193`.
+
+Hai chỗ trong phần trên cần đính chính, đo lại ngày 2026-09-22: Sanity và `apps/web/src/lib/locations.ts` ghi **cùng** tọa độ chứ không lệch nhau; và tra ngược OpenStreetMap thì tọa độ cũ của Khang Sport lại rơi đúng "Đường số 20" như địa chỉ đang công bố, nên bằng chứng máy móc không đủ để kết luận — chỉ chủ mới chốt được.
 
 **Làm** (sau khi chủ xác nhận):
 - Đổi `mapsUrl` của Phúc Lộc trong Sanity sang link Google Maps đúng.
