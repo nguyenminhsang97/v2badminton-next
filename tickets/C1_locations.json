@@ -45,8 +45,8 @@
     "district": "thu_duc",
     "addressText": "8 Đường số 20, Hiệp Bình Chánh, Hiệp Bình, Hồ Chí Minh",
     "mapsUrl": "https://maps.app.goo.gl/WK1JB7CCEhLQ8YN69",
-    "geoLat": 10.8443035,
-    "geoLng": 106.703096,
+    "geoLat": 10.8268392,
+    "geoLng": 106.7227008,
     "order": 3,
     "isActive": true
   },
@@ -61,9 +61,9 @@
     "shortName": "Phúc Lộc",
     "district": "thu_duc",
     "addressText": "103/11B Đường số 20, Hiệp Bình Chánh, Hiệp Bình, Hồ Chí Minh",
-    "mapsUrl": "https://share.google/5w1gPPvDQbyTm3CxB",
-    "geoLat": 10.84495,
-    "geoLng": 106.70385,
+    "mapsUrl": "https://maps.app.goo.gl/pU2Zr72N1s612v5b7",
+    "geoLat": 10.8240557,
+    "geoLng": 106.7247193,
     "order": 4,
     "isActive": true
   }
