@@ -32,6 +32,7 @@ import {
   DASHBOARD_API_VERSION,
   DASHBOARD_QUERY,
   type DashboardQueryResult,
+  type DashboardPendingDraft,
   type DashboardRecentItem,
 } from "./dashboardQueries";
 import { SITE_URL } from "../lib/resolvePath";
@@ -90,6 +91,19 @@ const TYPE_LABELS: Record<string, string> = {
   money_page: "Money page",
   static_page: "Trang tĩnh",
   post: "Blog post",
+  // Reference data. It never reaches the content-ops table, so "Chờ publish" is
+  // the only place in the Studio these show up as pending.
+  faq: "Câu hỏi thường gặp",
+  pricing_tier: "Gói học phí",
+  location: "Sân",
+  coach: "HLV",
+  testimonial: "Đánh giá",
+  schedule_block: "Khung lịch",
+  campaign: "Chiến dịch",
+  court: "Sân (trang riêng)",
+  route_redirect: "Chuyển hướng",
+  site_settings: "Cài đặt website",
+  homepage_content: "Nội dung trang chủ",
 };
 
 /** Relative time in Vietnamese, falls back to dd/mm/yyyy. */
@@ -342,6 +356,63 @@ function RecentItem({ item }: { item: DashboardRecentItem }) {
   );
 }
 
+/**
+ * One document with an unpublished draft. The link opens the document itself,
+ * because the point of this list is to get the editor to the Publish button —
+ * the Studio's own draft filter cannot be deep-linked.
+ */
+function PendingDraftItem({ item }: { item: DashboardPendingDraft }) {
+  const typeLabel = TYPE_LABELS[item._type] ?? item._type;
+  const publishedId = item._id.replace(/^drafts\./, "");
+  const title =
+    item.title.length > 50 ? `${item.title.slice(0, 48)}…` : item.title;
+
+  return (
+    <a
+      href={`/intent/edit/id=${encodeURIComponent(publishedId)};type=${item._type}`}
+      style={{
+        display: "flex",
+        alignItems: "baseline",
+        justifyContent: "space-between",
+        gap: 12,
+        padding: "8px 0",
+        borderBottom: "1px solid var(--card-border-color, #e5e7eb)",
+        textDecoration: "none",
+      }}
+    >
+      <div style={{ minWidth: 0, flex: 1 }}>
+        <span
+          style={{
+            fontSize: 13,
+            color: "var(--card-fg-color, #111827)",
+            display: "block",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {title}
+        </span>
+        <span
+          style={{ fontSize: 11, color: "var(--card-muted-fg-color, #6b7280)" }}
+        >
+          {typeLabel}
+        </span>
+      </div>
+      <span
+        style={{
+          fontSize: 11,
+          color: "var(--card-muted-fg-color, #6b7280)",
+          whiteSpace: "nowrap",
+          flexShrink: 0,
+        }}
+      >
+        {relativeVi(item._updatedAt)}
+      </span>
+    </a>
+  );
+}
+
 // ─── Main tool component ──────────────────────────────────────────────────────
 
 // PR 1: shell only — the `tool` prop is required by the Studio API but not
@@ -437,6 +508,75 @@ export function DashboardTool(_props: { tool: Tool }) {
           marginBottom: 32,
         }}
       >
+        {/* Documents with an unpublished draft, any type */}
+        <div>
+          <SectionHeading>
+            Chờ publish
+            {data && data.pendingDraftCount > 0
+              ? ` (${data.pendingDraftCount})`
+              : ""}
+          </SectionHeading>
+          <div
+            style={{
+              border: "1px solid var(--card-border-color, #e5e7eb)",
+              borderRadius: 6,
+              padding: "4px 16px 12px",
+            }}
+          >
+            {isLoading ? (
+              <p
+                style={{
+                  fontSize: 12,
+                  color: "var(--card-muted-fg-color, #6b7280)",
+                  margin: "16px 0",
+                  textAlign: "center",
+                }}
+              >
+                Đang tải…
+              </p>
+            ) : isError ? (
+              <p
+                style={{
+                  fontSize: 12,
+                  color: "var(--red-400, #f87171)",
+                  margin: "16px 0",
+                  textAlign: "center",
+                }}
+              >
+                Không thể tải danh sách.
+              </p>
+            ) : data && data.pendingDrafts.length > 0 ? (
+              <>
+                {data.pendingDrafts.map((item) => (
+                  <PendingDraftItem key={item._id} item={item} />
+                ))}
+                {data.pendingDraftCount > data.pendingDrafts.length ? (
+                  <p
+                    style={{
+                      fontSize: 11,
+                      color: "var(--card-muted-fg-color, #6b7280)",
+                      margin: "12px 0 0",
+                    }}
+                  >
+                    Hiển thị {data.pendingDrafts.length} bản nháp mới nhất.
+                  </p>
+                ) : null}
+              </>
+            ) : (
+              <p
+                style={{
+                  fontSize: 12,
+                  color: "var(--card-muted-fg-color, #6b7280)",
+                  margin: "16px 0",
+                  textAlign: "center",
+                }}
+              >
+                Không có bản nháp nào chờ publish.
+              </p>
+            )}
+          </div>
+        </div>
+
         {/* Recently updated — live in PR 2 */}
         <div>
           <SectionHeading>Mới cập nhật</SectionHeading>
