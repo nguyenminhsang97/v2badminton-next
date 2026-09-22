@@ -6,6 +6,7 @@ import { PortableText } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
 import { getCategoryLabel } from "@/lib/blogUtils";
 import { getGeneratedBlogCategoryImage } from "@/lib/generatedImages";
+import { NOT_FOUND_METADATA } from "@/lib/notFoundMetadata";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { canonicalUrl, coreRouteMap, type CoreRoutePath } from "@/lib/routes";
 import { siteConfig } from "@/lib/site";
@@ -29,8 +30,11 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = await getPostBySlug(slug);
 
+  // The post is gone or unpublished and the page below calls notFound().
+  // Returning {} here would let the root layout's `index, follow` stand on a
+  // page that does not exist; see NOT_FOUND_METADATA.
   if (!post) {
-    return {};
+    return NOT_FOUND_METADATA;
   }
 
   const title = post.metaTitle ?? post.title;
