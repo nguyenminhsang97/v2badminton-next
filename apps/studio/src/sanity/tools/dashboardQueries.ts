@@ -89,6 +89,24 @@ export const DASHBOARD_QUERY = `{
     !defined(coverImage)
   ]),
 
+  // ── Chờ publish (documents with an unpublished draft) ───────────────────
+  // Not the same thing as "Bản nháp" above, which counts the editorial status
+  // field on articles. This counts native draft twins, across every type, and
+  // had nowhere to show: the content-ops table lists page types only, so a draft
+  // on a faq, pricing_tier or location was invisible in the Studio until someone
+  // opened that document. Reference data is exactly what gets edited in batches.
+  "pendingDraftCount": count(*[
+    _id in path("drafts.**") && !(_type match "sanity.*")
+  ]),
+  "pendingDrafts": *[
+    _id in path("drafts.**") && !(_type match "sanity.*")
+  ] | order(_updatedAt desc) [0...20] {
+    _id,
+    _type,
+    _updatedAt,
+    "title": coalesce(title, h1, name, question, slug.current, "Untitled")
+  },
+
   // ── Mới cập nhật (recently updated, cross-type, top 8) ──────────────────
   // Excludes reference-data types (faq, coach, testimonial, etc.) because the
   // editor cares most about page-level content changes here.
@@ -154,10 +172,14 @@ export type DashboardRecentItem = {
   title: string;
 };
 
+export type DashboardPendingDraft = DashboardRecentItem;
+
 export type DashboardQueryResult = {
   draftCount: number;
   publishedCount: number;
   missingSeoCount: number;
   missingCoverCount: number;
   recentlyUpdated: DashboardRecentItem[];
+  pendingDraftCount: number;
+  pendingDrafts: DashboardPendingDraft[];
 };
