@@ -41,7 +41,7 @@ Dùng chung cho các việc bên dưới. Đây là dữ kiện đã chốt, kh�
 
 ## Quy ước chung
 
-- Sanity: project `w58s0f53`, dataset `production`. **Sửa nội dung qua Studio** tại cms.v2badminton.com, không sửa bằng script.
+- Sanity: project `w58s0f53`, dataset `production`. **Chốt câu chữ với chủ trước, rồi tạo bản nháp, chủ publish trong Studio** tại cms.v2badminton.com. Script chỉ được tạo bản nháp, không publish — cách làm và các bước an toàn ở `skills/sanity-cms/SKILL.md`, mục "Writing content".
 - **Đọc Sanity phải có xác thực.** Đọc ẩn danh trả về một tập con mà trông như dữ liệu đầy đủ.
 - **Quét nội dung phải gồm cả trường chữ thường** (`description`, `features`, `quickAnswer`, `excerpt`, `metaDescription`, `seoDescription`), không chỉ Portable Text (`answer`, `body`). Một lần quét chỉ xem `answer`/`body` đã bỏ sót câu sai trong `pricing_tier.description`.
 - Bản nháp cũ của money page `gia-hoc-cau-long-tphcm` đã được chủ publish ngày 2026-09-21, không còn treo. Quy tắc vẫn giữ: tài liệu nào đang có bản nháp thì hỏi chủ trước, đừng publish đè.
