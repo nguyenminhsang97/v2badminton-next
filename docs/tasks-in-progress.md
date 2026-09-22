@@ -237,7 +237,7 @@ Dữ liệu cấu trúc:
 
 ## T8 — Link bản đồ và tọa độ của hai sân ở Thủ Đức sai
 
-**Trạng thái:** đang làm — chủ đã xác nhận vị trí 2026-09-22; toạ độ trong code và file mẫu: `fix/t8-court-coordinates`; nội dung Sanity chờ chủ chạy lệnh tạo nháp rồi publish
+**Trạng thái:** xong — toạ độ trong code và file mẫu: #129; toạ độ và link bản đồ trong Sanity chủ publish 2026-09-22
 **Đọc trước:** `skills/sanity-cms/SKILL.md`, `skills/seo/SKILL.md`
 
 **Hiện trạng** (tìm ra trong lượt eval E9 ngày 2026-09-18, đã kiểm lại bằng cách mở từng link):
