@@ -264,7 +264,7 @@ Hai chỗ trong phần trên cần đính chính, đo lại ngày 2026-09-22: Sa
 
 ## T9 — Việc lặt vặt còn lại của bộ skill
 
-**Trạng thái:** mục 1 xong — #119; mục 2 và 3 xong — #PRNUM (mục 2 sửa định nghĩa eval; việc chạy lại vòng 4 vẫn còn, phải chạy từ session không nạp bộ nhớ dự án)
+**Trạng thái:** mục 1 xong — #119; mục 2 và 3 xong — #130 (mục 2 sửa định nghĩa eval; việc chạy lại vòng 4 vẫn còn, phải chạy từ session không nạp bộ nhớ dự án)
 **Đọc trước:** `skills/_evals/README.md`, `skills/v2badminton-next/SKILL.md`
 
 Bộ skill đang dùng được và đã được đo (#120–#123). Các việc dưới đây là dọn dẹp và gia cố, không chặn gì, làm lúc nào cũng được.
