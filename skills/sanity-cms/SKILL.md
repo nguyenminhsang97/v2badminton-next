@@ -137,6 +137,17 @@ Each invariant below exists for a reason — keep it:
 - **Production HTTP endpoints get read-only requests.** While investigating, send only GETs to v2badminton.com and cms.v2badminton.com. Never POST to an API route — not even an unsigned probe of `/api/revalidate/sanity/` that you expect to be rejected. Webhook health is read from Sanity's attempt log and Vercel's runtime logs, not tested by calling the endpoint.
 - Schema changes reach editors by deploying `apps/studio` on Vercel (push → build). Gate B removed the Sanity-hosted Studio registrations, so don't run `deploy_studio` as well.
 
+### Writing content: drafts by script, published by the owner
+
+Approved by the owner on 2026-09-22, after eleven documents took an afternoon through the Studio UI.
+
+- **The Sanity MCP cannot write.** Its token is "Codex Local Read Token (Robot)", role `read`; `patch_documents` comes back with `permission "create" required`. Don't plan a task around MCP writes — check with `whoami` if unsure.
+- **The write token is the `SANITY` variable in the repo-root production env file** (gitignored, so it is on the owner's machine only): robot token "Read and edit CMS", role `write`. Identify a token by sending a GET to `https://w58s0f53.api.sanity.io/v2021-06-07/users/me` with it. Never print a token, echo it into a log, or paste it anywhere.
+- **The flow.** Agree the exact wording with the owner first — one table of document id → field → old sentence → new sentence — then write a script that reads the published documents, builds `drafts.<id>` copies carrying the new text, and asserts every old string is still there before replacing it. Use `create`, never `createOrReplace`, so an existing draft aborts the run instead of being overwritten, and send all mutations in one transaction. The script never publishes.
+- **Dry run, then hand the command over.** Sanity's `dryRun=true` validates permissions and content and writes nothing; run that first and show the resulting sentences. Claude Code's auto mode refuses the committing request itself ("Modify Shared Resources"), so give the owner the one-line command to run.
+- **Verify twice.** Before handing over, query with `perspective=drafts` and run `skills/noi-dung-vi/scripts/check-facts.mjs --input <file>`. After the owner publishes, run `check-facts.mjs` against production and grep the live pages for the old sentences. Expect the owner to have reworded some drafts — read what was published, don't assume your text survived.
+- **Driving the Studio UI with a browser tool is the fallback, and a poor one.** Key events (Backspace, arrow keys) never reach Sanity's Portable Text editor; only typing and mouse clicks land. Deleting anything means selecting it and typing over it, and you must read `window.getSelection()` anchor and focus block keys before every keystroke: a shift-click one line too far puts the focus in the *next* block, where typing silently merges two blocks.
+
 ## Local dev
 
 ```bash
