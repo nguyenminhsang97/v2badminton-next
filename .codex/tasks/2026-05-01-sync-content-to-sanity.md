@@ -60,7 +60,7 @@ Các thay đổi nội dung quan trọng (xem `git log -p src/lib/faqs.ts` để
 
 | `slug` (Sanity)  | `addressText` mới                                          |
 | ---------------- | ---------------------------------------------------------- |
-| `green`          | `154/9 đường Nguyễn Xí, phường 26, Bình Thạnh, TP.HCM`     |
+| `green`          | `154/9 đường Nguyễn Xí, phường Bình Thạnh, TP.HCM`     |
 | `hue_thien`      | `520 Quốc Lộ 13, phường Hiệp Bình, TP.HCM`                 |
 | `khang_sport`    | `8 Đường số 20, phường Hiệp Bình, TP.HCM`                  |
 | `103/11B Đường số 20...` (slug `phuc_loc`) | `103/11B Đường số 20, phường Hiệp Bình, TP.HCM` |

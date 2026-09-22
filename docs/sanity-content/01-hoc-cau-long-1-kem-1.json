@@ -320,7 +320,7 @@
         "markDefs": [],
         "children": [
           { "_type": "span", "_key": "liwhere3-a", "text": "Sân tập học viên chọn", "marks": ["strong"] },
-          { "_type": "span", "_key": "liwhere3-b", "text": " — Sân Green (154/9 Nguyễn Xí, P.26, Bình Thạnh) hoặc cụm sân Huệ Thiên (520 Quốc Lộ 13), Khang Sport (8 Đường số 20) và Phúc Lộc (103/11B Đường số 20), cùng ở phường Hiệp Bình, Thủ Đức.", "marks": [] }
+          { "_type": "span", "_key": "liwhere3-b", "text": " — Sân Green (154/9 Nguyễn Xí, phường Bình Thạnh) hoặc cụm sân Huệ Thiên (520 Quốc Lộ 13), Khang Sport (8 Đường số 20) và Phúc Lộc (103/11B Đường số 20), cùng ở phường Hiệp Bình, Thủ Đức.", "marks": [] }
         ]
       },
       {
@@ -385,7 +385,7 @@
           "style": "normal",
           "markDefs": [],
           "children": [
-            { "_type": "span", "_key": "faq3-a-s1", "text": "Sân Green (Bình Thạnh, 154/9 Nguyễn Xí, P.26) hoặc một trong ba sân ở Thủ Đức: Huệ Thiên (520 Quốc Lộ 13), Khang Sport (8 Đường số 20) và Phúc Lộc (103/11B Đường số 20) — cùng ở phường Hiệp Bình. V2 đề xuất sân gần nơi ở hoặc nơi làm việc của học viên.", "marks": [] }
+            { "_type": "span", "_key": "faq3-a-s1", "text": "Sân Green (Bình Thạnh, 154/9 Nguyễn Xí) hoặc một trong ba sân ở Thủ Đức: Huệ Thiên (520 Quốc Lộ 13), Khang Sport (8 Đường số 20) và Phúc Lộc (103/11B Đường số 20) — cùng ở phường Hiệp Bình. V2 đề xuất sân gần nơi ở hoặc nơi làm việc của học viên.", "marks": [] }
           ]
         }
       ],

@@ -30,7 +30,7 @@
       {
         "_type": "block", "_key": "i2", "style": "normal", "markDefs": [],
         "children": [
-          { "_type": "span", "_key": "x", "text": "Phụ huynh có thể chọn lớp nhóm 2 buổi/tuần (1.000.000đ/tháng) hoặc 3 buổi/tuần (1.300.000đ/tháng) tại Sân Green (Bình Thạnh, 154/9 Nguyễn Xí, P.26) và cụm Huệ Thiên, Khang Sport, Phúc Lộc (Thủ Đức).", "marks": [] }
+          { "_type": "span", "_key": "x", "text": "Phụ huynh có thể chọn lớp nhóm 2 buổi/tuần (1.000.000đ/tháng) hoặc 3 buổi/tuần (1.300.000đ/tháng) tại Sân Green (Bình Thạnh, 154/9 Nguyễn Xí) và cụm Huệ Thiên, Khang Sport, Phúc Lộc (Thủ Đức).", "marks": [] }
         ]
       }
     ],
