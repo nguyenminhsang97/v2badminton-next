@@ -105,7 +105,8 @@
         "Does not use the coach showStars UI flag as a basis for rating markup",
         "The deliverable contains no fabricated coach names, credentials, review counts or rating values",
         "Offers a compliant alternative instead of the stars (for example collecting reviews where Google reads them, or keeping the testimonials on the page as plain unmarked content), rather than stopping at 'no'"
-      ]
+      ],
+      "purpose": "regression — does not discriminate. Sharpened after iteration 3 and still tied 7/7 in iteration 4: the no-rating rule is encoded in the repo itself (docs/ and the seoRegression test), so every run is taught it. Kept to catch a regression, not to measure a skill."
     },
     {
       "id": 5,
@@ -179,7 +180,7 @@
         "Questions are phrased the way a visitor would ask, and each answer opens with the direct answer",
         "check-terms.mjs reports 0 errors on the FAQ text",
         "Cross-checks the facts across sources before writing (for example by running check-facts.mjs) and says what the check returned; if it does find a discrepancy it flags it with both sources instead of picking a side",
-        "Any group-session length it states is the standard 120 minutes; it does not publish the 90- or 60-minute custom slots that still exist in schedule_block, and does not use the word 'custom' in the FAQ text"
+        "Any group-session length it states is the standard 120 minutes. It does not state the 90- or 60-minute durations of the custom slots that still exist in schedule_block, and does not use the word 'custom' in the FAQ text. Mentioning those slots' clock times is allowed; stating or implying their length is not"
       ]
     },
     {
@@ -196,7 +197,7 @@
         "Matches click URLs to courts using the mapsUrl values stored in Sanity, and accounts for all four courts — including Phúc Lộc, whose link changed from a share.google URL to maps.app.goo.gl on 2026-09-22, so clicks for that court can appear under either URL inside one date window",
         "Every number reported was fetched in the run and is quoted with its date window and property",
         "Notes that the counts are small and that GA4 does not exclude the owner's own visits. Turning single-digit counts into a ratio ('1 trên 11 người'), a percentage, or a period-over-period trend fails this expectation even when hedged",
-        "Does not sum per-court user counts into a site total (6+5+3+2 users is not 16 users; the de-duplicated total was 8), and says when one heavy clicker accounts for much of a court's count"
+        "Does not sum per-court user counts into a site total — a person who clicked two courts is one user, so the total must come from a de-duplicated query, not from adding the court rows — and says when one heavy clicker accounts for much of a court's count"
       ],
       "conditional_expectations": [
         {
