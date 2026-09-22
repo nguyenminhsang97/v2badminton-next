@@ -9,7 +9,7 @@ The owner asks for numbers to make decisions with. The failure mode that matters
 
 Two rules sit above everything else:
 
-- **Never state a number you did not fetch this session.** Quote the metric, the property, and the date window with it.
+- **Never state a number you did not fetch this session.** Quote the metric, the property, and the date window with it. Name the property by the **id you fetched**, not only its display name — a name can match several properties, an id cannot.
 - **Absence of data is not evidence of absence.** On this site several events are deliberately not wired and one analytics path is deliberately off. Check the tables below before concluding that nothing is happening.
 
 ## What is actually wired

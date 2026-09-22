@@ -8,6 +8,7 @@ Paths below are relative to the repository root.
 
 - Process to follow: `agents/grader.md` in the skill-creator skill (Anthropic's `skill-creator`). Read it first.
 - Expectations and ground truth: `skills/_evals/evals.json`. Use the `expectations` of the eval you are given, **verbatim and in order**, and the top-level `ground_truth_notes`. Read `ground_truth_notes.READ_FIRST` before trusting any entry.
+- An eval may also carry `conditional_expectations`, each with a `condition`. Grade one only when its condition actually held during the run; otherwise leave it out of `expectations` and record it in `eval_feedback.overall` as not applicable. Never count an unfired condition as passed — that is what it was moved out of the graded list for.
 - Run directories: `.claude/skill-evals/iteration-<N>/eval-<id>-<name>/<config>/run-<K>/`. Each has `outputs/` (response.md, user_notes.md, metrics.json, deliverables) and usually `timing.json`.
 - There is no transcript. Treat `outputs/user_notes.md` and `outputs/metrics.json` as the process record, and verify claims against the deliverables and the repository.
 
