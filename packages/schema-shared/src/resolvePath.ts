@@ -80,7 +80,12 @@ export function resolvePath(
     case "post": {
       const slug = doc.slug?.current?.trim();
       if (!slug) return null;
-      return `/blog/${slug}/`;
+      // The feed was renamed /blog/ -> /tin-tuc/ on 2026-09-08 and this was left
+      // behind. Both Studio actions still worked, through the 308 in
+      // next.config.ts, so nothing looked broken: "Mở trang trực tiếp" and
+      // "Xem bản nháp" just took an extra hop. The canonical, the sitemap and
+      // the route itself all say /tin-tuc/.
+      return `/tin-tuc/${slug}/`;
     }
 
     default:
