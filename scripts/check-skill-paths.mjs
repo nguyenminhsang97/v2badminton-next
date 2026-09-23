@@ -15,7 +15,7 @@
 // bare file names such as `QuickAnswer.tsx` must exist somewhere in the repo.
 //
 // Not checked: routes (`/gia-hoc-cau-long-tphcm/`), URLs, commands, files that
-// only exist on the owner's machine (`~/…`, and `.claude/…` other than
+// only exist on the owner's machine (`~/…`, `.mcp.json`, and `.claude/…` other than
 // `.claude/skills/`), and placeholders — write hypothetical paths with
 // <angle-brackets> or *, e.g. `apps/web/src/app/<slug>/page.tsx`.
 //
@@ -32,7 +32,7 @@ const REPO_ROOTS = ["apps/", "packages/", "docs/", "skills/", "scripts/", "ticke
 const SOURCE_EXT = /\.(?:ts|tsx|mjs|cjs|js|jsx|json|md|css|toml|ya?ml)$/;
 const NOT_A_PATH = /[<>*{}$\s…=|]|^https?:|^\/|^\.\.?\//;
 // Gitignored or outside the repo: present on the owner's machine, never in CI.
-const LOCAL_ONLY = /^~|^\.claude\/(?!skills\/)|^\.env/;
+const LOCAL_ONLY = /^~|^\.claude\/(?!skills\/)|^\.env|^\.mcp\.json/;
 const SKIP_DIRS = new Set(["node_modules", ".git", ".next", "dist", ".vercel", ".claude"]);
 
 // Names a skill cites on purpose even though no such file is in the repo.
