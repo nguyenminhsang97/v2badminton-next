@@ -296,7 +296,7 @@ Bộ skill đang dùng được và đã được đo (#120–#123). Các việc
 
 ## T10 — Loại tài liệu "Sự kiện" cho giải nội bộ
 
-**Trạng thái:** chưa nhận — **chủ quyết ngày 2026-09-23: mỗi năm chỉ 2-3 giải, để đó, khi nào cần thì làm**
+**Trạng thái:** chưa nhận — **chủ quyết ngày 2026-09-23: mỗi năm chỉ 2-3 giải, để đó, khi nào cần thì làm**. Ghi lại trong #137.
 **Đọc trước:** `skills/sanity-cms/SKILL.md`, `skills/seo/SKILL.md`, `skills/v2badminton-next/SKILL.md`
 
 **Bối cảnh.** Đề bài này do agent bịa ra làm đề chấm skill (eval 6), không phải yêu cầu của chủ. Nhưng hai lượt chạy ngày 2026-09-22 đã cho ra code gần đủ dùng, nên giữ lại thay vì bỏ.
