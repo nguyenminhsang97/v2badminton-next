@@ -91,9 +91,10 @@ npm run typecheck     # schema-shared + web + studio
 npm run build         # all three, same as CI
 npm test              # vitest: apps/web/src/**/*.test.ts
 npm run test:e2e      # playwright: apps/web/tests (desktop-chrome, mobile-chrome, mobile-safari)
+npm run check:fallback # hardcoded court/schedule fallbacks vs live Sanity (needs the read token)
 ```
 
-CI (`.github/workflows/ci.yml`) runs lint → typecheck → build → test. `lighthouse.yml` collects mobile and desktop Lighthouse reports.
+CI (`.github/workflows/ci.yml`) runs lint → typecheck → build → test. It cannot run `check:fallback`, which needs a Sanity token CI does not have — run it after touching `apps/web/src/lib/locations.ts` or `schedule.ts`, and after any schedule or court change in Sanity. `lighthouse.yml` collects mobile and desktop Lighthouse reports.
 
 For a UI change, look at it yourself rather than asking the owner to check. Start the dev server in the Browser pane (`preview_start` with `.claude/launch.json`), check the affected route at ~390px and 1440px, and scan for horizontal overflow:
 

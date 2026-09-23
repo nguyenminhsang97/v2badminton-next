@@ -151,8 +151,12 @@ editor-facing capability. These remain:
 - ~~**P1.6 — draft preview.**~~ Shipped in #119: the Studio's "Xem bản nháp" action opens
   the page with unpublished content. It needs `SANITY_API_VIEWER_TOKEN` on the web project;
   how to check it is in `skills/sanity-cms/SKILL.md`.
-- **P1.7 — fail-closed fallbacks.** Content rendering still falls back to hardcoded JSX rather
-  than failing closed when Sanity is unreachable.
+- ~~**P1.7 — fail-closed fallbacks.**~~ Settled on 2026-09-23 by owner ruling, in three parts:
+  prices and money-page bodies already failed closed; the Sprint-2 FAQ fallback is deleted, so
+  losing Sanity now hides the FAQs rather than serving answers written before the September
+  rulings; courts and the timetable keep their stand-in, because a visitor heading to a court
+  needs the address — but fallback coordinates no longer reach JSON-LD, every degraded read is
+  reported to Sentry, and `npm run check:fallback` compares the hardcoded lists with Sanity.
 - **CSP on the Studio origin.** `apps/studio/next.config.ts` deliberately ships no CSP — see
   addendum §B-8. Access control there is currently nothing but Sanity's own login.
 

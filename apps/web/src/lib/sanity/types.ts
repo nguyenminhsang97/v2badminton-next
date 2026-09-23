@@ -161,6 +161,12 @@ export type SanityLocation = {
   geoLat: number | null;
   geoLng: number | null;
   order: number;
+  /**
+   * True only for the hardcoded stand-in served when Sanity is unreachable.
+   * Structured data drops the coordinates for these, because a stale pin is a
+   * wrong address published with Google's authority.
+   */
+  isFallback?: boolean;
 };
 
 type SanityPricingTierBase = {

@@ -1,7 +1,6 @@
 import "server-only";
 
 import { defineQuery } from "groq";
-import { faqs as staticFaqs, type FaqItem } from "@/lib/faqs";
 import { courtLocationMap, courtLocations } from "@/lib/locations";
 import { scheduleItems as staticScheduleItems } from "@/lib/schedule";
 import type {
@@ -33,20 +32,6 @@ function toPortableTextBlocks(text: string): SanityPortableTextBlock[] {
   ];
 }
 
-function mapFallbackFaq(item: FaqItem): SanityFaq {
-  return {
-    id: item.id,
-    question: item.question,
-    answer: toPortableTextBlocks(item.answerText),
-    answerPlainText: item.answerText,
-    pages: [item.page],
-    includeInSchema: item.schemaEligible,
-    featured: false,
-    homepageOrder: item.order,
-    order: item.order,
-  };
-}
-
 export function getFallbackLocations(): SanityLocation[] {
   return courtLocations.map((court, index) => ({
     id: court.id,
@@ -63,6 +48,7 @@ export function getFallbackLocations(): SanityLocation[] {
     geoLat: court.geo.lat,
     geoLng: court.geo.lng,
     order: index + 1,
+    isFallback: true,
   }));
 }
 
@@ -84,12 +70,6 @@ export function getFallbackScheduleBlocks(): SanityScheduleBlock[] {
       order: index + 1,
     };
   });
-}
-
-export function getFallbackFaqs(page?: SanityFaqPage): SanityFaq[] {
-  return staticFaqs
-    .filter((faq) => page === undefined || faq.page === page)
-    .map(mapFallbackFaq);
 }
 
 export function selectHomepageItems<

@@ -13,7 +13,8 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:mobile": "playwright test --project=mobile-chrome --project=mobile-safari",
-    "test:mobile:headed": "playwright test --project=mobile-chrome --project=mobile-safari --headed"
+    "test:mobile:headed": "playwright test --project=mobile-chrome --project=mobile-safari --headed",
+    "check:fallback": "tsx scripts/check-fallback-drift.mts"
   },
   "dependencies": {
     "@next/env": "16.2.4",

@@ -122,7 +122,20 @@ function buildPostalAddress(location: SanityLocation) {
   };
 }
 
+/**
+ * Coordinates for a venue node, or nothing when they cannot be trusted.
+ *
+ * The hardcoded stand-in used while Sanity is unreachable carries `isFallback`.
+ * Its coordinates were 3 km off for two of the four courts until 2026-09-22, so
+ * publishing them to Google would put a visitor on the wrong street with the
+ * search engine vouching for it. The name and address still render on the page —
+ * the owner's call on 2026-09-23 — but nothing unverified reaches structured data.
+ */
 function buildGeoCoordinates(location: SanityLocation) {
+  if (location.isFallback || location.geoLat === null || location.geoLng === null) {
+    return undefined;
+  }
+
   return {
     "@type": "GeoCoordinates",
     latitude: location.geoLat,

@@ -15,7 +15,8 @@
     "typecheck": "npm run -w packages/schema-shared typecheck && npm run -w apps/web typecheck && npm run -w apps/studio typecheck",
     "test": "npm run -w apps/web test",
     "test:e2e": "npm run -w apps/web test:e2e",
-    "verify:production-env": "npm run -w apps/web verify:production-env"
+    "verify:production-env": "npm run -w apps/web verify:production-env",
+    "check:fallback": "npm run -w apps/web check:fallback"
   },
   "devDependencies": {
     "typescript": "^5"
