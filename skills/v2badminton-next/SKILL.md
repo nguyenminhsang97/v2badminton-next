@@ -125,6 +125,38 @@ These conventions only existed in git history, so agents kept re-deriving them. 
 - Prefer the Grep tool to shelling out to `rg`.
 - Don't write file content through a Bash heredoc: apostrophes can break parsing, and `\\` is collapsed to `\`, which silently corrupts regexes. Use the Write tool.
 
+## Monitoring, and the MCP servers that reach it
+
+- **Sentry is the only place a degraded request shows up.** `apps/web/src/lib/rateLimit.ts` fails
+  *open*: when Upstash is unreachable it returns `{ allowed: true, skipped: true }`, reports to
+  Sentry and calls `notifyOpsTelegram`. So the form still submits and no lead is lost — only the
+  anti-spam layer is gone. But `TELEGRAM_BOT_TOKEN` / `TELEGRAM_OPS_CHAT_ID` are not set in
+  production, so `notifyOpsTelegram` skips and that alert reaches nobody. Worked example: issue
+  `JAVASCRIPT-NEXTJS-H`, `getaddrinfo ENOTFOUND vast-dassie-94458.upstash.io` under
+  `serverAction/submitLead`, 9 times between 2026-05-12 and 2026-09-12, tagged `area: rate_limit`.
+  Read a Sentry error before assuming it cost the owner anything: `handled: yes` on this one means
+  the code already dealt with it.
+- **MCP servers are configured in `.mcp.json` at the repo root, which is gitignored** (#142) because
+  it holds tokens. Sentry org `nguyen-minh-sang-rk`, project `javascript-nextjs`.
+- **Prefer a stdio server with a token to a remote OAuth one.** The `cloudflare` and `vercel`
+  servers authorize one client interactively, so any other AI client sees them as unauthorized and
+  there is nothing to hand over. A stdio server reads its token from `env`, so every client that
+  reads `.mcp.json` gets the same access:
+
+  ```json
+  "sentry": {
+    "command": "npx", "args": ["-y", "@sentry/mcp-server@latest"],
+    "env": { "SENTRY_ACCESS_TOKEN": "…" }
+  }
+  ```
+
+  The token is a **Personal Token** (Sentry → Settings → Developer Settings → Personal Tokens —
+  there is no "Auth Tokens" page any more), with read scopes only; nothing here writes to Sentry.
+  Vercel was left on OAuth deliberately: its API tokens are full-account, with no read-only option.
+- **First start looks broken.** `npx` downloads the package on first run and the client gives up
+  waiting, so the server reports as failed once. Pre-warm it (`npx -y @sentry/mcp-server@latest --help`), then restart the client fully — a fresh session in the same process keeps the old
+  server list.
+
 ## Where the history lives
 
 - `docs/cms/gate-b-completion-2026-09-10.md` — current web/Studio topology and what is still open.
