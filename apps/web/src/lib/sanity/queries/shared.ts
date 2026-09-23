@@ -4,33 +4,11 @@ import { defineQuery } from "groq";
 import { courtLocationMap, courtLocations } from "@/lib/locations";
 import { scheduleItems as staticScheduleItems } from "@/lib/schedule";
 import type {
-  SanityFaq,
-  SanityFaqPage,
   SanityLocation,
-  SanityPortableTextBlock,
   SanityScheduleBlock,
 } from "../types";
 
 export const PUBLISHED_ONLY_FILTER = '!(_id in path("drafts.**"))';
-
-function toPortableTextBlocks(text: string): SanityPortableTextBlock[] {
-  return [
-    {
-      _key: "fallback-answer",
-      _type: "block",
-      style: "normal",
-      markDefs: [],
-      children: [
-        {
-          _key: "fallback-answer-span",
-          _type: "span",
-          text,
-          marks: [],
-        },
-      ],
-    },
-  ];
-}
 
 export function getFallbackLocations(): SanityLocation[] {
   return courtLocations.map((court, index) => ({

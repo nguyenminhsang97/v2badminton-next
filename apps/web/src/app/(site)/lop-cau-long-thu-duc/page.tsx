@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { MoneyPageTemplate } from "@/components/money-page/MoneyPageTemplate";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { notFoundForMissingMoneyPage } from "@/lib/moneyPageFailSafe";
+import { NOT_FOUND_METADATA } from "@/lib/notFoundMetadata";
 import { buildMoneyPageMetadata } from "@/lib/moneyPageMetadata";
-import { buildMetadata, canonicalUrl } from "@/lib/routes";
+import { canonicalUrl } from "@/lib/routes";
 import { getMoneyPage, getScheduleBlocks } from "@/lib/sanity";
 import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
 import {
@@ -23,7 +24,11 @@ export async function generateMetadata(): Promise<Metadata> {
     return buildMoneyPageMetadata(PATH, moneyPage);
   }
 
-  return buildMetadata(PATH);
+  // No money page means the route below calls notFound(), so this must not
+  // advertise the page as indexable. Measured against a local build with Sanity
+  // unreachable: the route served the not-found UI while the metadata still said
+  // `index, follow`, next to the noindex Next adds for a not-found render.
+  return NOT_FOUND_METADATA;
 }
 
 export default async function ThuDucPage() {
