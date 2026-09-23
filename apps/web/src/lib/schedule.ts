@@ -86,15 +86,6 @@ export const scheduleItems: readonly ScheduleItem[] = [
     levelLabels: ["Cơ bản", "Nâng cao"],
   }),
   createScheduleItem({
-    id: "khang-sport-trua-1130-13-t7",
-    courtId: "khang_sport",
-    dayGroup: "Thứ 7",
-    timeSlotId: "trua-1130-13",
-    timeLabel: "11:30 – 13:00",
-    levels: ["co_ban"],
-    levelLabels: ["Cơ bản"],
-  }),
-  createScheduleItem({
     id: "khang-sport-trua-12-14-t7-cn",
     courtId: "khang_sport",
     dayGroup: "T7 – CN",

@@ -15,7 +15,7 @@
     "audience": "nguoi_di_lam",
     "h1": "Lớp cầu lông cuối tuần tại TP.HCM",
     "metaTitle": "Lớp Cầu Lông Cuối Tuần TP.HCM | T7-CN | V2 Badminton",
-    "metaDescription": "Lớp cầu lông cuối tuần V2 Badminton tại TP.HCM: T7-CN khung sáng (07:00-11:00), trưa (11:30-14:00) và chiều (17:00-18:00). Sân Bình Thạnh và Thủ Đức.",
+    "metaDescription": "Lớp cầu lông cuối tuần V2 Badminton tại TP.HCM: T7-CN khung sáng (07:00-11:00), trưa (12:00-14:00) và chiều (17:00-18:00). Sân Bình Thạnh và Thủ Đức.",
     "ctaLabel": "Đăng ký lớp cuối tuần",
 
     "intro": [
@@ -23,7 +23,7 @@
         "_type": "block", "_key": "i1", "style": "normal", "markDefs": [],
         "children": [
           { "_type": "span", "_key": "a", "text": "Lớp cầu lông cuối tuần tại V2 Badminton mở thứ 7 và chủ nhật ở ba khung: ", "marks": [] },
-          { "_type": "span", "_key": "b", "text": "sáng (07:00-11:00), trưa (11:30-14:00) và chiều (17:00-18:00)", "marks": ["strong"] },
+          { "_type": "span", "_key": "b", "text": "sáng (07:00-11:00), trưa (12:00-14:00) và chiều (17:00-18:00)", "marks": ["strong"] },
           { "_type": "span", "_key": "c", "text": ", phù hợp người làm việc giờ hành chính T2-T6 muốn tập trung tập vào cuối tuần.", "marks": [] }
         ]
       },
@@ -42,8 +42,8 @@
         { "_type": "span", "_key": "b", "text": " Sân Huệ Thiên (07:00-09:00 và 09:00-11:00 T7-CN), Sân Green (08:00-10:00 T7-CN). Phù hợp người dậy sớm và muốn xong buổi tập trước trưa.", "marks": [] }
       ]},
       { "_type": "block", "_key": "lisl2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
-        { "_type": "span", "_key": "a", "text": "Trưa 11:30-14:00.", "marks": ["strong"] },
-        { "_type": "span", "_key": "b", "text": " Sân Khang Sport (11:30-13:00 T7 và 12:00-14:00 T7-CN). Phù hợp người làm bán thời gian cuối tuần hoặc muốn tập trước khi đi việc khác buổi chiều.", "marks": [] }
+        { "_type": "span", "_key": "a", "text": "Trưa 12:00-14:00.", "marks": ["strong"] },
+        { "_type": "span", "_key": "b", "text": " Sân Khang Sport (12:00-14:00 T7-CN). Phù hợp người làm bán thời gian cuối tuần hoặc muốn tập trước khi đi việc khác buổi chiều.", "marks": [] }
       ]},
       { "_type": "block", "_key": "lisl3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
         { "_type": "span", "_key": "a", "text": "Chiều 17:00-18:00.", "marks": ["strong"] },
@@ -92,7 +92,7 @@
       ]},
       { "_type": "block", "_key": "liwhere3", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
         { "_type": "span", "_key": "a", "text": "Sân Khang Sport (Thủ Đức).", "marks": ["strong"] },
-        { "_type": "span", "_key": "b", "text": " 8 Đường số 20, Hiệp Bình. Khung trưa 11:30-13:00 T7 và 12:00-14:00 T7-CN.", "marks": [] }
+        { "_type": "span", "_key": "b", "text": " 8 Đường số 20, Hiệp Bình. Khung trưa 12:00-14:00 T7-CN.", "marks": [] }
       ]},
 
       { "_type": "block", "_key": "h2level", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Lớp cuối tuần có chia trình độ cơ bản và nâng cao không?", "marks": [] }] },
@@ -117,7 +117,7 @@
       "_type": "faq",
       "question": "Một buổi cuối tuần V2 kéo dài bao lâu?",
       "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
-        { "_type": "span", "_key": "s1", "text": "Buổi 07:00-09:00 và 09:00-11:00 dài 120 phút. Buổi 08:00-10:00 ở Sân Green dài 120 phút. Buổi trưa 11:30-13:00 dài 90 phút, 12:00-14:00 dài 120 phút. Buổi chiều 17:00-18:00 dài 60 phút.", "marks": [] }
+        { "_type": "span", "_key": "s1", "text": "Buổi học nhóm chuẩn của V2 dài 120 phút, cuối tuần cũng như trong tuần: 15-20 phút đầu khởi động, phần giữa tập kỹ thuật, 15 phút cuối học viên đánh tự do với nhau.", "marks": [] }
       ]}],
       "pages": ["nguoi_di_lam"], "includeInSchema": true, "featured": false, "order": 40
     },
