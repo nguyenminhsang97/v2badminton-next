@@ -5,7 +5,12 @@
 > That spec was written on 2026-06-19 against the repo as it stood when Gate A merged
 > (`249ca30`). The repo is now at `5888777`. Eight items in §10.3 no longer match the code.
 >
-> **Status.** Owner decision 2026-09-09: execute Gate B to close out the CMS workstream.
+> **Status: EXECUTED — 2026-09-10. Do not run this again.** What shipped, and the five places
+> execution had to depart from these corrections, are in
+> [`gate-b-completion-2026-09-10.md`](./gate-b-completion-2026-09-10.md); that record wins where
+> it disagrees with this file. Kept for its reasoning and its traps.
+>
+> Owner decision 2026-09-09 (historical): execute Gate B to close out the CMS workstream.
 > The structural design in §10.3 is approved and unchanged. Everything below either
 > **corrects** a step in §10.3 or **adds** a step it lacks. Where this addendum is silent,
 > §10.3 still governs.
