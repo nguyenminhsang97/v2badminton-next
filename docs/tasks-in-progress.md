@@ -350,4 +350,5 @@ Những việc agent không làm thay được:
 
 - **Thử Codex nạp skill:** mở Codex trong repo, hỏi "liệt kê skill của dự án". Kể ra đủ 5 skill là đạt.
 - **Publish màn hình đồng ý OAuth** trong Google Cloud Console (project chứa client `528367442606-…`) trước khoảng 2026-09-24, nếu không token GA4 lại hết hạn. Đã có lịch nhắc lúc 09:00 ngày 22/09.
+- **Hoãn tới 2027 — trang `/lop-he-cau-long-tphcm/`:** hai câu ghi lịch hè có "khung trưa (11:30-14:00)", trong khi lớp nhóm giờ chỉ còn 12:00-14:00 (khung 11:30 là lớp 1 kèm 1, chủ đã ẩn ngày 2026-09-22). Chủ quyết ngày 2026-09-23: lớp hè đã đóng, khi nào mở lại mùa hè 2027 thì sửa luôn một thể. Sửa trong Sanity, không phải trong code.
 - *(Không gấp)* **Cấp quyền cho Cloudflare, Sentry và Vercel MCP** để agent xem được deploy và lỗi.
