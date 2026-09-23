@@ -324,7 +324,7 @@ Cả hai bản còn kèm bản diff và file mới trong `.claude/skill-evals/it
 
 ## T11 — P1.7: fail-closed khi Sanity không truy cập được
 
-**Trạng thái:** chưa nhận
+**Trạng thái:** xong — #138. Chủ quyết ngày 2026-09-23: lịch và sân giữ bản dự phòng (vì khách cần địa chỉ và lịch đang khớp Sanity), FAQ cũ ẩn hẳn, toạ độ dự phòng không gửi cho Google
 **Đọc trước:** `skills/sanity-cms/SKILL.md`, `skills/v2badminton-next/SKILL.md`
 
 **Hiện trạng.** Khi Sanity không đọc được, trang vẫn dựng bằng JSX và dữ liệu viết cứng thay vì báo hỏng. Nghĩa là một sự cố Sanity không hiện ra ngay, mà âm thầm phục vụ nội dung cũ — đúng loại lỗi đã làm mất cả buổi hôm 2026-09-20, khi đọc thiếu token trông y như dữ liệu đầy đủ. Ghi trong `docs/cms/gate-b-completion-2026-09-10.md` §4.

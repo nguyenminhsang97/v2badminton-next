@@ -34,14 +34,36 @@ describe("pricing fails closed", () => {
     expect(catalog).not.toContain("getFallbackPricingTiers");
   });
 
-  it("keeps the fallback path for content where staleness is tolerable", () => {
+  it("keeps the fallback only where the owner decided staleness is tolerable", () => {
     const catalog = read("apps/web/src/lib/sanity/queries/catalog.ts");
 
-    // FAQs, locations and schedule blocks still fall back on purpose — a stale
-    // answer beats a collapsed layout. Only numbers fail closed.
-    expect(catalog).toContain("getFallbackFaqs");
+    // Owner ruling 2026-09-23. Courts and the timetable keep their stand-in: a
+    // visitor heading to a court needs the address, and the timetable mirrors
+    // Sanity. FAQs do not — those answers predate the 2026-09 rulings, and a
+    // reader cannot tell a stale answer from a current one.
     expect(catalog).toContain("getFallbackLocations");
     expect(catalog).toContain("getFallbackScheduleBlocks");
+    expect(catalog).not.toContain("getFallbackFaqs");
+  });
+
+  it("reports every degraded catalog read, not just pricing", () => {
+    const catalog = read("apps/web/src/lib/sanity/queries/catalog.ts");
+
+    // Before this, losing the courts or the timetable was silent: the page kept
+    // rendering from the hardcoded copy and nothing said Sanity had gone.
+    expect(catalog).toContain('contentSet: "locations"');
+    expect(catalog).toContain('contentSet: "schedule_blocks"');
+    expect(catalog).toContain('contentSet: page ? `faqs:${page}` : "faqs"');
+  });
+
+  it("keeps fallback coordinates out of structured data", () => {
+    const shared = read("apps/web/src/lib/sanity/queries/shared.ts");
+    const schema = read("apps/web/src/lib/schema.ts");
+
+    // A stale pin published as JSON-LD is a wrong address carrying Google's
+    // authority — two of the four courts were 3 km out until 2026-09-22.
+    expect(shared).toContain("isFallback: true");
+    expect(schema).toContain("location.isFallback");
   });
 
   it("only reports from production so local and preview stay quiet", () => {

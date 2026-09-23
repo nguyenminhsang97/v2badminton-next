@@ -15,7 +15,6 @@ import type {
 import {
   COACHES_QUERY,
   FAQS_QUERY,
-  getFallbackFaqs,
   getFallbackLocations,
   getFallbackScheduleBlocks,
   LOCATIONS_QUERY,
@@ -62,6 +61,16 @@ export const getLocations = cache(async (): Promise<SanityLocation[]> => {
     return locations;
   }
 
+  // Owner ruling 2026-09-23: keep name and address, because someone trying to
+  // reach a court needs them and they change rarely. The entries are flagged
+  // `isFallback`, which keeps their coordinates out of JSON-LD — those drifted
+  // 3 km for months before 2026-09-22, and a wrong pin sends a visitor to the
+  // wrong street with Google's authority behind it.
+  reportMissingCatalogContent({
+    contentSet: "locations",
+    tags: ["sanity:locations"],
+  });
+
   return getFallbackLocations();
 });
 
@@ -99,6 +108,15 @@ export const getScheduleBlocks = cache(async (): Promise<SanityScheduleBlock[]> 
     return scheduleBlocks;
   }
 
+  // Owner ruling 2026-09-23: keep showing the timetable, because it mirrors what
+  // Sanity holds. That only stays true if someone checks: scripts/check-fallback-drift.mjs
+  // compares the two, and it exists because the Khang Sport 11:30 slot lived on
+  // in this list after the owner hid it in Sanity.
+  reportMissingCatalogContent({
+    contentSet: "schedule_blocks",
+    tags: ["sanity:schedule-blocks"],
+  });
+
   return getFallbackScheduleBlocks();
 });
 
@@ -115,8 +133,18 @@ export const getFaqs = cache(
       tags: page ? [`sanity:faqs:${page}`] : ["sanity:faqs"],
     });
 
-    const faqItems = faqs && faqs.length > 0 ? faqs : getFallbackFaqs(page);
+    if (faqs && faqs.length > 0) {
+      return selectHomepageItems(faqs, featuredOnly, limit);
+    }
 
-    return selectHomepageItems(faqItems, featuredOnly, limit);
+    // Owner ruling 2026-09-23: show nothing rather than the Sprint-2 copy. Those
+    // fallback answers carried no prices, but they were written before the 2026-09
+    // rulings and a visitor cannot tell a stale answer from a current one.
+    reportMissingCatalogContent({
+      contentSet: page ? `faqs:${page}` : "faqs",
+      tags: page ? [`sanity:faqs:${page}`] : ["sanity:faqs"],
+    });
+
+    return [];
   },
 );
