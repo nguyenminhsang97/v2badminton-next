@@ -52,8 +52,10 @@ at the source rather than re-deriving these.
 `git grep -n "next-sanity" -- apps/web` also matched
 `apps/web/scripts/sync-faqs-locations-to-sanity.mts`, which the handbook never mentions. That
 file is typechecked (`tsconfig` includes `**/*.mts`), so leaving it would have kept an
-undeclared dependency alive by hoisting. It now imports `@sanity/client`, and `@next/env`
-became the sixth previously-undeclared dependency.
+undeclared dependency alive by hoisting. It was rewritten to import `@sanity/client`, and
+`@next/env` became the sixth previously-undeclared dependency. (That script has since been
+deleted in #138, along with the FAQ fallback it seeded; the dependency rule it exposed still
+holds for anything under `apps/web/scripts/`.)
 
 ### 2.2 Addendum §B-8 was reversed: `apps/studio` DOES carry env fallbacks
 
@@ -168,7 +170,20 @@ recorded here so it is not lost:
       Telegram lead notifications will be skipped.
 ```
 
-Lead notifications are not being delivered. Pre-existing, unrelated to Gate B.
+Re-checked 2026-09-23 against the production environment: no `TELEGRAM_*` variable is set.
+What that does and does not cost, so nobody re-panics reading this:
+
+- **Leads are not lost.** `submitLead` writes to Postgres first, then notifies. `RESEND_API_KEY`,
+  `NOTIFY_EMAIL_TO` and `NOTIFY_EMAIL_FROM` are all set, so the email notification still goes
+  out. Only the Telegram copy is missing.
+- **The same gap silences ops alerts.** `TELEGRAM_OPS_CHAT_ID` is missing too, so
+  `notifyOpsTelegram` skips. That is how nine Upstash DNS failures inside the rate limiter went
+  unnoticed between 2026-05-12 and 2026-09-12 — the limiter fails open, the lead still went
+  through, and Sentry was the only witness. See `skills/v2badminton-next/SKILL.md`,
+  "Monitoring, and the MCP servers that reach it".
+
+Restoring Telegram is three variables on the web project; it is an owner decision, not a bug.
+Pre-existing, unrelated to Gate B.
 
 ---
 

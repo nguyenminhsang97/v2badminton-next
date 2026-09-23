@@ -7,9 +7,12 @@
 > **Gate A is DONE** — merged 2026-06-22 (`249ca30`). Sections describing Gate A are a
 > historical record, not work to do.
 >
-> **Gate B is NOT current as written.** Eight steps in §10.3 no longer match the code.
-> Read [`gate-b-addendum-2026-09-09.md`](./gate-b-addendum-2026-09-09.md) alongside §10.3;
-> it corrects them and is the governing document where the two disagree.
+> **Gate B has SHIPPED — do not execute §10.3.** Phases 1 and 2 went live on 2026-09-10 and
+> Phase 3 was cancelled by the owner. What actually exists is recorded in
+> [`gate-b-completion-2026-09-10.md`](./gate-b-completion-2026-09-10.md); read that first,
+> and it wins wherever it disagrees with this plan. §10.3 is kept for the reasoning behind
+> the design, not as a list of work. Eight of its steps never matched the code as written and
+> were corrected in [`gate-b-addendum-2026-09-09.md`](./gate-b-addendum-2026-09-09.md).
 
 **Status:** Plan only — DO NOT IMPLEMENT yet.
 **Author:** Tech lead (planning pass)
