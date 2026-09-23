@@ -24,8 +24,11 @@ Danh sách việc còn mở sau đợt làm skill ngày 2026-09-17. Mỗi việc
 | T7 | Quy tắc mâu thuẫn kiểm bằng máy, chạy E9 | Skill | Thấp |
 | T8 | Link bản đồ và tọa độ hai sân Thủ Đức sai | Sanity + code | Trung bình |
 | T9 | Việc lặt vặt còn lại của bộ skill | Skill | Thấp |
+| T10 | Loại tài liệu "Sự kiện" cho giải nội bộ | Sanity + code | Thấp — làm khi có giải |
+| T11 | P1.7 — fail-closed khi Sanity không truy cập được | Code | Trung bình |
+| T12 | CSP cho origin của Studio | Code | Thấp |
 
-T1–T5 và T8 đang sai trước mặt khách. T6, T7 và T9 là gia cố bộ skill: skill hiện dùng được và đã được đo; các việc này giữ cho nó không hỏng dần và vá những điểm yếu đã đo được.
+T1–T9 đã xong (2026-09-22). T10–T12 là phần còn mở của workstream CMS. T1–T5 và T8 từng sai trước mặt khách; T6, T7 và T9 là gia cố bộ skill: skill hiện dùng được và đã được đo; các việc này giữ cho nó không hỏng dần và vá những điểm yếu đã đo được.
 
 ## Quyết định của chủ (2026-09-17)
 
@@ -291,11 +294,60 @@ Bộ skill đang dùng được và đã được đo (#120–#123). Các việc
 
 ---
 
+## T10 — Loại tài liệu "Sự kiện" cho giải nội bộ
+
+**Trạng thái:** chưa nhận — **chủ quyết ngày 2026-09-23: mỗi năm chỉ 2-3 giải, để đó, khi nào cần thì làm**. Ghi lại trong #137.
+**Đọc trước:** `skills/sanity-cms/SKILL.md`, `skills/seo/SKILL.md`, `skills/v2badminton-next/SKILL.md`
+
+**Bối cảnh.** Đề bài này do agent bịa ra làm đề chấm skill (eval 6), không phải yêu cầu của chủ. Nhưng hai lượt chạy ngày 2026-09-22 đã cho ra code gần đủ dùng, nên giữ lại thay vì bỏ.
+
+**Code đang nằm ở đâu.** Hai nhánh trong máy chủ repo, chưa push, chưa review, **không merge nguyên trạng**:
+- `worktree-agent-a2d2fbb4d7f55ba07` — bản có skill. Lấy bản này làm gốc.
+- `worktree-agent-a6f21c897b2b496b0` — bản không skill. Có hai thứ tốt hơn nên ghép sang: component thẻ sự kiện (`EventBadge`, `EventCard`) và bản sửa lỗi ảnh bìa cao 405px do thuộc tính `height` đè `aspect-ratio`.
+
+Cả hai bản còn kèm bản diff và file mới trong `.claude/skill-evals/iteration-4/eval-6-new-event-doc-type/*/run-1/outputs/files/` (gitignored, chỉ có trên máy chủ repo).
+
+**Bản có skill gồm gì.** ~1.400 dòng mới, 8 file, cộng sửa 28 file: schema `event` 5 tab trong Studio (tổng quan, thời gian & địa điểm, nội dung, kết quả & ảnh, SEO); `/su-kien/` và `/su-kien/<slug>/`; nhãn "sắp diễn ra / đang diễn ra / đã kết thúc" tự tính theo giờ Việt Nam; nút đăng ký tự ẩn khi hết hạn; link chân trang chỉ hiện khi đã có sự kiện publish; vào sitemap; test riêng.
+
+**Quyết định đúng cần giữ:** chỉ phát JSON-LD `SportsEvent` khi sự kiện mở cho người ngoài CLB. Google chỉ chấp nhận sự kiện ai cũng đăng ký được; khai giải nội bộ là khai sai. Bản không skill phát cho mọi giải — đừng lấy phần đó.
+
+**Làm (khi có giải thật, ước lượng nửa buổi):**
+- Dựng lại trên `main` lúc đó. Sẽ đụng độ ở `dashboardQueries.ts`, `DashboardTool.tsx`, `ContentOpsTable.tsx` vì #134 đã sửa các file này sau khi hai nhánh kia tách ra.
+- Soát toàn bộ; bỏ phần agent tự ý sửa file skill và file này trong worktree của nó.
+- Kiểm thật: build, test, mở form trong Studio, tạo một sự kiện nháp, bấm "Xem bản nháp", xem ở 390px và 1440px.
+- Chủ cần duyệt các nhãn tiếng Việt ("Vô địch / Á quân / Hạng ba", "Giải đấu nội bộ / Giao lưu") và thêm `event` vào bộ lọc webhook trong Sanity, nếu không publish xong web chờ tới 1 giờ mới đổi.
+- Cân nhắc tách hai PR: schema + hai trang trước, kết quả và thư viện ảnh sau.
+
+**Xong khi:** đăng được một giải thật từ Studio, trang hiện đúng trạng thái, và giải nội bộ không phát `SportsEvent`.
+
+---
+
+## T11 — P1.7: fail-closed khi Sanity không truy cập được
+
+**Trạng thái:** chưa nhận
+**Đọc trước:** `skills/sanity-cms/SKILL.md`, `skills/v2badminton-next/SKILL.md`
+
+**Hiện trạng.** Khi Sanity không đọc được, trang vẫn dựng bằng JSX và dữ liệu viết cứng thay vì báo hỏng. Nghĩa là một sự cố Sanity không hiện ra ngay, mà âm thầm phục vụ nội dung cũ — đúng loại lỗi đã làm mất cả buổi hôm 2026-09-20, khi đọc thiếu token trông y như dữ liệu đầy đủ. Ghi trong `docs/cms/gate-b-completion-2026-09-10.md` §4.
+
+**Cần quyết trước khi làm:** trang nào được phép fallback (trang chủ? money page?) và trang nào nên trả lỗi. Hỏi chủ.
+
+---
+
+## T12 — CSP cho origin của Studio
+
+**Trạng thái:** chưa nhận
+**Đọc trước:** `skills/sanity-cms/SKILL.md`
+
+**Hiện trạng.** `apps/studio/next.config.ts` cố ý không có CSP (xem `docs/cms/gate-b-addendum-2026-09-09.md` §B-8): Sanity Studio cần `unsafe-eval`, worker `blob:` và `connect-src` rộng, nên CSP viết tay dễ làm hỏng trình soạn. Hiện quyền vào cms.v2badminton.com chỉ dựa vào đăng nhập Sanity.
+
+**Cân nhắc trước khi làm:** so giữa viết CSP đủ rộng cho Studio và bật Vercel Deployment Protection cho project studio. Cách sau đơn giản hơn nhiều; chủ đã từ chối một lần ngày 2026-09-10 vì nó chặn cả việc mở Studio từ máy khác.
+
+---
+
 ## Chờ chủ
 
 Những việc agent không làm thay được:
 
 - **Thử Codex nạp skill:** mở Codex trong repo, hỏi "liệt kê skill của dự án". Kể ra đủ 5 skill là đạt.
 - **Publish màn hình đồng ý OAuth** trong Google Cloud Console (project chứa client `528367442606-…`) trước khoảng 2026-09-24, nếu không token GA4 lại hết hạn. Đã có lịch nhắc lúc 09:00 ngày 22/09.
-- **`.codex/tmp/` chưa bị ignore:** thư mục chứa khoảng 480KB dump SEO audit và node_modules, chỉ một lần `git add -A` là vào repo. Thêm `.codex/tmp/` vào `.gitignore`.
 - *(Không gấp)* **Cấp quyền cho Cloudflare, Sentry và Vercel MCP** để agent xem được deploy và lỗi.
