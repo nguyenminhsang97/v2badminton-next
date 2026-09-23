@@ -34,6 +34,10 @@ Rules that outlive Gate B:
 
 Background: `docs/cms/gate-b-completion-2026-09-10.md` is the record of what shipped and what
 is still open. Read it before `docs/cms/gate-b-junior-handbook.md`, which is closed history.
+That record and `docs/cms/url-rename-runbook.md` describe the present, so a change that makes
+one of their statements false updates them in the same PR. The rest of `docs/cms/` is dated
+history behind an EXECUTED banner — read it, don't re-run it, and don't "fix" the pre-split
+paths it cites on purpose.
 
 Open work is tracked in `docs/tasks-in-progress.md`, with the evidence and the owner's decisions
 for each task. Check it, and `gh pr list`, before starting something that might already be
