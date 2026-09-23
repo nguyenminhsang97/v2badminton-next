@@ -31,7 +31,7 @@
       {
         "_type": "block", "_key": "i2", "style": "normal", "markDefs": [],
         "children": [
-          { "_type": "span", "_key": "x", "text": "Lịch hè mở thêm các khung trưa (11:30-14:00) và chiều (14:00-15:30) bên cạnh khung sáng cuối tuần và tối trong tuần đã có sẵn. Sân: Green (Bình Thạnh), Huệ Thiên, Khang Sport, Phúc Lộc (Thủ Đức), TP.HCM.", "marks": [] }
+          { "_type": "span", "_key": "x", "text": "Lịch hè mở thêm các khung trưa (12:00-14:00) và chiều (14:00-15:30) bên cạnh khung sáng cuối tuần và tối trong tuần đã có sẵn. Sân: Green (Bình Thạnh), Huệ Thiên, Khang Sport, Phúc Lộc (Thủ Đức), TP.HCM.", "marks": [] }
         ]
       }
     ],
@@ -58,7 +58,7 @@
       { "_type": "block", "_key": "h2diff", "style": "h2", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Khung giờ lớp hè khác năm học như thế nào?", "marks": [] }] },
       { "_type": "block", "_key": "pdiff", "style": "normal", "markDefs": [], "children": [{ "_type": "span", "_key": "x", "text": "Trong hè, V2 giữ nguyên các khung lớp năm học và bổ sung thêm khung trưa-chiều cho học sinh nghỉ:", "marks": [] }] },
       { "_type": "block", "_key": "lidiff1", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [
-        { "_type": "span", "_key": "a", "text": "Khung trưa (11:30-14:00).", "marks": ["strong"] },
+        { "_type": "span", "_key": "a", "text": "Khung trưa (12:00-14:00).", "marks": ["strong"] },
         { "_type": "span", "_key": "b", "text": " Sân Khang Sport (Thủ Đức) — phù hợp học sinh sau giờ sáng ở nhà.", "marks": [] }
       ]},
       { "_type": "block", "_key": "lidiff2", "style": "normal", "listItem": "bullet", "level": 1, "markDefs": [], "children": [

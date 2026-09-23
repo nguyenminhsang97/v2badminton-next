@@ -129,7 +129,7 @@
       "_type": "faq",
       "question": "Một buổi tối học V2 kéo dài bao lâu?",
       "answer": [{ "_type": "block", "_key": "a", "style": "normal", "markDefs": [], "children": [
-        { "_type": "span", "_key": "s1", "text": "Buổi học 90-120 phút, gồm khởi động, phần kỹ thuật và đánh tự do có HLV. Khung 18:00-20:00 và 20:00-22:00 đều đảm bảo đủ thời lượng cho học viên cảm thấy đủ tập nhưng không bị kiệt sức.", "marks": [] }
+        { "_type": "span", "_key": "s1", "text": "Mỗi buổi tối dài 120 phút: 15-20 phút đầu khởi động, phần giữa tập kỹ thuật, 15 phút cuối học viên đánh tự do với nhau. Cả hai khung 18:00-20:00 và 20:00-22:00 đều như vậy.", "marks": [] }
       ]}],
       "pages": ["nguoi_di_lam"], "includeInSchema": true, "featured": false, "order": 32
     },

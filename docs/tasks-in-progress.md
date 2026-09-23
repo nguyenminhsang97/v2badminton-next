@@ -35,7 +35,7 @@ Dùng chung cho các việc bên dưới. Đây là dữ kiện đã chốt, kh�
 - **Lớp nhóm luôn 4-8 người.** "2-6" là số cũ.
 - **1 kèm 1 (400.000 VNĐ/giờ/học viên):** khách hoặc V2 đặt sân đều được, không bên nào bắt buộc. **Tiền thuê sân luôn do khách trả.** V2 chỉ cung cấp HLV và cầu. Lớp nhóm thì khác: học phí đã gồm sân.
 - **Buổi học nhóm chuẩn là 120 phút:** 15-20 phút khởi động, 15 phút cuối để học viên đánh tự do với nhau, phần giữa là tập. Mọi lớp buổi tối đều 120 phút. Buổi học thử cũng 120 phút.
-- **Bốn khung ngắn hơn trong lịch là lớp custom, có thật — lịch không sai:** Green 14:00-15:30 (T3-T5-T7), Phúc Lộc 14:00-15:30 (T2-T4-T6), Khang Sport 11:30-13:00 (Thứ 7) dài 90 phút; Huệ Thiên 17:00-18:00 (T7-CN) dài 60 phút. **Không sửa giờ các khung này.**
+- **Ba khung ngắn hơn trong lịch là lớp custom, có thật — lịch không sai:** Green 14:00-15:30 (T3-T5-T7), Phúc Lộc 14:00-15:30 (T2-T4-T6), Huệ Thiên 17:00-18:00 (T7-CN) dài 60 phút. **Không sửa giờ các khung này.** Khung Khang Sport 11:30-13:00 (Thứ 7) cũng từng nằm ở đây: chủ cho biết ngày 2026-09-23 rằng đó là lớp 1 kèm 1, không nhận thêm người, và đã ẩn khỏi Sanity ngày 22/09. Đừng đưa nó trở lại.
 - **Ra bên ngoài chỉ báo buổi chuẩn 120 phút**, cả trong nội dung web lẫn dữ liệu cấu trúc cho Google. Không liệt kê thời lượng lớp custom, không ghi chữ "custom".
 - **Chưa biết:** lớp custom giá bao nhiêu và dành cho ai.
 
