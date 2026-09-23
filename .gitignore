@@ -18,6 +18,11 @@ node_modules/
 /playwright-report/
 /test-results/
 /.playwright-mcp/
+# MCP client config. It holds API tokens for Sanity, Vercel, Sentry and
+# Cloudflare in plain text, and it was untracked but not ignored — one
+# `git add -A` away from being published.
+.mcp.json
+.mcp.json.bak-*
 /*-mobile-*.png
 
 # next.js
