@@ -117,6 +117,7 @@ These conventions only existed in git history, so agents kept re-deriving them. 
 - **Wait for CI**, all of it: lint/typecheck/build, tests, Lighthouse, the skill-path guard, and both Vercel deploys. A Vercel check reading "Skipped - Not affected" means that project had no relevant changes, not that it built.
 - **An empty commit will not rebuild a Vercel preview** — the monorepo skips unaffected projects. To pick up a changed environment variable, redeploy the existing preview from the Vercel UI instead.
 - **Content lives in Sanity, not in the PR.** A change that needs both ships the code and leaves the wording to the owner; see `sanity-cms`, "Writing content".
+- **Two documents describe the present, and your PR keeps them true.** `docs/cms/gate-b-completion-2026-09-10.md` (§1 topology, §4 what is still open) and `docs/cms/url-rename-runbook.md` assert how things are right now; if your change makes one of their sentences false, fix it in the same PR, the way you already move a task's `Trạng thái` line. Everything else in `docs/cms/` is dated history behind an EXECUTED banner — leave it alone, including the pre-split paths it cites on purpose. Nothing checks this mechanically: a CI path guard over those files would flag the history as broken, which is why there isn't one.
 
 ## Windows workspace traps
 
