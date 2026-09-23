@@ -25,6 +25,9 @@ const PAGE_TYPES = new Set([
   "content_node",
   "content_article",
   "post",
+  // Routed by fullPath like hubs and articles, so it belongs with the pages.
+  // Without this it falls through to the "Khác" safety net at the bottom.
+  "court",
 ]);
 
 const DATA_TYPES = new Set([
