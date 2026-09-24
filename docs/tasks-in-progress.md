@@ -27,8 +27,21 @@ Danh sách việc còn mở sau đợt làm skill ngày 2026-09-17. Mỗi việc
 | T10 | Loại tài liệu "Sự kiện" cho giải nội bộ | Sanity + code | Thấp — làm khi có giải |
 | T11 | P1.7 — fail-closed khi Sanity không truy cập được | Code | Trung bình |
 | T12 | CSP cho origin của Studio | Code | Thấp |
+| T13 | Dọn hồ sơ Google Maps trước khi xin đánh giá | Chủ | Cao |
+| T14 | Nối Google Maps với website | Code + chủ | Cao — sau T13 |
+| T15 | Xin đánh giá thật trên Google Maps | Chủ + agent | Cao — sau T13 |
+| T16 | Đo lường: biết khách đến từ đâu | Code + chủ | Cao |
+| T17 | Hai trang quận nhắm "học cầu lông + quận" | Sanity + code | Cao |
+| T18 | Poster QR ở sân và fanpage của chủ sân | Chủ + agent | Trung bình |
+| T19 | Danh bạ sân cho 4 sân đối tác | Sanity + chủ | Trung bình |
+| T20 | Có tên trong bài "Top", trang danh bạ và nhóm Facebook | Chủ + agent | Trung bình |
+| T21 | Tin tức: phạm vi `/tin-tuc/` và index của hub `/tin-v2/` | Chủ + Sanity + code | Thấp |
+| T22 | Báo cáo SEO ở mốc 30, 60, 90 ngày | Báo cáo | Trung bình |
+| T23 | Rà danh sách trang dịch vụ sau mốc 90 ngày | Quyết định + code | Thấp — sau T22 |
 
 T1–T9 đã xong (2026-09-22). T10–T12 là phần còn mở của workstream CMS. T1–T5 và T8 từng sai trước mặt khách; T6, T7 và T9 là gia cố bộ skill: skill hiện dùng được và đã được đo; các việc này giữ cho nó không hỏng dần và vá những điểm yếu đã đo được.
+
+T13–T23 là workstream SEO, mở ngày 2026-09-24. Chiến lược, số liệu gốc và các quyết định nằm ở `docs/seo-strategy.md`; bằng chứng trong từng việc kiểm ngày 2026-09-23/24, không phải ngày 2026-09-17 như các việc trên. Thứ tự hợp lý: T13 và T16 trước, vì hồ sơ Maps phải đúng quy định trước khi xin đánh giá, và phải đo được thì mới biết việc nào có tác dụng.
 
 ## Quyết định của chủ (2026-09-17)
 
@@ -344,10 +357,269 @@ Cả hai bản còn kèm bản diff và file mới trong `.claude/skill-evals/it
 
 ---
 
+## T13 — Dọn hồ sơ Google Maps trước khi xin đánh giá
+
+**Trạng thái:** chưa nhận — chờ chủ quyết ba điểm bên dưới
+**Đọc trước:** `docs/seo-strategy.md` (mục 4 và 5.1)
+
+**Hiện trạng** (Google Maps, không đăng nhập, 2026-09-24):
+
+| Hồ sơ | Địa chỉ | Xác minh | Điện thoại | Đánh giá |
+|---|---|---|---|---|
+| V2 Badminton | 154/9 Nguyễn Xí, Bình Thạnh (địa chỉ sân Green) | đã xác minh | +84 982 093 947 | 0 |
+| V2 Badminton cơ sở Thủ Đức -Sân cầu lông Huệ Thiên | 520 QL13, Hiệp Bình | chưa — Google hiện nút "Xác nhận doanh nghiệp này" | — | 0 |
+| V2Badminton cơ sở Thủ Đức - sân Phúc Lộc | 103/11B Đường Số 20, Hiệp Bình (trùng địa chỉ sân Phúc Lộc) | chưa | — | 0 |
+| V2Badminton cơ sở Thủ Đức - Sân Bình Triệu | Đường Số 20, Hiệp Bình, cách hồ sơ Phúc Lộc khoảng 370 m | chưa | +84 907 911 886 | 0 |
+
+- Web dùng số 0907 911 886 (`apps/web/src/lib/site.ts`), cũng là số ghi trong phần xác minh dữ kiện tháng 5/2026.
+- Chủ cho biết (2026-09-24) các chi nhánh được tạo "ngay kế bên sân ở từng khu vực", và chủ nhờ được hầu hết chủ sân.
+- Quy định của Google:
+  - Lớp học định kỳ tại địa điểm mình không sở hữu hoặc không có quyền đại diện thì không đủ điều kiện có hồ sơ (https://support.google.com/business/answer/13763036, mục "Ineligible businesses").
+  - Tên hồ sơ phải là tên thật, không thêm địa danh hay tên doanh nghiệp khác (https://support.google.com/business/answer/3038177).
+  - Hồ sơ bị khoá thì mất luôn đánh giá, nên phải sửa trước khi xin đánh giá (T15).
+
+**Cần chủ quyết:**
+1. Có gộp 3 hồ sơ Thủ Đức thành 1 không, và giữ ở sân nào? Đề xuất: gộp, giữ ở sân có nhiều lớp nhất.
+2. Hồ sơ chính nên dùng số điện thoại nào?
+3. Chủ sân của các hồ sơ được giữ lại có đồng ý (một tin nhắn là đủ) và cho treo banner V2 cố định không?
+
+**Làm** (chủ làm trong Google Business Profile; agent không đăng nhập được):
+- Hồ sơ giữ lại:
+  - đặt tên đúng "V2 Badminton";
+  - số điện thoại khớp với web;
+  - giờ mở cửa bằng giờ lớp thật;
+  - link web lấy từ T14;
+  - có mô tả dịch vụ và ảnh lớp.
+- Hồ sơ Thủ Đức được giữ lại phải được xác minh. Google có thể yêu cầu quay video tại địa điểm, nên cần treo banner V2 ở sân trước.
+- Gỡ hai hồ sơ còn lại: nhận quyền quản lý rồi đóng, hoặc vào "Đề xuất chỉnh sửa" → "Đóng cửa hoặc xoá".
+- Lưu tin nhắn đồng ý của chủ sân.
+
+**Xong khi:** chỉ còn các hồ sơ đã chọn; tất cả đã được xác minh; tên, số điện thoại và giờ đều đúng; có banner V2 ở sân.
+
+---
+
+## T14 — Nối Google Maps với website
+
+**Trạng thái:** chưa nhận — làm sau T13, khi đã biết hồ sơ nào còn lại
+**Đọc trước:** `skills/seo/SKILL.md` (mục JSON-LD), `skills/analytics-report/SKILL.md`
+
+**Hiện trạng** (2026-09-24):
+- JSON-LD chỉ khai Facebook trong `sameAs` (`apps/web/src/lib/schema.ts`, ba chỗ `sameAs: [contact.facebookUrl]`), chưa có link hồ sơ Maps.
+- Link web trên các hồ sơ Maps không có mã UTM (hồ sơ Bình Triệu còn trỏ tới bản `http://`). Vì vậy GA4 không tách được khách đến từ Maps với khách đến từ tìm kiếm Google.
+- Place ID của hồ sơ chính: `ChIJIZbkb80pdTERglAcyJiRR9Y` (lấy từ URL Google Maps ngày 2026-09-24).
+
+**Làm.**
+- Thêm URL hồ sơ Maps đã xác minh vào `sameAs`. Nếu lưu URL này trong `site_settings` thì đọc từ Sanity giống `facebookUrl`, không viết cứng vào code.
+- Soạn cho mỗi hồ sơ một link có UTM, ví dụ `https://v2badminton.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp-binh-thanh`. Chủ dán link này vào ô "Trang web" của hồ sơ.
+- Kiểm: JSON-LD đọc được, Rich Results Test không báo lỗi mới.
+
+**Xong khi:** JSON-LD trỏ tới hồ sơ Maps, và GA4 có phiên với `sessionCampaignName` bắt đầu bằng `gbp-`.
+
+---
+
+## T15 — Xin đánh giá thật trên Google Maps
+
+**Trạng thái:** chưa nhận — bắt đầu sau T13 (không xin đánh giá cho hồ sơ có thể bị gộp hay bị khoá)
+**Đọc trước:** `docs/seo-strategy.md` (mục 5.1 và 7), `skills/noi-dung-vi/SKILL.md` (chữ trên thẻ)
+
+**Hiện trạng** (2026-09-24):
+- Cả 4 hồ sơ đều có 0 đánh giá. Các sân quanh đó: Phúc Lộc 4,1★ (44 đánh giá), Vạn Phúc 4,8★ (121), Tấn Phúc 4,4★ (207), PooC 4,8★ (1.442).
+- 3 lời chứng thực trên web là lời thật, nhưng khó nhờ những người đó viết thêm (chủ, 2026-09-24).
+- HLV chưa muốn công khai tên và ảnh.
+
+**Làm.**
+- Agent: làm thẻ khổ A6 để in. Mỗi hồ sơ một mã QR, quét là mở thẳng khung viết đánh giá (`https://search.google.com/local/writereview?placeid=<Place ID>`). Chữ trên thẻ ngắn, chủ duyệt.
+- HLV hỏi trực tiếp học viên đang học vào cuối buổi, lúc họ vừa đạt một mốc (làm được kỹ thuật mới, tròn tháng đầu). Học viên học ở sân nào thì đánh giá cho hồ sơ của sân đó.
+- Trả lời mọi đánh giá trong vài ngày.
+- Không tặng quà, không giảm giá, không soạn sẵn nội dung, không nhờ người không học. Những việc này trái chính sách đánh giá của Google, và Google gỡ các đánh giá đó.
+
+**Xong khi:** thẻ QR đã được đặt ở các sân và hồ sơ có ít nhất 10 đánh giá. Mục tiêu 25–30 đánh giá ở mốc 90 ngày được theo dõi ở T22.
+
+---
+
+## T16 — Đo lường: biết khách đến từ đâu
+
+**Trạng thái:** chưa nhận
+**Đọc trước:** `skills/analytics-report/SKILL.md`, `skills/v2badminton-next/SKILL.md` (đường xử lý lead)
+
+**Hiện trạng** (2026-09-23/24):
+- Chỉ `generate_lead` là Key Event: mỗi tháng từ tháng 6 đến tháng 9, số `keyEvents` bằng đúng số `generate_lead`. Vì vậy lượt bấm Zalo hoặc gọi (`contact_click`) không được tính là chuyển đổi.
+- Hai nút cuối trang dịch vụ (`apps/web/src/components/money-page/MoneyPageTemplate.tsx`, quanh dòng 254 và 257) là `<Link>` nội bộ, chưa gắn `trackEvent`.
+- Form không hỏi khách biết V2 qua đâu. Ba nguồn khách chính (người quen, Facebook, gặp ở sân — chủ, 2026-09-24) GA4 không đo được.
+- `/lop-cau-long-buoi-toi/`: Search Console báo "Crawled – currently not indexed", Google ghé lần cuối ngày 2026-05-12.
+- Trong code không có thẻ xác minh Bing Webmaster Tools. Chưa kiểm bản ghi DNS.
+
+**Làm.**
+
+Agent (một PR):
+- Thêm câu hỏi không bắt buộc "Bạn biết V2 qua đâu?" vào form, với các lựa chọn: người quen giới thiệu, Facebook, gặp ở sân, Google, Google Maps, ChatGPT hoặc AI khác, khác.
+  - Đi đúng đường xử lý lead hiện có (validation → DB → email), và kiểm xem DB có cần thêm cột không.
+  - Câu chữ theo `skills/noi-dung-vi/SKILL.md`, chủ duyệt.
+- Gắn `cta_click` cho hai nút cuối trang dịch vụ, thêm giá trị `CtaLocation` mới nếu cần.
+
+Chủ (mỗi việc vài phút):
+- GA4 Admin → Events → đánh dấu `contact_click` là Key Event.
+- Search Console → kiểm tra URL `/lop-cau-long-buoi-toi/` → "Yêu cầu lập chỉ mục". Ghi ngày làm vào dòng Trạng thái.
+- Đăng ký Bing Webmaster Tools và nhập site từ Search Console. Một số trợ lý AI tìm web qua Bing.
+
+**Xong khi:**
+- GA4 tính `contact_click` là Key Event.
+- Form lưu được nguồn khách, và email báo lead có dòng nguồn.
+- Hai nút cuối trang có event.
+- Trang buổi tối đã được yêu cầu index.
+- Site đã có trong Bing Webmaster Tools.
+
+---
+
+## T17 — Hai trang quận nhắm "học cầu lông + quận"
+
+**Trạng thái:** chưa nhận
+**Đọc trước:** `skills/seo/SKILL.md`, `skills/noi-dung-vi/SKILL.md`, `skills/sanity-cms/SKILL.md` (mục "Writing content")
+
+**Hiện trạng** (Search Console, 25/8–21/9):
+- `/lop-cau-long-thu-duc/`: 279 lượt hiển thị, 0 click, vị trí 9,5. Tiêu đề: "Lớp Cầu Lông Thủ Đức | Huệ Thiên, Bình Triệu, Phúc Lộc".
+- `/lop-cau-long-binh-thanh/`: 320 lượt hiển thị, 0 click, vị trí 8,6. Tiêu đề: "Lớp Cầu Lông Bình Thạnh | Sân Green | V2 Badminton".
+- Phần lớn lượt hiển thị đến từ người tìm tên sân. Với người tìm lớp: "học cầu lông thủ đức" ở vị trí khoảng 11 (8 lượt), "học cầu lông bình thạnh" khoảng 40 (4 lượt).
+
+**Làm.**
+- Viết lại `metaTitle`, H1 và đoạn mở đầu theo cụm "học cầu lông Thủ Đức" và "học cầu lông Bình Thạnh".
+  - Đoạn mở đầu nói rõ lớp gì, cho ai, ở sân nào, giá từ bao nhiêu (quy tắc AEO trong `skills/seo/SKILL.md`).
+  - `metaTitle` của money page phải tự có "| V2 Badminton".
+  - Chốt câu chữ với chủ, tạo bản nháp trong Sanity, chủ publish.
+- Thêm link nội bộ tới hai trang này từ trang chủ, trang người mới, trang người đi làm, trang 1 kèm 1 và trang bảng giá, với chữ neo có mô tả.
+- Khi có ảnh lớp thật (từ T15 hoặc T18) thì đưa lên trang.
+- Ghi số trước và sau: lượt hiển thị và vị trí của hai truy vấn trên, trong 28 ngày trước và 28 ngày sau khi publish.
+
+**Xong khi:** tiêu đề mới đã publish, link nội bộ đã có, và số trước/sau đã ghi vào mục 10 của `docs/seo-strategy.md`.
+
+---
+
+## T18 — Poster QR ở sân và fanpage của chủ sân
+
+**Trạng thái:** chưa nhận
+**Đọc trước:** `docs/seo-strategy.md` (mục 5.2), `skills/noi-dung-vi/SKILL.md`
+
+**Hiện trạng** (2026-09-24): "gặp ở sân" là một trong ba nguồn học viên chính nhưng chưa đo được. Chủ nhờ được hầu hết chủ sân. Chưa có poster nào dẫn khách về web.
+
+**Làm.**
+- Agent: làm mẫu poster khổ A4 cho từng sân (Green, Huệ Thiên, Phúc Lộc, Khang Sport).
+  - Nội dung: "Lớp cầu lông V2 tại sân này", giá "từ" lấy từ Sanity, và mã QR tới trang quận có UTM (`utm_source=poster&utm_medium=offline&utm_campaign=<tên sân>`).
+  - Không in lịch chi tiết vì dễ lỗi thời; mã QR dẫn tới lịch trên web.
+  - Chủ duyệt câu chữ.
+- Chủ: in và dán ở sân; nhờ chủ sân đăng một bài hoặc nhắc lớp V2 kèm link trên fanpage của sân (và trên web của sân nếu có).
+- Ghi lại sân nào đã dán, fanpage nào đã nhắc, vào mục 10 của `docs/seo-strategy.md`.
+
+**Xong khi:** poster đã có ở các sân; GA4 có phiên với `utm_source=poster`; có ít nhất một fanpage sân nhắc V2 kèm link.
+
+---
+
+## T19 — Danh bạ sân cho 4 sân đối tác
+
+**Trạng thái:** chưa nhận — chờ chủ quyết mở với 4 sân
+**Đọc trước:** `skills/sanity-cms/SKILL.md`, `skills/seo/SKILL.md`; spec Phase 2 `.claude/CMS/v2badminton-cms-phase-2-locked-spec.md` (chỉ có trên máy của chủ)
+
+**Hiện trạng.**
+- Code của `/san-cau-long/` đã xong từ 2026-06-17 (Phase 2 PR1–PR4): schema `court`, loader, trang, JSON-LD `SportsActivityLocation`, event `cms_court_cta_click`.
+- Mục trên menu đang tắt bằng `EXPOSE_SAN_CAU_LONG = false` (`apps/web/src/components/layout/Nav.tsx`). Sanity có 0 tài liệu `court` (2026-09-23).
+- Người tìm tên sân: khoảng 366 lượt hiển thị, 0 click (25/8–21/9). Các lượt này đang rơi vào hai trang quận.
+- Spec đặt mức mở là 5 sân đã kiểm, kèm phần nhận xét do chủ viết, và định làm danh bạ gồm cả sân V2 không dạy. Menu chỉ hiện khi có ít nhất 3 khu vực và 5 sân (quyết định 2026-06-15). V2 dạy ở 4 sân.
+
+**Làm.**
+- Đưa spec Phase 2 từ `.claude/CMS/` vào `docs/`, để máy khác cũng đọc được.
+- Chủ quyết: mở với 4 sân đối tác.
+- Xin chủ sân thông tin: giờ mở cửa, giá thuê, số điện thoại đặt sân, ảnh. Chủ viết phần nhận xét theo spec §9 (PR5b).
+- Tạo bản nháp `court` trong Sanity, chủ publish. Menu vẫn ẩn; hai trang quận link sang các trang sân.
+- Gửi link trang sân cho chủ sân để họ chia sẻ (nối với T18).
+
+**Xong khi:** 4 trang sân đã publish và được index, hai trang quận đã link tới, và mốc T22 kế tiếp thấy có click từ người tìm tên sân.
+
+---
+
+## T20 — Có tên trong bài "Top", trang danh bạ và nhóm Facebook
+
+**Trạng thái:** chưa nhận
+**Đọc trước:** `docs/seo-strategy.md` (mục 3 và 5.3), `skills/noi-dung-vi/SKILL.md`
+
+**Hiện trạng** (tìm ngày 2026-09-24 từ máy chủ ở Mỹ; thứ tự có thể khác Google Việt Nam):
+- Trang 1 cho "học cầu lông thủ đức", "lớp học cầu lông bình thạnh" và "học cầu lông 1 kèm 1 tphcm" là các bài tổng hợp và trang danh bạ: ShopVNB, Siêu Thị Cầu Lông, votcaulongshop, Eduoka, Baodep, Sài Gòn Review. Có thêm một bài hỏi trong nhóm Facebook "Học cầu lông".
+- V2 không có tên trong bài nào.
+- Bài ShopVNB về Thủ Đức cập nhật ngày 2026-06-04. Eduoka có mục "Đăng ký dạy".
+
+**Làm.**
+- Đăng ký V2 trên Eduoka (miễn phí).
+- Agent soạn tin nhắn hoặc email ngắn cho từng trang, kèm dữ kiện đúng lấy từ Sanity (lịch, giá từ 1.000.000đ/tháng, sân, ảnh). Chủ gửi. Không trả phí (chủ, 2026-09-24).
+- Khi có người hỏi lớp ở Thủ Đức hoặc Bình Thạnh trong nhóm Facebook, trả lời thật và kèm link trang quận. Không đăng quảng cáo hàng loạt.
+- Ghi nơi đã gửi, ngày gửi và kết quả vào mục 10 của `docs/seo-strategy.md`.
+
+**Xong khi:** có ít nhất 3 trang bên ngoài ghi tên V2 kèm link.
+
+---
+
+## T21 — Tin tức: phạm vi `/tin-tuc/` và index của hub `/tin-v2/`
+
+**Trạng thái:** chưa nhận — chờ chủ làm rõ phạm vi `/tin-tuc/`
+**Đọc trước:** `docs/blog-content-platform-addendum-2026-07-09.md` (biên bản 2026-09-24, #148), `skills/seo/SKILL.md`, `skills/sanity-cms/SKILL.md`
+
+**Hiện trạng** (2026-09-24):
+- Chủ cho biết `/tin-tuc/` dành cho tin các giải đấu cầu lông, còn `/tin-v2/` là tin về V2.
+- `/tin-tuc/` (loại `post`): 0 bài, `noindex, follow`. Tiêu đề, H1 và mô tả của trang vẫn nói về tin V2: "Thông báo, cập nhật chương trình và tin hoạt động của V2 Badminton tại TP.HCM."
+- Hub `/tin-v2/` ("Tin V2 Badminton", tạo ngày 2026-06-17): `isIndexed: true`, có trong sitemap cùng 2 bài áo kỷ niệm. Ngày 2026-09-23, Search Console chưa biết tới cả ba URL.
+- Ngưỡng index giữ từ memo blog (§10): trang tổng hợp tin chỉ bật index khi đã đăng đều; hub cần khoảng 4–5 bài tốt.
+
+**Làm.**
+- Chủ làm rõ: `/tin-tuc/` chỉ đưa tin giải chuyên nghiệp (BWF, giải quốc gia…), hay đưa cả giải V2 tổ chức? Giải V2 tổ chức đã có hướng riêng ở T10 (`/su-kien/`).
+- Viết lại tiêu đề, H1 và mô tả của `/tin-tuc/` theo phạm vi đã chốt. Đây là trang file-routed nên sửa trong code; câu chữ theo `skills/noi-dung-vi/SKILL.md`.
+- Tắt index của hub `/tin-v2/` (`isIndexed: false`) cho tới khi đủ bài và đăng đều, vẫn giữ index cho từng bài. Tạo bản nháp, chủ publish.
+- Nếu `/tin-tuc/` là tin giải chuyên nghiệp: ghi vào phụ lục cách làm và ngưỡng index. Ghi chú pre-think ngày 2026-05-20 (trong `.claude/CMS/`, lúc đó dự kiến ở `/tin-cau-long/`) nghiêng về bài phân tích, mỗi tuần hoặc hai tuần tối đa một bài, và nhúng video BWF/YouTube chứ không đăng lại video.
+
+**Xong khi:** phạm vi `/tin-tuc/` đã được ghi trong phụ lục, câu chữ trang `/tin-tuc/` khớp phạm vi đó, và hub `/tin-v2/` không còn được index khi chưa đủ bài.
+
+---
+
+## T22 — Báo cáo SEO ở mốc 30, 60, 90 ngày
+
+**Trạng thái:** chưa nhận — mốc đầu khoảng 2026-10-24
+**Đọc trước:** `skills/analytics-report/SKILL.md`, `docs/seo-strategy.md` (mục 2 và 7)
+
+**Làm** ở mỗi mốc (khoảng 2026-10-24, 2026-11-23 và 2026-12-23):
+- Kéo số Search Console và GA4 đúng cửa sổ 28 ngày, lùi lại 2 ngày vì Search Console có độ trễ. So với số gốc ở mục 2.
+- Số đánh giá trên Maps, và mục "Hiệu suất" của hồ sơ Maps (chủ đọc trong Google Business Profile rồi gửi số).
+- Tra các truy vấn ở mục 7 trên Google, ChatGPT và Perplexity; ghi lại V2 có được nhắc tên hay dẫn link không. Việc này thay cho W4.4 cũ.
+- Ghi kết quả vào mục 10 của `docs/seo-strategy.md`, và sửa chiến lược nếu số liệu cho thấy điều khác.
+
+**Xong khi:** đã ghi kết quả mốc 90 ngày, và `docs/seo-strategy.md` đã được sửa theo kết quả đó.
+
+---
+
+## T23 — Rà danh sách trang dịch vụ sau mốc 90 ngày
+
+**Trạng thái:** chưa nhận — làm sau mốc 90 ngày của T22
+**Đọc trước:** `docs/cms/url-rename-runbook.md`, `skills/seo/SKILL.md` (mục "Changing or retiring a URL"), `docs/seo-strategy.md` (mục 6)
+
+**Hiện trạng** (25/8–21/9):
+- 9 trong 12 trang dịch vụ có không quá 21 lượt hiển thị.
+- `/lop-cau-long-buoi-toi/` chưa được index.
+- Các nhóm trang gần nghĩa nhau: buổi tối, người đi làm, cuối tuần; và doanh nghiệp với team building.
+
+**Làm.**
+- Áp quy tắc gộp ở mục 6 của `docs/seo-strategy.md` lên số liệu mốc 90 ngày. Lập danh sách đề xuất kèm số liệu, chủ duyệt.
+- Gộp theo runbook: chuyển nội dung riêng sang trang được giữ lại, redirect 308, sửa sitemap và link nội bộ.
+- Với money page còn phải đổi slug trong Sanity. Làm theo trình tự trong `skills/seo/SKILL.md`, để không lúc nào trang bị 404 hay rơi khỏi sitemap.
+
+**Xong khi:** mỗi trang dịch vụ đều có quyết định giữ hay gộp, ghi kèm số liệu, và các trang bị gộp đã redirect đúng.
+
+---
+
 ## Chờ chủ
 
 Những việc agent không làm thay được:
 
+- **Quyết định cho workstream SEO (2026-09-24)**, chi tiết ở mục 4 của `docs/seo-strategy.md`:
+  - gộp các hồ sơ Maps ở Thủ Đức, và chọn số điện thoại cho hồ sơ chính (T13);
+  - mở danh bạ sân với 4 sân (T19);
+  - phạm vi của `/tin-tuc/` (T21).
+
+  Thêm ba việc vài phút trong GA4, Search Console và Bing, liệt kê ở T16.
 - ~~**Publish màn hình đồng ý OAuth** trong Google Cloud Console~~ — **xong 2026-09-23.** App ở project `gen-lang-client-0433014248` (client `528367442606-…`, dùng chung cho GA4 và Search Console) đã chuyển từ *Testing* sang *In production*, nên refresh token không còn hạn 7 ngày. Nút Publish ban đầu bị mờ vì trang Branding thiếu app name, support email, homepage và privacy policy — điền xong là sáng; **không tải logo lên**, vì có logo là Google bắt buộc xác minh app. Publish xong vẫn phải cấp lại token một lần nữa (token cũ giữ hạn của lúc cấp); đã làm, và cả hai API đọc được sau khi khởi động lại.
 - **Hoãn tới 2027 — trang `/lop-he-cau-long-tphcm/`:** hai câu ghi lịch hè có "khung trưa (11:30-14:00)", trong khi lớp nhóm giờ chỉ còn 12:00-14:00 (khung 11:30 là lớp 1 kèm 1, chủ đã ẩn ngày 2026-09-22). Chủ quyết ngày 2026-09-23: lớp hè đã đóng, khi nào mở lại mùa hè 2027 thì sửa luôn một thể. Sửa trong Sanity, không phải trong code.
 - *(Không gấp)* **Cấp quyền cho Cloudflare và Vercel MCP** để agent xem được deploy. Cả hai chỉ cấp bằng OAuth trong phiên tương tác, nên một lần cấp chỉ dùng được cho đúng client đó; riêng Vercel không có token chỉ-đọc (token nào cũng toàn quyền tài khoản) nên chủ quyết ngày 2026-09-23 là không phát token ra ngoài. **Sentry thì xong rồi** (2026-09-23): chạy bằng stdio với Personal Token chỉ-đọc trong `.mcp.json`, model AI nào đọc file đó cũng dùng được — cách cấu hình nằm trong `skills/v2badminton-next/SKILL.md`.
