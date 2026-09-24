@@ -314,7 +314,7 @@ Bộ skill đang dùng được và đã được đo (#120–#123). Các việc
 
 **Bối cảnh.** Đề bài này do agent bịa ra làm đề chấm skill (eval 6), không phải yêu cầu của chủ. Nhưng hai lượt chạy ngày 2026-09-22 đã cho ra code gần đủ dùng, nên giữ lại thay vì bỏ.
 
-**Chủ quyết ngày 2026-09-24:** tin về các giải V2 tổ chức đưa vào `/tin-v2/`, không có đường dẫn riêng `/su-kien/`. Vì vậy URL `/su-kien/` bên dưới không còn đúng. Khi làm việc này, chốt với chủ một trong hai cách: viết bài về giải trong hub `/tin-v2/`, hoặc đặt trang sự kiện dưới `/tin-v2/`. Xem T21 và phụ lục blog (#148).
+**Chủ xác nhận ngày 2026-09-24:** dùng `/su-kien/` cho các giải V2 tổ chức là được. Tin tức và thông báo về V2 vẫn đăng ở hub `/tin-v2/`. Để hai trang không tranh nhau cùng một giải, trang `/su-kien/` là trang chính của giải đó; nếu có bài ở `/tin-v2/` thì chỉ tóm tắt ngắn và link sang trang `/su-kien/`. Xem T21 và phụ lục blog (#148).
 
 **Code đang nằm ở đâu.** Hai nhánh trong máy chủ repo, chưa push, chưa review, **không merge nguyên trạng**:
 - `worktree-agent-a2d2fbb4d7f55ba07` — bản có skill. Lấy bản này làm gốc.
@@ -570,7 +570,10 @@ Chủ (mỗi việc vài phút):
 **Đọc trước:** `docs/blog-content-platform-addendum-2026-07-09.md` (biên bản 2026-09-24, #148), `skills/seo/SKILL.md`, `skills/sanity-cms/SKILL.md`
 
 **Hiện trạng** (2026-09-24):
-- Chủ quyết: `/tin-tuc/` chỉ dành cho tin các giải đấu chuyên nghiệp. Tin về V2, kể cả các giải do V2 tổ chức, đưa vào `/tin-v2/`. Quyết định này làm T10 đổi hướng (xem ghi chú trong T10).
+- Chủ quyết:
+  - `/tin-tuc/` chỉ dành cho tin các giải đấu chuyên nghiệp. Mục đích duy nhất là thu hút thêm lượt truy cập.
+  - Tin về V2 đăng ở `/tin-v2/`.
+  - Trang của các giải V2 tổ chức đặt ở `/su-kien/` (T10).
 - `/tin-tuc/` (loại `post`): 0 bài, `noindex, follow`. Tiêu đề, H1 và mô tả của trang vẫn nói về tin V2: "Thông báo, cập nhật chương trình và tin hoạt động của V2 Badminton tại TP.HCM."
 - Hub `/tin-v2/` ("Tin V2 Badminton", tạo ngày 2026-06-17): `isIndexed: true`, có trong sitemap cùng 2 bài áo kỷ niệm. Ngày 2026-09-23, Search Console chưa biết tới cả ba URL.
 - Ngưỡng index giữ từ memo blog (§10): trang tổng hợp tin chỉ bật index khi đã đăng đều; hub cần khoảng 4–5 bài tốt.
@@ -578,12 +581,14 @@ Chủ (mỗi việc vài phút):
 **Làm.**
 - Viết lại tiêu đề, H1 và mô tả của `/tin-tuc/` cho tin giải đấu chuyên nghiệp. Đây là trang file-routed nên sửa trong code; câu chữ theo `skills/noi-dung-vi/SKILL.md`, chủ duyệt.
 - Tắt index của hub `/tin-v2/` (`isIndexed: false`) cho tới khi đủ bài và đăng đều, vẫn giữ index cho từng bài. Tạo bản nháp, chủ publish.
-- Ghi vào phụ lục cách làm tin giải chuyên nghiệp và ngưỡng index. Về SEO:
-  - Mảng này phải cạnh tranh với báo thể thao và trang của BWF, và không trực tiếp mang về học viên.
-  - Nên viết bài phân tích, nối với kỹ thuật V2 đang dạy, thay vì đưa tin kết quả.
-  - Giữ `/tin-tuc/` ở trạng thái `noindex` cho tới khi đăng đều.
+- Đề xuất SEO cho `/tin-tuc/` (2026-09-24, đã ghi trong phụ lục): **ưu tiên thấp**, vì những lý do sau.
+  - Tin giải chuyên nghiệp phải cạnh tranh với báo thể thao và trang của BWF. Một site mới hiếm khi lên được trang 1 cho loại tin này.
+  - Người đọc tin giải phần lớn không ở gần sân V2 và không tìm lớp học, nên lượt vào này gần như không thành học viên.
+  - Lượt đọc tin giải không tự làm trang lớp học lên hạng. Thứ giúp trang lớp học là link từ trang khác và đánh giá trên Maps.
+  - Tin viết lại từ nguồn khác không có gì riêng, và có thể kéo điểm chất lượng của cả site xuống.
+  - Không đăng lại ảnh hay video của BWF hoặc báo khác (bản quyền); chỉ nhúng.
 
-  Ghi chú pre-think ngày 2026-05-20 (trong `.claude/CMS/`, lúc đó dự kiến ở `/tin-cau-long/`) cũng theo hướng này: bài phân tích, mỗi tuần hoặc hai tuần tối đa một bài, nhúng video BWF/YouTube chứ không đăng lại video.
+  Nếu vẫn đăng thì viết bài phân tích theo góc nhìn HLV, gắn với kỹ thuật V2 đang dạy, mỗi tuần tối đa một bài. Giữ `/tin-tuc/` ở trạng thái `noindex` cho tới khi đăng đều. Ghi chú pre-think ngày 2026-05-20 (trong `.claude/CMS/`, lúc đó dự kiến ở `/tin-cau-long/`) cũng theo hướng này.
 
 **Xong khi:** câu chữ trang `/tin-tuc/` khớp phạm vi tin giải chuyên nghiệp, hub `/tin-v2/` không còn được index khi chưa đủ bài, và cách làm đã được ghi trong phụ lục.
 

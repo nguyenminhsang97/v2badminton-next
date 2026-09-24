@@ -86,7 +86,7 @@ Lưu ý khi đọc số:
 | 2026-09-24 | Nhờ được hầu hết chủ sân (treo poster, nhắc tên V2 trên fanpage) | chủ |
 | 2026-09-24 | Không chi tiền; HLV có thể chụp ảnh, quay clip lớp | chủ |
 | 2026-09-24 | 3 lời chứng thực trên web là lời thật, nhưng khó nhờ những người đó viết thêm | chủ |
-| 2026-09-24 | `/tin-tuc/` chỉ dành cho tin các giải đấu chuyên nghiệp; `/tin-v2/` là tin về V2, kể cả các giải do V2 tổ chức | chủ; ghi trong phụ lục blog (#148) |
+| 2026-09-24 | `/tin-tuc/` chỉ dành cho tin các giải đấu chuyên nghiệp, mục đích là thu hút thêm lượt truy cập; `/tin-v2/` là tin về V2; trang của các giải V2 tổ chức đặt ở `/su-kien/` (T10) | chủ; ghi trong phụ lục blog (#148) |
 | 2026-09-24 | Cả hai số 0907 911 886 và 0982 093 947 đều là số của chủ V2 | chủ |
 | 2026-09-24 | Ba hồ sơ Maps ở Thủ Đức được tạo theo hướng dẫn của các model AI khác lúc mới làm; chủ sẽ tự dọn sau (T13) | chủ |
 
