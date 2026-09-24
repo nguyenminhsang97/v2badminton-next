@@ -18,9 +18,10 @@ equipment, and decision-support content.
 
 ~~Keep the `post`/blog system only for time-stamped V2 news, announcements,
 campaign updates, event recaps, and similar recency content.~~
-**Amended 2026-09-24:** the `post` feed at `/tin-tuc/` is for badminton
-tournament news. V2's own news, announcements and event recaps go in the
-content-platform hub `/tin-v2/`. See the second decision record.
+**Amended 2026-09-24:** the `post` feed at `/tin-tuc/` is for news about
+professional badminton tournaments. V2's own news goes in the content-platform
+hub `/tin-v2/`. That includes announcements, event recaps and the tournaments
+V2 runs. See the second decision record.
 
 Do not implement the old `/blog/<category>/<slug>/` evergreen plan unless this
 addendum is explicitly rejected.
@@ -162,13 +163,14 @@ depend on it.
 ## Decision record — 2026-09-24
 
 **Two news sections, each with one job.** Asked on 2026-09-24, the owner said
-`/tin-tuc/` is meant for news from badminton tournaments, and `/tin-v2/` is
-for news about V2. The 2026-09-08 record above assumed a single news home. It
-missed the fact that the content-platform hub `/tin-v2/` already existed.
+`/tin-tuc/` is meant for news from professional badminton tournaments, and
+`/tin-v2/` is for news about V2, including the tournaments V2 runs. The
+2026-09-08 record above assumed a single news home. It missed the fact that the
+content-platform hub `/tin-v2/` already existed.
 
 | | `/tin-tuc/` | `/tin-v2/` |
 |---|---|---|
-| Owner's intent (2026-09-24) | Badminton tournament news | V2 news |
+| Owner's intent (2026-09-24) | Professional tournament news | V2 news, including V2's own tournaments |
 | System | `post` feed, file-routed | `content_hub` "Tin V2 Badminton" with `content_article` children |
 | Live since | 2026-09-08 (before that, as `/blog/`) | 2026-06-17 |
 | Content on 2026-09-24 | 0 posts | 2 articles: áo quần kỷ niệm mẫu 01 and mẫu 02 |
@@ -178,12 +180,15 @@ What this changes above: the Decision's news sentence and the `tin-v2` row of
 the Category Mapping are amended in place. The Blog Route Policy's rule that
 thin news listings stay out of the index now covers both sections.
 
+This also touches T10 in `docs/tasks-in-progress.md`, which plans an `event`
+type at `/su-kien/` for V2's tournaments. The news about those tournaments now
+belongs in `/tin-v2/`. So whoever picks up T10 has to choose with the owner:
+write tournament articles in the hub, or place the event pages under `/tin-v2/`
+rather than at a new top-level URL.
+
 Still open:
 
-- Does `/tin-tuc/` cover professional tournaments only, or also tournaments V2
-  runs? V2's own tournaments already have a separate plan: T10, `/su-kien/`, in
-  `docs/tasks-in-progress.md`.
 - The title, H1 and meta description of `/tin-tuc/` still describe V2 news (the
-  copy quoted just above). Rewrite them once the scope is settled.
+  copy quoted just above). Rewrite them for professional tournament news.
 - The `/tin-v2/` hub is indexable with two items. That is below the thresholds
   this addendum keeps from the memo (§10).
