@@ -86,7 +86,9 @@ Lưu ý khi đọc số:
 | 2026-09-24 | Nhờ được hầu hết chủ sân (treo poster, nhắc tên V2 trên fanpage) | chủ |
 | 2026-09-24 | Không chi tiền; HLV có thể chụp ảnh, quay clip lớp | chủ |
 | 2026-09-24 | 3 lời chứng thực trên web là lời thật, nhưng khó nhờ những người đó viết thêm | chủ |
-| 2026-09-24 | `/tin-tuc/` dành cho tin các giải đấu cầu lông; `/tin-v2/` là tin về V2 | chủ; ghi trong phụ lục blog (#148) |
+| 2026-09-24 | `/tin-tuc/` chỉ dành cho tin các giải đấu chuyên nghiệp; `/tin-v2/` là tin về V2, kể cả các giải do V2 tổ chức | chủ; ghi trong phụ lục blog (#148) |
+| 2026-09-24 | Cả hai số 0907 911 886 và 0982 093 947 đều là số của chủ V2 | chủ |
+| 2026-09-24 | Ba hồ sơ Maps ở Thủ Đức được tạo theo hướng dẫn của các model AI khác lúc mới làm; chủ sẽ tự dọn sau (T13) | chủ |
 
 Các chính sách giữ nguyên từ tài liệu cũ:
 
@@ -98,11 +100,11 @@ Các chính sách giữ nguyên từ tài liệu cũ:
 
 ### Chờ chủ quyết
 
-1. Có gộp 3 hồ sơ Maps ở Thủ Đức thành 1 không, và giữ ở sân nào? Đề xuất: gộp, giữ ở sân có nhiều lớp nhất. (T13)
-2. Hồ sơ Maps chính nên dùng số điện thoại nào? Hồ sơ đang ghi 0982 093 947, còn web và ghi chú xác minh hồi
-   tháng 5 ghi 0907 911 886. (T13)
+1. Có gộp 3 hồ sơ Maps ở Thủ Đức thành 1 không, và giữ ở sân nào? Đề xuất: gộp, giữ ở sân có nhiều lớp nhất.
+   Chủ sẽ làm sau. (T13)
+2. Số điện thoại chính cho các hồ sơ Maps. Đề xuất: dùng 0907 911 886 làm số chính ở mọi nơi, vì số này trùng
+   với web, với Zalo và với dữ liệu cấu trúc. 0982 093 947 để làm số phụ trong hồ sơ. Lý do ghi ở T13.
 3. Có mở danh bạ sân với 4 sân V2 đang dạy không? Spec cũ đặt mức 5 sân và tính cả sân V2 không dạy. Đề xuất: mở với 4 sân. (T19)
-4. `/tin-tuc/` chỉ đưa tin giải chuyên nghiệp, hay đưa cả giải do V2 tổ chức? (T21)
 
 ## 5. Chiến lược — năm hướng, theo thứ tự ưu tiên
 

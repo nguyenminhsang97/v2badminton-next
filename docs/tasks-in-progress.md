@@ -314,6 +314,8 @@ Bộ skill đang dùng được và đã được đo (#120–#123). Các việc
 
 **Bối cảnh.** Đề bài này do agent bịa ra làm đề chấm skill (eval 6), không phải yêu cầu của chủ. Nhưng hai lượt chạy ngày 2026-09-22 đã cho ra code gần đủ dùng, nên giữ lại thay vì bỏ.
 
+**Chủ quyết ngày 2026-09-24:** tin về các giải V2 tổ chức đưa vào `/tin-v2/`, không có đường dẫn riêng `/su-kien/`. Vì vậy URL `/su-kien/` bên dưới không còn đúng. Khi làm việc này, chốt với chủ một trong hai cách: viết bài về giải trong hub `/tin-v2/`, hoặc đặt trang sự kiện dưới `/tin-v2/`. Xem T21 và phụ lục blog (#148).
+
 **Code đang nằm ở đâu.** Hai nhánh trong máy chủ repo, chưa push, chưa review, **không merge nguyên trạng**:
 - `worktree-agent-a2d2fbb4d7f55ba07` — bản có skill. Lấy bản này làm gốc.
 - `worktree-agent-a6f21c897b2b496b0` — bản không skill. Có hai thứ tốt hơn nên ghép sang: component thẻ sự kiện (`EventBadge`, `EventCard`) và bản sửa lỗi ảnh bìa cao 405px do thuộc tính `height` đè `aspect-ratio`.
@@ -359,7 +361,7 @@ Cả hai bản còn kèm bản diff và file mới trong `.claude/skill-evals/it
 
 ## T13 — Dọn hồ sơ Google Maps trước khi xin đánh giá
 
-**Trạng thái:** chưa nhận — chờ chủ quyết ba điểm bên dưới
+**Trạng thái:** chưa nhận — chủ sẽ tự làm sau (2026-09-24); còn chờ chủ quyết điểm 1 và 3 bên dưới
 **Đọc trước:** `docs/seo-strategy.md` (mục 4 và 5.1)
 
 **Hiện trạng** (Google Maps, không đăng nhập, 2026-09-24):
@@ -372,7 +374,10 @@ Cả hai bản còn kèm bản diff và file mới trong `.claude/skill-evals/it
 | V2Badminton cơ sở Thủ Đức - Sân Bình Triệu | Đường Số 20, Hiệp Bình, cách hồ sơ Phúc Lộc khoảng 370 m | chưa | +84 907 911 886 | 0 |
 
 - Web dùng số 0907 911 886 (`apps/web/src/lib/site.ts`), cũng là số ghi trong phần xác minh dữ kiện tháng 5/2026.
-- Chủ cho biết (2026-09-24) các chi nhánh được tạo "ngay kế bên sân ở từng khu vực", và chủ nhờ được hầu hết chủ sân.
+- Chủ cho biết (2026-09-24):
+  - các chi nhánh được tạo "ngay kế bên sân ở từng khu vực", theo hướng dẫn của các model AI khác lúc mới làm;
+  - cả hai số 0907 911 886 và 0982 093 947 đều là số của chủ;
+  - chủ nhờ được hầu hết chủ sân.
 - Quy định của Google:
   - Lớp học định kỳ tại địa điểm mình không sở hữu hoặc không có quyền đại diện thì không đủ điều kiện có hồ sơ (https://support.google.com/business/answer/13763036, mục "Ineligible businesses").
   - Tên hồ sơ phải là tên thật, không thêm địa danh hay tên doanh nghiệp khác (https://support.google.com/business/answer/3038177).
@@ -380,7 +385,11 @@ Cả hai bản còn kèm bản diff và file mới trong `.claude/skill-evals/it
 
 **Cần chủ quyết:**
 1. Có gộp 3 hồ sơ Thủ Đức thành 1 không, và giữ ở sân nào? Đề xuất: gộp, giữ ở sân có nhiều lớp nhất.
-2. Hồ sơ chính nên dùng số điện thoại nào?
+2. ~~Hồ sơ chính nên dùng số điện thoại nào?~~ Đề xuất (2026-09-24): dùng **0907 911 886 làm số chính trên mọi hồ sơ**. Nếu muốn, thêm 0982 093 947 vào ô số điện thoại phụ của hồ sơ. Lý do:
+   - Google và các trợ lý AI đối chiếu tên, địa chỉ và số điện thoại giữa hồ sơ Maps, web, Facebook và các trang danh bạ để xác định đó là cùng một doanh nghiệp. Số chính khớp nhau ở mọi nơi thì việc đối chiếu chắc chắn hơn.
+   - 0907 911 886 đã có trên web, ở nút Zalo và trong dữ liệu cấu trúc (`apps/web/src/lib/site.ts`), nên chọn số này thì không phải sửa web.
+   - Khách thấy cùng một số ở mọi nơi, và gọi hay nhắn Zalo đều trúng.
+   - Khi đo (T16, T22), dễ biết lượt gọi đến từ đâu hơn.
 3. Chủ sân của các hồ sơ được giữ lại có đồng ý (một tin nhắn là đủ) và cho treo banner V2 cố định không?
 
 **Làm** (chủ làm trong Google Business Profile; agent không đăng nhập được):
@@ -557,22 +566,26 @@ Chủ (mỗi việc vài phút):
 
 ## T21 — Tin tức: phạm vi `/tin-tuc/` và index của hub `/tin-v2/`
 
-**Trạng thái:** chưa nhận — chờ chủ làm rõ phạm vi `/tin-tuc/`
+**Trạng thái:** chưa nhận
 **Đọc trước:** `docs/blog-content-platform-addendum-2026-07-09.md` (biên bản 2026-09-24, #148), `skills/seo/SKILL.md`, `skills/sanity-cms/SKILL.md`
 
 **Hiện trạng** (2026-09-24):
-- Chủ cho biết `/tin-tuc/` dành cho tin các giải đấu cầu lông, còn `/tin-v2/` là tin về V2.
+- Chủ quyết: `/tin-tuc/` chỉ dành cho tin các giải đấu chuyên nghiệp. Tin về V2, kể cả các giải do V2 tổ chức, đưa vào `/tin-v2/`. Quyết định này làm T10 đổi hướng (xem ghi chú trong T10).
 - `/tin-tuc/` (loại `post`): 0 bài, `noindex, follow`. Tiêu đề, H1 và mô tả của trang vẫn nói về tin V2: "Thông báo, cập nhật chương trình và tin hoạt động của V2 Badminton tại TP.HCM."
 - Hub `/tin-v2/` ("Tin V2 Badminton", tạo ngày 2026-06-17): `isIndexed: true`, có trong sitemap cùng 2 bài áo kỷ niệm. Ngày 2026-09-23, Search Console chưa biết tới cả ba URL.
 - Ngưỡng index giữ từ memo blog (§10): trang tổng hợp tin chỉ bật index khi đã đăng đều; hub cần khoảng 4–5 bài tốt.
 
 **Làm.**
-- Chủ làm rõ: `/tin-tuc/` chỉ đưa tin giải chuyên nghiệp (BWF, giải quốc gia…), hay đưa cả giải V2 tổ chức? Giải V2 tổ chức đã có hướng riêng ở T10 (`/su-kien/`).
-- Viết lại tiêu đề, H1 và mô tả của `/tin-tuc/` theo phạm vi đã chốt. Đây là trang file-routed nên sửa trong code; câu chữ theo `skills/noi-dung-vi/SKILL.md`.
+- Viết lại tiêu đề, H1 và mô tả của `/tin-tuc/` cho tin giải đấu chuyên nghiệp. Đây là trang file-routed nên sửa trong code; câu chữ theo `skills/noi-dung-vi/SKILL.md`, chủ duyệt.
 - Tắt index của hub `/tin-v2/` (`isIndexed: false`) cho tới khi đủ bài và đăng đều, vẫn giữ index cho từng bài. Tạo bản nháp, chủ publish.
-- Nếu `/tin-tuc/` là tin giải chuyên nghiệp: ghi vào phụ lục cách làm và ngưỡng index. Ghi chú pre-think ngày 2026-05-20 (trong `.claude/CMS/`, lúc đó dự kiến ở `/tin-cau-long/`) nghiêng về bài phân tích, mỗi tuần hoặc hai tuần tối đa một bài, và nhúng video BWF/YouTube chứ không đăng lại video.
+- Ghi vào phụ lục cách làm tin giải chuyên nghiệp và ngưỡng index. Về SEO:
+  - Mảng này phải cạnh tranh với báo thể thao và trang của BWF, và không trực tiếp mang về học viên.
+  - Nên viết bài phân tích, nối với kỹ thuật V2 đang dạy, thay vì đưa tin kết quả.
+  - Giữ `/tin-tuc/` ở trạng thái `noindex` cho tới khi đăng đều.
 
-**Xong khi:** phạm vi `/tin-tuc/` đã được ghi trong phụ lục, câu chữ trang `/tin-tuc/` khớp phạm vi đó, và hub `/tin-v2/` không còn được index khi chưa đủ bài.
+  Ghi chú pre-think ngày 2026-05-20 (trong `.claude/CMS/`, lúc đó dự kiến ở `/tin-cau-long/`) cũng theo hướng này: bài phân tích, mỗi tuần hoặc hai tuần tối đa một bài, nhúng video BWF/YouTube chứ không đăng lại video.
+
+**Xong khi:** câu chữ trang `/tin-tuc/` khớp phạm vi tin giải chuyên nghiệp, hub `/tin-v2/` không còn được index khi chưa đủ bài, và cách làm đã được ghi trong phụ lục.
 
 ---
 
@@ -615,9 +628,8 @@ Chủ (mỗi việc vài phút):
 Những việc agent không làm thay được:
 
 - **Quyết định cho workstream SEO (2026-09-24)**, chi tiết ở mục 4 của `docs/seo-strategy.md`:
-  - gộp các hồ sơ Maps ở Thủ Đức, và chọn số điện thoại cho hồ sơ chính (T13);
-  - mở danh bạ sân với 4 sân (T19);
-  - phạm vi của `/tin-tuc/` (T21).
+  - gộp các hồ sơ Maps ở Thủ Đức (T13). Chủ sẽ tự làm sau; số điện thoại chính đã có đề xuất trong T13;
+  - mở danh bạ sân với 4 sân (T19).
 
   Thêm ba việc vài phút trong GA4, Search Console và Bing, liệt kê ở T16.
 - ~~**Publish màn hình đồng ý OAuth** trong Google Cloud Console~~ — **xong 2026-09-23.** App ở project `gen-lang-client-0433014248` (client `528367442606-…`, dùng chung cho GA4 và Search Console) đã chuyển từ *Testing* sang *In production*, nên refresh token không còn hạn 7 ngày. Nút Publish ban đầu bị mờ vì trang Branding thiếu app name, support email, homepage và privacy policy — điền xong là sáng; **không tải logo lên**, vì có logo là Google bắt buộc xác minh app. Publish xong vẫn phải cấp lại token một lần nữa (token cũ giữ hạn của lúc cấp); đã làm, và cả hai API đọc được sau khi khởi động lại.
