@@ -2,6 +2,23 @@
 
 Date: 2026-07-06 · Companion to `docs/architecture-review-2026-07-06.md` (technical findings; referenced here as "AR §n" without repeating them). No code changes made.
 
+> **Status note — 2026-09-24.** This is a dated analysis, not a live plan. Since it was written:
+>
+> - **Done:**
+>   - file-route redirects (`FILE_ROUTE_REDIRECTS` in `apps/web/next.config.ts`) and the rename runbook
+>     (`docs/cms/url-rename-runbook.md`);
+>   - SEO regression tests (`apps/web/src/lib/__tests__/seoRegression.test.ts`);
+>   - the blog-vs-platform addendum, approved 2026-09-08;
+>   - draft preview (#119);
+>   - the decision on what survives a Sanity outage (T11, #138);
+>   - the Studio split into `apps/studio` on cms.v2badminton.com (Gate B, 2026-09-10).
+> - **Still open:** the locked CMS specs are still only in the gitignored `.claude/CMS/` (P0.2), and the web
+>   CSP is still report-only (P1.9).
+> - **Missing from the roadmap altogether: local search.** §9 and §12 plan on-site content only (technique,
+>   courts, equipment, tools). Nothing covers the Google Business Profile, reviews, or links and mentions from
+>   other sites. Search Console (2026-09-23) and Google Maps (2026-09-24) show that this is where the site is
+>   weakest. Open SEO work lives in `docs/tasks-in-progress.md`.
+
 ---
 
 ## 1. My understanding of the current project direction

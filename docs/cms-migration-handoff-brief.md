@@ -1,6 +1,12 @@
 # CMS Migration Handoff Brief
 
-> **2026-07-09 draft addendum:** [Blog vs Content Platform Addendum](./blog-content-platform-addendum-2026-07-09.md) supersedes the evergreen blog-category migration direction if approved. Do not implement `/blog/<category>/<slug>/` work before this decision is resolved.
+> **Status: SUPERSEDED — 2026-09-08. Do not implement this brief.** The owner approved the
+> [Blog vs Content Platform Addendum](./blog-content-platform-addendum-2026-07-09.md). Evergreen content lives on
+> the content platform and `/blog/` became `/tin-tuc/`. The following, all listed below, will not be built: the
+> `/blog/<category>/<slug>/` route, the five categories, the `tag` document type and the new `post` fields. Q13 is
+> settled, because production had 0 published posts on 2026-09-08. The policies that still hold are listed in the
+> addendum under "Keep these parts of the original memo": no competitor content, no `AggregateRating` without
+> verifiable reviews, editorial review, and affiliate disclosure.
 
 > **Document type:** Handoff brief — decisions and pointers only. This is NOT the CMS migration plan. It does not contain implementation code, GROQ queries, or Sanity Studio configuration. Those belong in a separate CMS migration plan written by the migration team.
 >

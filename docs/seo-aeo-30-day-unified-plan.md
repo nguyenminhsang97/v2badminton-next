@@ -1,5 +1,18 @@
 # Unified SEO + AEO 30-Day Execution Plan
 
+> **Status: EXECUTED — 2026-05-14 to 2026-05-18, in #42 (Week 1), #43, #44 and #45. Do not run this again.**
+>
+> Checked on 2026-09-24, two items never shipped:
+>
+> - **W3.3 coach bios.** The owner does not want to publish coach names or photos yet (decided 2026-09-24).
+>   `/huan-luyen-vien/` therefore stays `noindex`, as it should. That is a decision, not a bug.
+> - **W4.4 AI-citation tracking.** This was handed to the owner as a manual spreadsheet, and there is no record
+>   that it ran.
+>
+> Read everything below as history. It cites the pre-split layout (`src/…` is now `apps/web/src/…`), and
+> `/blog/` became `/tin-tuc/` on 2026-09-08. The execution rules in §2 still hold: most of them are enforced in
+> code and restated in `skills/seo/SKILL.md`. Open SEO work lives in `docs/tasks-in-progress.md`.
+
 > **Sources merged:** [seo-30-day-execution-plan.md](./seo-30-day-execution-plan.md) + [aeo-30-day-additions.md](./aeo-30-day-additions.md). When a task exists in only one source, the source is noted in parentheses. CMS migration is intentionally out of scope — see a separate plan when needed.
 
 ---
