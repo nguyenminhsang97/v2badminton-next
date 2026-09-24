@@ -19,9 +19,9 @@ equipment, and decision-support content.
 ~~Keep the `post`/blog system only for time-stamped V2 news, announcements,
 campaign updates, event recaps, and similar recency content.~~
 **Amended 2026-09-24:** the `post` feed at `/tin-tuc/` is for news about
-professional badminton tournaments. V2's own news goes in the content-platform
-hub `/tin-v2/`. That includes announcements, event recaps and the tournaments
-V2 runs. See the second decision record.
+professional badminton tournaments. V2's own news and announcements go in the
+content-platform hub `/tin-v2/`. Pages for the tournaments V2 runs may live at
+`/su-kien/` (T10). See the second decision record.
 
 Do not implement the old `/blog/<category>/<slug>/` evergreen plan unless this
 addendum is explicitly rejected.
@@ -163,14 +163,14 @@ depend on it.
 ## Decision record — 2026-09-24
 
 **Two news sections, each with one job.** Asked on 2026-09-24, the owner said
-`/tin-tuc/` is meant for news from professional badminton tournaments, and
-`/tin-v2/` is for news about V2, including the tournaments V2 runs. The
-2026-09-08 record above assumed a single news home. It missed the fact that the
-content-platform hub `/tin-v2/` already existed.
+`/tin-tuc/` is meant for news from professional badminton tournaments, posted to
+bring in extra visits rather than for any other purpose. `/tin-v2/` is for news
+about V2. The 2026-09-08 record above assumed a single news home. It missed the
+fact that the content-platform hub `/tin-v2/` already existed.
 
 | | `/tin-tuc/` | `/tin-v2/` |
 |---|---|---|
-| Owner's intent (2026-09-24) | Professional tournament news | V2 news, including V2's own tournaments |
+| Owner's intent (2026-09-24) | Professional tournament news, to bring in visits | V2 news and announcements |
 | System | `post` feed, file-routed | `content_hub` "Tin V2 Badminton" with `content_article` children |
 | Live since | 2026-09-08 (before that, as `/blog/`) | 2026-06-17 |
 | Content on 2026-09-24 | 0 posts | 2 articles: áo quần kỷ niệm mẫu 01 and mẫu 02 |
@@ -180,11 +180,18 @@ What this changes above: the Decision's news sentence and the `tin-v2` row of
 the Category Mapping are amended in place. The Blog Route Policy's rule that
 thin news listings stay out of the index now covers both sections.
 
-This also touches T10 in `docs/tasks-in-progress.md`, which plans an `event`
-type at `/su-kien/` for V2's tournaments. The news about those tournaments now
-belongs in `/tin-v2/`. So whoever picks up T10 has to choose with the owner:
-write tournament articles in the hub, or place the event pages under `/tin-v2/`
-rather than at a new top-level URL.
+Tournaments that V2 runs: the owner confirmed that T10's `/su-kien/` pages are
+fine for them. To keep two pages from competing for the same tournament, the
+`/su-kien/` page is that tournament's home. A `/tin-v2/` post about it should
+give a short summary and link to that page, not repeat it.
+
+On the SEO value of `/tin-tuc/` (recommendation of 2026-09-24): news about
+professional tournaments competes with sports media and with BWF itself.
+Readers of it are mostly not near V2's courts and are not looking for classes,
+and news rewritten from other sources adds little of its own. So treat it as
+low priority. If posts are written, make them analysis from a coach's angle,
+with embedded video rather than re-hosted video. Keep the feed `noindex` until
+posting is regular.
 
 Still open:
 
