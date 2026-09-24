@@ -35,7 +35,7 @@ Danh sách việc còn mở sau đợt làm skill ngày 2026-09-17. Mỗi việc
 | T18 | Poster QR ở sân và fanpage của chủ sân | Chủ + agent | Trung bình |
 | T19 | Danh bạ sân cho 4 sân đối tác | Sanity + chủ | Trung bình |
 | T20 | Có tên trong bài "Top", trang danh bạ và nhóm Facebook | Chủ + agent | Trung bình |
-| T21 | Tin tức: phạm vi `/tin-tuc/` và index của hub `/tin-v2/` | Chủ + Sanity + code | Thấp |
+| T21 | Hub `/tin-v2/` đang được index khi chưa đủ bài (`/tin-tuc/` tạm dừng) | Sanity | Thấp |
 | T22 | Báo cáo SEO ở mốc 30, 60, 90 ngày | Báo cáo | Trung bình |
 | T23 | Rà danh sách trang dịch vụ sau mốc 90 ngày | Quyết định + code | Thấp — sau T22 |
 
@@ -564,33 +564,34 @@ Chủ (mỗi việc vài phút):
 
 ---
 
-## T21 — Tin tức: phạm vi `/tin-tuc/` và index của hub `/tin-v2/`
+## T21 — Hub `/tin-v2/` đang được index khi chưa đủ bài (`/tin-tuc/` tạm dừng)
 
 **Trạng thái:** chưa nhận
 **Đọc trước:** `docs/blog-content-platform-addendum-2026-07-09.md` (biên bản 2026-09-24, #148), `skills/seo/SKILL.md`, `skills/sanity-cms/SKILL.md`
 
 **Hiện trạng** (2026-09-24):
 - Chủ quyết:
-  - `/tin-tuc/` chỉ dành cho tin các giải đấu chuyên nghiệp. Mục đích duy nhất là thu hút thêm lượt truy cập.
-  - Tin về V2 đăng ở `/tin-v2/`.
-  - Trang của các giải V2 tổ chức đặt ở `/su-kien/` (T10).
-- `/tin-tuc/` (loại `post`): 0 bài, `noindex, follow`. Tiêu đề, H1 và mô tả của trang vẫn nói về tin V2: "Thông báo, cập nhật chương trình và tin hoạt động của V2 Badminton tại TP.HCM."
+  - Tin về V2 đăng ở `/tin-v2/`. Trang của các giải V2 tổ chức đặt ở `/su-kien/` (T10).
+  - `/tin-tuc/` định dành cho tin các giải đấu chuyên nghiệp, chỉ để thu hút thêm lượt truy cập. **Ý tưởng này đang tạm dừng.**
 - Hub `/tin-v2/` ("Tin V2 Badminton", tạo ngày 2026-06-17): `isIndexed: true`, có trong sitemap cùng 2 bài áo kỷ niệm. Ngày 2026-09-23, Search Console chưa biết tới cả ba URL.
 - Ngưỡng index giữ từ memo blog (§10): trang tổng hợp tin chỉ bật index khi đã đăng đều; hub cần khoảng 4–5 bài tốt.
+- `/tin-tuc/` (loại `post`): 0 bài, `noindex, follow`. Khi chưa có bài, menu và chân trang tự ẩn link tới trang này (`showBlogLink` trong `apps/web/src/app/(site)/layout.tsx`). Tiêu đề, H1 và mô tả vẫn nói về tin V2: "Thông báo, cập nhật chương trình và tin hoạt động của V2 Badminton tại TP.HCM." Ý tưởng đang tạm dừng và không có link nào trỏ tới trang, nên cứ để nguyên.
 
 **Làm.**
-- Viết lại tiêu đề, H1 và mô tả của `/tin-tuc/` cho tin giải đấu chuyên nghiệp. Đây là trang file-routed nên sửa trong code; câu chữ theo `skills/noi-dung-vi/SKILL.md`, chủ duyệt.
 - Tắt index của hub `/tin-v2/` (`isIndexed: false`) cho tới khi đủ bài và đăng đều, vẫn giữ index cho từng bài. Tạo bản nháp, chủ publish.
-- Đề xuất SEO cho `/tin-tuc/` (2026-09-24, đã ghi trong phụ lục): **ưu tiên thấp**, vì những lý do sau.
+
+**Khi mở lại ý tưởng tin thể thao** (tạm dừng từ 2026-09-24):
+- Viết lại tiêu đề, H1 và mô tả của `/tin-tuc/` cho tin giải đấu chuyên nghiệp. Đây là trang file-routed nên sửa trong code; câu chữ theo `skills/noi-dung-vi/SKILL.md`, chủ duyệt.
+- Làm theo đề xuất SEO ngày 2026-09-24 (đã ghi trong phụ lục). Mục này **ưu tiên thấp**, vì:
   - Tin giải chuyên nghiệp phải cạnh tranh với báo thể thao và trang của BWF. Một site mới hiếm khi lên được trang 1 cho loại tin này.
   - Người đọc tin giải phần lớn không ở gần sân V2 và không tìm lớp học, nên lượt vào này gần như không thành học viên.
   - Lượt đọc tin giải không tự làm trang lớp học lên hạng. Thứ giúp trang lớp học là link từ trang khác và đánh giá trên Maps.
   - Tin viết lại từ nguồn khác không có gì riêng, và có thể kéo điểm chất lượng của cả site xuống.
   - Không đăng lại ảnh hay video của BWF hoặc báo khác (bản quyền); chỉ nhúng.
 
-  Nếu vẫn đăng thì viết bài phân tích theo góc nhìn HLV, gắn với kỹ thuật V2 đang dạy, mỗi tuần tối đa một bài. Giữ `/tin-tuc/` ở trạng thái `noindex` cho tới khi đăng đều. Ghi chú pre-think ngày 2026-05-20 (trong `.claude/CMS/`, lúc đó dự kiến ở `/tin-cau-long/`) cũng theo hướng này.
+  Khi đăng thì viết bài phân tích theo góc nhìn HLV, gắn với kỹ thuật V2 đang dạy, mỗi tuần tối đa một bài. Giữ `/tin-tuc/` ở trạng thái `noindex` cho tới khi đăng đều. Ghi chú pre-think ngày 2026-05-20 (trong `.claude/CMS/`, lúc đó dự kiến ở `/tin-cau-long/`) cũng theo hướng này.
 
-**Xong khi:** câu chữ trang `/tin-tuc/` khớp phạm vi tin giải chuyên nghiệp, hub `/tin-v2/` không còn được index khi chưa đủ bài, và cách làm đã được ghi trong phụ lục.
+**Xong khi:** hub `/tin-v2/` không còn được index khi chưa đủ bài. Phần `/tin-tuc/` không tính vào điều kiện xong chừng nào ý tưởng còn tạm dừng.
 
 ---
 
