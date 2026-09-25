@@ -1,10 +1,33 @@
 # Blog + Content Hub Strategy for SEO, AEO, and Future CMS
 
-> **2026-07-09 draft addendum:** [Blog vs Content Platform Addendum](./blog-content-platform-addendum-2026-07-09.md) narrows blog scope to news-only and moves evergreen content to the content platform. Do not implement conflicting blog-route work until the addendum is approved or rejected.
+> **Status: PARTLY SUPERSEDED — 2026-09-08.** The owner approved the
+> [Blog vs Content Platform Addendum](./blog-content-platform-addendum-2026-07-09.md). Evergreen content (technique,
+> beginner, courts, equipment) lives on the content platform, not under `/blog/`, and `/blog/` now 308-redirects to
+> `/tin-tuc/`. The addendum's second decision record (2026-09-24) says what each news section is for.
+>
+> **No longer applies — do not build:**
+>
+> - the `/blog/<category>/<slug>/` route and its migration plan (§3, §4);
+> - the five categories as publishing destinations (§5). The intent map in §2 is still useful;
+> - the `/blog/…` URLs in the templates and the backlog (§6, §12), and category archive pages under `/blog/` (§10);
+> - §11 as a field spec for `post`;
+> - the proposed edits to the unified plan at the end of this memo.
+>
+> **Still in force:**
+>
+> - what the blog will not do, and the no-competitor policy (§1, §5.6);
+> - the template rules on FAQ, schema, affiliate disclosure and link `rel` values (§6);
+> - the writing and review rules (§7);
+> - the service-page boundary (§8) and internal linking (§9);
+> - the indexing thresholds (§10), which now apply to content-platform hubs and nodes;
+> - the affiliate policy (§11.7) and the risk list (§13).
+>
+> Two example answers in §6 stated facts nobody confirmed: a court's size and hours, and how many weeks a beginner
+> needs. On 2026-09-24 they were replaced with placeholders so they can't be copied into real pages.
 
 > **Revision 2** — incorporates business decisions on the 12 questions from §14 of the original memo. Key shift: **all blog publishing is deferred to a post-CMS-migration launch**. The current 30-day SEO + AEO plan focuses on service pages, About page, coach/trust content, schema, and indexing cleanup — no blog posts produced during the 30 days.
 >
-> **Status:** Approved canonical blog strategy memo. Incorporated by reference into the [Unified SEO + AEO 30-Day Plan](./seo-aeo-30-day-unified-plan.md). Implementation is deferred until CMS migration / post-CMS blog launch.
+> **Status:** Approved in May 2026 as the canonical blog strategy memo, and partly superseded on 2026-09-08 (see the banner above). Incorporated by reference into the [Unified SEO + AEO 30-Day Plan](./seo-aeo-30-day-unified-plan.md).
 
 ---
 
@@ -231,7 +254,7 @@ Each template specifies URL, H1, Quick Answer, H2s, FAQ usage, links, CTA, schem
 
 - **URL:** `/blog/<category>/<question-as-slug>/` e.g. `/blog/nguoi-moi/nguoi-moi-hoc-cau-long-bao-lau-thi-danh-duoc/`
 - **H1:** the question itself, verbatim, with TP.HCM context if relevant
-- **Opening direct answer (first 40-70 words):** sentence 1 = the answer. Sentence 2-3 = qualifier. Example: *"Trung bình 6-8 tuần với lịch 2 buổi/tuần là đủ để người mới đánh được kỹ thuật cơ bản: cầm vợt, di chuyển, phát cầu thấp/cao, đánh trái-phải tay. Tốc độ thực tế phụ thuộc vào nền thể chất, độ thường xuyên tập và việc có HLV theo sát hay không."*
+- **Opening direct answer (first 40-70 words):** sentence 1 = the answer. Sentence 2-3 = qualifier. Example: *"Trung bình [khoảng thời gian do HLV xác nhận] với lịch 2 buổi/tuần là đủ để người mới đánh được kỹ thuật cơ bản: cầm vợt, di chuyển, phát cầu thấp/cao, đánh trái-phải tay. Tốc độ thực tế phụ thuộc vào nền thể chất, độ thường xuyên tập và việc có HLV theo sát hay không."*
 - **Quick Answer block:** styled callout repeating the first sentence with key qualifiers. Use the same component as money pages.
 - **H2 sections (4-6):** "Câu trả lời ngắn" / lộ trình theo tuần / yếu tố ảnh hưởng / khi nào nên chuyển / kết luận
 - **FAQ:** 3-5 questions, only if answers are visible in body. Use `FAQPage` schema only if `includeInSchema` confirmed.
@@ -316,7 +339,7 @@ These rules apply to every blog post, not just `thiet-bi`:
 
 - **URL:** `/blog/san-tap/<court-slug>/` (one post per V2 teaching court, not roundup posts)
 - **H1:** court name + framing focused on student usefulness, not competitive ranking. Example: *"Sân Green Bình Thạnh: cơ sở vật chất và lưu ý cho học viên V2"*
-- **Direct answer:** 1-2 sentences. *"Sân Green tại Bình Thạnh có 8 sân tiêu chuẩn, ánh sáng tốt và chỗ để xe rộng. V2 Badminton dạy các lớp người mới và 1 kèm 1 tại sân này từ T2-T7, khung 17h30-21h00."*
+- **Direct answer:** 1-2 sentences. *"Sân Green tại Bình Thạnh có [số sân] sân, [ánh sáng, chỗ để xe — theo thông tin chủ sân xác nhận]. V2 Badminton dạy [các lớp] tại sân này vào [ngày và khung giờ lấy từ lịch trong Sanity]."*
 - **Quick Answer:** location + facilities + V2 classes offered there
 - **H2 sections (5-6):**
   - "Vị trí và cách di chuyển"
