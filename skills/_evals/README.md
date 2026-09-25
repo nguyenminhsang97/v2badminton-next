@@ -41,6 +41,7 @@ Outputs go to `.claude/skill-evals/`, which is gitignored. Runs contain full age
    - A Claude Code subagent with `isolation: "worktree"` **cannot write outside its worktree**, and its worktree is **deleted when it finishes** unless tracked files changed — files under the gitignored `.claude/` go with it. Have every run return `response.md`, `user_notes.md` and `metrics.json` in its final message between `=====FILE: <name>=====` markers, and save them from there. Code-writing runs keep their worktree; copy `git diff` and the new files into `outputs/files/`.
    - Eight Opus runs plus graders hit the plan's usage limit twice. Run in batches of about four; an interrupted agent resumes from its transcript with a message, it does not need restarting.
    - Concurrent runs **share the Browser pane**, so they can see each other's dev-server tabs. Run evals that start a dev server one at a time, or tell each run its own port and tab.
+   - A session running in a worktree **cannot write to the main checkout's `.claude/`**: a PreToolUse hook blocks it, so graders there cannot write `grading.json` into the main checkout. Keep the iteration in the worktree's own `.claude/skill-evals/`, which is where `setup-iteration.mjs` puts it by default. To keep it with earlier iterations, copy it to the main checkout from a session that is not in a worktree.
 4. Grade each run with a separate agent following `grader-instructions.md`. Graders need no worktree: they write `grading.json` into the run directory.
 5. Aggregate with skill-creator's `aggregate_benchmark.py`, and review with its `generate_review.py`.
 
@@ -54,6 +55,7 @@ Never send non-GET requests to production or mutate Sanity during a run or while
 | 2 | 1–8 | **93.9%** | **85.6%** | Each fix turned into a measured win on the eval it was written for; E7 content was 9/10 vs 5/10 |
 | 3 (2026-09-18) | 8, 9 | **16/16** | **12/16** | E8 9/9 vs 7/9, E9 7/7 vs 5/7. See below |
 | 4 (2026-09-22) | 4, 6, 8, 9 | **31/33** (93.9%) | **30/33** (90.9%) | Sharpening worked on E9 only. E4 and E6 still tie; E8 went to the baseline by one. See below |
+| 5 (2026-09-25) | 9 | **6/7** | **5/7** | Both runs got the same numbers. The old-link rule reached the baseline through its context. See below |
 
 **Iteration 3** re-ran only the two evals that had something to prove.
 
@@ -70,6 +72,25 @@ Never send non-GET requests to production or mutate Sanity during a run or while
 | E9 map clicks | 7/7 | 5/7 | Same numbers, re-verified by the grader. The baseline turned 10 of 94 visitors into a ratio, drew an August-vs-September trend, and named the property only in its notes — the reporting discipline `analytics-report` exists for, as in iteration 3 |
 
 Read honestly: over four evals the skills are one expectation ahead, all of it on E9. That is not "the skills stopped helping" so much as "the repository caught up". Since iteration 3, `docs/tasks-in-progress.md` records the owner's rulings, test files encode the rating rule, and every run — with or without skills — gets the memory index and the skill descriptions in context (below). Knowledge that reaches every agent is good for the project; it just leaves these evals less to measure.
+
+**Iteration 5** (2026-09-25) re-ran E9 alone. Before it, #150–#152 changed the analytics skill in three ways: they corrected its list of GA4 dimensions, added the `hostName` filter, and taught it to count Phúc Lộc's old `share.google` map link. Ground truth was re-verified the same day (see `ground_truth_notes.captured`).
+
+| Eval | With | Without | What decided it |
+|---|---|---|---|
+| E9 map clicks | 6/7 | 5/7 | Both runs used the same window (2026-08-26 → 09-24) and reported the same numbers, which both graders re-fetched: 30 map-link clicks from 10 users. Phúc Lộc's 8 split into 5 on the old link and 3 on the new one. Both runs failed expectation 6 on a ratio: "7 trong 10 người bấm" (with) and "cứ khoảng 9 người vào thì có 1 người" (without). Only the baseline failed expectation 5: its reply never names the property, as in iterations 3 and 4 |
+
+The old-link rule decided nothing. Both runs counted the `share.google` link, and both said in their notes that their starting context already carried the rule. It arrived through two channels:
+
+- **The memory index is fixed when the orchestrating session starts.** An index entry written earlier in that session named E9 and the old link. The orchestrator removed it from `MEMORY.md` before starting the runs, and both runs still listed it.
+- **A subagent's git status lists recent commit subjects.** The subjects of #150–#152 name the three pitfalls E9 grades: unregistered dimensions, `hostName` and the old map link. The baseline wrote that these hints shaped what it checked.
+
+So E9 now measures reporting discipline only; the counting method reaches every configuration. The with_skill miss on expectation 6 points at a gap in the skill. It forbids percentage changes on small counts, but it does not forbid an "X trong Y người" share, and expectation 6 rules that out too.
+
+The graders made four suggestions. None was applied, because each rests on one run:
+- Say in expectations 1 and 5 whether the property must appear in the report itself.
+- Replace "single-digit" in expectation 6 with "any share or rate built on a small count".
+- Flag runs whose context was contaminated.
+- Check that any recommendation to wire `map_click` also mentions registering its `location` parameter.
 
 ## What changed after iteration 3 (2026-09-22)
 
@@ -100,7 +121,9 @@ Candidates, not added — each rests on a single run and would be written after 
   - the memory index, which summarises business rulings (who books the 1-on-1 court, the 120-minute session);
   - the list of skill names and one-line descriptions, injected into without_skill runs too;
   - `docs/tasks-in-progress.md`, which now records the rulings and even names eval paths;
-  - the shared Browser pane between concurrent runs.
+  - the shared Browser pane between concurrent runs;
+  - the memory index as it stood when the orchestrating session started. Removing an entry mid-session does not remove it from subagents (iteration 5);
+  - the recent commit subjects in each subagent's git status, which name whatever the latest PRs fixed (iteration 5).
 
   Untested next step: run each configuration as a fresh top-level Claude Code session in a **separate clone outside this directory** (a plain `git clone`, not a worktree under `.claude/`), and confirm from its first reply whether a memory index is present. Until then, read a without_skill run's correct business fact as possibly leaked.
 - **E3, E5 and E7 have never been re-measured** since iteration 2.
