@@ -45,6 +45,14 @@ Outputs go to `.claude/skill-evals/`, which is gitignored. Runs contain full age
      - The worktree's copy does not last. Iteration 5's session was reopened on 2026-09-29, and by then its worktree was back on its original branch with a fresh copy of the main checkout's `.claude/`. That copy replaced the graded iteration with an older, partial one.
      - The copy must come from the owner's own terminal or from a session that is not in a worktree.
      - That terminal is PowerShell, where `cp -r src/. dst/` nests the folder instead of merging it. Use `robocopy <src> <dst> /E`; its exit code 1 means files were copied.
+   - **Hide recent commit subjects before starting runs.** Each subagent's git status lists them, and they name whatever the latest PRs fixed. Detach the worktree onto a commit with the same tree and no history, then switch back when the runs finish:
+
+     ```bash
+     git checkout --detach "$(git commit-tree 'HEAD^{tree}' -m snapshot)"
+     ```
+
+     In iteration 6 both runs reported seeing only "snapshot".
+   - **Remove a memory entry before the orchestrating session starts.** The memory index subagents see is the one loaded when that session began; removing an entry mid-session did not keep it from iteration 5's runs.
 4. Grade each run with a separate agent following `grader-instructions.md`. Graders need no worktree: they write `grading.json` into the run directory.
 5. Aggregate with skill-creator's `aggregate_benchmark.py`, and review with its `generate_review.py`.
 
@@ -59,6 +67,7 @@ Never send non-GET requests to production or mutate Sanity during a run or while
 | 3 (2026-09-18) | 8, 9 | **16/16** | **12/16** | E8 9/9 vs 7/9, E9 7/7 vs 5/7. See below |
 | 4 (2026-09-22) | 4, 6, 8, 9 | **31/33** (93.9%) | **30/33** (90.9%) | Sharpening worked on E9 only. E4 and E6 still tie; E8 went to the baseline by one. See below |
 | 5 (2026-09-25) | 9 | **6/7** | **5/7** | Both runs got the same numbers. The old-link rule reached the baseline through its context. See below |
+| 6 (2026-09-30) | 9 | **7/7** | **4/7** | The first E9 baseline without commit-subject or memory hints. The skill won on reporting discipline. See below |
 
 **Iteration 3** re-ran only the two evals that had something to prove.
 
@@ -95,6 +104,19 @@ The graders made four suggestions. None was applied, because each rests on one r
 - Flag runs whose context was contaminated.
 - Check that any recommendation to wire `map_click` also mentions registering its `location` parameter.
 
+**Iteration 6** (2026-09-30) re-ran E9 alone to measure #155, which forbids shares and rates built on small counts. Both runs worked on a detached commit named "snapshot", with the same tree as main and no history. Both reported seeing only that commit in their git status, and no memory entry about map clicks. Ground truth was re-checked against Sanity the same day and had not changed.
+
+| Eval | With | Without | What decided it |
+|---|---|---|---|
+| E9 map clicks | 7/7 | 4/7 | Same window (2026-08-31 → 09-29) and same numbers, re-fetched by both graders: 28 map-link clicks from 9 users. Phúc Lộc's 8 split into 5 on the old link and 3 on the new one. The baseline failed three expectations. Its reply never names the property, which fails 1 and 5. It also mentions the owner's own visits only in its notes, which fails 6 |
+
+Reading it honestly:
+
+- **The skill won on reporting discipline, not on counting.** Both runs found the old `share.google` link; the baseline found it through T8 in `docs/tasks-in-progress.md`. With the hints removed, the gap is 3 expectations, against 2 in iterations 3 and 4 and 1 in iteration 5.
+- **The with_skill pass on 6 measures a rule written after seeing 6 fail**, so it shows the rule is followed, not that it was written blind.
+- **Two graders split the same omission on expectation 1.** In iteration 5 a property named only in the notes passed 1; in iteration 6 it failed. The suggestion to say "in the report" in expectations 1 and 5 now rests on two runs graded differently.
+- The with_skill grader flagged one claim that no expectation covers: "gần hết lượt bấm nằm ở trang chủ", when the figure was 18 of 28.
+
 ## What changed after iteration 3 (2026-09-22)
 
 Each decision below comes from the grader's own `eval_feedback` on the runs, not from a guess about why a score tied.
@@ -130,7 +152,7 @@ Candidates, not added — each rests on a single run and would be written after 
   - `docs/tasks-in-progress.md`, which now records the rulings and even names eval paths;
   - the shared Browser pane between concurrent runs;
   - the memory index as it stood when the orchestrating session started. Removing an entry mid-session does not remove it from subagents (iteration 5);
-  - the recent commit subjects in each subagent's git status, which name whatever the latest PRs fixed (iteration 5).
+  - the recent commit subjects in each subagent's git status, which name whatever the latest PRs fixed (iteration 5). The snapshot commit described under "Running an iteration" removed them in iteration 6.
 
   Untested next step: run each configuration as a fresh top-level Claude Code session in a **separate clone outside this directory** (a plain `git clone`, not a worktree under `.claude/`), and confirm from its first reply whether a memory index is present. Until then, read a without_skill run's correct business fact as possibly leaked.
 - **E3, E5 and E7 have never been re-measured** since iteration 2.
