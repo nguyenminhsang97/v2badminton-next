@@ -118,6 +118,10 @@ Candidates, not added — each rests on a single run and would be written after 
 - E6: emits Event structured data for an event the public cannot join (the baseline miss above).
 - E9 expectation 4 no longer discriminates: T8 in `docs/tasks-in-progress.md` names the `share.google` link as Phúc Lộc's, so any run can find it.
 
+## What changed after iteration 5 (2026-09-30)
+
+- **`analytics-report` now forbids shares and rates built on small counts**, not only percentage changes. Examples: "7 trong 10 người bấm", "cứ khoảng 9 người vào thì có 1 người". Its report shape now asks for counts too. This gap cost the with_skill run expectation 6. The rule was written after reading expectation 6 and seeing that miss, so read any later E9 pass on #6 with that in mind. No expectation changed.
+
 ## Known weaknesses
 
 - **Isolation leaks, and `isolation: "worktree"` does not fix it.** Iteration 3's recipe said a worktree at another path keeps the memory out. It does not: Claude Code puts subagent worktrees under `.claude/worktrees/`, and all eight iteration-4 runs reported the owner's `MEMORY.md` index in their context. Channels measured in iteration 4:

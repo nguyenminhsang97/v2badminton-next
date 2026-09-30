@@ -55,7 +55,7 @@ Event-scoped custom dimensions registered in GA4 — the only event parameters a
 
 ## Reading the numbers honestly
 
-- This is a small site. A page with single-digit impressions is noise, not a trend; say so instead of computing a percentage change on it.
+- This is a small site. A page with single-digit impressions is noise, not a trend; say so instead of computing a percentage change on it. **The same holds for shares and rates built on small counts**, even when hedged with "khoảng". Examples: "7 trong 10 người bấm", "cứ khoảng 9 người vào thì có 1 người", "11% khách vào trang". One visitor more or less moves such a share, so it reads as a finding when it is noise. Report the counts as separate figures instead: "Green: 7 người bấm; cả 4 sân: 10 người".
 - **GA4 has no data from 2026-05-14 to 2026-06-07.** The Next.js site loaded GA4 only through GTM, and `NEXT_PUBLIC_GTM_ID` had never been set in Vercel, so nothing reached GA4 until PR #83 loaded `gtag.js` directly; data resumes on 2026-06-08, the day it merged. April 2026 is launch and test traffic, not a baseline: about 200 Direct sessions and 6 `generate_lead` (checked 2026-09-24). So month-over-month comparisons must start from mid-June 2026, not 06-08: the floating Zalo and phone buttons only fire `contact_click` since #84 and #85 on 2026-06-09, and July is the first full month. A window reaching further back compares against a hole or against test visits. From mid-June on, the small-numbers rule above still applies.
 - A money page that is "Crawled – currently not indexed" with zero impressions is not underperforming, it is not competing yet. Check index state before diagnosing content.
 - GA4 counts the owner's own visits (no internal filter). Treat tiny session counts with that in mind.
@@ -68,7 +68,7 @@ Event-scoped custom dimensions registered in GA4 — the only event parameters a
 Lead with the answer, then the evidence:
 
 1. The question in one line, with the window and property ("28 ngày gần nhất, `sc-domain:v2badminton.com`").
-2. The numbers that answer it — few, with the unit.
+2. The numbers that answer it: few, with the unit, and as counts, not as shares of a small total.
 3. What changed and the most plausible reason, separating what you measured from what you infer.
 4. What you could not measure and why (unauthorised connector, unwired event, no field data).
 5. One recommended action, if any.
