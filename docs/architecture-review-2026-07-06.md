@@ -2,6 +2,17 @@
 
 Date: 2026-07-06 · Scope: full repo (`apps/web`, `packages/schema-shared`, Sanity Studio, docs) · No code changes made.
 
+> **Status note — 2026-09-24.** This is a dated review. Since then:
+>
+> - R1 (no draft preview) was closed by #119.
+> - R2 and R3 (unguarded URL changes) were addressed by the rename runbook and `FILE_ROUTE_REDIRECTS`.
+> - R4 (fallback drift) was decided in T11 (#138).
+> - R5 (no SEO tests) was addressed by `apps/web/src/lib/__tests__/seoRegression.test.ts`.
+> - R6 is still open: the specs that code comments cite are still only in the gitignored `.claude/CMS/`.
+>
+> The Studio has since moved to `apps/studio` (Gate B), so the `src/…` paths and the `/studio` notes below
+> predate the split. For the current topology, see `docs/cms/gate-b-completion-2026-09-10.md`.
+
 ---
 
 ## 1. What the project is doing well

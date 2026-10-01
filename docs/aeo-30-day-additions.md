@@ -1,5 +1,18 @@
 # AEO 30-Day Plan — Additions to the SEO Plan
 
+> **Status: SUPERSEDED — 2026-05-14. Do not follow this file.** It was merged into
+> [`seo-aeo-30-day-unified-plan.md`](./seo-aeo-30-day-unified-plan.md), and that plan is what shipped (#42–#45).
+> Where this file now disagrees:
+>
+> - **Task A.5** calls Speakable schema a "real benefit", and the closing section calls `llms.txt` "harmless".
+>   The unified plan made Speakable optional, and it never shipped. It also bans AI-only files (§2 rule 7).
+> - **Task A.6** publishes two blog posts under `/blog/`. That was cancelled, and the feed is now `/tin-tuc/`.
+> - **Example facts were corrected on 2026-09-24.** Rule A.2.3 used to say "90 phút" and "2.500.000 VNĐ/tháng cho
+>   lớp nhóm 8 buổi". The owner's decisions of 2026-09-17 (`docs/tasks-in-progress.md`) are different: a group
+>   session is 120 minutes, and the cheapest group plan is 1,000,000 VNĐ/month for two sessions a week. The
+>   learning-time figure in A.6 was never confirmed by a coach, so it is now a placeholder. Examples get copied
+>   into real pages, which is why these were edited rather than only flagged.
+
 This document **adds** AEO (Answer Engine Optimization) tasks on top of [seo-30-day-execution-plan.md](./seo-30-day-execution-plan.md). Do the SEO tasks first each week; these AEO tasks layer on.
 
 **Why a separate doc:** AEO success depends on the SEO foundations already in motion (real Sanity content, no thin pages, indexable HTML). Don't start the AEO content tasks until the matching SEO week's deliverables are in.
@@ -150,8 +163,8 @@ Each H2 should be a question users actually ask. Examples:
 
 Always name actual courts, districts, prices, durations. AI engines reward specificity:
 - "Sân Green ở Bình Thạnh, sân Huệ Thiên ở Thủ Đức" — not "nhiều sân"
-- "Buổi học 90 phút" — not "thời lượng linh hoạt"
-- "Học phí 2.500.000 VNĐ/tháng cho lớp nhóm 8 buổi" — not "học phí ưu đãi"
+- "Buổi học 120 phút" — not "thời lượng linh hoạt"
+- "Học phí 1.000.000 VNĐ/tháng cho lớp nhóm 2 buổi/tuần" — not "học phí ưu đãi"
 
 ### Rule A.2.4 — Add a comparison section to `/hoc-cau-long-1-kem-1/` and `/gia-hoc-cau-long-tphcm/`
 
@@ -332,7 +345,7 @@ These two are explicitly question-shaped — perfect for AI Overview pickup:
 
 1. **`/blog/nguoi-moi-hoc-cau-long-bao-lau-thi-danh-duoc/`**
    - H1: "Người mới học cầu lông bao lâu thì đánh được cơ bản?"
-   - First paragraph must answer in one sentence (e.g., "Trung bình 6-8 tuần với lịch học 2 buổi/tuần là đủ để người mới đánh được các kỹ thuật cơ bản: cầm vợt, di chuyển, phát cầu thấp/cao, và đánh trái-phải tay.")
+   - First paragraph must answer in one sentence (e.g., "Trung bình [khoảng thời gian do HLV xác nhận] với lịch học 2 buổi/tuần là đủ để người mới đánh được các kỹ thuật cơ bản: cầm vợt, di chuyển, phát cầu thấp/cao, và đánh trái-phải tay.")
    - Then expand with: "Phụ thuộc vào...", "Lộ trình tuần 1-2 / 3-4 / 5-8", "Khi nào nên chuyển sang nâng cao".
    - Internal links: `/hoc-cau-long-cho-nguoi-moi/`, `/hoc-cau-long-1-kem-1/`.
 

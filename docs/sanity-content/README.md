@@ -1,5 +1,12 @@
 # Week 2 — Money Page Sanity Content Drafts
 
+> **Status: HISTORICAL. These are the Week 2 seed drafts from May 2026. Do not paste or import these files into
+> Sanity.** Production Sanity is the source of truth and has moved on. In September 2026 the owner corrected
+> class size (4-8 người), who books the court for 1 kèm 1, session length (120 phút) and the "từ" price (T1–T4
+> in `docs/tasks-in-progress.md`), and has edited in Studio since then. Pasting a file back would overwrite
+> those corrections. The "zero invented business facts" claim at the end did not hold: the drafts said
+> "2-6 học viên" until #126, and gave 60–90 and 90–120-minute sessions until #136.
+
 This folder contains draft Portable Text content for the 9 money pages listed in §6 of [seo-aeo-30-day-unified-plan.md](../seo-aeo-30-day-unified-plan.md). Each file is one money page, structured to match the Sanity schemas in `src/sanity/schemaTypes/`.
 
 ## File format

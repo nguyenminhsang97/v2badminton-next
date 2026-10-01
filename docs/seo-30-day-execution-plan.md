@@ -1,5 +1,19 @@
 # SEO 30-Day Execution Plan (Junior Developer Guide)
 
+> **Status: SUPERSEDED — 2026-05-14. Do not follow this file.** It was merged into
+> [`seo-aeo-30-day-unified-plan.md`](./seo-aeo-30-day-unified-plan.md) on the day it was written, and that plan
+> is what shipped (#42–#45). Several instructions here are wrong today:
+>
+> - **Task 1.4** creates `src/middleware.ts`. Next 16 calls this Proxy. What shipped is
+>   `apps/web/src/proxy.ts` exporting `proxy()`, and there is no `middleware.ts`.
+> - **Task 1.2** says the three always-listed money pages render from homepage data. In fact they return 404
+>   when their `money_page` document is missing (`moneyPageFailSafe.ts`).
+> - **Task 1.3** keeps the degraded (Sanity unreachable) branch indexable. The unified plan's W1.3 reversed
+>   that: every fallback branch is `noindex`.
+> - **Task 4.1** publishes three blog posts. That was cancelled, and `/blog/` is now `/tin-tuc/`.
+>
+> Open SEO work lives in `docs/tasks-in-progress.md`.
+
 This plan turns the SEO audit findings into concrete, day-by-day work. Follow it top-to-bottom. Do not skip the verification steps — they catch the mistakes juniors most often make on this codebase.
 
 **Owner:** assigned junior dev

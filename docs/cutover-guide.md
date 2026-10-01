@@ -1,5 +1,9 @@
 # Production Cutover Guide — `v2badminton.com`
 
+> **Status: EXECUTED — 2026-05-11 (tag `cutover-2026-05-11`). Do not run this again.** v2badminton.com serves
+> the Next.js app. On 2026-09-24, both `www.v2badminton.com` and `v2badminton-next.vercel.app` returned a 308 to
+> the apex. For the current topology, see `docs/cms/gate-b-completion-2026-09-10.md`.
+
 > **Audience:** A junior dev (you) executing the cutover for the first time.
 > **Goal:** Switch `https://v2badminton.com` (currently a stale Cloudflare-cached static page) to the new Next.js 16 production deployment.
 > **Total time:** ~3.5 hours spread across 2 calendar days. Active "danger window" is **30 min**.
