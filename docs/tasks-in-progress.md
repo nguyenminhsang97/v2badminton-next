@@ -453,7 +453,7 @@ Cả hai bản còn kèm bản diff và file mới trong `.claude/skill-evals/it
 
 **Hiện trạng** (2026-09-23/24):
 - Chỉ `generate_lead` là Key Event: mỗi tháng từ tháng 6 đến tháng 9, số `keyEvents` bằng đúng số `generate_lead`. Vì vậy lượt bấm Zalo hoặc gọi (`contact_click`) không được tính là chuyển đổi.
-- Hai nút cuối trang dịch vụ (`apps/web/src/components/money-page/MoneyPageTemplate.tsx`, quanh dòng 254 và 257) là `<Link>` nội bộ, chưa gắn `trackEvent`.
+- Hai nút cuối trang dịch vụ (`apps/web/src/components/money-page/MoneyPageTemplate.tsx`, quanh dòng 254 và 257) là `<Link>` nội bộ, chưa gắn `trackEvent`. Chủ nhắc lại ngày 2026-10-01: ghi lại để làm từ từ. Trong báo cáo tháng 9, `cta_click` chỉ có từ hero, thẻ khoá học, bảng giá, menu và nút Zalo nổi; nên không biết có ai đọc hết trang rồi bấm đăng ký ở cuối không.
 - Form không hỏi khách biết V2 qua đâu. Ba nguồn khách chính (người quen, Facebook, gặp ở sân — chủ, 2026-09-24) GA4 không đo được.
 - `/lop-cau-long-buoi-toi/`: Search Console báo "Crawled – currently not indexed", Google ghé lần cuối ngày 2026-05-12.
 - Trong code không có thẻ xác minh Bing Webmaster Tools. Chưa kiểm bản ghi DNS.
@@ -524,7 +524,7 @@ Chủ (mỗi việc vài phút):
 
 ## T19 — Danh bạ sân cho 4 sân đối tác
 
-**Trạng thái:** chưa nhận — chờ chủ quyết mở với 4 sân
+**Trạng thái:** chưa nhận — chủ đồng ý mở với 4 sân ngày 2026-10-01, làm từ từ
 **Đọc trước:** `skills/sanity-cms/SKILL.md`, `skills/seo/SKILL.md`; spec Phase 2 `.claude/CMS/v2badminton-cms-phase-2-locked-spec.md` (chỉ có trên máy của chủ)
 
 **Hiện trạng.**
@@ -532,13 +532,41 @@ Chủ (mỗi việc vài phút):
 - Mục trên menu đang tắt bằng `EXPOSE_SAN_CAU_LONG = false` (`apps/web/src/components/layout/Nav.tsx`). Sanity có 0 tài liệu `court` (2026-09-23).
 - Người tìm tên sân: khoảng 366 lượt hiển thị, 0 click (25/8–21/9). Các lượt này đang rơi vào hai trang quận.
 - Spec đặt mức mở là 5 sân đã kiểm, kèm phần nhận xét do chủ viết, và định làm danh bạ gồm cả sân V2 không dạy. Menu chỉ hiện khi có ít nhất 3 khu vực và 5 sân (quyết định 2026-06-15). V2 dạy ở 4 sân.
+- Số tháng 9 (Search Console, 1–30/9, kiểm 2026-10-01): `/lop-cau-long-thu-duc/` 425 lượt hiển thị, 1 click (tháng 8: 103 và 4); `/lop-cau-long-binh-thanh/` 329 lượt hiển thị, 0 click. Truy vấn kéo hai trang này lên phần lớn là tên sân: "green badminton" 63, "sân cầu lông green nguyễn xí" 46, "huệ thiên badminton" 26, "green nguyễn xí" 25, "phúc lộc badminton" 12, "154/9 nguyễn xí" 10. Cùng tháng, GA4 ghi 28 lượt bấm link bản đồ (tháng 8: 16): người vào web đang tìm đường tới sân.
+
+**Chủ quyết (2026-10-01).** Mở với 4 sân V2 đang dạy: Green Nguyễn Xí, Huệ Thiên, Phúc Lộc, Khang Sport — hai khu vực Bình Thạnh và Thủ Đức. Các trang sân vào sitemap ngay khi publish. Mục menu vẫn ẩn tới khi đủ 3 khu vực và 5 sân, như quyết định 2026-06-15. Không có hạn chót.
 
 **Làm.**
 - Đưa spec Phase 2 từ `.claude/CMS/` vào `docs/`, để máy khác cũng đọc được.
-- Chủ quyết: mở với 4 sân đối tác.
-- Xin chủ sân thông tin: giờ mở cửa, giá thuê, số điện thoại đặt sân, ảnh. Chủ viết phần nhận xét theo spec §9 (PR5b).
+- Chủ gom thông tin từng sân (danh sách bên dưới). Bắt đầu từ Green, sân có nhiều lượt hiển thị nhất.
+- Agent viết các trường theo khung bên dưới, chạy `check-terms.mjs` và `check-facts.mjs` (`skills/noi-dung-vi/SKILL.md`), chủ duyệt câu chữ.
 - Tạo bản nháp `court` trong Sanity, chủ publish. Menu vẫn ẩn; hai trang quận link sang các trang sân.
 - Gửi link trang sân cho chủ sân để họ chia sẻ (nối với T18).
+
+**Chủ cần gom cho mỗi sân** (agent không tự điền, vì đây là dữ kiện):
+- số sân, loại mặt sân (gỗ, thảm…), giá thuê giờ thường và giờ cao điểm, giờ mở và đóng từng ngày;
+- số điện thoại hoặc link đặt sân; gửi xe máy và ô tô, có phí không;
+- 3–6 ảnh ngang chụp thật: mặt tiền, toàn cảnh sân, chỗ gửi xe. Ảnh bìa cần 1200×630;
+- nhận xét của HLV: 3 ưu điểm, 1–2 nhược điểm thật. Ghi vội hoặc nói miệng cũng được, agent viết lại;
+- ngày đến sân hoặc gọi sân để xác nhận, dùng cho `lastReviewedAt`.
+
+**Khung nội dung.** Người tìm tên sân muốn biết: sân ở đâu và đi thế nào; giá thuê, giờ mở cửa, cách đặt sân; chơi có tốt không, gửi xe được không; và (phần của V2) ở đây có lớp không. Trang sân trả lời đủ bốn ý đó. Nó **không** phải trang lớp thứ hai: lớp học chỉ chiếm một đoạn và link sang trang quận, nếu không hai trang sẽ tranh cùng từ khoá.
+
+Thứ các danh bạ sân khác không có là nhận xét của người đứng trên sân mỗi tuần. Nên viết những điều chỉ người chơi thật biết: sàn có trơn không; đèn có chói khi ngửa lên phông cầu hay đập cầu không; trần cao hay thấp; quạt hoặc gió lùa có làm cầu lệch không; khung giờ nào khó đặt; sân hợp với ai.
+
+| Trường | Viết gì |
+|---|---|
+| `name` / `shortName` | Đúng tên người ta hay gõ: "Sân cầu lông Green Nguyễn Xí" / "Green Nguyễn Xí" |
+| `quickAnswer` | 40–70 từ, mở bằng tên sân: ở đâu, mấy sân, giá thuê, giờ mở cửa, hợp với ai |
+| `reviewSummary` | 4 đoạn, nên ≥150 từ: (1) tóm tắt sân; (2) chơi ở đây thế nào; (3) đi lại, gửi xe, đặt sân; (4) V2 dạy lớp nào ở đây, lịch lấy từ `schedule_block`, link sang trang quận |
+| `pros` / `cons` / `bestFor` | Mỗi ý một câu ngắn, cụ thể. Phải có nhược điểm thật |
+| `v2PartnerNote` | Bắt buộc với cả 4 sân: "V2 Badminton tổ chức lớp học tại sân này." (quyết định Q5, 2026-06-15) |
+| `seoTitle` | Khoảng 60 ký tự, không thêm "\| V2 Badminton". VD: "Sân cầu lông Green Nguyễn Xí, Bình Thạnh: giá thuê, giờ mở cửa" |
+| `seoDescription` | ≤160 ký tự: địa chỉ ngắn, giá, một lý do để bấm |
+| `relatedMoneyPage` | Trang quận của sân đó |
+| `relatedFaqs` | 3–4 câu: giá thuê một giờ; có chỗ gửi ô tô không; đặt sân bằng cách nào; có lớp học cầu lông ở sân này không |
+
+Câu lưu ý cuối trang ("Thông tin sân có thể thay đổi…", quyết định Q6) do code tự gắn, không viết lại.
 
 **Xong khi:** 4 trang sân đã publish và được index, hai trang quận đã link tới, và mốc T22 kế tiếp thấy có click từ người tìm tên sân.
 
@@ -635,7 +663,7 @@ Những việc agent không làm thay được:
 
 - **Quyết định cho workstream SEO (2026-09-24)**, chi tiết ở mục 4 của `docs/seo-strategy.md`:
   - gộp các hồ sơ Maps ở Thủ Đức (T13). Chủ sẽ tự làm sau; số điện thoại chính đã có đề xuất trong T13;
-  - mở danh bạ sân với 4 sân (T19).
+  - ~~mở danh bạ sân với 4 sân (T19)~~ — chủ đồng ý ngày 2026-10-01.
 
   Thêm ba việc vài phút trong GA4, Search Console và Bing, liệt kê ở T16.
 - ~~**Publish màn hình đồng ý OAuth** trong Google Cloud Console~~ — **xong 2026-09-23.** App ở project `gen-lang-client-0433014248` (client `528367442606-…`, dùng chung cho GA4 và Search Console) đã chuyển từ *Testing* sang *In production*, nên refresh token không còn hạn 7 ngày. Nút Publish ban đầu bị mờ vì trang Branding thiếu app name, support email, homepage và privacy policy — điền xong là sáng; **không tải logo lên**, vì có logo là Google bắt buộc xác minh app. Publish xong vẫn phải cấp lại token một lần nữa (token cũ giữ hạn của lúc cấp); đã làm, và cả hai API đọc được sau khi khởi động lại.

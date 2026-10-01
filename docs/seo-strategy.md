@@ -89,6 +89,7 @@ Lưu ý khi đọc số:
 | 2026-09-24 | `/tin-v2/` là tin về V2; trang của các giải V2 tổ chức đặt ở `/su-kien/` (T10). `/tin-tuc/` định dành cho tin giải đấu chuyên nghiệp để thu hút lượt truy cập, nhưng **tạm dừng** sau khi xem đề xuất SEO | chủ; ghi trong phụ lục blog (#148) |
 | 2026-09-24 | Cả hai số 0907 911 886 và 0982 093 947 đều là số của chủ V2 | chủ |
 | 2026-09-24 | Ba hồ sơ Maps ở Thủ Đức được tạo theo hướng dẫn của các model AI khác lúc mới làm; chủ sẽ tự dọn sau (T13) | chủ |
+| 2026-10-01 | Mở danh bạ sân với 4 sân V2 đang dạy (Green, Huệ Thiên, Phúc Lộc, Khang Sport). Vào sitemap ngay; menu vẫn ẩn tới khi đủ 3 khu vực và 5 sân. Làm từ từ (T19) | chủ |
 
 Các chính sách giữ nguyên từ tài liệu cũ:
 
@@ -104,7 +105,7 @@ Các chính sách giữ nguyên từ tài liệu cũ:
    Chủ sẽ làm sau. (T13)
 2. Số điện thoại chính cho các hồ sơ Maps. Đề xuất: dùng 0907 911 886 làm số chính ở mọi nơi, vì số này trùng
    với web, với Zalo và với dữ liệu cấu trúc. 0982 093 947 để làm số phụ trong hồ sơ. Lý do ghi ở T13.
-3. Có mở danh bạ sân với 4 sân V2 đang dạy không? Spec cũ đặt mức 5 sân và tính cả sân V2 không dạy. Đề xuất: mở với 4 sân. (T19)
+3. ~~Có mở danh bạ sân với 4 sân V2 đang dạy không?~~ Chủ đồng ý ngày 2026-10-01: mở với 4 sân. (T19)
 
 ## 5. Chiến lược — năm hướng, theo thứ tự ưu tiên
 
