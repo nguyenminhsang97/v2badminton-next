@@ -25,6 +25,22 @@ import { SerpPreviewInput } from "../components/SerpPreviewInput";
  * Tổng quan / Cấu trúc / Nội dung / SEO / Xuất bản. Pure schema metadata —
  * no behavioral change.
  */
+/**
+ * Author and expert-review fields only matter for technique articles, where a
+ * coach's name vouches for the advice. News in /tin-v2/ is written by the
+ * organisation, so the owner asked (2026-10-01) not to show coach fields there.
+ *
+ * Matched by document id because `hidden` cannot look up the hub's slug. Hub
+ * ids never change; if the technique hub is ever recreated, update this id.
+ */
+const TECHNIQUE_HUB_ID = "b761f64e-45b5-44b3-9381-a1d5ad41f282";
+
+function isTechniqueArticle(document: unknown): boolean {
+  const ref = (document as { parentHub?: { _ref?: string } } | undefined)
+    ?.parentHub?._ref;
+  return ref === TECHNIQUE_HUB_ID;
+}
+
 export const contentArticle = defineType({
   name: "content_article",
   title: "Bài viết",
@@ -84,7 +100,7 @@ export const contentArticle = defineType({
       type: "string",
       group: "overview",
       description:
-        "Chọn 'Tổ chức' nếu bài do đội ngũ V2 Badminton biên soạn. Chọn 'HLV' để gán HLV cụ thể.",
+        "Chọn 'Tổ chức' nếu bài do đội ngũ V2 Badminton biên soạn. Chọn 'HLV' để gán HLV cụ thể. Chỉ hiện với bài thuộc hub Kỹ thuật cầu lông.",
       options: {
         list: [
           { title: "Đội ngũ V2 Badminton (tổ chức)", value: "organization" },
@@ -93,6 +109,7 @@ export const contentArticle = defineType({
         layout: "radio",
       },
       initialValue: "organization",
+      hidden: ({ document }) => !isTechniqueArticle(document),
     }),
     defineField({
       name: "authorCoach",
@@ -102,7 +119,8 @@ export const contentArticle = defineType({
       to: [{ type: "coach" }],
       description:
         "Chọn HLV đã biên soạn bài viết này. Chỉ hiển thị khi Loại tác giả = HLV cụ thể.",
-      hidden: ({ document }) => document?.authorKind !== "coach",
+      hidden: ({ document }) =>
+        !isTechniqueArticle(document) || document?.authorKind !== "coach",
       validation: (Rule) =>
         Rule.custom((value, context) => {
           const doc = context.document as { authorKind?: string } | undefined;
@@ -120,6 +138,7 @@ export const contentArticle = defineType({
       to: [{ type: "coach" }],
       description:
         "HLV đã kiểm tra chuyên môn bài viết. Để trống nếu chưa có review. Khi có giá trị, cần kèm Ngày review.",
+      hidden: ({ document }) => !isTechniqueArticle(document),
       validation: (Rule) =>
         Rule.custom((value, context) => {
           const doc = context.document as { lastReviewed?: string } | undefined;
@@ -136,6 +155,7 @@ export const contentArticle = defineType({
       group: "overview",
       description:
         "Ngày HLV review lần gần nhất. Bắt buộc kèm theo khi có HLV review.",
+      hidden: ({ document }) => !isTechniqueArticle(document),
       validation: (Rule) =>
         Rule.custom((value, context) => {
           const doc = context.document as { reviewer?: unknown } | undefined;
