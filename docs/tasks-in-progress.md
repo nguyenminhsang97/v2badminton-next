@@ -547,7 +547,7 @@ Chủ (mỗi việc vài phút):
 - số sân, loại mặt sân (gỗ, thảm…), giá thuê giờ thường và giờ cao điểm, giờ mở và đóng từng ngày;
 - số điện thoại hoặc link đặt sân; gửi xe máy và ô tô, có phí không;
 - 3–6 ảnh ngang chụp thật: mặt tiền, toàn cảnh sân, chỗ gửi xe. Ảnh bìa cần 1200×630;
-- nhận xét của HLV: 3 ưu điểm, 1–2 nhược điểm thật. Ghi vội hoặc nói miệng cũng được, agent viết lại;
+- nhận xét của chủ về sân: 3 ưu điểm, 1–2 nhược điểm thật. Ghi vội hoặc nói miệng cũng được, agent viết lại;
 - ngày đến sân hoặc gọi sân để xác nhận, dùng cho `lastReviewedAt`.
 
 **Khung nội dung.** Người tìm tên sân muốn biết: sân ở đâu và đi thế nào; giá thuê, giờ mở cửa, cách đặt sân; chơi có tốt không, gửi xe được không; và (phần của V2) ở đây có lớp không. Trang sân trả lời đủ bốn ý đó. Nó **không** phải trang lớp thứ hai: lớp học chỉ chiếm một đoạn và link sang trang quận, nếu không hai trang sẽ tranh cùng từ khoá.
@@ -560,6 +560,7 @@ Thứ các danh bạ sân khác không có là nhận xét của người đứn
 | `quickAnswer` | 40–70 từ, mở bằng tên sân: ở đâu, mấy sân, giá thuê, giờ mở cửa, hợp với ai |
 | `reviewSummary` | 4 đoạn, nên ≥150 từ: (1) tóm tắt sân; (2) chơi ở đây thế nào; (3) đi lại, gửi xe, đặt sân; (4) V2 dạy lớp nào ở đây, lịch lấy từ `schedule_block`, link sang trang quận |
 | `pros` / `cons` / `bestFor` | Mỗi ý một câu ngắn, cụ thể. Phải có nhược điểm thật |
+| Cách xưng | Ghi là "nhận xét của V2 Badminton", không ghi "của HLV": trang sân nói bằng giọng tổ chức, không cần HLV đứng tên (chủ, 2026-10-01). Chỗ trống `[CẦN HLV XÁC NHẬN: …]` vẫn giữ, vì đó là dữ kiện chủ phải điền |
 | `v2PartnerNote` | Bắt buộc với cả 4 sân: "V2 Badminton tổ chức lớp học tại sân này." (quyết định Q5, 2026-06-15) |
 | `seoTitle` | Khoảng 60 ký tự, không thêm "\| V2 Badminton". VD: "Sân cầu lông Green Nguyễn Xí, Bình Thạnh: giá thuê, giờ mở cửa" |
 | `seoDescription` | ≤160 ký tự: địa chỉ ngắn, giá, một lý do để bấm |
