@@ -4,13 +4,36 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import robots from "@/app/robots";
 import sitemap from "@/app/sitemap";
 import { buildMetadata, canonicalUrl, coreRoutes } from "@/lib/routes";
+import type { HomepageCoach } from "@/domain/homepage";
 import {
   buildBreadcrumbSchema,
   buildCoursePageSchema,
   buildOrganizationSchema,
+  buildPersonSchema,
   buildWebsiteSchema,
+  coachPersonId,
 } from "@/lib/schema";
 import { siteConfig } from "@/lib/site";
+
+// A coach whose card shows the five-star strip, because that visual toggle is
+// the likeliest way a rating could leak into structured data.
+const starredCoach: HomepageCoach = {
+  id: "coach.example",
+  name: "  HLV Ví Dụ  ",
+  photoUrl: "/images/coaches/example.webp",
+  photoAlt: null,
+  teachingGroup: "Lớp nhóm",
+  approach: "",
+  roleBadge: "HLV",
+  credentialTags: ["BWF Coach Level 1 (2026)"],
+  quote: null,
+  focusLine: null,
+  proofLabel: null,
+  showStars: true,
+  featured: true,
+  homepageOrder: 1,
+  order: 1,
+};
 
 const sanityMocks = vi.hoisted(() => ({
   getCoaches: vi.fn(),
@@ -166,6 +189,7 @@ describe("SEO regression guardrails", () => {
         "Hoc cau long cho nguoi moi",
         "Khoa hoc cau long co ban tai TP.HCM.",
       ),
+      buildPersonSchema(starredCoach),
     ];
 
     for (const schema of schemas) {
@@ -176,9 +200,35 @@ describe("SEO regression guardrails", () => {
     const serialized = JSON.stringify(schemas);
     expect(JSON.parse(serialized)).toEqual(schemas);
     expect(serialized).not.toContain("AggregateRating");
+    expect(serialized).not.toContain("aggregateRating");
+    expect(serialized).not.toContain('"review"');
+    expect(serialized).not.toContain("ratingValue");
     expect(schemas[3]).toMatchObject({
       "@type": "Course",
       url: canonicalUrl("/hoc-cau-long-cho-nguoi-moi/"),
     });
+  });
+
+  it("gives each coach a stable Person identity tied to the coach page", () => {
+    const person = buildPersonSchema(starredCoach);
+
+    expect(person).toMatchObject({
+      "@type": "Person",
+      "@id": coachPersonId(starredCoach),
+      name: "HLV Ví Dụ",
+      image: canonicalUrl("/images/coaches/example.webp"),
+      jobTitle: "HLV",
+      knowsAbout: "Cầu lông",
+      worksFor: {
+        "@type": "Organization",
+        "@id": `${siteConfig.siteUrl}/#organization`,
+        name: siteConfig.name,
+        url: siteConfig.siteUrl,
+      },
+      hasCredential: ["BWF Coach Level 1 (2026)"],
+    });
+    expect(person["@id"]).toBe(
+      `${canonicalUrl("/huan-luyen-vien/")}#coach-coach.example`,
+    );
   });
 });

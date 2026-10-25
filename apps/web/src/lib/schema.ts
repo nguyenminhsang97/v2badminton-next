@@ -474,16 +474,43 @@ export function hasRealCoachName(coach: HomepageCoach): boolean {
   return coach.name.trim().length > 0;
 }
 
+const COACH_LIST_PATH = "/huan-luyen-vien/";
+
+/**
+ * Stable identity for one coach, keyed on the Sanity document id so it
+ * survives renames. It lives under the coach list page because that is the
+ * only page describing coaches; there are no per-coach routes yet.
+ */
+export function coachPersonId(coach: Pick<HomepageCoach, "id">): string {
+  return `${canonicalUrl(COACH_LIST_PATH)}#coach-${coach.id}`;
+}
+
+/**
+ * A Person node for one coach card. Apart from the fixed `knowsAbout`, every
+ * field is read from the same Sanity document the card renders, so the markup
+ * never states more than the page shows.
+ *
+ * Deliberately absent: `aggregateRating` and `review`. Google shows no review
+ * stars for a Person, does not accept ratings copied in from another site
+ * (Facebook included), and treats a business rating itself on its own pages
+ * as self-serving. seoRegression.test.ts guards this.
+ */
 export function buildPersonSchema(coach: HomepageCoach): JsonLdNode {
   return {
     "@context": "https://schema.org",
     "@type": "Person",
+    "@id": coachPersonId(coach),
     name: coach.name.trim(),
     ...(coach.photoUrl ? { image: canonicalUrl(coach.photoUrl) } : {}),
     ...(coach.roleBadge ? { jobTitle: coach.roleBadge } : {}),
+    knowsAbout: "Cầu lông",
+    // The Organization node is only defined in full on / and /gioi-thieu/,
+    // so name and url are repeated here to keep this reference self-contained.
     worksFor: {
       "@type": "Organization",
       "@id": `${siteConfig.siteUrl}/#organization`,
+      name: siteConfig.name,
+      url: siteConfig.siteUrl,
     },
     ...(coach.credentialTags.length > 0
       ? { hasCredential: coach.credentialTags }

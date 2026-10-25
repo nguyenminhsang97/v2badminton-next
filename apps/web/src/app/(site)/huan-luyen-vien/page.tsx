@@ -4,12 +4,19 @@ import { loadSiteChromeSettings } from "@/components/layout/siteSettings";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { canonicalUrl } from "@/lib/routes";
 import { getCoaches } from "@/lib/sanity";
-import { buildPersonSchema, hasRealCoachName } from "@/lib/schema";
+import {
+  buildBreadcrumbSchema,
+  buildPersonSchema,
+  hasRealCoachName,
+} from "@/lib/schema";
 import { siteConfig } from "@/lib/site";
 
 const pagePath = "/huan-luyen-vien/";
 
 const COACH_PAGE_TITLE = "Đội ngũ huấn luyện viên | V2 Badminton";
+// The page eyebrow and the last BreadcrumbList item read the same string, so
+// the breadcrumb Google shows always names what the visitor sees.
+const COACH_PAGE_BREADCRUMB_LABEL = "Đội ngũ huấn luyện viên";
 const COACH_PAGE_DESCRIPTION =
   "Xem đội ngũ huấn luyện viên tại V2 Badminton và nhóm học viên mỗi HLV đang đồng hành.";
 const COACH_PAGE_OG_DESCRIPTION =
@@ -59,15 +66,17 @@ export default async function CoachesPage() {
   const personSchemas = coaches
     .filter(hasRealCoachName)
     .map(buildPersonSchema);
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: "Trang chủ", item: canonicalUrl("/") },
+    { name: COACH_PAGE_BREADCRUMB_LABEL, item: canonicalUrl(pagePath) },
+  ]);
 
   return (
     <div className="coach-page">
-      {personSchemas.length > 0 ? (
-        <JsonLd id="coach-person" data={personSchemas} />
-      ) : null}
+      <JsonLd id="coach-schema" data={[breadcrumbSchema, ...personSchemas]} />
       <section className="section coach-page__hero">
         <div className="section__header coach-page__header">
-          <p className="section__eyebrow">Đội ngũ huấn luyện viên</p>
+          <p className="section__eyebrow">{COACH_PAGE_BREADCRUMB_LABEL}</p>
           <h1 className="section__title">
             Những người trực tiếp theo sát từng nhóm học viên
           </h1>
